@@ -1,36 +1,32 @@
-import 'dart:io';
+
+import 'package:game_server/src/command.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:test/test.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
-import 'package:shelf_web_socket/shelf_web_socket.dart';
-// dart C:\Users\Stephen\growing_games\game_server\bin\server.dart
+import 'package:game_server/game_server.dart';
 
 void main(){
 
   IOWebSocketChannel channel;
+  Server socketHandler = Server();
 
   setUp(() async {
 
-    var handler = webSocketHandler((webSocket) {
-      webSocket.stream.listen((message) {
-        print(message);
-        webSocket.sink.add("echo $message");
-      });
-    });
-
-    await shelf_io.serve(handler, 'localhost', 8080).then((server) {
+    await shelf_io.serve(socketHandler.handler, 'localhost', 8080).then((server) {
       print('Serving at ws://${server.address.host}:${server.port}');
     });
 
     channel = await IOWebSocketChannel.connect("ws://localhost:8080");
-    channel.stream.listen((d) => print(d));
+
+
+
   });
 
 
   test('websocket basics',() async{
 
-    channel.sink.add('hey');
-
+    channel.sink.add(Command.echo + 'hey');
+    expect(await channel.stream.first, 'echo hey');
 
   });
 
