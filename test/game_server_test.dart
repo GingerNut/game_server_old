@@ -15,12 +15,12 @@ void main(){
   int port = 8080;
 
   IOWebChannelClient channel;
-  Server gameServer;
+  GameServer gameServer = GameServer(address, port);
   User user;
 
   setUp(() async {
 
-    gameServer = Server(address, port);
+
     await gameServer.initialise();
     channel = IOWebChannelClient(user, "ws://" + address + ":$port");
     await channel.connect();

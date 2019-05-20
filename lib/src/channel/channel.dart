@@ -15,6 +15,6 @@ abstract class Channel{
 
 mixin ChannelHost{
 
-handleString(String message);
+  handleString(String message);
 
 }

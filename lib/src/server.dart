@@ -1,25 +1,27 @@
 
 
+import 'dart:io';
+
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'client.dart';
 
-
-
-class Server {
+class GameServer{
+  HttpServer server;
   final String address;
   final int port;
 
-  static List<Client> _clients = new List();
+  List<Client> _clients = new List();
 
-  Server(this.address, this.port);
+  GameServer(this.address, this.port);
 
   Future<void> initialise()async{
 
-    await shelf_io.serve(handler, address, port).then((server) {
-      print('Serving at ws://${server.address.host}:${server.port}');
-    });
+    server = await shelf_io.serve(handler, address, port);
+
+    print('Serving at ws://${server.address.host}:${server.port}');
 
     return;
   }
@@ -28,7 +30,7 @@ class Server {
 
     Client client = Client(webSocket);
     client.initialise();
-    _clients.add(client);
+    //_clients.add(client);
 
 
   });
