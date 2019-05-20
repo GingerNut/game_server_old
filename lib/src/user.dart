@@ -7,7 +7,7 @@ class User implements ChannelHost{
   Channel serverChannel;
 
 
-  message(String message){
+  handleString(String message){
 
 
   }

@@ -18,11 +18,14 @@ class Client implements ChannelHost{
 
   initialise() {
 
-    userChannel.listen((message) {
+    userChannel.listen((msg) => handleString(msg));
+  }
 
-      String string = message.toString();
-      String type = string.substring(0,3);
-      String content = string.substring(3);
+
+
+  handleString(String message){
+      String type = message.substring(0,3);
+      String content = message.substring(3);
 
       switch(type){
         case Command.echo:
@@ -34,14 +37,7 @@ class Client implements ChannelHost{
       }
 
 
-    });
-  }
-
-
-
-  message(String message){
-
+    }
 
   }
 
-}
