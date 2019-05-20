@@ -7,16 +7,18 @@ import 'channel.dart';
 
 class IOWebChannelClient extends Channel{
   IOWebSocketChannel webSocketChannel;
+  final String address;
 
-  IOWebChannelClient(ChannelHost host) : super(host);
+  IOWebChannelClient(ChannelHost host, this.address) : super(host);
 
 
 
-  connect(String address, int port)async{
-    webSocketChannel = await IOWebSocketChannel.connect("ws://" + address + ":$port");
+  Future<void> connect()async{
+    webSocketChannel = await IOWebSocketChannel.connect(address);
+    return;
   }
 
-  Future<String> get first => webSocketChannel.stream.first;
+  Future<dynamic> get first => webSocketChannel.stream.first;
 
   listen(Function func) => webSocketChannel.stream.listen(func);
 

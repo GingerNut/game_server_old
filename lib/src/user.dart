@@ -4,7 +4,7 @@ import 'channel/channel.dart';
 
 class User implements ChannelHost{
 
-  Channel clientChannel;
+  Channel serverChannel;
 
 
   message(String message){

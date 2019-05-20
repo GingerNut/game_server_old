@@ -3,12 +3,15 @@
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
-import 'command/command.dart';
+import 'client.dart';
+
 
 
 class Server {
   final String address;
   final int port;
+
+  static List<Client> _clients = new List();
 
   Server(this.address, this.port);
 
@@ -22,28 +25,12 @@ class Server {
   }
 
   var handler = webSocketHandler((webSocket) {
-    webSocket.stream.listen((message) {
 
-      String string = message.toString();
-      String type = string.substring(0,3);
-      String content = string.substring(3);
-
-      switch(type){
-        case Command.echo:
-          webSocket.sink.add("echo $content");
-          break;
+    Client client = Client(webSocket);
+    client.initialise();
+    _clients.add(client);
 
 
-
-      }
-
-
-
-
-
-
-
-    });
   });
 
 

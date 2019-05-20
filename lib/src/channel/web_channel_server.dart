@@ -1,22 +1,21 @@
 
+import 'package:web_socket_channel/web_socket_channel.dart';
+
 
 import 'channel.dart';
 
 
 class WebChannelServer extends Channel{
-  WebChannelServer(ChannelHost host) : super(host);
+  WebChannelServer(ChannelHost host, this.socketChannel) : super(host);
+
+  final WebSocketChannel socketChannel;
+
 
   @override
-  listen(Function func) {
-    // TODO: implement listen
-    return null;
-  }
+  listen(Function func) => socketChannel.stream.listen(func);
 
   @override
-  sink(String string) {
-    // TODO: implement sink
-    return null;
-  }
+  sink(String string)=> socketChannel.sink.add(string);
 
 
 

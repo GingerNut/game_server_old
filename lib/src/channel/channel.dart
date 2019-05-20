@@ -5,7 +5,7 @@ abstract class Channel{
 
   Channel(this.host);
 
-  Future<String> first;
+  Future<dynamic> first;
 
   listen(Function func);
 
