@@ -6,7 +6,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'command/command.dart';
 
 
-class Server{
+class Server {
   final String address;
   final int port;
 
@@ -45,6 +45,9 @@ class Server{
 
     });
   });
+
+
+
 
 
   //var staticHandler = shelf_io.createStaticHandler(staticPath, defaultDocument:'home.html');
