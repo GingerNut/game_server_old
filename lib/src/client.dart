@@ -4,7 +4,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'channel/channel.dart';
 import 'channel/web_channel_server.dart';
 import 'command/command.dart';
-import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 
 class Client implements ChannelHost{
