@@ -2,8 +2,11 @@
 
 
 import 'client/client.dart';
+import 'database/database.dart';
 
 class GameServer{
+
+  Database db = Database();
 
   Set<Client> _clients = new Set();
 

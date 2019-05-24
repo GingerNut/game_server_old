@@ -10,7 +10,8 @@ abstract class Command{
   static const String startGame = 'sta';
   static const String requestLogin = 'rql';
   static const String echo = 'ech';
-
+  static const String gameError = 'err';
+  static const String loginSuccess = 'lgs';
 }
 
 

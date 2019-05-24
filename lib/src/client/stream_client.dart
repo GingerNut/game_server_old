@@ -16,6 +16,12 @@ class StreamClient extends Client{
 
   StreamClient(StreamChannel channel){
     userChannel = channel;
+
+
+  }
+
+  setup(){
+    userChannel.listen((s)=>handleString(s));
   }
 
 
