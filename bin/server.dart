@@ -2,19 +2,27 @@
 
 // dart C:\Users\Stephen\growing_games\game_server\bin\server.dart
 
+import 'dart:io';
+
+import 'package:game_server/game_server.dart';
+import 'package:game_server/src/client/web_client.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 
-void main() {
+void main() async{
+  String address = 'localhost';
+  int port = 8080;
+
+  GameServer gameServer = GameServer();
+
   var handler = webSocketHandler((webSocket) {
-    webSocket.stream.listen((message) {
-      print(message);
-      webSocket.sink.add("echo $message");
-    });
+
+    WebClient client = WebClient(webSocket);
+    gameServer.addClient(client);
+
   });
 
-  shelf_io.serve(handler, 'localhost', 8080).then((server) {
-    print('Serving at ws://${server.address.host}:${server.port}');
-  });
+  HttpServer server = await shelf_io.serve(handler, address, port);
+  print('Serving at ws://${server.address.host}:${server.port}');
 }

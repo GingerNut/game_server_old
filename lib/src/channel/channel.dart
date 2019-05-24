@@ -11,6 +11,10 @@ abstract class Channel{
 
   sink(String string);
 
+  Future<dynamic> firstWhere(Function func);
+
+  close();
+
 }
 
 mixin ChannelHost{

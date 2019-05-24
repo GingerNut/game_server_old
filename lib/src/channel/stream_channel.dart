@@ -15,13 +15,16 @@ class StreamChannel extends Channel{
   static handshake(StreamChannel one, StreamChannel two){
     one.otherEnd = two;
     two.otherEnd = one;
-
   }
 
 
   Future<String> get first => otherEnd.messagesOut.stream.first;
 
+  Future<dynamic> firstWhere(Function func) => otherEnd.messagesOut.stream.firstWhere(func);
+
   listen(Function func) => otherEnd.messagesOut.stream.listen(func);
+
+  close(){}
 
   @override
   sink(String string) {

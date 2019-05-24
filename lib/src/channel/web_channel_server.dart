@@ -10,7 +10,6 @@ class WebChannelServer extends Channel{
 
   final WebSocketChannel socketChannel;
 
-
   @override
   listen(Function func) => socketChannel.stream.listen(func);
 
@@ -18,6 +17,8 @@ class WebChannelServer extends Channel{
   sink(String string)=> socketChannel.sink.add(string);
 
 
+  Future<dynamic> firstWhere(Function func) => socketChannel.stream.firstWhere(func);
 
+  close(){}
 
 }

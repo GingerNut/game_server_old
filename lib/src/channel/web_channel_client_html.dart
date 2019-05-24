@@ -9,6 +9,10 @@ class HMTLWebChannelClient extends Channel{
   @override
   listen(Function func) {}
 
+  Future<dynamic> firstWhere(Function func){}
+
+  close(){}
+
 
   @override
   sink(String string) {
