@@ -11,8 +11,6 @@ class IOWebChannelClient extends Channel{
 
   IOWebChannelClient(ChannelHost host, this.address) : super(host);
 
-
-
   Future<void> connect()async{
     webSocketChannel = await IOWebSocketChannel.connect(address);
     return;

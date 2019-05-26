@@ -12,6 +12,8 @@ abstract class Command{
   static const String echo = 'ech';
   static const String gameError = 'err';
   static const String loginSuccess = 'lgs';
+  static const String testData = 'tst';
+  static const String requestClientList = 'rcl';
 }
 
 

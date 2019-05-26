@@ -10,19 +10,9 @@ import 'client.dart';
 
 
 class StreamClient extends Client{
-  bool valid = true;
-
-  Channel userChannel;
-
-  StreamClient(StreamChannel channel){
-    userChannel = channel;
 
 
-  }
 
-  setup(){
-    userChannel.listen((s)=>handleString(s));
-  }
 
 
   }

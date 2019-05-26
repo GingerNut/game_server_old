@@ -1,35 +1,51 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:game_server/src/channel/channel.dart';
 import 'package:game_server/src/command/command.dart';
+import 'package:game_server/src/database/record.dart';
 
 import '../../game_server.dart';
 
 class Client implements ChannelHost {
-  Channel userChannel;
+  int loginAttempts = 3;
+  String id;
+  String displayName;
+  String secret;
+
+  Channel clientChannel;
   GameServer server;
   Random random = Random();
+  StreamController<String> messagesIn;
 
-  initialise(GameServer server) {
+  initialise(GameServer server) async {
 
     this.server = server;
 
-    userChannel.listen((msg) => handleString(msg));
+    clientChannel.listen((msg) => handleString(msg));
+    messagesIn = await StreamController.broadcast();
   }
 
+
+
   requestLogin(){
-    userChannel.sink(Command.requestLogin);
+    clientChannel.sink(Command.requestLogin);
   }
 
   handleString(String message) async{
-    print('client string ' + message);
+    messagesIn.sink.add(message);
 
     String type = message.substring(0,3);
     String details = message.substring(3);
 
     switch(type){
       case Command.echo:
-        userChannel.sink("echo $details");
+        send("echo $details");
+        break;
+
+      case Command.testData:
+        await server.db.testData();
+        send(Command.testData);
         break;
 
       case Command.login:
@@ -41,26 +57,48 @@ class Client implements ChannelHost {
         String id = _details[0];
         String password = _details[1];
 
-        if((await server.db.getRecordWithId(id)).password != password) reply += Command.gameError;
+        Record record = await server.db.getRecordWithId(id);
 
-        else {
+        if(record == null) {
+          loginAttempts --;
+          send(Command.gameError);
+        } else if(password != record.password){
+          loginAttempts --;
+          send(Command.gameError);
+        } else if(server.clientWithLogin(id)){
+          server.removeClient(this);
+          send(Command.gameError);
+        }else {
+
+          this.id = id;
+          this.displayName = record.displayName;
 
           String secret = getSecret();
 
           reply += Command.loginSuccess;
 
           reply += secret;
+          send(reply);
         }
-
-        userChannel.sink(reply);
 
         break;
 
+      case Command.requestClientList:
+        send(Command.requestClientList + server.clientList);
+        break;
+
+        default:
+          send(Command.gameError);
+          break;
 
 
     }
 
 
+  }
+
+  send(String message){
+    clientChannel.sink(message);
   }
 
   String getSecret(){

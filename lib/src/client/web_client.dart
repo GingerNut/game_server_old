@@ -9,12 +9,9 @@ import 'client.dart';
 
 
 class WebClient extends Client{
-  bool valid = true;
-
-  Channel userChannel;
 
   WebClient(WebSocketChannel webSocket){
-    userChannel = WebChannelServer(this, webSocket);
+    clientChannel = WebChannelServer(this, webSocket);
   }
 
 

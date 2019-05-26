@@ -21,4 +21,6 @@ mixin ChannelHost{
 
   handleString(String message);
 
+  send(String message);
+
 }

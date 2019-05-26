@@ -15,6 +15,7 @@ void main() async{
   int port = 8080;
 
   GameServer gameServer = GameServer();
+  await gameServer.db.testData();
 
   var handler = webSocketHandler((webSocket) {
 
