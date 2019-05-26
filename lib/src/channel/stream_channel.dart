@@ -17,7 +17,6 @@ class StreamChannel extends Channel{
     two.otherEnd = one;
   }
 
-
   Future<String> get first => otherEnd.messagesOut.stream.first;
 
   Future<dynamic> firstWhere(Function func) => otherEnd.messagesOut.stream.firstWhere(func);
@@ -30,9 +29,6 @@ class StreamChannel extends Channel{
   sink(String string) {
    messagesOut.add(string);
   }
-
-
-
 
 
 }

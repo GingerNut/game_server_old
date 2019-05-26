@@ -8,9 +8,9 @@ import 'client.dart';
 
 
 
-class WebClient extends Client{
+class HttpClient extends Client{
 
-  WebClient(WebSocketChannel webSocket){
+  HttpClient(WebSocketChannel webSocket){
     clientChannel = WebChannelServer(this, webSocket);
   }
 

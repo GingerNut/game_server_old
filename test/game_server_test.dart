@@ -73,7 +73,7 @@ void main()async{
 
     setUp(() async {
 
-      // dart C:\Users\Stephen\growing_games\game_server\bin\server.dart
+      // dart C:\Users\Stephen\growing_games\game_server\bin\resource_server.dart
 
       await user.login('henry', 'h1234');
 

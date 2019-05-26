@@ -1,11 +1,11 @@
 
 
-// dart C:\Users\Stephen\growing_games\game_server\bin\server.dart
+// dart C:\Users\Stephen\growing_games\game_server\bin\resource_server.dart
 
 import 'dart:io';
 
 import 'package:game_server/game_server.dart';
-import 'package:game_server/src/client/web_client.dart';
+import 'package:game_server/src/client/http_client.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
@@ -19,7 +19,7 @@ void main() async{
 
   var handler = webSocketHandler((webSocket) {
 
-    WebClient client = WebClient(webSocket);
+    HttpClient client = HttpClient(webSocket);
     gameServer.addClient(client);
 
   });

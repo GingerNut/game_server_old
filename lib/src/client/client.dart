@@ -19,17 +19,13 @@ class Client implements ChannelHost {
   StreamController<String> messagesIn;
 
   initialise(GameServer server) async {
-
     this.server = server;
-
     clientChannel.listen((msg) => handleString(msg));
-    messagesIn = await StreamController.broadcast();
+    messagesIn = await StreamController();
   }
 
-
-
   requestLogin(){
-    clientChannel.sink(Command.requestLogin);
+    send(Command.requestLogin);
   }
 
   handleString(String message) async{
@@ -73,7 +69,7 @@ class Client implements ChannelHost {
           this.id = id;
           this.displayName = record.displayName;
 
-          String secret = getSecret();
+          String secret = _getSecret();
 
           reply += Command.loginSuccess;
 
@@ -95,17 +91,14 @@ class Client implements ChannelHost {
           send(Command.gameError);
           break;
 
-
     }
-
-
   }
 
   send(String message){
     clientChannel.sink(message);
   }
 
-  String getSecret(){
+  String _getSecret(){
 
     var rand = new Random();
     var codeUnits = new List.generate(
@@ -116,7 +109,6 @@ class Client implements ChannelHost {
     );
 
     return new String.fromCharCodes(codeUnits);
-
   }
 
 

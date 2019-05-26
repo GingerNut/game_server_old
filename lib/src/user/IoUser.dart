@@ -9,7 +9,6 @@ class IoUser extends User{
 
   IoUser(this.address, this.port);
 
-
   Future setupChannel() async{
     IOWebChannelClient channel = IOWebChannelClient(this, "ws://" + address + ":$port");
     await channel.connect();
@@ -18,7 +17,5 @@ class IoUser extends User{
     serverChannel.listen((s)=> handleString(s));
     return;
   }
-
-
 
 }

@@ -24,7 +24,4 @@ class StreamUser extends User{
     serverChannel = connectToServer;
     serverChannel.listen((s)=>handleString(s));
   }
-
-
-
 }

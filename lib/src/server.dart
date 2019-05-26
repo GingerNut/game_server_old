@@ -20,7 +20,6 @@ class GameServer{
       string += c.displayName;
       if(i < _clients.length -1)string += Command.delimiter;
     }
-
     return string;
   }
 
