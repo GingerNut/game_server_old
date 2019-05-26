@@ -14,6 +14,8 @@ abstract class User implements ChannelHost{
   StreamController<String> messagesIn;
 
   Channel serverChannel;
+  List<String> clients = new List();
+
 
   Future login(String id, String password) async{
     messagesIn = await StreamController.broadcast();
@@ -48,7 +50,7 @@ abstract class User implements ChannelHost{
         break;
 
       case Command.requestClientList:
-        print(details);
+        clients = details.split(Command.delimiter);
         break;
 
 

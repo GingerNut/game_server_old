@@ -87,6 +87,10 @@ class Client implements ChannelHost {
         send(Command.requestClientList + server.clientList);
         break;
 
+      case Command.resetServer:
+        server.reset();
+        break;
+
         default:
           send(Command.gameError);
           break;

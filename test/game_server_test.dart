@@ -1,5 +1,8 @@
 
+import 'dart:async';
+
 import 'package:game_server/game_server.dart';
+import 'package:game_server/src/command/command.dart';
 import 'package:game_server/src/user/IoUser.dart';
 import 'package:game_server/src/user/stream_user.dart';
 import 'package:game_server/src/user/user.dart';
@@ -9,6 +12,16 @@ import 'package:test/test.dart';
 
 
 void main()async{
+
+  Future <String> nextMessage(Stream<String> stream )async{
+
+    await for(String string in stream){
+
+      return string;
+
+    }
+
+  }
 
   group ('basic stream server',(){
 
@@ -21,14 +34,24 @@ void main()async{
 
     });
 
-
     test('communication basics',() async{
 
-      expect(await user.messagesIn.stream.first, 'rql');
+      expect(await nextMessage(user.messagesIn.stream), 'rql');
+      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), 'lgs');
+
+      user.send(Command.requestClientList);
+
+      expect((await nextMessage(user.messagesIn.stream)), Command.requestClientList + 'Henry');
+
+      expect(user.clients.length, 1);
       expect(server.numberOfClients, 1);
 
       await user.login('henry', 'h1235');
+      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
+      expect((await nextMessage(user.messagesIn.stream)), Command.gameError);
       await user.login('henry', 'h1234');
+      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
+      expect((await nextMessage(user.messagesIn.stream)), Command.gameError);
 
     });
 
@@ -42,6 +65,8 @@ void main()async{
 
 
   group('web socket connection',() {
+
+
     String address = 'localhost';
     int port = 8080;
     User user = IoUser(address, port);
@@ -52,14 +77,19 @@ void main()async{
 
       await user.login('henry', 'h1234');
 
-    });
 
+    });
 
     test('communication basics',() async{
 
-      expect(await user.messagesIn.stream.first, 'rql');
+      expect(await nextMessage(user.messagesIn.stream), 'rql');
+      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), 'lgs');
 
+      user.send(Command.requestClientList);
 
+      expect((await nextMessage(user.messagesIn.stream)), Command.requestClientList + 'Henry');
+
+      expect(user.clients.length, 1);
 
     });
 
@@ -67,7 +97,9 @@ void main()async{
       await user.logout();
     });
 
-  },skip: 'not testing web');
+
+  }, skip: 'server test'
+  );
 
 
 

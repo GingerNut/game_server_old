@@ -8,17 +8,18 @@ class GameServer{
 
   Database db = Database();
 
-  Set<Client> _clients = new Set();
+  List<Client> _clients = new List();
 
   int get numberOfClients => _clients.length;
 
   String get clientList{
     String string = '';
 
-    _clients.forEach((c){
+    for(int i = 0 ; i < _clients.length ; i++){
+      Client c = _clients[i];
       string += c.displayName;
-      string += Command.delimiter;
-    });
+      if(i < _clients.length -1)string += Command.delimiter;
+    }
 
     return string;
   }
@@ -37,6 +38,9 @@ class GameServer{
     _clients.add(client);
   }
 
+  reset(){
+    _clients.clear();
+  }
 
 
 
