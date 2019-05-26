@@ -16,11 +16,8 @@ void main()async{
   Future <String> nextMessage(Stream<String> stream )async{
 
     await for(String string in stream){
-
       return string;
-
     }
-
   }
 
   group ('basic stream server',(){
@@ -31,13 +28,12 @@ void main()async{
     setUp(() async {
       await server.db.testData();
       await user.login('henry', 'h1234');
-
     });
 
     test('communication basics',() async{
 
-      expect(await nextMessage(user.messagesIn.stream), 'rql');
-      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), 'lgs');
+      expect(await nextMessage(user.messagesIn.stream), Command.requestLogin);
+      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), Command.loginSuccess);
 
       user.send(Command.requestClientList);
 
@@ -65,8 +61,6 @@ void main()async{
 
 
   group('web socket connection',() {
-
-
     String address = 'localhost';
     int port = 8080;
     User user = IoUser(address, port);
@@ -76,20 +70,25 @@ void main()async{
       // dart C:\Users\Stephen\growing_games\game_server\bin\resource_server.dart
 
       await user.login('henry', 'h1234');
-
-
     });
 
     test('communication basics',() async{
 
-      expect(await nextMessage(user.messagesIn.stream), 'rql');
-      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), 'lgs');
+      expect(await nextMessage(user.messagesIn.stream), Command.requestLogin);
+      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), Command.loginSuccess);
 
       user.send(Command.requestClientList);
 
       expect((await nextMessage(user.messagesIn.stream)), Command.requestClientList + 'Henry');
 
       expect(user.clients.length, 1);
+
+      await user.login('henry', 'h1235');
+      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
+      expect((await nextMessage(user.messagesIn.stream)), Command.gameError);
+      await user.login('henry', 'h1234');
+      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
+      expect((await nextMessage(user.messagesIn.stream)), Command.gameError);
 
     });
 
@@ -98,7 +97,7 @@ void main()async{
     });
 
 
-  }, skip: 'server test'
+  }, //skip: 'server test'
   );
 
 
