@@ -1,8 +1,8 @@
 
 
 
-import 'package:game_server/src/response/response.dart';
-import 'package:game_server/src/response/success.dart';
+import 'package:game_server/src/messages/response/response.dart';
+import 'package:game_server/src/messages/response/success.dart';
 
 import 'record.dart';
 

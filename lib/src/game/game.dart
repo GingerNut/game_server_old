@@ -1,12 +1,12 @@
 
 
-import 'package:game_server/src/command/new_game.dart';
+import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/game/position.dart';
-import 'package:game_server/src/response/game_error.dart';
-import 'package:game_server/src/response/response.dart';
-import 'package:game_server/src/response/success.dart';
+import 'package:game_server/src/messages/response/game_error.dart';
+import 'package:game_server/src/messages/response/response.dart';
+import 'package:game_server/src/messages/response/success.dart';
 
 import 'board.dart';
 import 'move.dart';

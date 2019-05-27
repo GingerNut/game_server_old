@@ -1,7 +1,9 @@
 
 
 
-import 'package:game_server/src/response/response.dart';
+
+
+import 'response.dart';
 
 class LoginToken extends Response{
 

@@ -3,8 +3,8 @@
 import 'package:game_server/src/game/palette.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/game_server/member.dart';
-import 'package:game_server/src/response/response.dart';
-import 'package:game_server/src/response/success.dart';
+import 'package:game_server/src/messages/response/response.dart';
+import 'package:game_server/src/messages/response/success.dart';
 
 import 'game.dart';
 import 'game_timer.dart';

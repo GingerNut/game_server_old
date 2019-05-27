@@ -2,7 +2,7 @@
 
 
 
-import 'package:game_server/src/command/command.dart';
+import 'package:game_server/src/messages/command/command.dart';
 
 class Login extends Command{
 

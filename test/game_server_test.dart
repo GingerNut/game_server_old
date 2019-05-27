@@ -2,7 +2,7 @@
 import 'dart:async';
 
 import 'package:game_server/game_server.dart';
-import 'package:game_server/src/command/command.dart';
+import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/client_connection/io_client.dart';
 import 'package:game_server/src/game_server/client_connection/stream_connection.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';
@@ -30,7 +30,6 @@ void main()async{
 
     setUp(() async {
       await server.db.testData();
-      await server.reset();
       await ui.initialise(server);
       await ui.login('henry', 'h1234');
     });

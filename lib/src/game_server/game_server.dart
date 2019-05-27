@@ -2,7 +2,7 @@
 
 
 
-import 'package:game_server/src/command/command.dart';
+import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/member.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
@@ -52,7 +52,7 @@ class GameServer{
     _membersOnline.forEach((m) {
       if(m.id == connection.id) {
         m.connection.send(Command.connectionSuperseded);
-        //TODO superseding code
+        //TODO superseding connection
         m.connection.close();
         m.connection = connection;
         connection.member = m;
