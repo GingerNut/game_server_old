@@ -7,12 +7,15 @@ import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/member.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 
+import 'advert.dart';
+
 class GameServer{
 
   Database db = Database();
 
+  List<ServerConnection> _connections = List();
   List<Member> _membersOnline = List();
-
+  List<Advert> _adverts = List();
 
   int get numberOfClients => _membersOnline.length;
 
@@ -31,16 +34,28 @@ class GameServer{
 
   bool clientWithLogin(String id) => _membersOnline.any((m) => m.id == id);
 
-  addConnection(ServerConnection connection) async{
+  addConnection(ServerConnection connection) async {
     await connection.initialise(this);
     connection.requestLogin();
+    _connections.add(connection);
+  }
+
+  removeConnection(ServerConnection connection)async{
+    _connections.remove(connection);
+  }
+
+  addMember(ServerConnection connection)async{
+    removeConnection(connection);
 
     Member member;
 
     _membersOnline.forEach((m) {
       if(m.id == connection.id) {
+        m.connection.send(Command.connectionSuperseded);
+        //TODO superseding code
         m.connection.close();
         m.connection = connection;
+        connection.member = m;
         member = m;
       }
     });
@@ -48,6 +63,7 @@ class GameServer{
     if(member == null) {
       member = Member(connection.id);
       member.connection = connection;
+      connection.member = member;
       _membersOnline.add(member);
     }
 

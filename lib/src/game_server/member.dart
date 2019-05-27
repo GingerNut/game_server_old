@@ -10,5 +10,4 @@ class Member{
 
   Member(this.id);
 
-
 }

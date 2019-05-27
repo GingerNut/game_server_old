@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/command/command.dart';
 
-abstract class User implements ChannelHost{
+abstract class ClientConnection implements ChannelHost{
   String id;
   String displayName;
   String password;

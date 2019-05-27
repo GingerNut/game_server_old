@@ -3,12 +3,15 @@ import 'dart:async';
 
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/command/command.dart';
-import 'package:game_server/src/game_server/client_connection/IoUser.dart';
-import 'package:game_server/src/game_server/client_connection/stream_user.dart';
-import 'package:game_server/src/game_server/client_connection/user.dart';
+import 'package:game_server/src/game_server/client_connection/io_client.dart';
+import 'package:game_server/src/game_server/client_connection/stream_connection.dart';
+import 'package:game_server/src/game_server/client_connection/client_connection.dart';
 
 
 import 'package:test/test.dart';
+
+import 'test_http_interface.dart';
+import 'test_stream_interface.dart';
 
 
 void main()async{
@@ -23,38 +26,41 @@ void main()async{
   group ('basic stream server',(){
 
     GameServer server = GameServer();
-    StreamUser user = StreamUser(server);
+    TestStreamInterface ui = TestStreamInterface();
+
 
     setUp(() async {
       await server.db.testData();
       await server.reset();
-      await user.login('henry', 'h1234');
+      await ui.initialise(server);
+      await ui.login('henry', 'h1234');
     });
 
     test('communication basics',() async{
 
-      expect(await nextMessage(user.messagesIn.stream), Command.requestLogin);
-      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), Command.loginSuccess);
+      expect(await nextMessage(ui.connection.messagesIn.stream), Command.requestLogin);
+      expect((await nextMessage(ui.connection.messagesIn.stream)).substring(0,3), Command.loginSuccess);
 
-      user.send(Command.requestClientList);
+      ui.connection.send(Command.requestClientList);
 
-      expect((await nextMessage(user.messagesIn.stream)), Command.requestClientList + 'Henry');
+      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.requestClientList + 'Henry');
 
-      expect(user.clients.length, 1);
+      expect(ui.connection.clients.length, 1);
       expect(server.numberOfClients, 1);
 
-      await user.login('henry', 'h1235');
-      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
-      expect((await nextMessage(user.messagesIn.stream)), Command.gameError);
-      await user.login('henry', 'h1234');
-      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
-      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), Command.loginSuccess);
-      expect(server.numberOfClients, 1); // replaced connection on member on server
+      await ui.connection.login('henry', 'h1235');
+      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.requestLogin);
+      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.gameError);
+//      await ui.connection.login('henry', 'h1234');
+//      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.connectionSuperseded);
+//      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.requestLogin);
+//      expect((await nextMessage(ui.connection.messagesIn.stream)).substring(0,3), Command.loginSuccess);
+//      expect(server.numberOfClients, 1); // replaced connection on member on server
 
     });
 
     tearDown(() async {
-      await user.serverChannel.close();
+      await ui.connection.serverChannel.close();
     });
 
 
@@ -63,39 +69,39 @@ void main()async{
 
 
   group('web socket connection',() {
-    String address = 'localhost';
-    int port = 8080;
-    User user = IoUser(address, port);
+    TestHttpInterface ui = TestHttpInterface();
 
     setUp(() async {
 
       // dart C:\Users\Stephen\growing_games\game_server\bin\resource_server.dart
 
-      await user.login('henry', 'h1234');
+      await ui.login('henry', 'h1234');
     });
 
     test('communication basics',() async{
 
-      expect(await nextMessage(user.messagesIn.stream), Command.requestLogin);
-      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), Command.loginSuccess);
+      expect(await nextMessage(ui.connection.messagesIn.stream), Command.requestLogin);
+      expect((await nextMessage(ui.connection.messagesIn.stream)).substring(0,3), Command.loginSuccess);
 
-      user.send(Command.requestClientList);
+      ui.connection.send(Command.requestClientList);
 
-      expect((await nextMessage(user.messagesIn.stream)), Command.requestClientList + 'Henry');
+      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.requestClientList + 'Henry');
 
-      expect(user.clients.length, 1);
+      expect(ui.connection.clients.length, 1);
 
-      await user.login('henry', 'h1235');
-      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
-      expect((await nextMessage(user.messagesIn.stream)), Command.gameError);
-      await user.login('henry', 'h1234');
-      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
-      expect((await nextMessage(user.messagesIn.stream)), Command.gameError);
+      await ui.connection.login('henry', 'h1235');
+      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.requestLogin);
+      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.gameError);
+
+//      await user.login('henry', 'h1234');
+//      expect((await nextMessage(user.messagesIn.stream)), Command.connectionSuperseded);
+//      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
+//      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), Command.loginSuccess);
 
     });
 
     tearDown(() async {
-      await user.logout();
+      await ui.connection.logout();
     });
 
 

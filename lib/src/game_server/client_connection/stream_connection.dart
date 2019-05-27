@@ -1,14 +1,14 @@
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/game_server/channel/stream_channel.dart';
 import 'package:game_server/src/game_server/server_connection/stream_connection.dart';
-import 'package:game_server/src/game_server/client_connection/user.dart';
+import 'package:game_server/src/game_server/client_connection/client_connection.dart';
 
 
-class StreamUser extends User{
+class StreamClientConnection extends ClientConnection{
 
   final GameServer server;
 
-  StreamUser(this.server);
+  StreamClientConnection(this.server);
 
   setupChannel() {
     StreamChannel connectToServer = StreamChannel(this);

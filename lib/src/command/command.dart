@@ -15,6 +15,7 @@ abstract class Command{
   static const String testData = 'tst';
   static const String requestClientList = 'rcl';
   static const String resetServer = 'res';
+  static const String connectionSuperseded = 'csu';
 }
 
 

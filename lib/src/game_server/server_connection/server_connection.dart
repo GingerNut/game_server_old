@@ -69,21 +69,23 @@ class ServerConnection implements ChannelHost {
           loginAttempts --;
           send(Command.gameError);
         } else if(password != record.password){
+
           loginAttempts --;
           send(Command.gameError);
         } else if(server.clientWithLogin(id)){
+
+          server.removeConnection(this);
           send(Command.gameError);
-        }else {
+
+        } else {
 
           this.id = id;
           this.displayName = record.displayName;
-
           String secret = _getSecret();
-
           reply += Command.loginSuccess;
-
           reply += secret;
           send(reply);
+          server.addMember(this);
         }
 
         break;
