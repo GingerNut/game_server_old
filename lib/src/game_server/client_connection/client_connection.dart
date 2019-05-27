@@ -76,7 +76,9 @@ abstract class ClientConnection implements ChannelHost{
 
       case Command.chat:
         List<String> _d = details.split(Command.delimiter);
-        interface.chatMessages.add(ChatMessage(_d[0], _d[1]));
+        ChatMessage msg = ChatMessage(_d[0], _d[1]);
+        msg.timeStamp = DateTime.now();
+        interface.chatMessages.add(msg);
         break;
 
     }

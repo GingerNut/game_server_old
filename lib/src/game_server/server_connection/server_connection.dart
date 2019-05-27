@@ -108,7 +108,9 @@ class ServerConnection implements ChannelHost {
 
       case Command.chat:
         List<String> _d = details.split(Command.delimiter);
-        server.chat.addMessage(ChatMessage(_d[0], _d[1]));
+        ChatMessage msg = ChatMessage(_d[0], _d[1]);
+        msg.timeStamp = DateTime.now();
+        server.chat.addMessage(msg);
         break;
 
         default:
