@@ -3,9 +3,9 @@ import 'dart:async';
 
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/command/command.dart';
-import 'package:game_server/src/user/IoUser.dart';
-import 'package:game_server/src/user/stream_user.dart';
-import 'package:game_server/src/user/user.dart';
+import 'package:game_server/src/game_server/client_connection/IoUser.dart';
+import 'package:game_server/src/game_server/client_connection/stream_user.dart';
+import 'package:game_server/src/game_server/client_connection/user.dart';
 
 
 import 'package:test/test.dart';
@@ -27,6 +27,7 @@ void main()async{
 
     setUp(() async {
       await server.db.testData();
+      await server.reset();
       await user.login('henry', 'h1234');
     });
 
@@ -47,7 +48,8 @@ void main()async{
       expect((await nextMessage(user.messagesIn.stream)), Command.gameError);
       await user.login('henry', 'h1234');
       expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
-      expect((await nextMessage(user.messagesIn.stream)), Command.gameError);
+      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), Command.loginSuccess);
+      expect(server.numberOfClients, 1); // replaced connection on member on server
 
     });
 

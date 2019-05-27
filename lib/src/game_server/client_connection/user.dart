@@ -3,7 +3,7 @@
 
 import 'dart:async';
 
-import 'package:game_server/src/channel/channel.dart';
+import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/command/command.dart';
 
 abstract class User implements ChannelHost{
@@ -27,6 +27,8 @@ abstract class User implements ChannelHost{
 
     return;
   }
+
+  close(){}
 
   setupChannel();
 

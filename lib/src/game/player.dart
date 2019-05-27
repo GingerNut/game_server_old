@@ -2,6 +2,7 @@
 
 import 'package:game_server/src/game/palette.dart';
 import 'package:game_server/src/game/position.dart';
+import 'package:game_server/src/game_server/member.dart';
 import 'package:game_server/src/response/response.dart';
 import 'package:game_server/src/response/success.dart';
 
@@ -13,8 +14,12 @@ class Player{
   static const int computer = 1;
   static const int internet = 2;
 
-
   Game game;
+  Member member;
+  String id;
+  String displayName;
+  String gameId;
+
   int number;
   int color;
   String reasonOut;
@@ -22,10 +27,6 @@ class Player{
   PlayerStatus playerStatus = PlayerStatus.waiting;
 
   GameTimer timer;
-  String id = '?';
-  String secret;
-  String displayName;
-  String gameId;
 
   double get timeLeft => timer.timeLeft;
 

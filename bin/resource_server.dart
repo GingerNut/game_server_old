@@ -21,7 +21,7 @@ void main() async{
   var handler = webSocketHandler((webSocket) {
 
     HttpConnection client = HttpConnection(webSocket);
-    gameServer.addClient(client);
+    gameServer.addConnection(client);
 
   });
 

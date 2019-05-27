@@ -23,4 +23,5 @@ mixin ChannelHost{
 
   send(String message);
 
+  close();
 }

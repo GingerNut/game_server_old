@@ -11,39 +11,50 @@ class GameServer{
 
   Database db = Database();
 
-  Set<Member> _membersOnline = Set();
+  List<Member> _membersOnline = List();
 
-  List<ServerConnection> _connections = new List();
 
-  int get numberOfClients => _connections.length;
+  int get numberOfClients => _membersOnline.length;
 
-  String get clientList{
+  String get membersOnline{
     String string = '';
 
-    for(int i = 0 ; i < _connections.length ; i++){
-      ServerConnection c = _connections[i];
-      string += c.displayName;
-      if(i < _connections.length -1)string += Command.delimiter;
+    for(int i = 0 ; i < _membersOnline.length ; i++){
+      Member m = _membersOnline[i];
+      string += m.connection.displayName;
+      if(i < _membersOnline.length -1)string += Command.delimiter;
     }
     return string;
   }
 
-  removeClient(ServerConnection client){
 
-    _connections.remove(client);
 
-  }
+  bool clientWithLogin(String id) => _membersOnline.any((m) => m.id == id);
 
-  bool clientWithLogin(String id) => _connections.any((c) => c.id == id);
+  addConnection(ServerConnection connection) async{
+    await connection.initialise(this);
+    connection.requestLogin();
 
-  addClient(ServerConnection client) async{
-    await client.initialise(this);
-    client.requestLogin();
-    _connections.add(client);
+    Member member;
+
+    _membersOnline.forEach((m) {
+      if(m.id == connection.id) {
+        m.connection.close();
+        m.connection = connection;
+        member = m;
+      }
+    });
+
+    if(member == null) {
+      member = Member(connection.id);
+      member.connection = connection;
+      _membersOnline.add(member);
+    }
+
   }
 
   reset(){
-    _connections.clear();
+    _membersOnline.clear();
   }
 
 

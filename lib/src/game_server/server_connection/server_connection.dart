@@ -1,15 +1,19 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:game_server/src/channel/channel.dart';
+import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/command/command.dart';
 import 'package:game_server/src/game_server/database/record.dart';
 
 import '../../../game_server.dart';
+import '../member.dart';
 
 
 
 class ServerConnection implements ChannelHost {
+
+  Member member;
+
   int loginAttempts = 3;
   String id;
   String displayName;
@@ -24,6 +28,10 @@ class ServerConnection implements ChannelHost {
     this.server = server;
     clientChannel.listen((msg) => handleString(msg));
     messagesIn = await StreamController();
+  }
+
+  close(){
+    clientChannel.close();
   }
 
   requestLogin(){
@@ -64,7 +72,6 @@ class ServerConnection implements ChannelHost {
           loginAttempts --;
           send(Command.gameError);
         } else if(server.clientWithLogin(id)){
-          server.removeClient(this);
           send(Command.gameError);
         }else {
 
@@ -82,7 +89,7 @@ class ServerConnection implements ChannelHost {
         break;
 
       case Command.requestClientList:
-        send(Command.requestClientList + server.clientList);
+        send(Command.requestClientList + server.membersOnline);
         break;
 
       case Command.resetServer:

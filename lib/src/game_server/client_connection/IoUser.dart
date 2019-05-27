@@ -1,7 +1,7 @@
 
 
-import 'package:game_server/src/channel/web_channel_client_io.dart';
-import 'package:game_server/src/user/user.dart';
+import 'package:game_server/src/game_server/channel/web_channel_client_io.dart';
+import 'package:game_server/src/game_server/client_connection/user.dart';
 
 class IoUser extends User{
   final String address;

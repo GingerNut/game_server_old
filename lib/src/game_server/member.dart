@@ -1,14 +1,14 @@
-import 'database/record.dart';
+
+
+import 'server_connection/server_connection.dart';
 
 class Member{
 
-  final Record record;
+  final String id;
 
-  Member(this.record);
+  ServerConnection connection;
 
-
-
-
+  Member(this.id);
 
 
 }
