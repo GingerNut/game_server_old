@@ -9,4 +9,8 @@ abstract class Interface{
 
   login(String id, String password);
 
+  logout(){
+    connection.close();
+  }
+
 }

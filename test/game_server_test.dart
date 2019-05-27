@@ -53,7 +53,7 @@ void main()async{
     });
 
     tearDown(() async {
-      await ui.connection.serverChannel.close();
+      await ui.logout();
     });
 
 
@@ -93,10 +93,10 @@ void main()async{
 
 
     tearDown(() async {
-      await henry.connection.serverChannel.close();
-      await james.connection.serverChannel.close();
-      await sarah.connection.serverChannel.close();
-      await trace.connection.serverChannel.close();
+      await henry.logout();
+      await james.logout();
+      await sarah.logout();
+      await trace.logout();
     });
 
 
@@ -136,7 +136,7 @@ void main()async{
     });
 
     tearDown(() async {
-      await ui.connection.logout();
+      await ui.logout();
     });
 
 

@@ -75,8 +75,6 @@ abstract class ClientConnection implements ChannelHost{
     serverChannel.sink(message);
   }
 
-  logout(){
-    serverChannel.close();
-  }
+
 
 }
