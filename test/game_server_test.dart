@@ -28,7 +28,6 @@ void main()async{
     GameServer server = GameServer();
     TestStreamInterface ui = TestStreamInterface();
 
-
     setUp(() async {
       await server.db.testData();
       await server.reset();
