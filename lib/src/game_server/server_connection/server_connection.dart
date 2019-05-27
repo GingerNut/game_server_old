@@ -109,12 +109,12 @@ class ServerConnection implements ChannelHost {
 
       case Command.chat:
         ChatMessage msg = ChatMessage.fromString(details);
-        server.chat.addMessage(msg);
+        server.addGeneralChat(msg);
         break;
 
       case Command.privateMessage:
         PrivateMessage msg = PrivateMessage.fromString(details);
-        server.chat.addPrivateMessage(msg);
+        server.addPrivateMessage(msg);
         break;
 
         default:

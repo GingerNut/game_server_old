@@ -1,6 +1,7 @@
 
 
-import 'package:game_server/src/chat/chat.dart';
+import 'package:game_server/src/messages/chat/chat_message.dart';
+import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/member.dart';
@@ -8,19 +9,13 @@ import 'package:game_server/src/game_server/server_connection/server_connection.
 
 import 'advert.dart';
 
-class GameServer implements ChatHost{
+class GameServer{
 
   Database db = Database();
 
   List<ServerConnection> _connections = List();
   List<Member> _membersOnline = List();
   List<Advert> _adverts = List();
-
-  Chat chat;
-
-  GameServer(){
-    chat = Chat(this);
-  }
 
   int get numberOfClients => _membersOnline.length;
 
@@ -82,6 +77,36 @@ class GameServer implements ChatHost{
     _membersOnline.clear();
   }
 
+  addGeneralChat(ChatMessage message){
+
+    String broadcast = message.string;
+
+    members.forEach((m) {
+      m.connection.send(broadcast);
+    });
+
+  }
+
+  addPrivateMessage(PrivateMessage message){
+    Member to;
+    Member from;
+
+    members.forEach((m) {
+      if(m.id == message.to) to = m;
+      if(m.id == message.from) from = m;
+    });
+
+    if(to != null) {
+      to.connection.send(message.string);
+      if(from != null) from.connection.send(message.string);
+
+    } else {
+      if(from != null) from.connection.send(PrivateMessage('server', from.id, message.to + ' is not online').string);
+    }
+
+
+
+  }
 
 
 

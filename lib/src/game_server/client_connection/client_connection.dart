@@ -93,9 +93,4 @@ abstract class ClientConnection implements ChannelHost{
     serverChannel.sink(message);
   }
 
-  sendChat(String text) => send(ChatMessage(id, text).string);
-
-  sendMessage(String to, String text) => send(PrivateMessage(id, to, text).string);
-
-
 }

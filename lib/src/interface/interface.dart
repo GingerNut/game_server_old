@@ -27,4 +27,8 @@ abstract class Interface{
     connection.close();
   }
 
+  sendChat(String text) => connection.send(ChatMessage(id, text).string);
+
+  sendMessage(String to, String text) => connection.send(PrivateMessage(id, to, text).string);
+
 }
