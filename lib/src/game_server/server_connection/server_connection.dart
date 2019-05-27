@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:game_server/src/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/record.dart';
@@ -89,7 +90,7 @@ class ServerConnection implements ChannelHost {
         break;
 
       case Command.requestClientList:
-        send(Command.requestClientList + server.membersOnline);
+        send(Command.requestClientList + server.membersOnlineList);
         break;
 
       case Command.loginSuccess:
@@ -103,6 +104,11 @@ class ServerConnection implements ChannelHost {
 
       case Command.resetServer:
         server.reset();
+        break;
+
+      case Command.chat:
+        List<String> _d = details.split(Command.delimiter);
+        server.chat.addMessage(ChatMessage(_d[0], _d[1]));
         break;
 
         default:

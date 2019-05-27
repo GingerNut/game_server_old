@@ -89,6 +89,12 @@ void main()async{
           + 'Sarah' + Command .delimiter
           + 'Tracy') ;
 
+      henry.connection.send(Command.chat + henry.id + Command.delimiter + 'hi');
+      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), Command.chat);
+      expect(james.chatMessages.length,1);
+      expect(james.chatMessages[0].from,'henry');
+      expect(james.chatMessages[0].text,'hi');
+
     });
 
 

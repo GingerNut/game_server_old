@@ -3,10 +3,13 @@
 
 import 'dart:async';
 
+import 'package:game_server/src/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
+import 'package:game_server/src/interface/interface.dart';
 import 'package:game_server/src/messages/command/command.dart';
 
 abstract class ClientConnection implements ChannelHost{
+  final Interface interface;
   String id;
   String displayName;
   String password;
@@ -16,6 +19,8 @@ abstract class ClientConnection implements ChannelHost{
 
   Channel serverChannel;
   List<String> clients = new List();
+
+  ClientConnection(this.interface);
 
 
   Future login(String id, String password) async{
@@ -67,6 +72,11 @@ abstract class ClientConnection implements ChannelHost{
         loggedIn = true;
         secret = details;
         send(Command.loginSuccess);
+        break;
+
+      case Command.chat:
+        List<String> _d = details.split(Command.delimiter);
+        interface.chatMessages.add(ChatMessage(_d[0], _d[1]));
         break;
 
     }

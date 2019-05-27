@@ -1,7 +1,6 @@
 
 
-
-
+import 'package:game_server/src/chat/chat.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/member.dart';
@@ -9,7 +8,7 @@ import 'package:game_server/src/game_server/server_connection/server_connection.
 
 import 'advert.dart';
 
-class GameServer{
+class GameServer implements ChatHost{
 
   Database db = Database();
 
@@ -17,9 +16,17 @@ class GameServer{
   List<Member> _membersOnline = List();
   List<Advert> _adverts = List();
 
+  Chat chat;
+
+  GameServer(){
+    chat = Chat(this);
+  }
+
   int get numberOfClients => _membersOnline.length;
 
-  String get membersOnline{
+  List<Member> get members => _membersOnline;
+
+  String get membersOnlineList{
     String string = '';
 
     for(int i = 0 ; i < _membersOnline.length ; i++){
@@ -43,9 +50,7 @@ class GameServer{
   }
 
   addMember(ServerConnection connection)async{
-    removeConnection(connection);
-
-    //TODO tidy up adding members
+    _connections.remove(connection);
 
     Member member;
 
@@ -70,14 +75,14 @@ class GameServer{
   }
 
   removeMember(ServerConnection con){
-//    print('before ${membersOnline.length}');
     if(con.member != null) _membersOnline.remove(con.member);
-//    print('after ${_membersOnline.length}');
   }
 
   reset(){
     _membersOnline.clear();
   }
+
+
 
 
 

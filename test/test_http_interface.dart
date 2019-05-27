@@ -9,7 +9,8 @@ class TestHttpInterface extends HttpInterface{
   int port = 8080;
 
   login(String id, String password) async{
-    connection = await IoClientConnection(address, port);
+    super.login(id, password);
+    connection = await IoClientConnection(this, address, port);
     await connection.login(id, password);
   }
 
