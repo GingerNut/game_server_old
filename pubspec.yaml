@@ -9,7 +9,8 @@ environment:
 
 dependencies:
   args: ^1.4.2
-  shelf: ^0.7.2
+  shelf:
+  quiver:
   shelf_web_socket:
   web_socket_channel:
 

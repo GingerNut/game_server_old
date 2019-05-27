@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 
 import 'package:game_server/src/command/new_game.dart';
 import 'package:game_server/src/game/player.dart';
@@ -26,12 +24,12 @@ abstract class Game {
   GameState get state =>_state;
 
   Board board;
+  PlayerList players = new PlayerList();
 
   Game(this.settings);
 
   int get numberOfPlayers => settings.numberOfPlayers;
   Position position;
-  PlayerList get players => settings.players;
   String get id => settings.id;
   String get displayName => settings.displayName;
 
@@ -49,8 +47,8 @@ abstract class Game {
 
     for (int i = 0; i < numberOfPlayers; i ++) {
       for (int i = 0; i < numberOfPlayers; i ++) {
-        Player player = players[i];
-
+        Player player = Player();
+        players.add(player);
         player.game = this;
         player.number = i;
         player.gameId = settings.id;

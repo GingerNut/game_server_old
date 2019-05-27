@@ -3,11 +3,13 @@ import 'dart:math';
 
 import 'package:game_server/src/channel/channel.dart';
 import 'package:game_server/src/command/command.dart';
-import 'package:game_server/src/database/record.dart';
+import 'package:game_server/src/game_server/database/record.dart';
 
-import '../../game_server.dart';
+import '../../../game_server.dart';
 
-class Client implements ChannelHost {
+
+
+class ServerConnection implements ChannelHost {
   int loginAttempts = 3;
   String id;
   String displayName;

@@ -1,9 +1,10 @@
 
 
 
-import 'package:game_server/src/database/record.dart';
 import 'package:game_server/src/response/response.dart';
 import 'package:game_server/src/response/success.dart';
+
+import 'record.dart';
 
 class Database{
 

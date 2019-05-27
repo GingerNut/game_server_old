@@ -4,12 +4,12 @@ import 'package:game_server/src/channel/stream_channel.dart';
 import 'package:game_server/src/channel/web_channel_server.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'client.dart';
+import 'server_connection.dart';
 
 
 
 
-class StreamClient extends Client{
+class StreamConnection extends ServerConnection{
 
 
 

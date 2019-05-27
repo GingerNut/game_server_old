@@ -5,7 +5,8 @@
 import 'dart:io';
 
 import 'package:game_server/game_server.dart';
-import 'package:game_server/src/client/http_client.dart';
+import 'package:game_server/src/game_server/server_connection/http_connection.dart';
+
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
@@ -19,7 +20,7 @@ void main() async{
 
   var handler = webSocketHandler((webSocket) {
 
-    HttpClient client = HttpClient(webSocket);
+    HttpConnection client = HttpConnection(webSocket);
     gameServer.addClient(client);
 
   });

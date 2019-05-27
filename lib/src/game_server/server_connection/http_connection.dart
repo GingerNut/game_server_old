@@ -3,14 +3,14 @@ import 'package:game_server/src/channel/channel.dart';
 import 'package:game_server/src/channel/web_channel_server.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'client.dart';
+import 'server_connection.dart';
 
 
 
 
-class HttpClient extends Client{
+class HttpConnection extends ServerConnection{
 
-  HttpClient(WebSocketChannel webSocket){
+  HttpConnection(WebSocketChannel webSocket){
     clientChannel = WebChannelServer(this, webSocket);
   }
 

@@ -1,7 +1,6 @@
 
 
-
-import 'package:game_server/src/game/player_list.dart';
+import 'package:game_server/src/response/game_error.dart';
 import 'package:game_server/src/response/response.dart';
 import 'package:game_server/src/response/success.dart';
 
@@ -10,7 +9,7 @@ import 'command.dart';
 class NewGame extends Command{
   String id;
   String displayName ='';
-  PlayerList players = new PlayerList();
+  List<String> playerIds = new List();
   int numberOfPlayers;
   int playerType;
   bool playerHelp;
@@ -18,24 +17,22 @@ class NewGame extends Command{
   double moveTime;
   double gameTime;
 
-  bool get full => players.length == numberOfPlayers;
+  bool get full => playerIds.length == numberOfPlayers;
   NewGame();
 
-  addPlayerFromPlayerList(PlayerList players, String id){
+  addPlayerFromPlayerList(String id){
     if(full) return;
 
-    players.add(players.getPlayerWithId(id));
+   playerIds.add(id);
   }
 
-  Future<Response> requestJoin(String playerId, String token) async{
+  Future<Response> requestJoin(String playerId) async{
 
-    if(player == null) return GameError.playerNotFound();
+    if(playerId == null) return GameError.playerNotFound();
 
-    if(player.secret != token) return GameError.playerNotFound();
+    if(playerIds.contains(playerId)) return GameError.alreadyInGame(playerId, id);
 
-    if(players.contains(playerId)) return GameError.alreadyInGame(playerId, id);
-
-    players.add(player);
+    playerIds.add(playerId);
 
     return Success();
   }

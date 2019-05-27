@@ -3,12 +3,12 @@
 
 
 import 'dart:async';
-
+import 'package:quiver/async.dart' as quiver;
 import 'package:game_server/src/game/player.dart';
 
 class GameTimer{
 
-  CountdownTimer countdownTimer;
+  quiver.CountdownTimer countdownTimer;
   final Player player;
   final StreamController<TimeStamp> events = StreamController.broadcast();
 
@@ -44,7 +44,7 @@ class GameTimer{
 
     _timeLeft += _moveTime;
 
-    countdownTimer = CountdownTimer(durationLeft, Duration(milliseconds: 100));
+    countdownTimer = quiver.CountdownTimer(durationLeft, Duration(milliseconds: 100));
 
     countdownTimer.listen((e){
       _timeLeft = _timeLeft = countdownTimer.remaining.inMilliseconds / 1000;
