@@ -27,6 +27,8 @@ abstract class ClientConnection implements ChannelHost{
 
     await setupChannel();
 
+    //TODO get the wait until logged in working
+
     while(loggedIn == false){
       await Future.delayed(Duration(milliseconds : 100));
     }

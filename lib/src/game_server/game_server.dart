@@ -45,6 +45,8 @@ class GameServer{
   addMember(ServerConnection connection)async{
     removeConnection(connection);
 
+    //TODO tidy up adding members
+
     Member member;
 
     _membersOnline.forEach((m) {
@@ -65,6 +67,12 @@ class GameServer{
       _membersOnline.add(member);
     }
 
+  }
+
+  removeMember(ServerConnection con){
+//    print('before ${membersOnline.length}');
+    if(con.member != null) _membersOnline.remove(con.member);
+//    print('after ${_membersOnline.length}');
   }
 
   reset(){

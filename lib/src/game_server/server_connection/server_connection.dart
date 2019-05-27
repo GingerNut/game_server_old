@@ -96,6 +96,11 @@ class ServerConnection implements ChannelHost {
         server.addMember(this);
         break;
 
+      case Command.logout:
+        server.removeConnection(this);
+        server.removeMember(this);
+        break;
+
       case Command.resetServer:
         server.reset();
         break;
