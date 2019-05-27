@@ -18,6 +18,7 @@ abstract class Command{
   static const String connectionSuperseded = 'csu';
   static const String logout = 'out';
   static const String chat = 'cha';
+  static const String privateMessage = 'pri';
 }
 
 

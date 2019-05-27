@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:game_server/src/chat/chat_message.dart';
+import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
+import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/record.dart';
 
@@ -107,10 +108,13 @@ class ServerConnection implements ChannelHost {
         break;
 
       case Command.chat:
-        List<String> _d = details.split(Command.delimiter);
-        ChatMessage msg = ChatMessage(_d[0], _d[1]);
-        msg.timeStamp = DateTime.now();
+        ChatMessage msg = ChatMessage.fromString(details);
         server.chat.addMessage(msg);
+        break;
+
+      case Command.privateMessage:
+        PrivateMessage msg = PrivateMessage.fromString(details);
+        server.chat.addPrivateMessage(msg);
         break;
 
         default:

@@ -3,9 +3,10 @@
 
 import 'dart:async';
 
-import 'package:game_server/src/chat/chat_message.dart';
+import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/interface/interface.dart';
+import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 
 abstract class ClientConnection implements ChannelHost{
@@ -75,10 +76,13 @@ abstract class ClientConnection implements ChannelHost{
         break;
 
       case Command.chat:
-        List<String> _d = details.split(Command.delimiter);
-        ChatMessage msg = ChatMessage(_d[0], _d[1]);
-        msg.timeStamp = DateTime.now();
+        var msg = ChatMessage.fromString(details);
         interface.chatMessages.add(msg);
+        break;
+
+      case Command.privateMessage:
+        var msg = PrivateMessage.fromString(details);
+        interface.privateMessages.add(msg);
         break;
 
     }
@@ -89,6 +93,9 @@ abstract class ClientConnection implements ChannelHost{
     serverChannel.sink(message);
   }
 
+  sendChat(String text) => send(ChatMessage(id, text).string);
+
+  sendMessage(String to, String text) => send(PrivateMessage(id, to, text).string);
 
 
 }
