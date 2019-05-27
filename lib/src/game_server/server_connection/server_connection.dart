@@ -85,7 +85,6 @@ class ServerConnection implements ChannelHost {
           reply += Command.loginSuccess;
           reply += secret;
           send(reply);
-
         }
         break;
 

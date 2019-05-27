@@ -23,7 +23,10 @@ class StreamChannel extends Channel{
 
   listen(Function func) => otherEnd.messagesOut.stream.listen(func);
 
-  close(){}
+  close() {
+    messagesOut.close();
+
+  }
 
   @override
   sink(String string) {

@@ -3,10 +3,6 @@ import 'dart:async';
 
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/messages/command/command.dart';
-import 'package:game_server/src/game_server/client_connection/io_client.dart';
-import 'package:game_server/src/game_server/client_connection/stream_connection.dart';
-import 'package:game_server/src/game_server/client_connection/client_connection.dart';
-
 
 import 'package:test/test.dart';
 
@@ -87,11 +83,20 @@ void main()async{
       expect(server.numberOfClients, 4);
       henry.connection.send(Command.requestClientList);
       expect( await nextMessage(henry.connection.messagesIn.stream),
-      Command.requestClientList + 'Henry' + Command.delimiter
-      + 'Jim' + Command.delimiter
-      + 'Sarah' + Command .delimiter
-      + 'Tracy') ;
+      Command.requestClientList
+          + 'Henry' + Command.delimiter
+          + 'Jim' + Command.delimiter
+          + 'Sarah' + Command .delimiter
+          + 'Tracy') ;
 
+    });
+
+
+    tearDown(() async {
+      await henry.connection.serverChannel.close();
+      await james.connection.serverChannel.close();
+      await sarah.connection.serverChannel.close();
+      await trace.connection.serverChannel.close();
     });
 
 
