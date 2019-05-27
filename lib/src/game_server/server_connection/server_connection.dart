@@ -85,13 +85,16 @@ class ServerConnection implements ChannelHost {
           reply += Command.loginSuccess;
           reply += secret;
           send(reply);
-          server.addMember(this);
-        }
 
+        }
         break;
 
       case Command.requestClientList:
         send(Command.requestClientList + server.membersOnline);
+        break;
+
+      case Command.loginSuccess:
+        server.addMember(this);
         break;
 
       case Command.resetServer:

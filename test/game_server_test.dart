@@ -26,11 +26,10 @@ void main()async{
   group ('basic stream server',(){
 
     GameServer server = GameServer();
-    TestStreamInterface ui = TestStreamInterface();
+    TestStreamInterface ui = TestStreamInterface(server);
 
     setUp(() async {
       await server.db.testData();
-      await ui.initialise(server);
       await ui.login('henry', 'h1234');
     });
 
@@ -64,6 +63,39 @@ void main()async{
 
   },
   );
+
+  group('Game test',() {
+    GameServer server = GameServer();
+    TestStreamInterface henry = TestStreamInterface(server);
+    TestStreamInterface james = TestStreamInterface(server);
+    TestStreamInterface sarah = TestStreamInterface(server);
+    TestStreamInterface trace = TestStreamInterface(server);
+
+    setUp(() async {
+      await server.db.testData();
+
+      await henry.login('henry', 'h1234');
+      await james.login('james', 'j1234');
+      await sarah.login('sarah', 's1234');
+      await trace.login('trace', 't1234');
+
+      await Future.delayed(Duration(seconds: 1));
+    });
+
+    test('Logins ',() async{
+
+      expect(server.numberOfClients, 4);
+      henry.connection.send(Command.requestClientList);
+      expect( await nextMessage(henry.connection.messagesIn.stream),
+      Command.requestClientList + 'Henry' + Command.delimiter
+      + 'Jim' + Command.delimiter
+      + 'Sarah' + Command .delimiter
+      + 'Tracy') ;
+
+    });
+
+
+  });
 
 
   group('web socket connection',() {

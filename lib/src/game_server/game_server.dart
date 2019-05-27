@@ -30,8 +30,6 @@ class GameServer{
     return string;
   }
 
-
-
   bool clientWithLogin(String id) => _membersOnline.any((m) => m.id == id);
 
   addConnection(ServerConnection connection) async {
