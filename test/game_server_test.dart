@@ -95,6 +95,14 @@ void main()async{
       expect(james.chatMessages[0].from,'henry');
       expect(james.chatMessages[0].text,'hi');
 
+      james.connection.send(Command.chat + james.id + Command.delimiter + 'Hows it going');
+      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), Command.chat);
+      expect(henry.chatMessages.length,2);
+      expect(henry.chatMessages[0].from,'henry');
+      expect(henry.chatMessages[0].text,'hi');
+      expect(henry.chatMessages[1].from,'james');
+      expect(henry.chatMessages[1].text,'Hows it going');
+
     });
 
 
