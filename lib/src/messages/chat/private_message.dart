@@ -5,6 +5,8 @@ import '../message.dart';
 
 class PrivateMessage extends Message{
 
+  static const String code = 'pri';
+
   String from;
   String to;
   DateTime  timeStamp;
@@ -21,7 +23,7 @@ class PrivateMessage extends Message{
     timeStamp = DateTime.now();
   }
 
-  String get string => Command.privateMessage
+  String get string => code
       + from + Command.delimiter
       + to + Command.delimiter
       + text;

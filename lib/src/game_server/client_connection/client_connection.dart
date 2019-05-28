@@ -8,6 +8,8 @@ import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/interface/interface.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
+import 'package:game_server/src/messages/command/login.dart';
+import 'package:game_server/src/messages/response/login_success.dart';
 
 abstract class ClientConnection implements ChannelHost{
   final Interface interface;
@@ -55,32 +57,28 @@ abstract class ClientConnection implements ChannelHost{
     switch(type){
 
       case Command.requestLogin:
-
-        String reply = '';
-        reply += Command.login;
-        reply += id;
-        reply += Command.delimiter;
-        reply += password;
-
-        send(reply);
+        var login = Login(id, password);
+         send(login.string);
         break;
 
       case Command.requestClientList:
         clients = details.split(Command.delimiter);
         break;
 
-      case Command.loginSuccess:
+      case LoginSuccess.code:
+        var logSuccess = LoginSuccess.fromString(details);
         loggedIn = true;
-        secret = details;
-        send(Command.loginSuccess);
+        secret = logSuccess.playerSecret;
+        displayName = logSuccess.displayName;
+        send(logSuccess.string);
         break;
 
-      case Command.chat:
+      case ChatMessage.code:
         var msg = ChatMessage.fromString(details);
         interface.chatMessages.add(msg);
         break;
 
-      case Command.privateMessage:
+      case PrivateMessage.code:
         var msg = PrivateMessage.fromString(details);
         interface.privateMessages.add(msg);
         break;

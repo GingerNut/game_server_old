@@ -6,6 +6,8 @@ import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/record.dart';
+import 'package:game_server/src/messages/command/login.dart';
+import 'package:game_server/src/messages/response/login_success.dart';
 
 import '../../../game_server.dart';
 import '../member.dart';
@@ -51,42 +53,33 @@ class ServerConnection implements ChannelHost {
         send("echo $details");
         break;
 
-      case Command.testData:
-        await server.db.testData();
-        send(Command.testData);
-        break;
-
-      case Command.login:
+      case Login.code:
 
         String reply = '';
 
-        List<String> _details = details.split(Command.delimiter);
+        var login = Login.fromString(details);
 
-        String id = _details[0];
-        String password = _details[1];
-
-        Record record = await server.db.getRecordWithId(id);
+        Record record = await server.db.getRecordWithId(login.playerId);
 
         if(record == null) {
           loginAttempts --;
           send(Command.gameError);
-        } else if(password != record.password){
+        } else if(login.password != record.password){
 
           loginAttempts --;
           send(Command.gameError);
-        } else if(server.clientWithLogin(id)){
+        } else if(server.clientWithLogin(login.playerId)){
 
           server.removeConnection(this);
           send(Command.gameError);
 
         } else {
 
-          this.id = id;
+          this.id = login.playerId;
           this.displayName = record.displayName;
-          String secret = _getSecret();
-          reply += Command.loginSuccess;
-          reply += secret;
-          send(reply);
+
+          var logSuccess = LoginSuccess(id, _getSecret(), displayName);
+          send(logSuccess.string);
         }
         break;
 
@@ -94,7 +87,7 @@ class ServerConnection implements ChannelHost {
         send(Command.requestClientList + server.membersOnlineList);
         break;
 
-      case Command.loginSuccess:
+      case LoginSuccess.code:
         server.addMember(this);
         break;
 
@@ -103,16 +96,13 @@ class ServerConnection implements ChannelHost {
         server.removeMember(this);
         break;
 
-      case Command.resetServer:
-        server.reset();
-        break;
 
-      case Command.chat:
+      case ChatMessage.code:
         ChatMessage msg = ChatMessage.fromString(details);
         server.addGeneralChat(msg);
         break;
 
-      case Command.privateMessage:
+      case PrivateMessage.code:
         PrivateMessage msg = PrivateMessage.fromString(details);
         server.addPrivateMessage(msg);
         break;

@@ -2,20 +2,26 @@
 
 
 
-import 'package:game_server/src/messages/command/command.dart';
+import '../message.dart';
 
-class Login extends Command{
+class Login extends Message{
 
+  static const code = 'log';
   String playerId;
   String password;
 
   Login(this.playerId, this.password);
 
+  Login.fromString(String string){
+    List<String> details = string.split((delimiter));
 
-
-  String toString() {
-      return Command.login + playerId + password;
+    playerId = details[0];
+    password = details[1];
   }
+
+
+
+  String get string => code + playerId + delimiter + password;
 
 
 

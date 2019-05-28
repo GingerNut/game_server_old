@@ -3,7 +3,9 @@ import 'dart:async';
 
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
+import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
+import 'package:game_server/src/messages/response/login_success.dart';
 
 import 'package:test/test.dart';
 
@@ -33,7 +35,7 @@ void main()async{
     test('communication basics',() async{
 
       expect(await nextMessage(ui.connection.messagesIn.stream), Command.requestLogin);
-      expect((await nextMessage(ui.connection.messagesIn.stream)).substring(0,3), Command.loginSuccess);
+      expect((await nextMessage(ui.connection.messagesIn.stream)).substring(0,3), LoginSuccess.code);
 
       ui.connection.send(Command.requestClientList);
 
@@ -48,7 +50,7 @@ void main()async{
 //      await ui.connection.login('henry', 'h1234');
 //      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.connectionSuperseded);
 //      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.requestLogin);
-//      expect((await nextMessage(ui.connection.messagesIn.stream)).substring(0,3), Command.loginSuccess);
+//      expect((await nextMessage(ui.connection.messagesIn.stream)).substring(0,3), LoginSuccess.code);
 //      expect(server.numberOfClients, 1); // replaced connection on member on server
 
     });
@@ -91,13 +93,13 @@ void main()async{
           + 'Tracy') ;
 
       henry.sendChat('hi');
-      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), Command.chat);
+      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), ChatMessage.code);
       expect(james.chatMessages.length,1);
       expect(james.chatMessages[0].from,'henry');
       expect(james.chatMessages[0].text,'hi');
 
       james.sendChat('Hows it going');
-      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), Command.chat);
+      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), ChatMessage.code);
       expect(henry.chatMessages.length,2);
       expect(henry.chatMessages[0].from,'henry');
       expect(henry.chatMessages[0].text,'hi');
@@ -105,7 +107,7 @@ void main()async{
       expect(henry.chatMessages[1].text,'Hows it going');
 
       sarah.sendMessage('james', 'hello james');
-      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), Command.privateMessage);
+      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
       expect(james.privateMessages.length, 1);
       expect(james.privateMessages[0].from, 'sarah');
       expect(james.privateMessages[0].text, 'hello james');
@@ -115,13 +117,13 @@ void main()async{
       expect(sarah.privateMessages[0].text, 'hello james');
 
       james.sendMessage('sarah', 'yo');
-      expect((await nextMessage(sarah.connection.messagesIn.stream)).substring(0,3), Command.privateMessage);
+      expect((await nextMessage(sarah.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
       expect(sarah.privateMessages.length, 2);
       expect(sarah.privateMessages[1].from, 'james');
       expect(sarah.privateMessages[1].text, 'yo');
 
       henry.sendMessage('emma', 'hey Emma');
-      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), Command.privateMessage);
+      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
       expect(henry.privateMessages.length, 1);
       expect(henry.privateMessages[0].from, 'server');
       expect(henry.privateMessages[0].text, 'emma is not online');
@@ -163,7 +165,7 @@ void main()async{
     test('communication basics',() async{
 
       expect(await nextMessage(ui.connection.messagesIn.stream), Command.requestLogin);
-      expect((await nextMessage(ui.connection.messagesIn.stream)).substring(0,3), Command.loginSuccess);
+      expect((await nextMessage(ui.connection.messagesIn.stream)).substring(0,3), LoginSuccess.code);
 
       ui.connection.send(Command.requestClientList);
 
@@ -178,7 +180,7 @@ void main()async{
 //      await user.login('henry', 'h1234');
 //      expect((await nextMessage(user.messagesIn.stream)), Command.connectionSuperseded);
 //      expect((await nextMessage(user.messagesIn.stream)), Command.requestLogin);
-//      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), Command.loginSuccess);
+//      expect((await nextMessage(user.messagesIn.stream)).substring(0,3), LoginSuccess.code);
 
     });
 
@@ -221,13 +223,13 @@ void main()async{
               + 'Tracy') ;
 
       henry.sendChat('hi');
-      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), Command.chat);
+      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), ChatMessage.code);
       expect(james.chatMessages.length,1);
       expect(james.chatMessages[0].from,'henry');
       expect(james.chatMessages[0].text,'hi');
 
       james.sendChat('Hows it going');
-      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), Command.chat);
+      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), ChatMessage.code);
       expect(henry.chatMessages.length,2);
       expect(henry.chatMessages[0].from,'henry');
       expect(henry.chatMessages[0].text,'hi');
@@ -235,25 +237,25 @@ void main()async{
       expect(henry.chatMessages[1].text,'Hows it going');
 
       sarah.sendMessage('james', 'hello james');
-      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), Command.chat);
-      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), Command.privateMessage);
+      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), ChatMessage.code);
+      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
       expect(james.privateMessages.length, 1);
       expect(james.privateMessages[0].from, 'sarah');
       expect(james.privateMessages[0].text, 'hello james');
 
-      expect((await nextMessage(sarah.connection.messagesIn.stream)).substring(0,3), Command.privateMessage);
+      expect((await nextMessage(sarah.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
       expect(sarah.privateMessages.length, 1);
       expect(sarah.privateMessages[0].from, 'sarah');
       expect(sarah.privateMessages[0].text, 'hello james');
 
       james.sendMessage('sarah', 'yo');
-      expect((await nextMessage(sarah.connection.messagesIn.stream)).substring(0,3), Command.privateMessage);
+      expect((await nextMessage(sarah.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
       expect(sarah.privateMessages.length, 2);
       expect(sarah.privateMessages[1].from, 'james');
       expect(sarah.privateMessages[1].text, 'yo');
 
       henry.sendMessage('emma', 'hey Emma');
-      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), Command.privateMessage);
+      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
       expect(henry.privateMessages.length, 1);
       expect(henry.privateMessages[0].from, 'server');
       expect(henry.privateMessages[0].text, 'emma is not online');

@@ -5,6 +5,7 @@ import '../message.dart';
 
 class ChatMessage extends Message{
 
+  static const String code = 'cha';
   String from;
   DateTime  timeStamp;
   String text;
@@ -19,7 +20,8 @@ class ChatMessage extends Message{
     timeStamp = DateTime.now();
   }
 
-  String get string => Command.chat + from + Command.delimiter + text;
+  String get string => code + from + Command.delimiter + text;
+
 
 
 }
