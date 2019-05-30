@@ -1,5 +1,9 @@
 
 
+import 'package:game_server/src/game/computer/computer_player.dart';
+import 'package:game_server/src/game/player.dart';
+import 'package:game_server/src/game/player_list.dart';
+import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/messages/response/game_error.dart';
 import 'package:game_server/src/messages/response/response.dart';
 import 'package:game_server/src/messages/response/success.dart';
@@ -9,7 +13,7 @@ import 'command.dart';
 class NewGame extends Command{
   String id;
   String displayName ='';
-  List<String> playerIds = new List();
+  PlayerList players = new PlayerList();
   int numberOfPlayers;
   int playerType;
   bool playerHelp;
@@ -17,22 +21,17 @@ class NewGame extends Command{
   double moveTime;
   double gameTime;
 
-  bool get full => playerIds.length == numberOfPlayers;
+  bool get full => players.length == numberOfPlayers;
   NewGame();
 
-  addPlayerFromPlayerList(String id){
-    if(full) return;
 
-   playerIds.add(id);
-  }
+  Future<Response> requestJoin(Player player) async{
 
-  Future<Response> requestJoin(String playerId) async{
+    if(player == null) return GameError.playerNotFound();
 
-    if(playerId == null) return GameError.playerNotFound();
+    if(players.contains(player.id)) return GameError.alreadyInGame(player.id, id);
 
-    if(playerIds.contains(playerId)) return GameError.alreadyInGame(playerId, id);
-
-    playerIds.add(playerId);
+    players.add(player);
 
     return Success();
   }
@@ -66,7 +65,44 @@ class NewGame extends Command{
     return string;
   }
 
+  NewGame.local(Settings settings){
+    id = 'local game';
+    gameTime = settings.gameTime;
+    moveTime = settings.moveTime;
+    timer = settings.timer;
+    playerHelp = false;
+  }
 
+  addLocalPlayer(Player player) async{
+
+    if(players.isEmpty) players.add(player);
+
+    if(players.length < Settings.maxPlayers) players.add(player);
+
+    players.forEach((p){
+      if(p.displayName == null){
+
+        String base;
+
+        if(p is ComputerPlayer) base = 'Computer';
+        else base = 'Player';
+
+        int trialInt = 1;
+
+        String trialName = base + ' ' + trialInt.toString();
+
+        while(players.containsPlayerWithDisplayName(trialName)){
+          trialInt ++;
+          trialName = base + ' ' + trialInt.toString();
+
+        }
+        p.displayName = trialName;
+      }
+
+
+    });
+
+  }
 
 
 

@@ -1,6 +1,8 @@
 
 
 import 'package:game_server/src/game/game_host.dart';
+import 'package:game_server/src/game/player.dart';
+import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
@@ -15,25 +17,25 @@ abstract class GameServer implements GameHost{
   Database db = Database();
 
   List<ServerConnection> _connections = List();
-  List<Member> _membersOnline = List();
+  PlayerList __playersOnline = PlayerList();
   List<Advert> _adverts = List();
 
-  int get numberOfClients => _membersOnline.length;
+  int get numberOfClients => __playersOnline.length;
 
-  List<Member> get members => _membersOnline;
+  PlayerList get _players => __playersOnline;
 
-  String get membersOnlineList{
+  String get playersOnlineList{
     String string = '';
 
-    for(int i = 0 ; i < _membersOnline.length ; i++){
-      Member m = _membersOnline[i];
+    for(int i = 0 ; i < __playersOnline.length ; i++){
+      Player m = __playersOnline[i];
       string += m.connection.displayName;
-      if(i < _membersOnline.length -1)string += Command.delimiter;
+      if(i < __playersOnline.length -1)string += Command.delimiter;
     }
     return string;
   }
 
-  bool clientWithLogin(String id) => _membersOnline.any((m) => m.id == id);
+  bool clientWithLogin(String id) => __playersOnline.containsPlayerId(id);
 
   addConnection(ServerConnection connection) async {
     await connection.initialise(this);
@@ -48,51 +50,51 @@ abstract class GameServer implements GameHost{
   addMember(ServerConnection connection)async{
     _connections.remove(connection);
 
-    Member member;
+    Player member;
 
-    _membersOnline.forEach((m) {
-      if(m.id == connection.id) {
-        m.connection.send(Command.connectionSuperseded);
+    __playersOnline.forEach((p) {
+      if(p.id == connection.id) {
+        p.connection.send(Command.connectionSuperseded);
         //TODO superseding connection
-        m.connection.close();
-        m.connection = connection;
-        connection.member = m;
-        member = m;
+        p.connection.close();
+        p.connection = connection;
+        connection.player = p;
+        member = p;
       }
     });
 
     if(member == null) {
-      member = Member(connection.id);
+      member = Player.server(connection.id);
       member.connection = connection;
-      connection.member = member;
-      _membersOnline.add(member);
+      connection.player = member;
+      __playersOnline.add(member);
     }
 
   }
 
   removeMember(ServerConnection con){
-    if(con.member != null) _membersOnline.remove(con.member);
+    if(con.player != null) __playersOnline.remove(con.player);
   }
 
   reset(){
-    _membersOnline.clear();
+    __playersOnline.clear();
   }
 
   addGeneralChat(ChatMessage message){
 
     String broadcast = message.string;
 
-    members.forEach((m) {
+    _players.forEach((m) {
       m.connection.send(broadcast);
     });
 
   }
 
   addPrivateMessage(PrivateMessage message){
-    Member to;
-    Member from;
+    Player to;
+    Player from;
 
-    members.forEach((m) {
+    _players.forEach((m) {
       if(m.id == message.to) to = m;
       if(m.id == message.from) from = m;
     });

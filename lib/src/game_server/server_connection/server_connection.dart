@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
@@ -16,7 +17,7 @@ import '../member.dart';
 
 class ServerConnection implements ChannelHost {
 
-  Member member;
+  Player player;
 
   int loginAttempts = 3;
   String id;
@@ -84,7 +85,7 @@ class ServerConnection implements ChannelHost {
         break;
 
       case Command.requestClientList:
-        send(Command.requestClientList + server.membersOnlineList);
+        send(Command.requestClientList + server.playersOnlineList);
         break;
 
       case LoginSuccess.code:

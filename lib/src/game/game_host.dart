@@ -4,5 +4,5 @@ mixin GameHost{
 
 
 
-  getGame(GameHost host, NewGame setttings);
+  getGame(NewGame settings);
 }

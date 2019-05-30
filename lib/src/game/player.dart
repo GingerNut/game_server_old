@@ -3,6 +3,7 @@
 import 'package:game_server/src/game/palette.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/game_server/member.dart';
+import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/messages/response/response.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
@@ -19,6 +20,7 @@ class Player{
   String id;
   String displayName;
   String gameId;
+  ServerConnection connection;
 
   int number;
   int color;
@@ -29,6 +31,10 @@ class Player{
   GameTimer timer;
 
   double get timeLeft => timer.timeLeft;
+
+  Player();
+
+  Player.server(this.id);
 
   initialise(){
     color = Palette.defaultPlayerColours[number];
