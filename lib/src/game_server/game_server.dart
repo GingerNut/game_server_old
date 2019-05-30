@@ -7,7 +7,6 @@ import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/database.dart';
-import 'package:game_server/src/game_server/member.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 
 import 'advert.dart';
@@ -50,7 +49,7 @@ abstract class GameServer implements GameHost{
   addMember(ServerConnection connection)async{
     _connections.remove(connection);
 
-    Player member;
+    Player player;
 
     __playersOnline.forEach((p) {
       if(p.id == connection.id) {
@@ -59,15 +58,15 @@ abstract class GameServer implements GameHost{
         p.connection.close();
         p.connection = connection;
         connection.player = p;
-        member = p;
+        player = p;
       }
     });
 
-    if(member == null) {
-      member = Player.server(connection.id);
-      member.connection = connection;
-      connection.player = member;
-      __playersOnline.add(member);
+    if(player == null) {
+      player = Player.server(connection.id);
+      player.connection = connection;
+      connection.player = player;
+      __playersOnline.add(player);
     }
 
   }
@@ -94,9 +93,9 @@ abstract class GameServer implements GameHost{
     Player to;
     Player from;
 
-    _players.forEach((m) {
-      if(m.id == message.to) to = m;
-      if(m.id == message.from) from = m;
+    _players.forEach((p) {
+      if(p.id == message.to) to = p;
+      if(p.id == message.from) from = p;
     });
 
     if(to != null) {

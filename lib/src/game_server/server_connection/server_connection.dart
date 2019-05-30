@@ -11,7 +11,6 @@ import 'package:game_server/src/messages/command/login.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 
 import '../../../game_server.dart';
-import '../member.dart';
 
 
 
