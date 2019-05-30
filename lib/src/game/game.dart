@@ -9,11 +9,13 @@ import 'package:game_server/src/messages/response/response.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
 import 'board.dart';
+import 'game_host.dart';
 import 'move.dart';
 
 abstract class Game {
 
   final NewGame settings;
+  final GameHost host;
 
   GameState _state = GameState.waitingForPlayers;
 
@@ -26,7 +28,7 @@ abstract class Game {
   Board board;
   PlayerList players = new PlayerList();
 
-  Game(this.settings);
+  Game(this.host, this.settings);
 
   int get numberOfPlayers => settings.numberOfPlayers;
   Position position;
@@ -41,7 +43,7 @@ abstract class Game {
 
   setup() async {}
 
-  Future<Response> initialise() async{
+  Future initialise() async{
     position = getPosition();
     position.setupFirstPosition();
 
@@ -58,25 +60,34 @@ abstract class Game {
 
     _state = GameState.waitingForAllReady;
 
+    position.analyse();
+    history.clear();
     await waitForAllReady();
 
-    position.analyse();
-
-    history.clear();
-
     _state = GameState.started;
-
-    Response response = Success();
-
     position.player.yourTurn(position);
-
-    return response;
+    return;
   }
 
 
-  Future<Response> waitForAllReady()async{
-    players.forEach((p) => p.playerStatus =  PlayerStatus.playing);
-    return Success();
+  Future waitForAllReady()async{
+    bool allReady = false;
+
+    players.forEach((p) => p.initialise());
+
+    while(allReady == false){
+
+      await Future.delayed(Duration(milliseconds : 100));
+
+      allReady = true;
+
+      players.forEach((p) {
+        if(p.playerStatus != PlayerStatus.ready) allReady = false;
+      });
+
+    }
+
+    return;
   }
 
   getPosition();

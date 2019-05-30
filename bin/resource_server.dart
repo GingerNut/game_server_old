@@ -10,12 +10,14 @@ import 'package:game_server/src/game_server/server_connection/http_connection.da
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
+import '../test/test_game/test_server.dart';
+
 
 void main() async{
   String address = 'localhost';
   int port = 8080;
 
-  GameServer gameServer = GameServer();
+  TestServer gameServer = TestServer();
   await gameServer.db.testData();
 
   var handler = webSocketHandler((webSocket) {

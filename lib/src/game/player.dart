@@ -30,20 +30,12 @@ class Player{
 
   double get timeLeft => timer.timeLeft;
 
-  Future<Response> getReady()async{
-
-    Response response = await initialise();
-
-    return response;
-  }
-
-  Future<Response> initialise()async{
+  initialise(){
     color = Palette.defaultPlayerColours[number];
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
 
     if(game.id == 'local game') playerStatus = PlayerStatus.ready;
 
-    return Success();
   }
 
 

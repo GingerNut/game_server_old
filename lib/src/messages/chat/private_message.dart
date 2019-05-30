@@ -15,7 +15,7 @@ class PrivateMessage extends Message{
   PrivateMessage(this.from, this.to, this.text);
 
   PrivateMessage.fromString(String string){
-    List<String> details = string.split(Command.delimiter);
+    List<String> details = string.split(delimiter);
 
     from = details[0];
     to = details[1];
@@ -24,8 +24,8 @@ class PrivateMessage extends Message{
   }
 
   String get string => code
-      + from + Command.delimiter
-      + to + Command.delimiter
+      + from + delimiter
+      + to + delimiter
       + text;
 
 

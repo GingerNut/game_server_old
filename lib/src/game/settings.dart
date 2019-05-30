@@ -8,6 +8,7 @@ import 'package:game_server/src/game/player.dart';
 class Settings{
 
   int numberOfPlayers = 4;
+  static const int maxPlayers = 6;
   int playerType = Player.human;
   bool playerHelp = false;
   bool randomStart = true;

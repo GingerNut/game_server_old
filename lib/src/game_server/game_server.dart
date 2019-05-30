@@ -1,5 +1,6 @@
 
 
+import 'package:game_server/src/game/game_host.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
@@ -9,7 +10,7 @@ import 'package:game_server/src/game_server/server_connection/server_connection.
 
 import 'advert.dart';
 
-class GameServer{
+abstract class GameServer implements GameHost{
 
   Database db = Database();
 

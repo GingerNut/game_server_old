@@ -9,6 +9,7 @@ import 'package:game_server/src/messages/response/login_success.dart';
 
 import 'package:test/test.dart';
 
+import 'test_game/test_server.dart';
 import 'test_http_interface.dart';
 import 'test_stream_interface.dart';
 
@@ -22,9 +23,19 @@ void main()async{
     }
   }
 
+
+  group('basic game ', (){
+
+
+
+
+
+  });
+
+
   group ('basic stream server',(){
 
-    GameServer server = GameServer();
+    GameServer server = TestServer();
     TestStreamInterface ui = TestStreamInterface(server);
 
     setUp(() async {
@@ -64,7 +75,7 @@ void main()async{
   );
 
   group('Game test',() {
-    GameServer server = GameServer();
+    GameServer server = TestServer();
     TestStreamInterface henry = TestStreamInterface(server);
     TestStreamInterface james = TestStreamInterface(server);
     TestStreamInterface sarah = TestStreamInterface(server);
