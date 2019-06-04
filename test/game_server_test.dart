@@ -8,9 +8,11 @@ import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
+import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
+import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:test/test.dart';
 
@@ -211,7 +213,8 @@ void main()async{
       henry.advertiseGame();
       expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), NewGame.code);
       expect(james.adverts.length, 1);
-
+      james.joinGame(james.adverts[0]);
+      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), Success.code);
 
 
 

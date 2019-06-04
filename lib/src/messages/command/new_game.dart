@@ -12,7 +12,7 @@ import '../message.dart';
 class NewGame extends Message{
   static const String code = 'new';
 
-  String id;
+  String id = 'game id';
   String displayName ='';
   PlayerList players = new PlayerList();
   int maxPlayers;
@@ -27,6 +27,13 @@ class NewGame extends Message{
 
   int get hash => maxPlayers + numberOfPlayers;
 
+  int get hashCode => hash;
+
+  bool operator == (o){
+    if(o.id == id) return true;
+    else return false;
+  }
+
   NewGame();
 
   NewGame.fromSettings(Settings settings){
@@ -38,33 +45,24 @@ class NewGame extends Message{
     this.playerHelp = settings.playerHelp;
   }
 
-  Future<Message> requestJoin(Player player) async{
-
-    if(player == null) return GameError('player not found');
-
-    if(players.contains(player.id)) return GameError('already in game');
-
-    players.add(player);
-
-    return Success();
-  }
 
 
   NewGame.fromString(String details){
 
     List<String> detailList = details.split(delimiter);
-
-    this.displayName = detailList[0];
-    this.maxPlayers = int.parse(detailList[1]);
-    this.numberOfPlayers = int.parse(detailList[2]);
-    this.timer = detailList[3] == 'TRUE' ? true : false;
-    this.moveTime = double.parse(detailList[4]);
-    this.gameTime = double.parse(detailList[5]);
+    this.id = detailList[0];
+    this.displayName = detailList[1];
+    this.maxPlayers = int.parse(detailList[2]);
+    this.numberOfPlayers = int.parse(detailList[3]);
+    this.timer = detailList[4] == 'TRUE' ? true : false;
+    this.moveTime = double.parse(detailList[5]);
+    this.gameTime = double.parse(detailList[6]);
   }
 
   String get string{
     String string = '';
     string += code;
+    string += id + delimiter;
     string += displayName + delimiter;
     string += maxPlayers.toString() + delimiter;
     string += numberOfPlayers.toString() + delimiter;
@@ -82,6 +80,17 @@ class NewGame extends Message{
     moveTime = settings.moveTime;
     timer = settings.timer;
     playerHelp = false;
+  }
+
+  Future<Message> requestJoin(Player player) async{
+
+    if(player == null) return GameError('player not found');
+
+    if(players.contains(player.id)) return GameError('already in game');
+
+    players.add(player);
+
+    return Success();
   }
 
   addLocalPlayer(Player player){

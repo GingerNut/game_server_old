@@ -7,9 +7,11 @@ import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/record.dart';
+import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/login.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
+import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 
 import '../../../game_server.dart';
@@ -112,6 +114,12 @@ class ServerConnection implements ChannelHost {
       case NewGame.code:
         NewGame advert = NewGame.fromString(details);
         server.advertiseGame(advert);
+        break;
+
+      case JoinGame.code:
+        var join = JoinGame.fromString(details);
+        Message response = await server.joinGame(player, join.gameId);
+        send(response.string);
         break;
 
         default:

@@ -8,15 +8,9 @@ import '../message.dart';
 
 class Success extends Message{
   static const String code = 'suc';
-  String text;
+  String text = '';
 
   bool operator ==(other) => other is Success;
-
-
-  Success.login(String playerId){
-
-    text = 'Successful login for player ' + playerId;
-  }
 
   Success();
 
@@ -25,7 +19,7 @@ class Success extends Message{
   }
 
 
-  String get string => code + text != null ? delimiter + text : '';
+  String get string => code;
 
 
 

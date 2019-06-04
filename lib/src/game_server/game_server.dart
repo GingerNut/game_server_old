@@ -97,6 +97,15 @@ abstract class GameServer implements GameHost{
     broadcast(advert);
   }
 
+  Future<Message> joinGame(Player player, String gameId)async{
+      NewGame advert = _adverts.getAdvertrWithId(gameId);
+
+      Message response = await advert.requestJoin(player);
+
+
+      return response;
+  }
+
   addGeneralChat(ChatMessage message){
 
     broadcast(message);

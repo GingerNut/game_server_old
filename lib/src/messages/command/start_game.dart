@@ -1,24 +1,20 @@
 
 
 
-
-
-import 'command.dart';
+import 'new_game.dart';
 
 class StartGame {
+  static const String code = 'sta';
+  String gameId;
 
-  final String gameId;
-  final String playerId;
-  final String playerToken;
+  StartGame(NewGame game){
+    this.gameId = game.id;
+  }
 
-  StartGame(this.gameId, this.playerId, this.playerToken);
+  StartGame.fromString(String details){
+    this.gameId = details;
+  }
 
-  @override
-  String toString() =>
-      Command.startGame
-          + gameId + Command.delimiter
-          + playerId + Command.delimiter
-          + playerToken;
-
-
+  String get string => code
+      + gameId;
 }

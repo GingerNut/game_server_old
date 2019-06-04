@@ -2,22 +2,22 @@
 
 
 
-import 'command.dart';
+import '../message.dart';
+import 'new_game.dart';
 
-class JoinGame{
-
-  final String gameId;
-  final String playerId;
-  final String playerToken;
-
-  JoinGame(this.gameId, this.playerId, this.playerToken);
+class JoinGame extends Message{
+  static const String code = 'joi';
+    String gameId;
 
 
+  JoinGame(NewGame game){
+    this.gameId = game.id;
+  }
 
+  JoinGame.fromString(String details){
+    this.gameId = details;
+  }
 
-  @override
-  String toString() => Command.joinGame
-      + gameId + Command.delimiter
-      + playerId + Command.delimiter
-      + playerToken;
+  String get string => code
+      + gameId;
 }
