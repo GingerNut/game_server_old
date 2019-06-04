@@ -39,6 +39,33 @@ void main()async{
   }
 
 
+  group('computer player basics',(){
+
+    var ui = FieFoFumLocalInterface();
+
+    setUp(()async{
+      ui.addPlayer(Player());
+      ui.addPlayer(ComputerPlayer());
+      await ui.startGame(ui.newGame);
+    });
+
+
+    test('Basic computer', (){
+
+
+
+    });
+
+
+    tearDown((){
+
+      ui.game.tidyUp();
+
+    });
+
+  });
+
+
   group('Fie fo fum basic game ', () {
 
     var ui = FieFoFumLocalInterface();
@@ -204,8 +231,6 @@ void main()async{
       expect(henry.privateMessages[0].from, 'server');
       expect(henry.privateMessages[0].text, 'emma is not online');
 
-
-
     });
 
     test('advertise and start fie fo fum game',() async{
@@ -235,7 +260,8 @@ void main()async{
 
       expect(await nextMessage(henry.connection.messagesIn.stream), SetStatus.code + 'ready');
       expect(await nextMessage(henry.connection.messagesIn.stream), SetStatus.code + 'playing');
-      //expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), YourTurn.code);
+
+      //TODO make two or three moves
 
     });
 

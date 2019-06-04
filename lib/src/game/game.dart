@@ -118,6 +118,12 @@ abstract class Game {
     return Success();
   }
 
+  tidyUp(){
+
+    players.forEach((p)=> p.tidyUp());
+
+  }
+
 
 }
 

@@ -52,6 +52,8 @@ class Player{
 
     if(game.id == 'local game') status = PlayerStatus.ready;
 
+    //TODO get timer working
+
   }
 
 
@@ -71,6 +73,8 @@ class Player{
     status = PlayerStatus.out;
     position.checkWin();
   }
+
+  tidyUp(){}
 
 
 }
