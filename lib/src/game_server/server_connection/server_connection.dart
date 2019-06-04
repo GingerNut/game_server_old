@@ -10,6 +10,7 @@ import 'package:game_server/src/game_server/database/record.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/login.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/start_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
@@ -127,6 +128,10 @@ class ServerConnection implements ChannelHost {
         var start = StartGame.fromString(details);
         Message response = await server.startGame(start.gameId);
         send(response.string);
+        break;
+
+      case SetStatus.code:
+        player.status = SetStatus.fromString(details).status;
         break;
 
         default:

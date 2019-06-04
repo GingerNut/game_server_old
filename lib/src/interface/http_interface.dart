@@ -1,5 +1,6 @@
 
 
+import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/game_server/advert_list.dart';
@@ -9,6 +10,7 @@ import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/start_game.dart';
 
 abstract class HttpInterface{
@@ -20,6 +22,7 @@ abstract class HttpInterface{
   String password = '';
 
   ClientConnection connection;
+  PlayerStatus _status;
   AdvertList adverts = new AdvertList();
   List<ChatMessage> chatMessages = List();
   List<PrivateMessage> privateMessages = List();
@@ -39,6 +42,17 @@ abstract class HttpInterface{
   joinGame(NewGame game)=> connection.send(JoinGame(game).string);
 
   startGame(NewGame game)=> connection.send(StartGame(game).string);
+
+  set status (PlayerStatus status) {
+    bool changed = false;
+
+    if(_status != status) changed = true;
+
+    _status = status;
+    if (changed) connection.send(SetStatus(status).string);
+  }
+
+  PlayerStatus get status => _status;
 
   sendChat(String text) => connection.send(ChatMessage(id, text).string);
 

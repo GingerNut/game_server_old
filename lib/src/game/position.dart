@@ -42,13 +42,13 @@ abstract class Position{
     switch(playerOrder){
       case PlayerOrder.countUp:
         next = players[(player.number + 1) % players.length];
-        while(next.playerStatus != PlayerStatus.playing){
+        while(next.status != PlayerStatus.playing){
           next = players[(next.number + 1) % players.length];
         }
         break;
       case PlayerOrder.countDown:
         next = players[(player.number - 1) % players.length];
-        while(next.playerStatus != PlayerStatus.playing){
+        while(next.status != PlayerStatus.playing){
           next = players[(next.number - 1) % players.length];
         }
         break;

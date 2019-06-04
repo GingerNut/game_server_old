@@ -41,7 +41,7 @@ class PlayerList{
     if(playersLeft != 1) return null;
 
     _players.forEach((p) {
-      if(p.playerStatus == PlayerStatus.playing) winner = p;
+      if(p.status == PlayerStatus.playing) winner = p;
 
     });
     return winner;
@@ -117,7 +117,7 @@ class PlayerList{
   PlayerList get remainingPlayers{
       PlayerList remain = PlayerList();
 
-      _players.forEach((p) => p.playerStatus == PlayerStatus.playing ? remain.add(p) :  false);
+      _players.forEach((p) => p.status == PlayerStatus.playing ? remain.add(p) :  false);
 
       return remain;
   }
@@ -126,7 +126,7 @@ class PlayerList{
 
     int remain = 0;;
 
-    _players.forEach((p) => p.playerStatus== PlayerStatus.playing ? remain ++ :  false);
+    _players.forEach((p) => p.status== PlayerStatus.playing ? remain ++ :  false);
 
     return remain;
 

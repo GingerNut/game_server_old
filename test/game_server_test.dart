@@ -10,6 +10,8 @@ import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/command/set_player_status.dart';
+import 'package:game_server/src/messages/command/your_turn.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 import 'package:game_server/src/messages/response/success.dart';
@@ -225,6 +227,15 @@ void main()async{
 
       henry.startGame(henry.adverts[0]);
       expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), Success.code);
+
+      henry.status = PlayerStatus.ready;
+      james.status = PlayerStatus.ready;
+      sarah.status = PlayerStatus.ready;
+      trace.status = PlayerStatus.ready;
+
+      expect(await nextMessage(henry.connection.messagesIn.stream), SetStatus.code + 'ready');
+      expect(await nextMessage(henry.connection.messagesIn.stream), SetStatus.code + 'playing');
+      //expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), YourTurn.code);
 
     });
 

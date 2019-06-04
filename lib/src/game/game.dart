@@ -48,7 +48,7 @@ abstract class Game {
         player.game = this;
         player.number = i;
         player.gameId = settings.id;
-        player.playerStatus = PlayerStatus.waiting;
+        player.status = PlayerStatus.waiting;
       }
     }
 
@@ -61,9 +61,9 @@ abstract class Game {
 
     state = GameState.inPlay;
 
-    players.forEach((p) => p.playerStatus = PlayerStatus.playing);
+    players.forEach((p) => p.status = PlayerStatus.playing);
 
-    position.player.yourTurn(position);
+    position.player.yourTurn();
     return;
   }
 
@@ -80,7 +80,7 @@ abstract class Game {
       allReady = true;
 
       players.forEach((p) {
-        if(p.playerStatus != PlayerStatus.ready) allReady = false;
+        if(p.status != PlayerStatus.ready) allReady = false;
       });
 
     }
@@ -113,7 +113,7 @@ abstract class Game {
     if (state == GameState.inPlay) {
       position.setNextPlayer();
       position.setUpNewPosition();
-      position.player.yourTurn(position);
+      position.player.yourTurn();
     }
     return Success();
   }

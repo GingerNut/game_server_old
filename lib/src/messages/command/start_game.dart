@@ -1,9 +1,10 @@
 
 
 
+import '../message.dart';
 import 'new_game.dart';
 
-class StartGame {
+class StartGame extends Message{
   static const String code = 'sta';
   String gameId;
 
