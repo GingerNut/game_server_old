@@ -6,6 +6,7 @@ import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
+import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/message.dart';
 
 abstract class Interface{
@@ -26,6 +27,8 @@ abstract class Interface{
     connection.send(Command.logout);
     connection.close();
   }
+
+  startGame(NewGame newgame);
 
   sendChat(String text) => connection.send(ChatMessage(id, text).string);
 

@@ -26,11 +26,11 @@ abstract class Game {
   GameState get state =>_state;
 
   Board board;
-  PlayerList players = new PlayerList();
+  PlayerList get players => settings.players;
 
   Game(this.host, this.settings);
 
-  int get numberOfPlayers => settings.numberOfPlayers;
+  int get numberOfPlayers => players.length;
   Position position;
   String get id => settings.id;
   String get displayName => settings.displayName;
@@ -49,8 +49,7 @@ abstract class Game {
 
     for (int i = 0; i < numberOfPlayers; i ++) {
       for (int i = 0; i < numberOfPlayers; i ++) {
-        Player player = Player();
-        players.add(player);
+        Player player = players[i];
         player.game = this;
         player.number = i;
         player.gameId = settings.id;
@@ -72,6 +71,8 @@ abstract class Game {
 
   Future waitForAllReady()async{
     bool allReady = false;
+
+
 
     players.forEach((p) => p.initialise());
 

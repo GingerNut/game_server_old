@@ -8,8 +8,8 @@ import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
+import 'package:game_server/src/messages/command/new_game.dart';
 
-import 'advert.dart';
 
 abstract class GameServer implements GameHost{
 
@@ -17,7 +17,7 @@ abstract class GameServer implements GameHost{
 
   List<ServerConnection> _connections = List();
   PlayerList __playersOnline = PlayerList();
-  List<Advert> _adverts = List();
+  List<NewGame> _adverts = List();
 
   int get numberOfClients => __playersOnline.length;
 

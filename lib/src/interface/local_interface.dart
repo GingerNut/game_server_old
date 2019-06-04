@@ -14,18 +14,24 @@ abstract class LocalInterface extends Interface implements GameHost{
 
 //pass and play
 
-Settings localSettings;
+Settings localSettings = Settings();
 Game game;
 NewGame newGame;
 
 
+LocalInterface(){
+  resetGame();
+}
+
 resetGame(){
   newGame = NewGame.local(localSettings);
-
 }
 
 addPlayer(Player player) => newGame.addLocalPlayer(player);
 
-
+startGame(NewGame newgame){
+  game = getGame(newgame);
+  game.initialise();
+}
 
 }

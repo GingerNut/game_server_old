@@ -26,7 +26,7 @@ abstract class Position{
 
   Player player;
 
-  PlayerOrder playerOrder;
+  PlayerOrder get playerOrder;
 
   Player winner;
 

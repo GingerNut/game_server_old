@@ -2,6 +2,8 @@
 import 'dart:async';
 
 import 'package:game_server/game_server.dart';
+import 'package:game_server/src/game/computer/computer_player.dart';
+import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
@@ -9,6 +11,8 @@ import 'package:game_server/src/messages/response/login_success.dart';
 
 import 'package:test/test.dart';
 
+import 'test_game/move_number.dart';
+import 'test_game/test_local_interface.dart';
 import 'test_game/test_server.dart';
 import 'test_http_interface.dart';
 import 'test_stream_interface.dart';
@@ -26,6 +30,22 @@ void main()async{
 
   group('basic game ', (){
 
+    var ui = TestLocalInterface();
+
+    test('start local game',(){
+      ui.addPlayer(Player());
+      ui.addPlayer(Player());
+      ui.addPlayer(ComputerPlayer());
+      ui.addPlayer(Player());
+
+      expect(ui.newGame.players.length, 4);
+
+      ui.startGame(ui.newGame);
+     // ui.game.makeMove(MoveNumber());
+      expect(ui.game.players.remainingPlayers(ui.game.position).length, 4);
+
+
+    });
 
 
 

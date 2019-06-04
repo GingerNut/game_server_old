@@ -22,8 +22,8 @@ class NewGame extends Command{
   double gameTime;
 
   bool get full => players.length == numberOfPlayers;
-  NewGame();
 
+  NewGame();
 
   Future<Response> requestJoin(Player player) async{
 
@@ -74,8 +74,6 @@ class NewGame extends Command{
   }
 
   addLocalPlayer(Player player) async{
-
-    if(players.isEmpty) players.add(player);
 
     if(players.length < Settings.maxPlayers) players.add(player);
 
