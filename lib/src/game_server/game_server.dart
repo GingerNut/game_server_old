@@ -1,5 +1,6 @@
 
 
+import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/game_host.dart';
 import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/game/player_list.dart';
@@ -9,7 +10,9 @@ import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:game_server/src/messages/response/success.dart';
 
 import 'advert_list.dart';
 
@@ -21,6 +24,7 @@ abstract class GameServer implements GameHost{
   List<ServerConnection> _connections = List();
   PlayerList __playersOnline = PlayerList();
   AdvertList _adverts = AdvertList();
+  Set<Game> _games = new Set();
 
   int get numberOfClients => __playersOnline.length;
 
@@ -102,8 +106,23 @@ abstract class GameServer implements GameHost{
 
       Message response = await advert.requestJoin(player);
 
-
       return response;
+  }
+
+  Future<Message> startGame(String gameId) async{
+    NewGame advert = _adverts.getAdvertrWithId(gameId);
+
+    if(advert.players.length < advert.maxPlayers) return GameError('game not yet full');
+
+    _adverts.remove(advert);
+
+    Game game = getGame(advert);
+
+    game.initialise();
+
+    _games.add(game);
+
+    return Success();
   }
 
   addGeneralChat(ChatMessage message){

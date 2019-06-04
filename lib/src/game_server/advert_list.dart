@@ -8,6 +8,9 @@ class AdvertList{
   operator []=(int i, NewGame value) => _adverts[i] = value;
 
   add(NewGame advert) => _adverts.add(advert);
+
+  remove(NewGame advert) => _adverts.remove(advert);
+
   int get length => _adverts.length;
 
   int get hash {

@@ -216,7 +216,15 @@ void main()async{
       james.joinGame(james.adverts[0]);
       expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), Success.code);
 
+      henry.joinGame(henry.adverts[0]);
+      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), Success.code);
+      sarah.joinGame(sarah.adverts[0]);
+      expect((await nextMessage(sarah.connection.messagesIn.stream)).substring(0,3), Success.code);
+      trace.joinGame(trace.adverts[0]);
+      expect((await nextMessage(trace.connection.messagesIn.stream)).substring(0,3), Success.code);
 
+      henry.startGame(henry.adverts[0]);
+      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), Success.code);
 
     });
 

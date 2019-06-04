@@ -9,6 +9,7 @@ import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/command/start_game.dart';
 
 abstract class HttpInterface{
 
@@ -36,6 +37,8 @@ abstract class HttpInterface{
   advertiseGame()=> connection.send(NewGame.fromSettings(onlineSettings).string);
 
   joinGame(NewGame game)=> connection.send(JoinGame(game).string);
+
+  startGame(NewGame game)=> connection.send(StartGame(game).string);
 
   sendChat(String text) => connection.send(ChatMessage(id, text).string);
 
