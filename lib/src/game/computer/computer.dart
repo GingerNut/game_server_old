@@ -15,10 +15,11 @@ class Computer{
 
     Position position;
 
-  Computer(this.receivePort, this.sendPort);
+  Computer(this.receivePort, this.sendPort){
+    receivePort.listen((s) => handleMessage(s));
+  }
 
     initialise()async{
-        receivePort.listen((s) => handleMessage(s));
 
         await setupPosition();
 

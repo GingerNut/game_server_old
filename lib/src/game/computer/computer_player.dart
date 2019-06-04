@@ -25,8 +25,6 @@ class ComputerPlayer extends Player{
 
       if(d is SendPort) {
         sendPort = d;
-        sendPort.send("foo");
-
       } else if(d is String) {
         handleMessage(d);
       }
@@ -63,10 +61,7 @@ class ComputerPlayer extends Player{
 }
 
 setupComputer(SendPort sendPort) async {
-  // Open the ReceivePort for incoming messages.
   var port = new ReceivePort();
-
-  // Notify any other isolates what port this isolate listens to.
   sendPort.send(port.sendPort);
 
   Computer computer = Computer(port, sendPort);
