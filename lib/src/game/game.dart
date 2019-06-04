@@ -8,7 +8,7 @@ import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
-import 'board.dart';
+import 'package:game_server/src/game/board/board.dart';
 import 'game_host.dart';
 import 'move.dart';
 

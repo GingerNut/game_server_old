@@ -8,6 +8,8 @@ import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/record.dart';
 import 'package:game_server/src/messages/command/login.dart';
+import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 
 import '../../../game_server.dart';
@@ -63,15 +65,15 @@ class ServerConnection implements ChannelHost {
 
         if(record == null) {
           loginAttempts --;
-          send(Command.gameError);
+          send(GameError('player not found').string);
         } else if(login.password != record.password){
 
           loginAttempts --;
-          send(Command.gameError);
+          send(GameError('password incorrect').string);
         } else if(server.clientWithLogin(login.playerId)){
 
           server.removeConnection(this);
-          send(Command.gameError);
+          send(GameError('already logged in').string);
 
         } else {
 
@@ -107,8 +109,13 @@ class ServerConnection implements ChannelHost {
         server.addPrivateMessage(msg);
         break;
 
+      case NewGame.code:
+        NewGame advert = NewGame.fromString(details);
+        server.advertiseGame(advert);
+        break;
+
         default:
-          send(Command.gameError);
+          send(GameError('unknown command').string);
           break;
 
     }

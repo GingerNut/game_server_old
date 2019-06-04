@@ -3,16 +3,18 @@
 
 import 'dart:async';
 
+import 'package:game_server/src/interface/http_interface.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
-import 'package:game_server/src/interface/interface.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/messages/command/login.dart';
+import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 
 abstract class ClientConnection implements ChannelHost{
-  final Interface interface;
+  final HttpInterface interface;
   String id;
   String displayName;
   String password;
@@ -81,6 +83,15 @@ abstract class ClientConnection implements ChannelHost{
       case PrivateMessage.code:
         var msg = PrivateMessage.fromString(details);
         interface.privateMessages.add(msg);
+        break;
+
+      case NewGame.code:
+        var advert = NewGame.fromString(details);
+        interface.adverts.add(advert);
+        break;
+
+      case GameError.code:
+        GameError error = GameError.fromString(details) ;
         break;
 
     }

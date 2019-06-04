@@ -9,6 +9,9 @@ import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/message.dart';
+
+import 'advert_list.dart';
 
 
 abstract class GameServer implements GameHost{
@@ -17,7 +20,7 @@ abstract class GameServer implements GameHost{
 
   List<ServerConnection> _connections = List();
   PlayerList __playersOnline = PlayerList();
-  List<NewGame> _adverts = List();
+  AdvertList _adverts = AdvertList();
 
   int get numberOfClients => __playersOnline.length;
 
@@ -45,6 +48,8 @@ abstract class GameServer implements GameHost{
   removeConnection(ServerConnection connection)async{
     _connections.remove(connection);
   }
+
+
 
   addMember(ServerConnection connection)async{
     _connections.remove(connection);
@@ -79,13 +84,22 @@ abstract class GameServer implements GameHost{
     __playersOnline.clear();
   }
 
-  addGeneralChat(ChatMessage message){
-
-    String broadcast = message.string;
+  broadcast(Message message){
 
     _players.forEach((m) {
-      m.connection.send(broadcast);
+      m.connection.send(message.string);
     });
+  }
+
+  advertiseGame(NewGame advert) {
+    _adverts.add(advert);
+
+    broadcast(advert);
+  }
+
+  addGeneralChat(ChatMessage message){
+
+    broadcast(message);
 
   }
 

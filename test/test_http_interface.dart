@@ -2,6 +2,7 @@
 
 import 'package:game_server/src/game_server/client_connection/io_client.dart';
 import 'package:game_server/src/interface/http_interface.dart';
+import 'package:game_server/src/messages/command/new_game.dart';
 
 class TestHttpInterface extends HttpInterface{
 
@@ -13,6 +14,8 @@ class TestHttpInterface extends HttpInterface{
     connection = await IoClientConnection(this, address, port);
     await connection.login(id, password);
   }
+
+
 
 
 

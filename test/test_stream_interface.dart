@@ -1,6 +1,7 @@
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/game_server/client_connection/stream_connection.dart';
 import 'package:game_server/src/interface/http_interface.dart';
+import 'package:game_server/src/messages/command/new_game.dart';
 
 class TestStreamInterface extends HttpInterface{
 
@@ -15,6 +16,8 @@ class TestStreamInterface extends HttpInterface{
     await connection.login(id, password);
     return;
   }
+
+
 
 
 

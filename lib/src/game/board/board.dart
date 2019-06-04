@@ -16,6 +16,8 @@ class Board{
   makeBoard(){}
 
 
+  //TODO chess board
+
 }
 
 

@@ -16,7 +16,7 @@ class NewGame extends Message{
   String displayName ='';
   PlayerList players = new PlayerList();
   int maxPlayers;
-  int get numberOfPlayers => players.length;
+  int numberOfPlayers = 0;
   int playerType;
   bool playerHelp;
   bool timer;
@@ -25,7 +25,18 @@ class NewGame extends Message{
 
   bool get full => players.length == maxPlayers;
 
+  int get hash => maxPlayers + numberOfPlayers;
+
   NewGame();
+
+  NewGame.fromSettings(Settings settings){
+    this.displayName = settings.onlineGameName;
+    this.maxPlayers = settings.numberOfPlayers;
+    this.gameTime = settings.gameTime;
+    this.moveTime = settings.moveTime;
+    this.timer = settings.timer;
+    this.playerHelp = settings.playerHelp;
+  }
 
   Future<Message> requestJoin(Player player) async{
 
@@ -41,31 +52,26 @@ class NewGame extends Message{
 
   NewGame.fromString(String details){
 
-    List<String> detailList = details.split('\n');
+    List<String> detailList = details.split(delimiter);
 
     this.displayName = detailList[0];
     this.maxPlayers = int.parse(detailList[1]);
-    this.timer = detailList[2] == 'TRUE' ? true : false;
-    this.moveTime = double.parse(detailList[3]);
-    this.gameTime = double.parse(detailList[4]);
+    this.numberOfPlayers = int.parse(detailList[2]);
+    this.timer = detailList[3] == 'TRUE' ? true : false;
+    this.moveTime = double.parse(detailList[4]);
+    this.gameTime = double.parse(detailList[5]);
   }
 
   String get string{
-
     String string = '';
     string += code;
+    string += displayName + delimiter;
+    string += maxPlayers.toString() + delimiter;
+    string += numberOfPlayers.toString() + delimiter;
+    string += timer ? 'TRUE' : 'FALSE' ;
     string += delimiter;
-    string += displayName;
-    string += delimiter;
-    string += maxPlayers.toString();
-    string += delimiter;
-    string += timer ? 'TRUE' : 'FALSE';
-    string += delimiter;
-    string += moveTime.toString();
-    string += delimiter;
-    string += gameTime.toString();
-    string += delimiter;
-
+    string += moveTime.toString() + delimiter;
+    string += gameTime.toString() + delimiter;
     return string;
   }
 
@@ -100,6 +106,7 @@ class NewGame extends Message{
 
         }
         p.displayName = trialName;
+        p.id = trialName;
       }
 
     });
