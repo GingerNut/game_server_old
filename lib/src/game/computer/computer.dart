@@ -27,6 +27,8 @@ class Computer{
 
     Future setupPosition()async{
 
+      //TODO position sharing message needed
+
         await Future.delayed(Duration(seconds: 1));
 
         return;
