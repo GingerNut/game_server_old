@@ -4,8 +4,8 @@ import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/game/position.dart';
-import 'package:game_server/src/messages/response/game_error.dart';
-import 'package:game_server/src/messages/response/response.dart';
+import 'package:game_server/src/messages/error/game_error.dart';
+import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
 import 'board.dart';
@@ -17,13 +17,8 @@ abstract class Game {
   final NewGame settings;
   final GameHost host;
 
-  GameState _state = GameState.waitingForPlayers;
+  GameState state = GameState.waitingForPlayers;
 
-  set state(GameState newState){
-    _state = newState;
-  }
-
-  GameState get state =>_state;
 
   Board board;
   PlayerList get players => settings.players;
@@ -31,13 +26,13 @@ abstract class Game {
   Game(this.host, this.settings);
 
   int get numberOfPlayers => players.length;
+
   Position position;
+
   String get id => settings.id;
   String get displayName => settings.displayName;
 
   List<Move> history = new List();
-
-  bool get gameOver => position.winner != null;
 
   String get string;
 
@@ -53,17 +48,21 @@ abstract class Game {
         player.game = this;
         player.number = i;
         player.gameId = settings.id;
-        player.playerStatus = PlayerStatus.playing;
+        player.playerStatus = PlayerStatus.waiting;
       }
     }
 
-    _state = GameState.waitingForAllReady;
+    state = GameState.waitingForAllReady;
 
     position.analyse();
     history.clear();
+
     await waitForAllReady();
 
-    _state = GameState.started;
+    state = GameState.inPlay;
+
+    players.forEach((p) => p.playerStatus = PlayerStatus.playing);
+
     position.player.yourTurn(position);
     return;
   }
@@ -71,8 +70,6 @@ abstract class Game {
 
   Future waitForAllReady()async{
     bool allReady = false;
-
-
 
     players.forEach((p) => p.initialise());
 
@@ -93,8 +90,8 @@ abstract class Game {
 
   getPosition();
 
-  Response makeMove(Move move) {
-    Response response = move.check(position);
+  Message makeMove(Move move) {
+    Message response = move.check(position);
 
     if(response is GameError) return response;
 
@@ -103,7 +100,17 @@ abstract class Game {
     position.checkWin();
     history.add(move);
 
-    if (!gameOver) {
+    if(players.playersLeft < 2 && players.length > 1){
+      position.winner = players.winner;
+      if(position.winner == null ) {
+        state = GameState.drawn;
+      }
+      else {
+        state = GameState.won;
+      }
+    }
+
+    if (state == GameState.inPlay) {
       position.setNextPlayer();
       position.setUpNewPosition();
       position.player.yourTurn(position);
@@ -118,7 +125,8 @@ enum GameState{
   none,
   waitingForPlayers,
   waitingForAllReady,
-  started,
+  inPlay,
   paused,
-  finished
+  won,
+  drawn
 }

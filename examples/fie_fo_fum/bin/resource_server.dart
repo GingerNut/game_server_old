@@ -1,18 +1,14 @@
 
-
-// dart C:\Users\Stephen\growing_games\game_server\bin\resource_server.dart
-
-//
+//  darC:\Users\Stephen\growing_games\game_server\examples\fie_fo_fum\bin\resource_server.dart
 
 import 'dart:io';
 
-import 'package:game_server/game_server.dart';
 import 'package:game_server/src/game_server/server_connection/http_connection.dart';
 
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
-import '../examples/fie_fo_fum/lib/test_server.dart';
+import '../lib/test_server.dart';
 
 
 void main() async{

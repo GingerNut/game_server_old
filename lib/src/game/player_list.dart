@@ -35,6 +35,18 @@ class PlayerList{
   clear() => _players.clear();
   forEach(Function(Player player) function) => _players.forEach(function);
 
+  Player get winner{
+    Player winner;
+
+    if(playersLeft != 1) return null;
+
+    _players.forEach((p) {
+      if(p.playerStatus == PlayerStatus.playing) winner = p;
+
+    });
+    return winner;
+  }
+
   Player getPlayerWithId(String id){
 
     Player player;
@@ -101,40 +113,8 @@ class PlayerList{
   Player get first => _players.first;
   Player get last => _players.last;
 
-  Player getPlayer(Position position){
 
-   Player next;
-    switch(position.playerOrder){
-      case PlayerOrder.countUp:
-        next = _players[(position.player.number + 1) % _players.length];
-        while(next.playerStatus != PlayerStatus.playing){
-          next = _players[(next.number + 1) % _players.length];
-        }
-        break;
-      case PlayerOrder.countDown:
-        next = _players[(position.player.number - 1) % _players.length];
-        while(next.playerStatus != PlayerStatus.playing){
-          next = _players[(next.number - 1) % _players.length];
-        }
-        break;
-      case PlayerOrder.random:
-      // TODO: Handle this case.
-        break;
-      case PlayerOrder.firstToPlay:
-      // TODO: Handle this case.
-        break;
-      case PlayerOrder.highestScore:
-      // TODO: Handle this case.
-        break;
-      case PlayerOrder.lowersScore:
-      // TODO: Handle this case.
-        break;
-    }
-    return next;
-
-  }
-
-  PlayerList remainingPlayers(Position position){
+  PlayerList get remainingPlayers{
       PlayerList remain = PlayerList();
 
       _players.forEach((p) => p.playerStatus == PlayerStatus.playing ? remain.add(p) :  false);
@@ -142,7 +122,7 @@ class PlayerList{
       return remain;
   }
 
-  int playersLeft(Position position){
+  int get playersLeft{
 
     int remain = 0;;
 

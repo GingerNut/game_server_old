@@ -1,13 +1,2 @@
 
 
-
-abstract class Response{
-
-
-
-
-
-
-
-
-}

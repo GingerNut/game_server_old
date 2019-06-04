@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/game/computer/computer_player.dart';
+import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
@@ -11,9 +12,13 @@ import 'package:game_server/src/messages/response/login_success.dart';
 
 import 'package:test/test.dart';
 
-import 'test_game/move_number.dart';
-import 'test_game/test_local_interface.dart';
-import 'test_game/test_server.dart';
+import '../examples/fie_fo_fum/lib/fie_fo_fum_local_interface.dart';
+import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
+import '../examples/fie_fo_fum/lib/move_fie.dart';
+import '../examples/fie_fo_fum/lib/move_fo.dart';
+import '../examples/fie_fo_fum/lib/move_fum.dart';
+import '../examples/fie_fo_fum/lib/move_number.dart';
+import '../examples/fie_fo_fum/lib/test_server.dart';
 import 'test_http_interface.dart';
 import 'test_stream_interface.dart';
 
@@ -28,21 +33,56 @@ void main()async{
   }
 
 
-  group('basic game ', (){
+  group('Fie fo fum basic game ', () {
 
-    var ui = TestLocalInterface();
+    var ui = FieFoFumLocalInterface();
 
-    test('start local game',(){
+    test('start local game',()async{
       ui.addPlayer(Player());
       ui.addPlayer(Player());
       ui.addPlayer(ComputerPlayer());
       ui.addPlayer(Player());
 
-      expect(ui.newGame.players.length, 4);
 
-      ui.startGame(ui.newGame);
-     // ui.game.makeMove(MoveNumber());
-      expect(ui.game.players.remainingPlayers(ui.game.position).length, 4);
+      expect(ui.newGame.numberOfPlayers, 4);
+      expect(ui.newGame.players.length, 4);
+      await ui.startGame(ui.newGame);
+
+      expect(ui.position.playersLeft, 4);
+      expect((ui.game.position as FieFoFumPosition).count, 1);
+      ui.makeMove(MoveNumber());   // 1 so this is correct
+      expect(ui.position.playersLeft, 4);
+      ui.makeMove(MoveFie());   // 2 so this is wrong
+      expect(ui.position.playersLeft, 3);
+      ui.makeMove(MoveFie());   // 3 so this is good
+      expect(ui.position.playersLeft, 3);
+      ui.makeMove(MoveFo());   // 4 so this is wrong
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveFo());   // 5 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveFie());   // 6 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveNumber());   // 7 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveNumber());   // 8 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveFie());   // 9 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveFo());   //10 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveNumber());   // 11 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveFie());   // 12 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveNumber());   // 13 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveNumber());   // 14 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveFum());   // 15 so this is godd
+      expect(ui.position.playersLeft, 2);
+      ui.makeMove(MoveFo());   // 16 so this is bad
+      expect(ui.position.playersLeft, 1);
+      expect(ui.game.state , GameState.won);
 
 
     });

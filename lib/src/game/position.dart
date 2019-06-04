@@ -12,8 +12,8 @@ abstract class Position{
   Move lastMove;
 
   PlayerList get players => game.players;
-  int get playersLeft => players.playersLeft(this);
-  PlayerList get survivors => players.remainingPlayers(this);
+  int get playersLeft => players.playersLeft;
+  PlayerList get survivors => players.remainingPlayers;
 
   String toString(){
 

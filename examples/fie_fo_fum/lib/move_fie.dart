@@ -6,17 +6,17 @@
 
 import 'package:game_server/src/game/player.dart';
 
-import 'test_move.dart';
-import 'test_position.dart';
+import 'fie_fo_fum_move.dart';
+import 'fie_fo_fum_position.dart';
 
-class MoveFie extends TestMove{
+class MoveFie extends FieFoFumMove{
   static const String type ='fie';
 
   String toString() => type;
 
 
 
-  doMove(TestPosition position) {
+  doMove(FieFoFumPosition position) {
       bool moveOk = false;
 
       int test = position.count;

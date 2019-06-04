@@ -1,6 +1,7 @@
 
 
 
+import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/response.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
@@ -10,7 +11,7 @@ class Database{
 
   List<Record> _records = new List();
 
-  Future<Response> addRecord(Record record) async{
+  Future<Message> addRecord(Record record) async{
 
     _records.add(record);
 

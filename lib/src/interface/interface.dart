@@ -14,7 +14,7 @@ abstract class Interface{
   String password = '';
 
   ClientConnection connection;
-  Position position;
+  Position get position;
   List<ChatMessage> chatMessages = List();
   List<PrivateMessage> privateMessages = List();
 

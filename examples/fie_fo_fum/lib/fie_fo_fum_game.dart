@@ -2,12 +2,12 @@ import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/game_host.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 
-import 'test_position.dart';
+import 'fie_fo_fum_position.dart';
 
-class TestGame extends Game{
-  TestGame(GameHost host, NewGame settings) : super(host, settings);
+class FieFoFumGame extends Game{
+  FieFoFumGame(GameHost host, NewGame settings) : super(host, settings);
 
-  getPosition() => TestPosition(this);
+  getPosition() => FieFoFumPosition(this);
 
   @override
   // TODO: implement string

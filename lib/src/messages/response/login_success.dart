@@ -4,11 +4,12 @@
 
 
 import 'package:game_server/src/messages/command/command.dart';
+import 'package:game_server/src/messages/response/success.dart';
 
 import '../message.dart';
 import 'response.dart';
 
-class LoginSuccess extends Message{
+class LoginSuccess extends Success{
 
     static const String code = 'lgs';
 
