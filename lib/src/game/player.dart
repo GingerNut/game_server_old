@@ -22,25 +22,22 @@ class Player{
 
   int number;
   int color;
-  String reasonOut;
-  double score;
 
-  PlayerStatus _status = PlayerStatus.waiting;
-
-  set status (PlayerStatus status) {
+  set status (PlayerStatus newStatus) {
     bool changed = false;
 
-    if(_status != status) changed = true;
+    if(status != newStatus) changed = true;
 
-    _status = status;
-    if (changed && connection != null) connection.send(SetStatus(status).string);
+    game.position.playerStatus[this] = newStatus;
+
+    if (changed && connection != null) connection.send(SetStatus(newStatus).string);
   }
 
-  PlayerStatus get status => _status;
+  PlayerStatus get status => game == null ? PlayerStatus.queuing : game.position.playerStatus[this];
 
   GameTimer timer;
 
-  double get timeLeft => timer.timeLeft;
+  double get timeLeft => game.position.timeLeft(this);
 
   Player();
 
@@ -49,6 +46,8 @@ class Player{
   initialise(){
     color = Palette.defaultPlayerColours[number];
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
+
+    game.position.playerStatus[this] = status;
 
     if(game.id == 'local game') status = PlayerStatus.ready;
 
@@ -81,10 +80,11 @@ class Player{
 
 
 enum PlayerStatus{
+  queuing,
   winner,
   disconnected,
   out,
-  waiting,
+  ingameNotReady,
   ready,
   playing
 }

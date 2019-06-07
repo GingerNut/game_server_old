@@ -49,6 +49,7 @@ abstract class HttpInterface{
     if(_status != status) changed = true;
 
     _status = status;
+
     if (changed) connection.send(SetStatus(status).string);
   }
 

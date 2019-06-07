@@ -29,7 +29,7 @@ class SetStatus extends Message{
       case PlayerStatus.out:
         return 'out';
 
-      case PlayerStatus.waiting:
+      case PlayerStatus.ingameNotReady:
         return 'waiting';
 
       case PlayerStatus.ready:
@@ -37,6 +37,10 @@ class SetStatus extends Message{
 
       case PlayerStatus.playing:
         return 'playing';
+
+      case PlayerStatus.queuing:
+       return'queuing';
+        break;
     }
 
   }
@@ -57,7 +61,7 @@ class SetStatus extends Message{
         break;
 
       case 'waiting':
-        status = PlayerStatus.waiting;
+        status = PlayerStatus.ingameNotReady;
         break;
 
       case 'ready':
@@ -66,6 +70,10 @@ class SetStatus extends Message{
 
       case 'playing':
         status = PlayerStatus.playing;
+        break;
+
+      case 'queuing':
+        return PlayerStatus.queuing;
         break;
     }
 

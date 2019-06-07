@@ -2,6 +2,7 @@
 
 import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/game/player_list.dart';
+import 'package:game_server/src/game/player_variable.dart';
 
 import 'game.dart';
 import 'move.dart';
@@ -14,6 +15,10 @@ abstract class Position{
   PlayerList get players => game.players;
   int get playersLeft => players.playersLeft;
   PlayerList get survivors => players.remainingPlayers;
+
+  PlayerVariable<PlayerStatus> playerStatus;
+  PlayerVariable<double> score;
+  PlayerVariable<double> timeLeft;
 
   String toString(){
 
@@ -66,6 +71,14 @@ abstract class Position{
         break;
     }
      player = next;
+  }
+
+  initialise(){
+    playerStatus = PlayerVariable(this, PlayerStatus.ingameNotReady);
+    score = PlayerVariable(this, 0);
+    timeLeft = PlayerVariable(this, game.settings.gameTime);
+
+    setupFirstPosition();
   }
 
   setupFirstPosition();

@@ -27,7 +27,8 @@ abstract class Game {
 
   int get numberOfPlayers => players.length;
 
-  Position position;
+  Position _position;
+  get position => _position;
 
   String get id => settings.id;
   String get displayName => settings.displayName;
@@ -39,8 +40,8 @@ abstract class Game {
   setup() async {}
 
   Future initialise() async{
-    position = getPosition();
-    position.setupFirstPosition();
+    _position = getPosition();
+    _position.initialise();
 
     for (int i = 0; i < numberOfPlayers; i ++) {
       for (int i = 0; i < numberOfPlayers; i ++) {
@@ -48,13 +49,13 @@ abstract class Game {
         player.game = this;
         player.number = i;
         player.gameId = settings.id;
-        player.status = PlayerStatus.waiting;
+        player.status = PlayerStatus.ingameNotReady;
       }
     }
 
     state = GameState.waitingForAllReady;
 
-    position.analyse();
+    _position.analyse();
     history.clear();
 
     await waitForAllReady();
@@ -63,7 +64,7 @@ abstract class Game {
 
     players.forEach((p) => p.status = PlayerStatus.playing);
 
-    position.player.yourTurn();
+    _position.player.yourTurn();
     return;
   }
 
@@ -91,18 +92,18 @@ abstract class Game {
   getPosition();
 
   Message makeMove(Move move) {
-    Message response = move.check(position);
+    Message response = move.check(_position);
 
     if(response is GameError) return response;
 
-    position.makeMove(move);
-    position.analyse();
-    position.checkWin();
+    _position.makeMove(move);
+    _position.analyse();
+    _position.checkWin();
     history.add(move);
 
     if(players.playersLeft < 2 && players.length > 1){
-      position.winner = players.winner;
-      if(position.winner == null ) {
+      _position.winner = players.winner;
+      if(_position.winner == null ) {
         state = GameState.drawn;
       }
       else {
@@ -111,9 +112,9 @@ abstract class Game {
     }
 
     if (state == GameState.inPlay) {
-      position.setNextPlayer();
-      position.setUpNewPosition();
-      position.player.yourTurn();
+      _position.setNextPlayer();
+      _position.setUpNewPosition();
+      _position.player.yourTurn();
     }
     return Success();
   }
