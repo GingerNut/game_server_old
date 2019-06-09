@@ -7,7 +7,9 @@ import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
 
 import 'package:game_server/src/game/player/player.dart';
+
 import '../position.dart';
+
 
 class ComputerIsolate{
 

@@ -34,11 +34,9 @@ class FieFoFumPosition extends Position{
 
   }
 
+  findBestMove(){
 
-  findBestMove() {
 
   }
-
-
 
 }
