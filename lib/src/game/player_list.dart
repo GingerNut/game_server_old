@@ -1,7 +1,7 @@
 
 
 
-import 'package:game_server/src/game/player.dart';
+import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/position.dart';
 
 class PlayerList{

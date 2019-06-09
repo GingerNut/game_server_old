@@ -3,7 +3,7 @@
 import 'dart:collection';
 
 import 'package:game_server/src/messages/command/new_game.dart';
-import 'package:game_server/src/game/player.dart';
+import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/error/game_error.dart';

@@ -3,7 +3,7 @@
 
 // multiples of 3
 
-import 'package:game_server/src/game/player.dart';
+import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/response.dart';
 

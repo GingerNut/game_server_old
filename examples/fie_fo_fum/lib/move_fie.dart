@@ -4,7 +4,7 @@
 
 // multiples of 3
 
-import 'package:game_server/src/game/player.dart';
+import 'package:game_server/src/game/player/player.dart';
 
 import 'fie_fo_fum_move.dart';
 import 'fie_fo_fum_position.dart';

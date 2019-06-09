@@ -1,6 +1,6 @@
 
 import 'package:game_server/src/design/palette.dart';
-import 'package:game_server/src/game/player.dart';
+import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/game/player_variable.dart';
 import 'package:game_server/src/messages/command/new_game.dart';

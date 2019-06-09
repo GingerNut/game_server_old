@@ -4,7 +4,7 @@
 
 import 'dart:async';
 import 'package:quiver/async.dart' as quiver;
-import 'package:game_server/src/game/player.dart';
+import 'package:game_server/src/game/player/player.dart';
 
 class GameTimer{
 

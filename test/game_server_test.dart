@@ -2,16 +2,13 @@
 import 'dart:async';
 
 import 'package:game_server/game_server.dart';
-import 'package:game_server/src/game/computer/computer_player.dart';
 import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/game/player.dart';
+import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
-import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
-import 'package:game_server/src/messages/command/your_turn.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 import 'package:game_server/src/messages/response/success.dart';
@@ -42,17 +39,18 @@ void main()async{
   group('computer player basics',(){
 
     var ui = FieFoFumLocalInterface();
+    var computer = ComputerPlayer();
 
     setUp(()async{
       ui.addPlayer(Player());
-      ui.addPlayer(ComputerPlayer());
+      ui.addPlayer(computer);
       await ui.startGame(ui.newGame);
     });
 
 
-    test('Basic computer', (){
-
-
+    test('Basic computer connection', () async{
+      computer.sendPort.send(Command.echo + 'hey');
+      expect((await nextMessage(computer.messagesIn.stream)), 'echo hey');
 
     });
 

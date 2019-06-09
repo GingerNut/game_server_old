@@ -1,12 +1,6 @@
-import 'dart:isolate';
+part of player;
 
-import 'package:game_server/src/messages/command/set_player_status.dart';
-import 'package:game_server/src/messages/command/tidy.dart';
 
-import '../game_timer.dart';
-import 'package:game_server/src/design/palette.dart';
-import '../player.dart';
-import 'computer.dart';
 
 
 
@@ -15,7 +9,10 @@ class ComputerPlayer extends Player{
   ReceivePort receivePort = ReceivePort();
   SendPort sendPort;
 
+  StreamController<String> messagesIn;  // just for testing
+
   initialise() async{
+    messagesIn = await StreamController.broadcast();
     color = Palette.defaultPlayerColours[game.position.playerIds.indexOf(id)];
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
 
@@ -35,6 +32,7 @@ class ComputerPlayer extends Player{
 
 
   handleMessage(String string){
+    messagesIn.sink.add(string);
 
     String type = string.substring(0,3);
     String details = string.substring(3);

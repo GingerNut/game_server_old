@@ -1,13 +1,23 @@
+library player;
 
+import 'dart:async';
+import 'dart:isolate';
 
 import 'package:game_server/src/design/palette.dart';
-import 'package:game_server/src/game/position.dart';
+import 'package:game_server/src/game/player/computer.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
+import 'package:game_server/src/messages/command/tidy.dart';
 import 'package:game_server/src/messages/command/your_turn.dart';
 
-import 'game.dart';
-import 'game_timer.dart';
+import '../game.dart';
+import '../game_timer.dart';
+import '../position.dart';
+
+
+part 'computer_player.dart';
+part 'server_player.dart';
+
 
 class Player{
   static const int human = 0;

@@ -1,7 +1,7 @@
 
 
-import 'package:game_server/src/game/computer/computer_player.dart';
-import 'package:game_server/src/game/player.dart';
+
+import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/messages/error/game_error.dart';

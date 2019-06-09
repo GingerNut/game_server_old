@@ -2,10 +2,11 @@
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
 
-import '../player.dart';
+import 'package:game_server/src/game/player/player.dart';
 import '../position.dart';
 
 class Computer{
@@ -47,6 +48,10 @@ class Computer{
             case Tidy.code:
                 receivePort.close();
                 break;
+
+          case Command.echo:
+            sendPort.send('echo ' + details);
+            break;
 
 
 
