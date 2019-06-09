@@ -2,7 +2,6 @@
 
 
 import 'package:game_server/src/game/player/player.dart';
-import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/success.dart';
@@ -14,7 +13,7 @@ class NewGame extends Message{
 
   String id = 'game id';
   String displayName ='';
-  PlayerList players = new PlayerList();
+  List players = new List();
   int maxPlayers;
   int numberOfPlayers = 0;
   int playerType;
@@ -109,7 +108,7 @@ class NewGame extends Message{
 
         String trialName = base + ' ' + trialInt.toString();
 
-        while(players.containsPlayerWithDisplayName(trialName)){
+        while(players.any((p)=>p.id == trialName)){
           trialInt ++;
           trialName = base + ' ' + trialInt.toString();
 

@@ -78,7 +78,7 @@ void main()async{
       expect(ui.newGame.players.length, 4);
 
       await ui.startGame(ui.newGame);
-      expect(ui.game.players.listAllNames(), ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
+      expect(ui.game.position.playerIds, ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
 
       String winner = ui.position.playerId;
 

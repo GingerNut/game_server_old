@@ -1,10 +1,7 @@
 
 
-import 'dart:collection';
-
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/game/player/player.dart';
-import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
@@ -23,7 +20,7 @@ abstract class Game {
 
 
   Board board;
-  PlayerList get players => settings.players;
+  List get players => settings.players;
 
   Game(this.host, this.settings);
 
@@ -43,7 +40,6 @@ abstract class Game {
 
   Future initialise() async{
     _position = getPosition();
-
 
     List<String> playerIds = List();
     List<String> playerQueue = List();
@@ -76,7 +72,7 @@ abstract class Game {
 
     players.forEach((p) => p.status = PlayerStatus.playing);
 
-    players.getPlayerWithId(_position.playerId).yourTurn();
+    players.firstWhere((p) => p.id ==_position.playerId).yourTurn();
     return;
   }
 
@@ -127,7 +123,7 @@ abstract class Game {
 
     if (state == GameState.inPlay) {
       _position.setUpNewPosition();
-      players.getPlayerWithId(_position.playerId).yourTurn();
+      players.firstWhere((p) => p.id ==_position.playerId).yourTurn();
     }
     return Success();
   }
