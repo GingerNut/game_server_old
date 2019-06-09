@@ -8,9 +8,9 @@ class PlayerVariable<T>{
   List<T> _variable;
 
   PlayerVariable(this.position, this.startingValue){
-    _variable = new List(position.players.length);
+    _variable = new List(position.playerIds.length);
 
-    for(int i = 0 ; i < position.players.length ; i ++){
+    for(int i = 0 ; i < position.playerIds.length ; i ++){
       _variable[i] = startingValue;
     }
   }

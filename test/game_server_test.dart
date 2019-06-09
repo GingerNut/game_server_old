@@ -82,6 +82,8 @@ void main()async{
       await ui.startGame(ui.newGame);
       expect(ui.game.players.listAllNames(), ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
 
+      String winner = ui.position.playerId;
+
       expect(ui.position.playerQueue.length, 4);
       expect((ui.game.position as FieFoFumPosition).count, 1);
       ui.makeMove(MoveNumber());   // 1 so this is correct 0
@@ -117,8 +119,7 @@ void main()async{
       ui.makeMove(MoveFo());   // 16 so this is bad 2
       expect(ui.position.playerQueue.length, 1);
       expect(ui.game.state , GameState.won);
-      expect(ui.game.position.winner.id , 'Player 1');
-
+      expect(ui.game.position.winner , winner);
 
     });
 

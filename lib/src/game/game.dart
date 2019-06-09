@@ -43,10 +43,10 @@ abstract class Game {
 
   Future initialise() async{
     _position = getPosition();
-    _position.initialise();
+
 
     List<String> playerIds = List();
-
+    List<String> playerQueue = List();
 
       for (int i = 0; i < numberOfPlayers; i ++) {
         Player player = players[i];
@@ -54,19 +54,21 @@ abstract class Game {
         player.number = i;
         player.gameId = settings.id;
         playerIds.add(player.id);
+        playerQueue.add(player.id);
       }
 
       _position.playerIds = playerIds;
-      playerIds.shuffle();
-    _position.playerQueue = playerIds;
+    _position.playerQueue = playerQueue;
+    _position.initialise();
 
     players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 
     _position.setFirstPlayer();
 
+    _position.analyse();
+
     state = GameState.waitingForAllReady;
 
-    _position.analyse();
     history.clear();
 
     await waitForAllReady();
@@ -111,9 +113,10 @@ abstract class Game {
     _position.analyse();
     _position.checkWin();
     history.add(move);
+    _position.setNextPlayer();
 
     if(players.playersLeft < 2 && players.length > 1){
-      _position.winner = players.winner;
+      _position.winner = players.winner.id;
       if(_position.winner == null ) {
         state = GameState.drawn;
       }
@@ -123,7 +126,6 @@ abstract class Game {
     }
 
     if (state == GameState.inPlay) {
-      _position.setNextPlayer();
       _position.setUpNewPosition();
       players.getPlayerWithId(_position.playerId).yourTurn();
     }

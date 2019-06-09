@@ -27,8 +27,7 @@ class FieFoFumPosition extends Position{
   }
 
   setFirstPlayer(){
-    playerId = playerQueue[0];
-
+   playerQueue.shuffle();
   }
 
 
