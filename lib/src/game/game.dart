@@ -1,5 +1,7 @@
 
 
+import 'dart:collection';
+
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/game/player_list.dart';
@@ -43,15 +45,24 @@ abstract class Game {
     _position = getPosition();
     _position.initialise();
 
-    for (int i = 0; i < numberOfPlayers; i ++) {
+    List<String> playerIds = List();
+
+
       for (int i = 0; i < numberOfPlayers; i ++) {
         Player player = players[i];
         player.game = this;
         player.number = i;
         player.gameId = settings.id;
-        player.status = PlayerStatus.ingameNotReady;
+        playerIds.add(player.id);
       }
-    }
+
+      _position.playerIds = playerIds;
+      playerIds.shuffle();
+    _position.playerQueue = playerIds;
+
+    players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
+
+    _position.setFirstPlayer();
 
     state = GameState.waitingForAllReady;
 
@@ -64,7 +75,7 @@ abstract class Game {
 
     players.forEach((p) => p.status = PlayerStatus.playing);
 
-    _position.player.yourTurn();
+    players.getPlayerWithId(_position.playerId).yourTurn();
     return;
   }
 
@@ -114,7 +125,7 @@ abstract class Game {
     if (state == GameState.inPlay) {
       _position.setNextPlayer();
       _position.setUpNewPosition();
-      _position.player.yourTurn();
+      players.getPlayerWithId(_position.playerId).yourTurn();
     }
     return Success();
   }

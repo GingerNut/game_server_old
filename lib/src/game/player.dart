@@ -28,12 +28,12 @@ class Player{
 
     if(status != newStatus) changed = true;
 
-    game.position.playerStatus[this] = newStatus;
+    game.position.playerStatus[id] = newStatus;
 
     if (changed && connection != null) connection.send(SetStatus(newStatus).string);
   }
 
-  PlayerStatus get status => game == null ? PlayerStatus.queuing : game.position.playerStatus[this];
+  PlayerStatus get status => game == null ? PlayerStatus.queuing : game.position.playerStatus[id];
 
   GameTimer timer;
 
@@ -47,7 +47,7 @@ class Player{
     color = Palette.defaultPlayerColours[number];
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
 
-    game.position.playerStatus[this] = status;
+    game.position.playerStatus[id] = status;
 
     if(game.id == 'local game') status = PlayerStatus.ready;
 

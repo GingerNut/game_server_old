@@ -15,9 +15,9 @@ class PlayerVariable<T>{
     }
   }
 
-  operator [](Player player) => _variable[player.number];
+  operator [](String playerId) => _variable[position.playerIds.indexOf(playerId)];
 
-  operator []=(Player player, T value) => _variable[player.number] = value;
+  operator []=(String playerId, T value) => _variable[position.playerIds.indexOf(playerId)] = value;
 
 
 

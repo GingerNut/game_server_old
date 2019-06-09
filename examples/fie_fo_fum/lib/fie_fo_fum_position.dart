@@ -7,13 +7,13 @@ class FieFoFumPosition extends Position{
   FieFoFumPosition(Game game) : super(game);
 
   int count = 1;
-  get playerOrder => PlayerOrder.countUp;
+  get playerOrder => PlayerOrder.sequential;
   PlayerVariable<double> score;
   PlayerVariable<double> gameTime;
   PlayerVariable<double> moveTime;
 
   analyse() {
-    score[player] ++;
+    score[playerId] ++;
   }
 
 
@@ -26,9 +26,14 @@ class FieFoFumPosition extends Position{
     count ++;
   }
 
+  setFirstPlayer(){
+    playerId = playerQueue[0];
+
+  }
+
 
   setupFirstPosition() {
-    player = players[0];
+
 
   }
 

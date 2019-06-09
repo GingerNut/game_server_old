@@ -82,40 +82,40 @@ void main()async{
       await ui.startGame(ui.newGame);
       expect(ui.game.players.listAllNames(), ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
 
-      expect(ui.position.playersLeft, 4);
+      expect(ui.position.playerQueue.length, 4);
       expect((ui.game.position as FieFoFumPosition).count, 1);
       ui.makeMove(MoveNumber());   // 1 so this is correct 0
-      expect(ui.position.playersLeft, 4);
+      expect(ui.position.playerQueue.length, 4);
       ui.makeMove(MoveFie());   // 2 so this is wrong 1 out
-      expect(ui.position.playersLeft, 3);
+      expect(ui.position.playerQueue.length, 3);
       ui.makeMove(MoveFie());   // 3 so this is good 2
-      expect(ui.position.playersLeft, 3);
+      expect(ui.position.playerQueue.length, 3);
       ui.makeMove(MoveFo());   // 4 so this is wrong 3 out
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveFo());   // 5 so this is godd 0
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveFie());   // 6 so this is godd 2
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveNumber());   // 7 so this is godd 0
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveNumber());   // 8 so this is godd 2
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveFie());   // 9 so this is godd 0
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveFo());   //10 so this is godd 2
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveNumber());   // 11 so this is godd 0
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveFie());   // 12 so this is godd 2
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveNumber());   // 13 so this is godd 0
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveNumber());   // 14 so this is godd 2
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveFum());   // 15 so this is godd 0
-      expect(ui.position.playersLeft, 2);
+      expect(ui.position.playerQueue.length, 2);
       ui.makeMove(MoveFo());   // 16 so this is bad 2
-      expect(ui.position.playersLeft, 1);
+      expect(ui.position.playerQueue.length, 1);
       expect(ui.game.state , GameState.won);
       expect(ui.game.position.winner.id , 'Player 1');
 

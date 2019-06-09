@@ -137,10 +137,9 @@ class PlayerList{
 }
 
 enum PlayerOrder{
-  countUp,
-  countDown,
+  sequential,
   random,
   firstToPlay,
   highestScore,
-  lowersScore
+  lowestScore
 }

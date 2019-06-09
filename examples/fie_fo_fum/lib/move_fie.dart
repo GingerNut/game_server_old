@@ -23,7 +23,7 @@ class MoveFie extends FieFoFumMove{
 
       if(test % 3 == 0 && test % 5 != 0) moveOk = true;
 
-      if(!moveOk) position.player.status = PlayerStatus.out;
+      if(!moveOk) position.playerOut();
 
   }
 

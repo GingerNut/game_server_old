@@ -1,5 +1,7 @@
 
 
+import 'dart:collection';
+
 import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/game/player_variable.dart';
@@ -13,8 +15,11 @@ abstract class Position{
   Move lastMove;
 
   PlayerList get players => game.players;
-  int get playersLeft => players.playersLeft;
-  PlayerList get survivors => players.remainingPlayers;
+//  int get playersLeft => players.playersLeft;
+//  PlayerList get survivors => players.remainingPlayers;
+
+  List<String> playerIds;
+  List<String> playerQueue;
 
   PlayerVariable<PlayerStatus> playerStatus;
   PlayerVariable<double> score;
@@ -24,12 +29,10 @@ abstract class Position{
 
     String string = '';
 
-    
-
     return string;
   }
 
-  Player player;
+  String playerId;
 
   PlayerOrder get playerOrder;
 
@@ -42,23 +45,19 @@ abstract class Position{
     lastMove = move;
   }
 
+  playerOut() => playerStatus[playerId] = PlayerStatus.out;
+
   setNextPlayer(){
-    Player next;
+
     switch(playerOrder){
-      case PlayerOrder.countUp:
-        next = players[(player.number + 1) % players.length];
-        while(next.status != PlayerStatus.playing){
-          next = players[(next.number + 1) % players.length];
-        }
-        break;
-      case PlayerOrder.countDown:
-        next = players[(player.number - 1) % players.length];
-        while(next.status != PlayerStatus.playing){
-          next = players[(next.number - 1) % players.length];
-        }
+      case PlayerOrder.sequential:
+        String p = playerQueue.removeAt(0);
+        playerId = playerQueue[0];
+        playerQueue.add(p);
         break;
       case PlayerOrder.random:
-      // TODO: Handle this case.
+        playerQueue.shuffle();
+        playerId = playerQueue[0];
         break;
       case PlayerOrder.firstToPlay:
       // TODO: Handle this case.
@@ -66,20 +65,20 @@ abstract class Position{
       case PlayerOrder.highestScore:
       // TODO: Handle this case.
         break;
-      case PlayerOrder.lowersScore:
+      case PlayerOrder.lowestScore:
       // TODO: Handle this case.
         break;
     }
-     player = next;
+
   }
 
   initialise(){
     playerStatus = PlayerVariable(this, PlayerStatus.ingameNotReady);
     score = PlayerVariable(this, 0);
     timeLeft = PlayerVariable(this, game.settings.gameTime);
-
-    setupFirstPosition();
   }
+
+  setFirstPlayer();
 
   setupFirstPosition();
 
