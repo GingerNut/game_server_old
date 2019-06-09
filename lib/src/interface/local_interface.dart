@@ -7,8 +7,10 @@ import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 
+import 'interface.dart';
 
-abstract class LocalInterface implements GameHost{
+
+abstract class LocalInterface extends Interface implements GameHost{
 
 //TODO local games server. Only one login allowed but that stays in background
 

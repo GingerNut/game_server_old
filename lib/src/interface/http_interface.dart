@@ -13,7 +13,9 @@ import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/start_game.dart';
 
-abstract class HttpInterface{
+import 'interface.dart';
+
+abstract class HttpInterface extends Interface{
 
   Position position;
   Settings onlineSettings = Settings();

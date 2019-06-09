@@ -1,14 +1,14 @@
 
+import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/player.dart';
 import 'package:game_server/src/game/player_list.dart';
 import 'package:game_server/src/game/player_variable.dart';
+import 'package:game_server/src/messages/command/new_game.dart';
 
-import 'game.dart';
 import 'move.dart';
 
 abstract class Position{
 
-  final Game game;
   Move lastMove;
 
   List<String> playerIds;
@@ -17,6 +17,7 @@ abstract class Position{
   PlayerVariable<PlayerStatus> playerStatus;
   PlayerVariable<double> score;
   PlayerVariable<double> timeLeft;
+  PlayerVariable<Palette> color;
 
   String toString(){
 
@@ -31,16 +32,12 @@ abstract class Position{
 
   String winner;
 
-  Position(this.game);
-
   makeMove(Move move){
     move.go(this);
     lastMove = move;
   }
 
   playerOut() => playerStatus[playerId] = PlayerStatus.out;
-
-
 
   setNextPlayer(){
 
@@ -71,10 +68,10 @@ abstract class Position{
 
   }
 
-  initialise(){
+  initialise(NewGame settings){
     playerStatus = PlayerVariable(this, PlayerStatus.ingameNotReady);
     score = PlayerVariable(this, 0);
-    timeLeft = PlayerVariable(this, game.settings.gameTime);
+    timeLeft = PlayerVariable(this, settings.gameTime);
   }
 
   setFirstPlayer();

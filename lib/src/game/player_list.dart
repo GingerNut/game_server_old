@@ -22,6 +22,7 @@ class PlayerList{
     //if(containsPlayerId(player.id)) return;
     _players.add(player);
   }
+
   remove(Player player) =>  _players.remove(player);
   bool get isEmpty => _players.isEmpty;
   int get length  => _players.length;

@@ -51,7 +51,6 @@ abstract class Game {
       for (int i = 0; i < numberOfPlayers; i ++) {
         Player player = players[i];
         player.game = this;
-        player.number = i;
         player.gameId = settings.id;
         playerIds.add(player.id);
         playerQueue.add(player.id);
@@ -59,7 +58,7 @@ abstract class Game {
 
       _position.playerIds = playerIds;
     _position.playerQueue = playerQueue;
-    _position.initialise();
+    _position.initialise(settings);
 
     players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 
@@ -115,8 +114,9 @@ abstract class Game {
     history.add(move);
     _position.setNextPlayer();
 
-    if(players.playersLeft < 2 && players.length > 1){
-      _position.winner = players.winner.id;
+    if(_position.playerQueue.length < 2 && _position.playerIds.length > 1){
+      if(_position.playerQueue.length == 1) _position.winner = _position.playerQueue[0];
+
       if(_position.winner == null ) {
         state = GameState.drawn;
       }

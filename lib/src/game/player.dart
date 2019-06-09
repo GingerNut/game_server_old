@@ -1,6 +1,6 @@
 
 
-import 'package:game_server/src/game/palette.dart';
+import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
@@ -20,7 +20,6 @@ class Player{
   String gameId;
   ServerConnection connection;
 
-  int number;
   int color;
 
   set status (PlayerStatus newStatus) {
@@ -44,8 +43,8 @@ class Player{
   Player.server(this.id);
 
   initialise(){
-    color = Palette.defaultPlayerColours[number];
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
+    color = Palette.defaultPlayerColours[game.position.playerIds.indexOf(id)];
 
     game.position.playerStatus[id] = status;
 

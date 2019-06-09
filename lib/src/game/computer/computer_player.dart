@@ -4,7 +4,7 @@ import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
 
 import '../game_timer.dart';
-import '../palette.dart';
+import 'package:game_server/src/design/palette.dart';
 import '../player.dart';
 import 'computer.dart';
 
@@ -16,7 +16,7 @@ class ComputerPlayer extends Player{
   SendPort sendPort;
 
   initialise() async{
-    color = Palette.defaultPlayerColours[number];
+    color = Palette.defaultPlayerColours[game.position.playerIds.indexOf(id)];
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
 
     await Isolate.spawn(setupComputer, receivePort.sendPort);

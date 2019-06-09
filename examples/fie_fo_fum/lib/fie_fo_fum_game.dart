@@ -7,7 +7,7 @@ import 'fie_fo_fum_position.dart';
 class FieFoFumGame extends Game{
   FieFoFumGame(GameHost host, NewGame settings) : super(host, settings);
 
-  getPosition() => FieFoFumPosition(this);
+  getPosition() => FieFoFumPosition();
 
   @override
   // TODO: implement string
