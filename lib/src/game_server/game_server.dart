@@ -22,26 +22,26 @@ abstract class GameServer implements GameHost{
   Database db = Database();
 
   List<ServerConnection> _connections = List();
-  PlayerList __playersOnline = PlayerList();
+  List<ServerPlayer> __playersOnline = List();
   AdvertList _adverts = AdvertList();
   Set<Game> _games = new Set();
 
   int get numberOfClients => __playersOnline.length;
 
-  PlayerList get _players => __playersOnline;
+  List get _players => __playersOnline;
 
   String get playersOnlineList{
     String string = '';
 
     for(int i = 0 ; i < __playersOnline.length ; i++){
-      Player m = __playersOnline[i];
+      ServerPlayer m = __playersOnline[i];
       string += m.connection.displayName;
       if(i < __playersOnline.length -1)string += Command.delimiter;
     }
     return string;
   }
 
-  bool clientWithLogin(String id) => __playersOnline.containsPlayerId(id);
+  bool clientWithLogin(String id) => __playersOnline.any((p) => (p.id == id));
 
   addConnection(ServerConnection connection) async {
     await connection.initialise(this);
@@ -58,7 +58,7 @@ abstract class GameServer implements GameHost{
   addMember(ServerConnection connection)async{
     _connections.remove(connection);
 
-    Player player;
+    ServerPlayer player;
 
     __playersOnline.forEach((p) {
       if(p.id == connection.id) {
@@ -72,7 +72,7 @@ abstract class GameServer implements GameHost{
     });
 
     if(player == null) {
-      player = Player.server(connection.id);
+      player = ServerPlayer(connection.id);
       player.connection = connection;
       connection.player = player;
       __playersOnline.add(player);
@@ -132,8 +132,8 @@ abstract class GameServer implements GameHost{
   }
 
   addPrivateMessage(PrivateMessage message){
-    Player to;
-    Player from;
+    ServerPlayer to;
+    ServerPlayer from;
 
     _players.forEach((p) {
       if(p.id == message.to) to = p;

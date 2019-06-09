@@ -28,29 +28,16 @@ class Player{
   String id;
   String displayName;
   String gameId;
-  ServerConnection connection;
 
   int color;
 
-  set status (PlayerStatus newStatus) {
-    bool changed = false;
-
-    if(status != newStatus) changed = true;
-
-    game.position.playerStatus[id] = newStatus;
-
-    if (changed && connection != null) connection.send(SetStatus(newStatus).string);
-  }
+  set status (PlayerStatus newStatus) => game.position.playerStatus[id] = newStatus;
 
   PlayerStatus get status => game == null ? PlayerStatus.queuing : game.position.playerStatus[id];
 
   GameTimer timer;
 
   double get timeLeft => game.position.timeLeft(this);
-
-  Player();
-
-  Player.server(this.id);
 
   initialise(){
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
@@ -66,10 +53,8 @@ class Player{
 
 
   yourTurn(){
-    if(connection != null) connection.send(YourTurn(gameId).string);
-  }
 
-  sendMessage(String string){}
+  }
 
   wait(){
 

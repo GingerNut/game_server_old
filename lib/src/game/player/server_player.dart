@@ -7,6 +7,10 @@ class ServerPlayer extends Player{
 
   ServerConnection connection;
 
+  ServerPlayer(String id){
+    this.id = id;
+  }
+
   set status (PlayerStatus newStatus) {
     bool changed = false;
 
