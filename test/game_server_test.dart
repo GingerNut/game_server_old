@@ -16,6 +16,7 @@ import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:test/test.dart';
 
+import '../examples/fie_fo_fum/lib/fie_fo_fum_computer_player.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_local_interface.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
 import '../examples/fie_fo_fum/lib/move_fie.dart';
@@ -40,7 +41,7 @@ void main()async{
   group('computer player basics',(){
 
     var ui = FieFoFumLocalInterface();
-    var computer = ComputerPlayer();
+    var computer = FieFoFumComputerPlayer();
 
     setUp(()async{
       ui.addPlayer(Player());

@@ -11,7 +11,7 @@ import 'package:game_server/src/game/player/player.dart';
 import '../position.dart';
 
 
-class ComputerIsolate{
+abstract class ComputerIsolate{
 
     final ReceivePort receivePort;
     final SendPort sendPort;
@@ -58,10 +58,9 @@ class ComputerIsolate{
 
         }
 
-
     }
 
-    findBestMove() => position.findBestMove();
+    findBestMove();
 
     }
 

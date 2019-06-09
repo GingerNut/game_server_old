@@ -1,21 +1,10 @@
 part of player;
 
 
-class ComputerPlayer extends Player{
-
-  static setupComputer(SendPort sendPort) async {
-
-    var port = new ReceivePort();
-    sendPort.send(port.sendPort);
-
-    ComputerIsolate computer = ComputerIsolate(port, sendPort);
-    computer.initialise();
-  }
+abstract class ComputerPlayer extends Player{
 
   ReceivePort receivePort = ReceivePort();
   SendPort sendPort;
-
-
 
   StreamController<String> messagesIn;  // just for testing
 
@@ -23,7 +12,7 @@ class ComputerPlayer extends Player{
     messagesIn = await StreamController.broadcast();
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
 
-    await Isolate.spawn(setupComputer, receivePort.sendPort);
+    startComputer();
 
     receivePort.listen((d){
 
@@ -37,6 +26,7 @@ class ComputerPlayer extends Player{
 
   }
 
+  startComputer();
 
   handleMessage(String string){
     messagesIn.sink.add(string);
@@ -64,6 +54,15 @@ class ComputerPlayer extends Player{
   }
 
 }
+
+//setupComputer(SendPort sendPort) async {
+//
+//  var port = new ReceivePort();
+//  sendPort.send(port.sendPort);
+//
+//  ComputerIsolate computer = ComputerIsolate(port, sendPort);
+//  computer.initialise();
+//}
 
 
 
