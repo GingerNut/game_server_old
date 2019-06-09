@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:game_server/game_server.dart';
+import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
@@ -79,6 +80,11 @@ void main()async{
 
       await ui.startGame(ui.newGame);
       expect(ui.game.position.playerIds, ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
+
+      expect(ui.position.color['Player 1'], Palette.COLOR_WHITE);
+      expect(ui.position.color['Player 2'], Palette.COLOR_BLACK);
+      expect(ui.position.color['Player 3'], Palette.COLOR_BLUE);
+      expect(ui.position.color['Player 4'], Palette.COLOR_RED);
 
       String winner = ui.position.playerId;
 

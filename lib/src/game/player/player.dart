@@ -3,8 +3,8 @@ library player;
 import 'dart:async';
 import 'dart:isolate';
 
-import 'package:game_server/src/design/palette.dart';
-import 'package:game_server/src/game/player/computer.dart';
+
+import 'package:game_server/src/game/player/computer_isolate.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
@@ -17,6 +17,7 @@ import '../position.dart';
 
 part 'computer_player.dart';
 part 'server_player.dart';
+part 'computer.dart';
 
 
 class Player{
@@ -29,8 +30,6 @@ class Player{
   String displayName;
   String gameId;
 
-  int color;
-
   set status (PlayerStatus newStatus) => game.position.playerStatus[id] = newStatus;
 
   PlayerStatus get status => game == null ? PlayerStatus.queuing : game.position.playerStatus[id];
@@ -41,7 +40,6 @@ class Player{
 
   initialise(){
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
-    color = Palette.defaultPlayerColours[game.position.playerIds.indexOf(id)];
 
     game.position.playerStatus[id] = status;
 

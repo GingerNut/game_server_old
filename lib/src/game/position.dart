@@ -15,7 +15,7 @@ abstract class Position{
   PlayerVariable<PlayerStatus> playerStatus;
   PlayerVariable<double> score;
   PlayerVariable<double> timeLeft;
-  PlayerVariable<Palette> color;
+  PlayerVariable<int> color;
 
   String toString(){
 
@@ -70,6 +70,7 @@ abstract class Position{
     playerStatus = PlayerVariable(this, PlayerStatus.ingameNotReady);
     score = PlayerVariable(this, 0);
     timeLeft = PlayerVariable(this, settings.gameTime);
+    color = PlayerVariable.fromList(this, Palette.defaultPlayerColours);
   }
 
   setFirstPlayer();
@@ -87,7 +88,7 @@ abstract class Position{
 class PlayerVariable<T>{
 
   final Position position;
-  final T startingValue;
+  T startingValue;
   List<T> _variable;
 
   PlayerVariable(this.position, this.startingValue){
@@ -98,9 +99,23 @@ class PlayerVariable<T>{
     }
   }
 
+  PlayerVariable.fromList(this.position, List<T> values){
+    _variable = new List(position.playerIds.length);
+
+    position.playerIds.forEach((p){
+
+      int index = position.playerIds.indexOf(p);
+
+      _variable[index] = values[index];
+
+    });
+
+  }
+
   operator [](String playerId) => _variable[position.playerIds.indexOf(playerId)];
 
   operator []=(String playerId, T value) => _variable[position.playerIds.indexOf(playerId)] = value;
+
 
 }
 

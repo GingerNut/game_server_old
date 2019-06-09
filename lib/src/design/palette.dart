@@ -17,10 +17,10 @@ class Palette{
   static const int COLOR_LETTER_LIGHT = 21;
 
   static const List<int> defaultPlayerColours = [
-    COLOR_WHITE,
-    COLOR_BLACK,
-    COLOR_BLUE,
-    COLOR_RED,
+    COLOR_WHITE, // 7
+    COLOR_BLACK, // 6
+    COLOR_BLUE, // 2
+    COLOR_RED, // 1
     COLOR_GOLD,
     COLOR_PURPLE
   ];
