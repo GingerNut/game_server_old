@@ -59,6 +59,8 @@ class ComputerIsolate{
 
     }
 
+    findBestMove() => position.findBestMove();
+
     }
 
 

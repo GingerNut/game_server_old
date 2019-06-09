@@ -17,7 +17,7 @@ import '../position.dart';
 
 part 'computer_player.dart';
 part 'server_player.dart';
-part 'computer.dart';
+
 
 
 class Player{

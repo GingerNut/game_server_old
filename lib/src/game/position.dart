@@ -83,6 +83,8 @@ abstract class Position{
 
   checkWin();
 
+  findBestMove();
+
 }
 
 class PlayerVariable<T>{
