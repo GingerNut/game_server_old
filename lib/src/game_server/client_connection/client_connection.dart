@@ -13,6 +13,8 @@ import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 
+enum LoginStatus {requesting, good, error}
+
 abstract class ClientConnection implements ChannelHost{
   final HttpInterface interface;
   String id;
@@ -20,7 +22,7 @@ abstract class ClientConnection implements ChannelHost{
   String password;
   String secret;
   StreamController<String> messagesIn;
-  bool loggedIn = false;
+  LoginStatus loginStatus;
 
   Channel serverChannel;
   List<String> clients = new List();
@@ -29,7 +31,7 @@ abstract class ClientConnection implements ChannelHost{
 
 
   Future login(String id, String password) async{
-    loggedIn = true;
+   loginStatus = LoginStatus.requesting;
     messagesIn = await StreamController.broadcast();
 
     this.id = id;
@@ -37,10 +39,14 @@ abstract class ClientConnection implements ChannelHost{
 
     await setupChannel();
 
-    //TODO get the wait until logged in working
-
-    while(loggedIn == false){
+    while(loginStatus == LoginStatus.requesting){
       await Future.delayed(Duration(milliseconds : 100));
+    }
+
+    if(loginStatus == LoginStatus.error) {
+      serverChannel = null;
+      this.id = null;
+      this.password = null;
     }
 
     return;
@@ -69,7 +75,7 @@ abstract class ClientConnection implements ChannelHost{
 
       case LoginSuccess.code:
         var logSuccess = LoginSuccess.fromString(details);
-        loggedIn = true;
+        loginStatus = LoginStatus.good;
         secret = logSuccess.playerSecret;
         displayName = logSuccess.displayName;
         send(logSuccess.string);
@@ -92,6 +98,7 @@ abstract class ClientConnection implements ChannelHost{
 
       case GameError.code:
         GameError error = GameError.fromString(details) ;
+        loginStatus = LoginStatus.error;
         break;
 
     }
