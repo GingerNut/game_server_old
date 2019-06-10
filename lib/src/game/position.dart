@@ -130,7 +130,23 @@ class PlayerVariable<T>{
 
   operator []=(String playerId, T value) => _variable[position.playerIds.indexOf(playerId)] = value;
 
+  String get string {
+    String string = '';
 
+
+
+    return string;
+  }
+
+  String get type{
+
+    switch(T.runtimeType){
+      case int: return 'int';
+      case double: return 'dbl';
+      case PlayerStatus: return 'pls';
+      default: return '';
+    }
+  }
 }
 
 enum PlayerOrder{

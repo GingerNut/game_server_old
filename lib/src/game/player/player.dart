@@ -4,9 +4,7 @@ import 'dart:async';
 import 'dart:isolate';
 
 
-import 'package:game_server/src/game/player/computer_isolate.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
-import 'package:game_server/src/messages/command/send_game.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
 import 'package:game_server/src/messages/command/your_turn.dart';
@@ -19,7 +17,6 @@ import '../position.dart';
 
 part 'computer_player.dart';
 part 'server_player.dart';
-
 
 
 class Player{
@@ -54,7 +51,10 @@ class Player{
 
   yourTurn(){
 
+    think();
   }
+
+  think(){}
 
   wait(){
 

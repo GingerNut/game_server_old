@@ -17,6 +17,7 @@ class FieFoFumComputer extends ComputerIsolate{
   createPosition(String details) {
     var sendGame = FieFoFumSendGame.fromString(details);
     position = sendGame.position;
+
   }
 
 
