@@ -13,9 +13,6 @@ abstract class ComputerPlayer extends Player{
   initialise() async{
     messagesIn = await StreamController.broadcast();
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
-
-    await startComputer();
-
     receivePort.listen((d){
 
       if(d is SendPort) {
@@ -23,11 +20,12 @@ abstract class ComputerPlayer extends Player{
       } else if(d is String) {
         handleMessage(d);
       }
-
     });
 
+    await startComputer();
+
     while(sendPort == null){
-      await Future.delayed(Duration(milliseconds : 10));
+      await Future.delayed(Duration(milliseconds : 1));
     }
 
     sendGame();

@@ -14,10 +14,13 @@ class FieFoFumComputer extends ComputerIsolate{
 
   }
 
-  createPosition(String details) {
+  Future createPosition(String details) async{
     var sendGame = FieFoFumSendGame.fromString(details);
     position = sendGame.position;
 
+    await Future.delayed(Duration(milliseconds : 500));
+
+    return;
   }
 
 

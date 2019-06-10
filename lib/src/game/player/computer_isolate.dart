@@ -15,8 +15,10 @@ import '../move_builder.dart';
 import '../position.dart';
 
 
+
 abstract class ComputerIsolate{
 
+    bool ready = false;
     final ReceivePort receivePort;
     final SendPort sendPort;
 
@@ -33,24 +35,18 @@ abstract class ComputerIsolate{
 
         moveBuilder = getMoveBuilder();
 
+        while(!ready ){
+          await Future.delayed(Duration(milliseconds : 100));
+        }
 
         sendPort.send(SetStatus(PlayerStatus.ready).string);
     }
 
-    Future setupPosition()async{
-
-      //TODO position sharing message needed
-
-        await Future.delayed(Duration(seconds: 1));
 
 
 
-        return;
-    }
 
-
-
-    handleMessage(String string){
+    handleMessage(String string) async{
 
         String type = string.substring(0,3);
         String details = string.substring(3);
@@ -66,15 +62,16 @@ abstract class ComputerIsolate{
             break;
 
           case SendGame.code:
-            createPosition(details);
+            await createPosition(details);
+            ready = true;
             break;
 
           case YourTurn.code:
-            createPosition(details);
+            yourTurn(details);
             break;
 
           case Move.code:
-            createPosition(details);
+            doMove(details);
             break;
 
           default:
@@ -84,7 +81,7 @@ abstract class ComputerIsolate{
 
     }
 
-    createPosition(String details);
+    Future createPosition(String details);
 
     doMove(String details);
 
