@@ -12,12 +12,9 @@ import 'game_host.dart';
 import 'move.dart';
 
 abstract class Game {
-
+  GameState state = GameState.waitingForPlayers;
   final NewGame settings;
   final GameHost host;
-
-  GameState state = GameState.waitingForPlayers;
-
 
   Board board;
   List get players => settings.players;
@@ -105,15 +102,11 @@ abstract class Game {
     if(response is GameError) return response;
 
     _position.makeMove(move);
-    _position.analyse();
-    _position.checkWin();
+
     history.add(move);
-    _position.setNextPlayer();
 
-    if(_position.playerQueue.length < 2 && _position.playerIds.length > 1){
-      if(_position.playerQueue.length == 1) _position.winner = _position.playerQueue[0];
-
-      if(_position.winner == null ) {
+    if(position.gameOver){
+      if(position.winner == null ) {
         state = GameState.drawn;
       }
       else {
@@ -122,9 +115,9 @@ abstract class Game {
     }
 
     if (state == GameState.inPlay) {
-      _position.setUpNewPosition();
       players.firstWhere((p) => p.id ==_position.playerId).yourTurn();
     }
+
     return Success();
   }
 

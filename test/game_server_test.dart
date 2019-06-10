@@ -5,6 +5,7 @@ import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/player/player.dart';
+import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
@@ -23,7 +24,7 @@ import '../examples/fie_fo_fum/lib/move_fie.dart';
 import '../examples/fie_fo_fum/lib/move_fo.dart';
 import '../examples/fie_fo_fum/lib/move_fum.dart';
 import '../examples/fie_fo_fum/lib/move_number.dart';
-import '../examples/fie_fo_fum/lib/test_server.dart';
+import '../examples/fie_fo_fum/lib/fie_fo_fum_server.dart';
 import 'test_http_interface.dart';
 import 'test_stream_interface.dart';
 
@@ -136,7 +137,7 @@ void main()async{
 
   group ('basic stream server',(){
 
-    GameServer server = TestServer();
+    GameServer server = FieFoFumServer();
     TestStreamInterface ui = TestStreamInterface(server);
 
     setUp(() async {
@@ -173,7 +174,7 @@ void main()async{
   );
 
   group('Game test',() {
-    GameServer server = TestServer();
+    GameServer server = FieFoFumServer();
     TestStreamInterface henry = TestStreamInterface(server);
     TestStreamInterface james = TestStreamInterface(server);
     TestStreamInterface sarah = TestStreamInterface(server);

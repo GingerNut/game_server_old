@@ -3,11 +3,13 @@ import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 
+import 'game.dart';
 import 'move.dart';
 
 abstract class Position{
 
   Move lastMove;
+
 
   List<String> playerIds;
   List<String> playerQueue;
@@ -24,10 +26,27 @@ abstract class Position{
   PlayerOrder get playerOrder;
 
   String winner;
+  bool gameOver = false;
 
   makeMove(Move move){
     move.go(this);
     lastMove = move;
+
+    analyse();
+    checkWin();
+
+    setNextPlayer();
+
+    if(playerQueue.length < 2 && playerIds.length > 1){
+      gameOver = true;
+
+      if(playerQueue.length == 1) winner = playerQueue[0];
+
+    }
+
+    if (!gameOver) {
+      setUpNewPosition();
+    }
   }
 
   playerOut() => playerStatus[playerId] = PlayerStatus.out;
@@ -121,4 +140,5 @@ enum PlayerOrder{
   highestScore,
   lowestScore
 }
+
 
