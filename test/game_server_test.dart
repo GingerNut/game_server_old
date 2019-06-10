@@ -55,7 +55,11 @@ void main()async{
       expect(ui.game.position.playerStatus.string,
           PlayerVariable.playerVariablefromString(ui.game.position,ui.game.position.playerStatus.string).string);
 
+      expect(ui.game.position.score.string,
+          PlayerVariable.playerVariablefromString(ui.game.position,ui.game.position.score.string).string);
 
+      expect(ui.game.position.color.string,
+          PlayerVariable.playerVariablefromString(ui.game.position,ui.game.position.color.string).string);
 
     });
 
