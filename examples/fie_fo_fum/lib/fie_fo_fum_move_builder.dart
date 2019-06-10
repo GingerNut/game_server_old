@@ -7,7 +7,7 @@ import 'move_fo.dart';
 import 'move_fum.dart';
 import 'move_number.dart';
 
-class TestMoveBuilder extends MoveBuilder{
+class FieFoFumMoveBuilder extends MoveBuilder{
 
   build(String string) {
 

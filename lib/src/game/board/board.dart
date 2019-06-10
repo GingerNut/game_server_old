@@ -1,7 +1,7 @@
 
 
 
-class Board{
+abstract class Board{
   static const int North = 1;
   static const int North_East = 2;
   static const int East = 3;
@@ -14,6 +14,10 @@ class Board{
   static List<int> directions = [North_East, East, South_East, South_West, West, North_West];
 
   makeBoard(){}
+
+  String get string;
+
+  Board.fromString(String string);
 
 
   //TODO chess board

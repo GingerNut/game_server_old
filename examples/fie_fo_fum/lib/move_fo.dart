@@ -3,6 +3,7 @@
 
 // multiples of 5
 
+import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/player.dart';
 
 import 'fie_fo_fum_move.dart';
@@ -11,8 +12,7 @@ import 'fie_fo_fum_position.dart';
 class MoveFo extends FieFoFumMove{
   static const String type ='fo';
 
-  String toString() => type;
-
+  String get string => Move.code + type;
 
 
   doMove(FieFoFumPosition position) {

@@ -3,6 +3,8 @@ part of player;
 
 abstract class ComputerPlayer extends Player{
 
+  bool computerReady = false;
+
   ReceivePort receivePort = ReceivePort();
   SendPort sendPort;
 
@@ -12,7 +14,7 @@ abstract class ComputerPlayer extends Player{
     messagesIn = await StreamController.broadcast();
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
 
-    startComputer();
+    await startComputer();
 
     receivePort.listen((d){
 
@@ -24,7 +26,15 @@ abstract class ComputerPlayer extends Player{
 
     });
 
+    while(sendPort == null){
+      await Future.delayed(Duration(milliseconds : 10));
+    }
+
+    sendGame();
+
   }
+
+  sendGame();
 
   startComputer();
 
@@ -44,9 +54,13 @@ abstract class ComputerPlayer extends Player{
 
 
 
+
+
     }
 
   }
+
+  send(String message) => sendPort.send(message);
 
   @override
   tidyUp() {
@@ -54,15 +68,23 @@ abstract class ComputerPlayer extends Player{
   }
 
 }
-
-//setupComputer(SendPort sendPort) async {
+// example code
+//class FieFoFumComputerPlayer extends ComputerPlayer{
 //
+//  startComputer() async{
+//    await Isolate.spawn(setupFFFComputer, receivePort.sendPort);
+//  }
+//}
+//
+//setupFFFComputer(SendPort sendPort) async {
 //  var port = new ReceivePort();
 //  sendPort.send(port.sendPort);
-//
-//  ComputerIsolate computer = ComputerIsolate(port, sendPort);
+//  FieFoFumComputer computer = FieFoFumComputer(port, sendPort);
 //  computer.initialise();
 //}
+
+
+
 
 
 

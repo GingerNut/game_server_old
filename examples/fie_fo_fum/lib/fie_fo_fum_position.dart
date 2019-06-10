@@ -10,6 +10,13 @@ class FieFoFumPosition extends Position{
   PlayerVariable<double> gameTime;
   PlayerVariable<double> moveTime;
 
+  String get string{
+
+    String string = '';
+
+    return string;
+  }
+
   analyse() {
     score[playerId] ++;
   }

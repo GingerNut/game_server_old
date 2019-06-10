@@ -17,12 +17,7 @@ abstract class Position{
   PlayerVariable<double> timeLeft;
   PlayerVariable<int> color;
 
-  String toString(){
-
-    String string = '';
-
-    return string;
-  }
+  String get string;
 
   String get playerId => playerQueue[0];
 
