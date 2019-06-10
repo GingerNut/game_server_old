@@ -39,6 +39,29 @@ void main()async{
   }
 
 
+  group('varous methods', (){
+    var ui = FieFoFumLocalInterface();
+
+    setUp(() async{
+      ui.addPlayer(Player());
+      ui.addPlayer(Player());
+      ui.addPlayer(Player());
+      ui.addPlayer(Player());
+      await ui.startGame(ui.newGame);
+    });
+
+    test('player variable',()async{
+
+      expect(ui.game.position.playerStatus.string,
+          PlayerVariable.playerVariablefromString(ui.game.position,ui.game.position.playerStatus.string).string);
+
+
+
+    });
+
+  });
+
+
   group('computer player basics',(){
 
     var ui = FieFoFumLocalInterface();
