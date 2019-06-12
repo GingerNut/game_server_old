@@ -18,11 +18,11 @@ class ServerPlayer extends Player{
 
     game.position.playerStatus[id] = newStatus;
 
-    if (changed && connection != null) connection.send(SetStatus(newStatus).string);
+    if (changed && connection != null) connection.send(SetStatus(newStatus).json);
   }
 
   yourTurn(){
-    if(connection != null) connection.send(YourTurn(gameId).string);
+    if(connection != null) connection.send(YourTurn(gameId).json);
   }
 
 }

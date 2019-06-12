@@ -61,7 +61,7 @@ abstract class GameServer implements GameHost{
 
     __playersOnline.forEach((p) {
       if(p.id == connection.id) {
-        p.connection.send(Command.connectionSuperseded);
+//        p.connection.send(ConnectionSuperseded);
         //TODO superseding connection
         p.connection.close();
         p.connection = connection;
@@ -90,7 +90,7 @@ abstract class GameServer implements GameHost{
   broadcast(Message message){
 
     _players.forEach((m) {
-      m.connection.send(message.string);
+      m.connection.send(message.json);
     });
   }
 
@@ -140,11 +140,11 @@ abstract class GameServer implements GameHost{
     });
 
     if(to != null) {
-      to.connection.send(message.string);
-      if(from != null) from.connection.send(message.string);
+      to.connection.send(message.json);
+      if(from != null) from.connection.send(message.json);
 
     } else {
-      if(from != null) from.connection.send(PrivateMessage('server', from.id, message.to + ' is not online').string);
+      if(from != null) from.connection.send(PrivateMessage('server', from.id, message.to + ' is not online').json);
     }
 
 

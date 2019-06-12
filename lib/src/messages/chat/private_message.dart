@@ -1,10 +1,12 @@
 
+import 'dart:convert';
+
 import 'package:game_server/src/messages/command/command.dart';
 
 import '../message.dart';
 
 class PrivateMessage extends Message{
-
+  static const String type = 'private_message';
   static const String code = 'pri';
 
   String from;
@@ -27,6 +29,21 @@ class PrivateMessage extends Message{
       + from + delimiter
       + to + delimiter
       + text;
+
+  PrivateMessage.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
+
+    from = jsonObject['from'];
+    to = jsonObject['to'];
+    text = jsonObject['text'];
+  }
+
+  get json => jsonEncode({
+    'type': type,
+    'text' : text,
+    'from':from,
+    'to':to
+  });
 
 
 }

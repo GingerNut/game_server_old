@@ -15,7 +15,7 @@ class IoClientConnection extends ClientConnection{
     await channel.connect();
 
     serverChannel = channel;
-    serverChannel.listen((s)=> handleString(s));
+    serverChannel.listen((s)=> handleJSON(s));
     return;
   }
 

@@ -1,10 +1,12 @@
 
+import 'dart:convert';
+
 import 'package:game_server/src/messages/command/command.dart';
 
 import '../message.dart';
 
 class ChatMessage extends Message{
-
+  static const String type = 'chat_message';
   static const String code = 'cha';
   String from;
   DateTime  timeStamp;
@@ -23,5 +25,17 @@ class ChatMessage extends Message{
   String get string => code + from + Command.delimiter + text;
 
 
+  ChatMessage.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
+
+    from = jsonObject['from'];
+    text = jsonObject['text'];
+  }
+
+  get json => jsonEncode({
+    'type': type,
+    'text' : text,
+    'from':from
+  });
 
 }

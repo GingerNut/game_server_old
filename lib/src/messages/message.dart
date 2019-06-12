@@ -5,6 +5,7 @@ abstract class Message{
   static String code;
 
   String get string;
+  String get json;
 
 //  Message.fromJSON(String string){
 //

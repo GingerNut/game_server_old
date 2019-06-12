@@ -23,6 +23,6 @@ class StreamClientConnection extends ClientConnection{
     server.addConnection(client);
 
     serverChannel = connectToServer;
-    serverChannel.listen((s)=>handleString(s));
+    serverChannel.listen((s)=>handleJSON(s));
   }
 }

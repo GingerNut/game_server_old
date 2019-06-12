@@ -25,9 +25,12 @@ class Login extends Message{
   String get string => code + playerId + delimiter + password;
 
   Login.fromJSON(String string){
+
     var jsonObject = jsonDecode(string);
 
     playerId = jsonObject['player_id'];
+    password = jsonObject['password'];
+
   }
 
   get json => jsonEncode({

@@ -10,7 +10,7 @@ import 'command.dart';
 
 class MakeMove extends Message{
   static const type = 'make_move';
-
+static const code = 'mov';
 
   String gameId;
   String move;
@@ -19,7 +19,7 @@ class MakeMove extends Message{
 
   MakeMove(this.gameId, this.playerId, this.token, this.move);
 
-  String toString() => Command.move
+  String toString() => code
       + gameId + Command.delimiter
       + playerId + Command.delimiter
       + token + Command.delimiter

@@ -1,12 +1,18 @@
 import 'dart:convert' as JSON;
 
 import 'package:game_server/src/messages/response/login_success.dart';
+import 'package:game_server/src/messages/response/player_list.dart';
 
+import 'chat/chat_message.dart';
+import 'chat/private_message.dart';
 import 'command/echo.dart';
 import 'command/join_game.dart';
 import 'command/login.dart';
+import 'command/logout.dart';
 import 'command/make_move.dart';
 import 'command/new_game.dart';
+import 'command/request_login.dart';
+import 'command/request_player_list.dart';
 import 'command/send_game.dart';
 import 'command/set_player_status.dart';
 import 'command/start_game.dart';
@@ -37,6 +43,12 @@ class Inflater{
       case YourTurn.type: return YourTurn.fromJSON(string);
       case GameError.type: return GameError.fromJSON(string);
       case Success.type: return Success.fromJSON(string);
+      case RequestLogin.type: return RequestLogin.fromJSON(string);
+      case Logout.type: return Logout.fromJSON(string);
+      case RequestPlayerList.type: return RequestPlayerList.fromJSON(string);
+      case PlayerList.type: return PlayerList.fromJSON(string);
+      case ChatMessage.type: return ChatMessage.fromJSON(string);
+      case PrivateMessage.type: return PrivateMessage.fromJSON(string);
       default: return null;
     }
 
