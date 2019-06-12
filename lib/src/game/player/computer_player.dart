@@ -39,7 +39,7 @@ abstract class ComputerPlayer extends Player{
   handleMessage(String string){
     messagesIn.sink.add(string);
 
-    Message message = Inflater.inflate(string);
+    Message message = Message.inflate(string);
 
     switch(message.runtimeType){
 

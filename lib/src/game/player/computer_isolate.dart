@@ -9,7 +9,6 @@ import 'package:game_server/src/messages/command/tidy.dart';
 
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/command/your_turn.dart';
-import 'package:game_server/src/messages/inflater.dart';
 import 'package:game_server/src/messages/message.dart';
 
 import '../move.dart';
@@ -50,7 +49,7 @@ abstract class ComputerIsolate{
 
     handleMessage(String string) async{
 
-      Message message = Inflater.inflate(string);
+      Message message = Message.inflate(string);
 
         switch(message.runtimeType){
 

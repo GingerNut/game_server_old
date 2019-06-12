@@ -17,7 +17,6 @@ import 'package:game_server/src/messages/command/request_player_list.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/start_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
-import 'package:game_server/src/messages/inflater.dart';
 import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/echo_response.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
@@ -58,7 +57,7 @@ class ServerConnection implements ChannelHost {
 
   handleJSON(String string) async{
 
-    var message = Inflater.inflate(string);
+    var message = Message.inflate(string);
 
     messagesIn.sink.add(string);
 

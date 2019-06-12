@@ -13,7 +13,6 @@ import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/request_login.dart';
 import 'package:game_server/src/messages/command/request_player_list.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
-import 'package:game_server/src/messages/inflater.dart';
 import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 import 'package:game_server/src/messages/response/player_list.dart';
@@ -62,7 +61,7 @@ abstract class ClientConnection implements ChannelHost{
   setupChannel();
 
   handleJSON(String string){
-    var message = Inflater.inflate(string);
+    var message = Message.inflate(string);
 
     messagesIn.sink.add(string);
 
