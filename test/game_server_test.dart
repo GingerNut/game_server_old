@@ -297,8 +297,11 @@ void main()async{
       sarah.status = PlayerStatus.ready;
       trace.status = PlayerStatus.ready;
 
-//      expect(await nextMessage(henry.connection.messagesIn.stream), SetStatus.code + 'ready');
-//      expect(await nextMessage(henry.connection.messagesIn.stream), SetStatus.code + 'playing');
+      var message = Inflater.inflate(await nextMessage(henry.connection.messagesIn.stream));
+
+      expect(message.runtimeType, SetStatus);
+      var setStatus = message as SetStatus;
+      expect(setStatus.status, PlayerStatus.ready);
 
       //TODO make two or three moves
 
