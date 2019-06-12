@@ -39,16 +39,14 @@ abstract class ComputerPlayer extends Player{
   handleMessage(String string){
     messagesIn.sink.add(string);
 
-    String type = string.substring(0,3);
-    String details = string.substring(3);
+    Message message = Inflater.inflate(string);
 
-    switch(type){
+    switch(message.runtimeType){
 
-      case SetStatus.code:
-        var setStatus = SetStatus.fromString(details);
+      case SetStatus:
+        var setStatus = message as SetStatus;
         status = setStatus.status;
         break;
-
 
 
 
@@ -58,11 +56,11 @@ abstract class ComputerPlayer extends Player{
 
   }
 
-  send(String message) => sendPort.send(message);
+  send(Message message) => sendPort.send(message.json);
 
   @override
   tidyUp() {
-    sendPort.send(Tidy().string);
+    send(Tidy());
   }
 
 }

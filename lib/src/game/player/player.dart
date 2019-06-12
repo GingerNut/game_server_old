@@ -8,6 +8,8 @@ import 'package:game_server/src/game_server/server_connection/server_connection.
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
 import 'package:game_server/src/messages/command/your_turn.dart';
+import 'package:game_server/src/messages/inflater.dart';
+import 'package:game_server/src/messages/message.dart';
 
 
 import '../game.dart';

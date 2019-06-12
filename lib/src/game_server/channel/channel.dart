@@ -1,5 +1,7 @@
 
 
+import 'package:game_server/src/messages/message.dart';
+
 abstract class Channel{
   final ChannelHost host;
 
@@ -19,9 +21,9 @@ abstract class Channel{
 
 mixin ChannelHost{
 
-  handleString(String message);
+  handleJSON(String message);
 
-  send(String message);
+  send(Message message);
 
   close();
 }

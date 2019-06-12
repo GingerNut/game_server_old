@@ -6,7 +6,6 @@ import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
-import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/record.dart';
 import 'package:game_server/src/messages/command/echo.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
@@ -20,6 +19,7 @@ import 'package:game_server/src/messages/command/start_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/inflater.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:game_server/src/messages/response/echo_response.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 import 'package:game_server/src/messages/response/player_list.dart';
 import 'package:game_server/src/messages/response/success.dart';
@@ -53,100 +53,7 @@ class ServerConnection implements ChannelHost {
   }
 
   requestLogin(){
-    send(RequestLogin().json);
-  }
-
-  handleString(String message) async{
-    messagesIn.sink.add(message);
-
-    String type = message.substring(0,3);
-    String details = message.substring(3);
-
-    switch(type){
-      case Echo.code:
-        send("echo $details");
-        break;
-
-      case Login.code:
-
-        String reply = '';
-
-        var login = Login.fromString(details);
-
-        Record record = await server.db.getRecordWithId(login.playerId);
-
-        if(record == null) {
-          loginAttempts --;
-          send(GameError('player not found').string);
-        } else if(login.password != record.password){
-
-          loginAttempts --;
-          send(GameError('password incorrect').string);
-        } else if(server.clientWithLogin(login.playerId)){
-
-          server.removeConnection(this);
-          send(GameError('already logged in').string);
-
-        } else {
-
-          this.id = login.playerId;
-          this.displayName = record.displayName;
-
-          var logSuccess = LoginSuccess(id, _getSecret(), displayName);
-          send(logSuccess.string);
-        }
-        break;
-
-      case RequestPlayerList.code:
-        send(RequestPlayerList.code + server.playersOnlineList);
-        break;
-
-      case LoginSuccess.code:
-        server.addMember(this);
-        break;
-
-      case Logout.code:
-        server.removeConnection(this);
-        server.removeMember(this);
-        break;
-
-
-      case ChatMessage.code:
-        ChatMessage msg = ChatMessage.fromString(details);
-        server.addGeneralChat(msg);
-        break;
-
-      case PrivateMessage.code:
-        PrivateMessage msg = PrivateMessage.fromString(details);
-        server.addPrivateMessage(msg);
-        break;
-
-      case NewGame.code:
-        NewGame advert = NewGame.fromString(details);
-        server.advertiseGame(advert);
-        break;
-
-      case JoinGame.code:
-        var join = JoinGame.fromString(details);
-        Message response = await server.joinGame(player, join.gameId);
-        send(response.string);
-        break;
-
-      case StartGame.code:
-        var start = StartGame.fromString(details);
-        Message response = await server.startGame(start.gameId);
-        send(response.string);
-        break;
-
-      case SetStatus.code:
-        player.status = SetStatus.fromString(details).status;
-        break;
-
-        default:
-          send(GameError('unknown command').string);
-          break;
-
-    }
+    send(RequestLogin());
   }
 
   handleJSON(String string) async{
@@ -158,7 +65,7 @@ class ServerConnection implements ChannelHost {
     switch(message.runtimeType){
 
       case Echo:
-        send("echo ${(message as Echo).text}");
+        send(EchoResponse(string));
         break;
 
       case Login:
@@ -169,15 +76,15 @@ class ServerConnection implements ChannelHost {
 
         if(record == null) {
           loginAttempts --;
-          send(GameError('player not found').json);
+          send(GameError('player not found'));
         } else if(login.password != record.password){
 
           loginAttempts --;
-          send(GameError('password incorrect').json);
+          send(GameError('password incorrect'));
         } else if(server.clientWithLogin(login.playerId)){
 
           server.removeConnection(this);
-          send(GameError('already logged in').json);
+          send(GameError('already logged in'));
 
         } else {
 
@@ -185,13 +92,13 @@ class ServerConnection implements ChannelHost {
           this.displayName = record.displayName;
 
           var logSuccess = LoginSuccess(id, _getSecret(), displayName);
-          send(logSuccess.json);
+          send(logSuccess);
         }
         break;
 
       case RequestPlayerList:
 
-        send(PlayerList(server.playersOnlineList.split(Command.delimiter)).json);
+        send(PlayerList(server.playersOnlineList));
         break;
 
       case LoginSuccess:
@@ -222,13 +129,13 @@ class ServerConnection implements ChannelHost {
       case JoinGame:
         var join = message  as JoinGame;
         Success response = await server.joinGame(player, join.gameId);
-        send(response.json);
+        send(response);
         break;
 
       case StartGame:
         var start = message as StartGame;
         Success response = await server.startGame(start.gameId);
-        send(response.json);
+        send(response);
         break;
 
       case SetStatus:
@@ -237,7 +144,7 @@ class ServerConnection implements ChannelHost {
         break;
 
       default:
-        send(GameError('unknown command').string);
+        send(GameError('unknown command'));
         break;
 
 
@@ -246,8 +153,8 @@ class ServerConnection implements ChannelHost {
   }
 
 
-  send(String message){
-    clientChannel.sink(message);
+  send(Message message){
+    clientChannel.sink(message.json);
   }
 
   String _getSecret(){

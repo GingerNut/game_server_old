@@ -7,15 +7,12 @@ import '../message.dart';
 
 class SetStatus extends Message{
   static const type = 'set_player_status';
-  static const String code = 'set';
 
   PlayerStatus status;
 
   SetStatus(PlayerStatus status){
     this.status = status;
   }
-
-  String get string => code + Position.playerStatusToString(status);
 
   SetStatus.fromString(String details){
     status = Position.playerStatusFromString(details);

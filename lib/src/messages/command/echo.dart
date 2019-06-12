@@ -1,15 +1,17 @@
 import 'dart:convert';
 
+import 'package:game_server/src/messages/response/echo_response.dart';
+
 import '../message.dart';
 
 class Echo extends Message{
   static const type = 'echo';
-  static const code = 'ech';
+
   String text;
 
   Echo(this.text);
 
-  String get string => code;
+  EchoResponse get response => EchoResponse('echo ' + text);
 
   Echo.fromJSON(String string){
     var jsonObject = jsonDecode(string);

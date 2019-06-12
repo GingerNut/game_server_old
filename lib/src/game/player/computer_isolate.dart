@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:isolate';
 
-import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/messages/command/echo.dart';
 import 'package:game_server/src/messages/command/send_game.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
@@ -10,6 +9,8 @@ import 'package:game_server/src/messages/command/tidy.dart';
 
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/command/your_turn.dart';
+import 'package:game_server/src/messages/inflater.dart';
+import 'package:game_server/src/messages/message.dart';
 
 import '../move.dart';
 import '../move_builder.dart';
@@ -40,7 +41,7 @@ abstract class ComputerIsolate{
           await Future.delayed(Duration(milliseconds : 100));
         }
 
-        sendPort.send(SetStatus(PlayerStatus.ready).string);
+        send(SetStatus(PlayerStatus.ready));
     }
 
 
@@ -49,30 +50,30 @@ abstract class ComputerIsolate{
 
     handleMessage(String string) async{
 
-        String type = string.substring(0,3);
-        String details = string.substring(3);
+      Message message = Inflater.inflate(string);
 
-        switch(type){
+        switch(message.runtimeType){
 
-            case Tidy.code:
+            case Tidy:
                 receivePort.close();
                 break;
 
-          case Echo.code:
-            sendPort.send('echo ' + details);
+          case Echo:
+            var echo = message as Echo;
+            send(echo.response);
             break;
 
-          case SendGame.code:
-            await createPosition(details);
+          case SendGame:
+            await createPosition(string);
             ready = true;
             break;
 
-          case YourTurn.code:
-            yourTurn(details);
+          case YourTurn:
+            yourTurn(string);
             break;
 
-          case Move.code:
-            doMove(details);
+          case Move:
+            doMove(string);
             break;
 
           default:
@@ -80,6 +81,10 @@ abstract class ComputerIsolate{
 
         }
 
+    }
+
+    send(Message message) {
+      sendPort.send(message.json);
     }
 
     Future createPosition(String details);

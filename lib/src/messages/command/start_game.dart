@@ -8,7 +8,7 @@ import 'new_game.dart';
 
 class StartGame extends Message{
   static const String type = 'start_game';
-  static const String code = 'sta';
+
   String gameId;
 
   StartGame(NewGame game){
@@ -19,8 +19,6 @@ class StartGame extends Message{
     this.gameId = details;
   }
 
-  String get string => code
-      + gameId;
 
 
   StartGame.fromJSON(String string){

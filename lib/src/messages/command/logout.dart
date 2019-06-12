@@ -4,12 +4,10 @@ import '../message.dart';
 
 class Logout extends Message{
   static const type = 'logout';
-  static const code = 'lgo';
+
   String player_id;
 
   Logout(this.player_id);
-
-  String get string => code;
 
   Logout.fromJSON(String string){
     var jsonObject = jsonDecode(string);

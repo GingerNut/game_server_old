@@ -13,7 +13,7 @@ class FieFoFumComputerPlayer extends ComputerPlayer{
   }
 
   sendGame() {
-    send(FieFoFumSendGame.fromGame(game).string);
+    send(FieFoFumSendGame.fromGame(game));
   }
 }
 

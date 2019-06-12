@@ -7,7 +7,7 @@ import '../message.dart';
 
 class YourTurn extends Message{
   static const String type = 'your_turn';
-  static const String code = 'you';
+
   String gameId;
 
   YourTurn(this.gameId);
@@ -16,8 +16,6 @@ class YourTurn extends Message{
     this.gameId = details;
   }
 
-  String get string => code
-      + gameId;
 
 
   YourTurn.fromJSON(String string){

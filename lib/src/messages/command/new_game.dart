@@ -12,7 +12,6 @@ import '../message.dart';
 
 class NewGame extends Message{
   static const String type = 'new_game';
-  static const String code = 'new';
 
   String id = 'game id';
   String displayName ='';
@@ -49,31 +48,7 @@ class NewGame extends Message{
 
 
 
-  NewGame.fromString(String details){
 
-    List<String> detailList = details.split(delimiter);
-    this.id = detailList[0];
-    this.displayName = detailList[1];
-    this.maxPlayers = int.parse(detailList[2]);
-    this.numberOfPlayers = int.parse(detailList[3]);
-    this.timer = detailList[4] == 'TRUE' ? true : false;
-    this.moveTime = double.parse(detailList[5]);
-    this.gameTime = double.parse(detailList[6]);
-  }
-
-  String get string{
-    String string = '';
-    string += code;
-    string += id + delimiter;
-    string += displayName + delimiter;
-    string += maxPlayers.toString() + delimiter;
-    string += numberOfPlayers.toString() + delimiter;
-    string += timer ? 'TRUE' : 'FALSE' ;
-    string += delimiter;
-    string += moveTime.toString() + delimiter;
-    string += gameTime.toString() + delimiter;
-    return string;
-  }
 
   NewGame.local(Settings settings){
     id = 'local game';

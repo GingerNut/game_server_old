@@ -9,7 +9,7 @@ import '../message.dart';
 
 class SendGame extends Message{
   static const type = 'send_game';
-  static const code = 'sng';
+
 
   Board board;
   Position position;
@@ -29,7 +29,7 @@ class SendGame extends Message{
   String get string {
 
     String string = '';
-    string += code;
+//    string += code;
     string += board == null ? ' ' : board.string;
     string += delimiter;
     string += position.string;

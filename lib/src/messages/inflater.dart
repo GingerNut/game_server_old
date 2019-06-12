@@ -1,5 +1,6 @@
 import 'dart:convert' as JSON;
 
+import 'package:game_server/src/messages/response/echo_response.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 import 'package:game_server/src/messages/response/player_list.dart';
 
@@ -32,6 +33,7 @@ class Inflater{
 
       case LoginSuccess.type: return LoginSuccess.fromJSON(string);
       case Echo.type: return Echo.fromJSON(string);
+      case EchoResponse.type: return EchoResponse.fromJSON(string);
       case JoinGame.type: return JoinGame.fromJSON(string);
       case Login.type: return Login.fromJSON(string);
       case MakeMove.type: return MakeMove.fromJSON(string);

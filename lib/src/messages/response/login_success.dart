@@ -9,7 +9,6 @@ import 'response.dart';
 
 class LoginSuccess extends Success{
     static const String type = 'login_success';
-    static const String code = 'lgs';
 
     String playerId;
     String playerSecret;
@@ -17,13 +16,6 @@ class LoginSuccess extends Success{
 
     LoginSuccess(this.playerId, this.playerSecret, this.displayName);
 
-    LoginSuccess.fromString(String string){
-        List<String> details = string.split((delimiter));
-
-        playerId = details[0];
-        playerSecret = details[1];
-        displayName = details[2];
-    }
 
     LoginSuccess.fromJSON(String string){
 
@@ -34,12 +26,6 @@ class LoginSuccess extends Success{
         displayName = jsonObject['display_name'];
     }
 
-    String get string {
-
-        return code + playerId + delimiter
-            + playerSecret + delimiter
-            + displayName;
-    }
 
 
     get json => jsonEncode({

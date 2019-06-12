@@ -1,7 +1,6 @@
 
 import 'dart:convert';
 
-import 'package:game_server/src/messages/command/command.dart';
 
 import '../message.dart';
 

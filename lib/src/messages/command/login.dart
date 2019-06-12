@@ -9,7 +9,6 @@ import '../message.dart';
 class Login extends Message{
   static const type ='login';
 
-  static const code = 'log';
   String playerId;
   String password;
 
@@ -22,7 +21,6 @@ class Login extends Message{
     password = details[1];
   }
 
-  String get string => code + playerId + delimiter + password;
 
   Login.fromJSON(String string){
 

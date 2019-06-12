@@ -8,7 +8,6 @@ import 'package:game_server/src/interface/http_interface.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
-import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/messages/command/login.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/request_login.dart';
@@ -62,55 +61,6 @@ abstract class ClientConnection implements ChannelHost{
 
   setupChannel();
 
-  handleString(String message){
-    messagesIn.sink.add(message);
-
-    String type = message.substring(0,3);
-    String details = message.substring(3);
-
-    switch(type){
-
-      case RequestLogin.code:
-        var login = Login(id, password);
-         send(login.string);
-        break;
-
-      case RequestPlayerList.code:
-        clients = details.split(Command.delimiter);
-        break;
-
-      case LoginSuccess.code:
-        var logSuccess = LoginSuccess.fromString(details);
-        loginStatus = LoginStatus.good;
-        secret = logSuccess.playerSecret;
-        displayName = logSuccess.displayName;
-        send(logSuccess.string);
-        break;
-
-      case ChatMessage.code:
-        var msg = ChatMessage.fromString(details);
-        interface.chatMessages.add(msg);
-        break;
-
-      case PrivateMessage.code:
-        var msg = PrivateMessage.fromString(details);
-        interface.privateMessages.add(msg);
-        break;
-
-      case NewGame.code:
-        var advert = NewGame.fromString(details);
-        interface.adverts.add(advert);
-        break;
-
-      case GameError.code:
-        GameError error = GameError.fromString(details) ;
-        loginStatus = LoginStatus.error;
-        break;
-
-    }
-
-  }
-
   handleJSON(String string){
     var message = Inflater.inflate(string);
 
@@ -120,7 +70,7 @@ abstract class ClientConnection implements ChannelHost{
 
       case RequestLogin:
         var login = Login(id, password);
-        send(login.json);
+        send(login);
         break;
 
       case PlayerList:
@@ -132,7 +82,7 @@ abstract class ClientConnection implements ChannelHost{
         loginStatus = LoginStatus.good;
         secret = login.playerSecret;
         displayName = login.displayName;
-        send(login.json);
+        send(login);
         break;
 
       case ChatMessage:
@@ -157,8 +107,8 @@ abstract class ClientConnection implements ChannelHost{
 
   }
 
-  send(String message){
-    serverChannel.sink(message);
+  send(Message message){
+    serverChannel.sink(message.json);
   }
 
 }

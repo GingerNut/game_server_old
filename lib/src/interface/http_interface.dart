@@ -7,7 +7,6 @@ import 'package:game_server/src/game_server/advert_list.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
-import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/logout.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
@@ -36,15 +35,15 @@ abstract class HttpInterface extends Interface{
   }
 
   logout(){
-    connection.send(Logout(id).json);
+    connection.send(Logout(id));
     connection.close();
   }
 
-  advertiseGame()=> connection.send(NewGame.fromSettings(onlineSettings).json);
+  advertiseGame()=> connection.send(NewGame.fromSettings(onlineSettings));
 
-  joinGame(NewGame game)=> connection.send(JoinGame(game).json);
+  joinGame(NewGame game)=> connection.send(JoinGame(game));
 
-  startGame(NewGame game)=> connection.send(StartGame(game).json);
+  startGame(NewGame game)=> connection.send(StartGame(game));
 
   set status (PlayerStatus status) {
     bool changed = false;
@@ -53,14 +52,14 @@ abstract class HttpInterface extends Interface{
 
     _status = status;
 
-    if (changed) connection.send(SetStatus(status).json);
+    if (changed) connection.send(SetStatus(status));
   }
 
   PlayerStatus get status => _status;
 
-  sendChat(String text) async => connection.send(ChatMessage(id, text).json);
+  sendChat(String text) async => connection.send(ChatMessage(id, text));
 
-  sendMessage(String to, String text) => connection.send(PrivateMessage(id, to, text).json);
+  sendMessage(String to, String text) => connection.send(PrivateMessage(id, to, text));
 
 
 }

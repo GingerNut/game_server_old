@@ -1,25 +1,15 @@
-
-
-
-
-
-
 import 'dart:convert';
 
 import '../message.dart';
 
-class Success extends Message{
-  static const String type = 'success';
+class EchoResponse extends Message{
+  static const type = 'echo_response';
 
-  String text = '';
+  String text;
 
-  bool operator ==(other) => other is Success;
+  EchoResponse(this.text);
 
-  Success();
-
-
-
-  Success.fromJSON(String string){
+  EchoResponse.fromJSON(String string){
     var jsonObject = jsonDecode(string);
 
     text = jsonObject['text'];
@@ -29,4 +19,9 @@ class Success extends Message{
     'type': type,
     'text' : text
   });
+
+
+
+
+
 }

@@ -5,7 +5,6 @@ import 'package:game_server/src/game/game_host.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
-import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
@@ -29,15 +28,13 @@ abstract class GameServer implements GameHost{
 
   List get _players => __playersOnline;
 
-  String get playersOnlineList{
-    String string = '';
+  List<String> get playersOnlineList {
 
-    for(int i = 0 ; i < __playersOnline.length ; i++){
-      ServerPlayer m = __playersOnline[i];
-      string += m.connection.displayName;
-      if(i < __playersOnline.length -1)string += Command.delimiter;
-    }
-    return string;
+    List<String> playersOnline = new List();
+
+    __playersOnline.forEach((p) => playersOnline.add(p.displayName));
+
+    return playersOnline;
   }
 
   bool clientWithLogin(String id) => __playersOnline.any((p) => (p.id == id));
@@ -63,6 +60,7 @@ abstract class GameServer implements GameHost{
       if(p.id == connection.id) {
 //        p.connection.send(ConnectionSuperseded);
         //TODO superseding connection
+
         p.connection.close();
         p.connection = connection;
         connection.player = p;
@@ -73,6 +71,7 @@ abstract class GameServer implements GameHost{
     if(player == null) {
       player = ServerPlayer(connection.id);
       player.connection = connection;
+      player.displayName = connection.displayName;
       connection.player = player;
       __playersOnline.add(player);
     }
@@ -90,7 +89,7 @@ abstract class GameServer implements GameHost{
   broadcast(Message message){
 
     _players.forEach((m) {
-      m.connection.send(message.json);
+      m.connection.send(message);
     });
   }
 
@@ -140,11 +139,11 @@ abstract class GameServer implements GameHost{
     });
 
     if(to != null) {
-      to.connection.send(message.json);
-      if(from != null) from.connection.send(message.json);
+      to.connection.send(message);
+      if(from != null) from.connection.send(message);
 
     } else {
-      if(from != null) from.connection.send(PrivateMessage('server', from.id, message.to + ' is not online').json);
+      if(from != null) from.connection.send(PrivateMessage('server', from.id, message.to + ' is not online'));
     }
 
 

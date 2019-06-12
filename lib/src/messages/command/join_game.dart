@@ -9,7 +9,7 @@ import 'new_game.dart';
 
 class JoinGame extends Message{
   static const type = 'join_game';
-  static const String code = 'joi';
+
     String gameId;
 
 
@@ -20,9 +20,6 @@ class JoinGame extends Message{
   JoinGame.fromString(String details){
     this.gameId = details;
   }
-
-  String get string => code
-      + gameId;
 
 
   JoinGame.fromJSON(String string){
