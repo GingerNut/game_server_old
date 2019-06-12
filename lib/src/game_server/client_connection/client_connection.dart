@@ -57,6 +57,7 @@ abstract class ClientConnection implements ChannelHost{
   setupChannel();
 
   handleString(String message){
+    print(message);
     messagesIn.sink.add(message);
 
     String type = message.substring(0,3);
