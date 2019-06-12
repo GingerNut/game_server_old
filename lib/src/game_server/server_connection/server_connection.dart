@@ -7,9 +7,11 @@ import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/game_server/database/record.dart';
+import 'package:game_server/src/messages/command/echo.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/login.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/command/request_player_list.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/start_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
@@ -55,7 +57,7 @@ class ServerConnection implements ChannelHost {
     String details = message.substring(3);
 
     switch(type){
-      case Command.echo:
+      case Echo.code:
         send("echo $details");
         break;
 
@@ -89,8 +91,8 @@ class ServerConnection implements ChannelHost {
         }
         break;
 
-      case Command.requestClientList:
-        send(Command.requestClientList + server.playersOnlineList);
+      case RequestPlayerList.code:
+        send(RequestPlayerList.code + server.playersOnlineList);
         break;
 
       case LoginSuccess.code:

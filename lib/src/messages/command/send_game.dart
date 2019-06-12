@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:game_server/src/game/board/board.dart';
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/move.dart';
@@ -5,7 +7,8 @@ import 'package:game_server/src/game/position.dart';
 
 import '../message.dart';
 
-abstract class SendGame extends Message{
+class SendGame extends Message{
+  static const type = 'send_game';
   static const code = 'sng';
 
   Board board;
@@ -41,7 +44,16 @@ abstract class SendGame extends Message{
 
   }
 
+  SendGame.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
 
+
+  }
+
+  get json => jsonEncode({
+    'type': type,
+
+  });
 
 
 

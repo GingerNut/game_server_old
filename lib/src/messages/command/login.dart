@@ -2,9 +2,12 @@
 
 
 
+import 'dart:convert';
+
 import '../message.dart';
 
 class Login extends Message{
+  static const type ='login';
 
   static const code = 'log';
   String playerId;
@@ -19,10 +22,18 @@ class Login extends Message{
     password = details[1];
   }
 
-
-
   String get string => code + playerId + delimiter + password;
 
+  Login.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
 
+    playerId = jsonObject['player_id'];
+  }
+
+  get json => jsonEncode({
+    'type': type,
+    'player_id' : playerId,
+    'password' : password
+  });
 
 }

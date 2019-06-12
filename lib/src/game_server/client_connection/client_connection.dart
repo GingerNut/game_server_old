@@ -10,6 +10,7 @@ import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
 import 'package:game_server/src/messages/command/login.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/command/request_player_list.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 
@@ -70,7 +71,7 @@ abstract class ClientConnection implements ChannelHost{
          send(login.string);
         break;
 
-      case Command.requestClientList:
+      case RequestPlayerList.code:
         clients = details.split(Command.delimiter);
         break;
 

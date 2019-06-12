@@ -9,7 +9,9 @@ import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/command.dart';
+import 'package:game_server/src/messages/command/echo.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/command/request_player_list.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
@@ -79,7 +81,7 @@ void main()async{
 
 
     test('Basic computer connection', () async{
-      computer.sendPort.send(Command.echo + 'hey');
+      computer.sendPort.send(Echo.code + 'hey');
       expect((await nextMessage(computer.messagesIn.stream)), 'echo hey');
 
     });
@@ -175,9 +177,9 @@ void main()async{
 
     test('communication basics',() async{
 
-      ui.connection.send(Command.requestClientList);
+      ui.connection.send(RequestPlayerList.code);
 
-      expect((await nextMessage(ui.connection.messagesIn.stream)), Command.requestClientList + 'Emma');
+      expect((await nextMessage(ui.connection.messagesIn.stream)), RequestPlayerList.code + 'Emma');
 
       expect(ui.connection.clients.length, 1);
       expect(server.numberOfClients, 1);
@@ -219,9 +221,9 @@ void main()async{
     test('Logins and chat',() async{
 
       expect(server.numberOfClients, 4);
-      henry.connection.send(Command.requestClientList);
+      henry.connection.send(RequestPlayerList.code);
       expect( await nextMessage(henry.connection.messagesIn.stream),
-      Command.requestClientList
+      RequestPlayerList.code
           + 'Henry' + Command.delimiter
           + 'Jim' + Command.delimiter
           + 'Sarah' + Command .delimiter
@@ -323,19 +325,19 @@ void main()async{
 
     test('communication basics',() async{
 
-      emma.connection.send(Command.requestClientList);
+      emma.connection.send(RequestPlayerList.code);
 
-      expect((await nextMessage(emma.connection.messagesIn.stream)), Command.requestClientList + 'Emma');
+      expect((await nextMessage(emma.connection.messagesIn.stream)), RequestPlayerList.code + 'Emma');
 
       expect(emma.connection.clients.length, 1);
 
       await henry.login('henry', 'h1235');
 
-      emma.connection.send(Command.requestClientList);
-      expect((await nextMessage(emma.connection.messagesIn.stream)), Command.requestClientList + 'Emma');
+      emma.connection.send(RequestPlayerList.code);
+      expect((await nextMessage(emma.connection.messagesIn.stream)), RequestPlayerList.code + 'Emma');
 
       await henry.login('henry', 'h1234');
-      expect((await nextMessage(emma.connection.messagesIn.stream)), Command.requestClientList + 'Emma' + Command.delimiter + 'Henry');
+      expect((await nextMessage(emma.connection.messagesIn.stream)), RequestPlayerList.code + 'Emma' + Command.delimiter + 'Henry');
 
 
     });
@@ -369,9 +371,9 @@ void main()async{
 
     test('Logins and chat',() async{
 
-      henry.connection.send(Command.requestClientList);
+      henry.connection.send(RequestPlayerList.code);
       expect( await nextMessage(henry.connection.messagesIn.stream),
-          Command.requestClientList
+          RequestPlayerList.code
               + 'Henry' + Command.delimiter
               + 'Jim' + Command.delimiter
               + 'Sarah' + Command .delimiter

@@ -1,6 +1,8 @@
 
 
 
+import 'dart:convert';
+
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
@@ -9,6 +11,7 @@ import 'package:game_server/src/messages/response/success.dart';
 import '../message.dart';
 
 class NewGame extends Message{
+  static const String type = 'new_game';
   static const String code = 'new';
 
   String id = 'game id';
@@ -121,5 +124,28 @@ class NewGame extends Message{
 
   }
 
+
+  NewGame.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
+
+    id = jsonObject['id'];
+    displayName = jsonObject['display_name'];
+    maxPlayers = jsonObject['max_players'];
+    numberOfPlayers = jsonObject['number_of_players'];
+    timer = jsonObject['time'] == 'TRUE' ? true : false;
+    moveTime = jsonObject['move_time'];
+    gameTime = jsonObject['game_time'];
+  }
+
+  get json => jsonEncode({
+    'type': type,
+
+    'display_name':displayName,
+    'max_players': maxPlayers,
+    'number_of_players':numberOfPlayers,
+    'timer': timer == true ? 'TRUE' : 'FALSE',
+    'move_time':moveTime,
+    'game_time':gameTime
+  });
 
 }

@@ -4,9 +4,12 @@
 
 
 
+import 'dart:convert';
+
 import '../message.dart';
 
 class Success extends Message{
+  static const String type = 'success';
   static const String code = 'suc';
   String text = '';
 
@@ -22,5 +25,14 @@ class Success extends Message{
   String get string => code;
 
 
+  Success.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
 
+    text = jsonObject['text'];
+  }
+
+  get json => jsonEncode({
+    'type': type,
+    'text' : text
+  });
 }
