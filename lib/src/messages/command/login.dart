@@ -14,14 +14,6 @@ class Login extends Message{
 
   Login(this.playerId, this.password);
 
-  Login.fromString(String string){
-    List<String> details = string.split((delimiter));
-
-    playerId = details[0];
-    password = details[1];
-  }
-
-
   Login.fromJSON(String string){
 
     var jsonObject = jsonDecode(string);

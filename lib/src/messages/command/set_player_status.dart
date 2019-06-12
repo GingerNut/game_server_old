@@ -14,12 +14,6 @@ class SetStatus extends Message{
     this.status = status;
   }
 
-  SetStatus.fromString(String details){
-    status = Position.playerStatusFromString(details);
-  }
-
-
-
   SetStatus.fromJSON(String string){
     var jsonObject = jsonDecode(string);
 

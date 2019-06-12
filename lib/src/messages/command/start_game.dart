@@ -15,11 +15,6 @@ class StartGame extends Message{
     this.gameId = game.id;
   }
 
-  StartGame.fromString(String details){
-    this.gameId = details;
-  }
-
-
 
   StartGame.fromJSON(String string){
     var jsonObject = jsonDecode(string);

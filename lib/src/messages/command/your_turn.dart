@@ -12,11 +12,6 @@ class YourTurn extends Message{
 
   YourTurn(this.gameId);
 
-  YourTurn.fromString(String details){
-    this.gameId = details;
-  }
-
-
 
   YourTurn.fromJSON(String string){
     var jsonObject = jsonDecode(string);

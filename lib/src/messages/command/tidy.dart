@@ -9,8 +9,6 @@ class Tidy extends Message{
   Tidy();
 
 
-
-
 Tidy.fromJSON(String string){
   var jsonObject = jsonDecode(string);
 }

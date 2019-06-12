@@ -17,10 +17,6 @@ class JoinGame extends Message{
     this.gameId = game.id;
   }
 
-  JoinGame.fromString(String details){
-    this.gameId = details;
-  }
-
 
   JoinGame.fromJSON(String string){
     var jsonObject = jsonDecode(string);

@@ -5,8 +5,6 @@ import '../message.dart';
 class RequestLogin extends Message{
   static const type = 'request_login';
 
-
-
   RequestLogin();
 
 
