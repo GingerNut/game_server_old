@@ -41,6 +41,7 @@ abstract class ComputerPlayer extends Player{
 
   yourTurn()=> send(YourTurn(gameId));
 
+  gameStarted(String gameId) => send(GameStarted(gameId));
 
   startComputer();
 

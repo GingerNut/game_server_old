@@ -71,6 +71,8 @@ abstract class Game {
 
     players.forEach((p) => p.status = PlayerStatus.playing);
 
+    players.forEach((p) => p.gameStarted(id));
+
     players.firstWhere((p) => p.id ==_position.playerId).yourTurn();
     return;
   }

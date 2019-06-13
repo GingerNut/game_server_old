@@ -7,6 +7,7 @@ import 'package:game_server/src/messages/response/player_list.dart';
 import 'chat/chat_message.dart';
 import 'chat/private_message.dart';
 import 'command/echo.dart';
+import 'command/game_started.dart';
 import 'command/join_game.dart';
 import 'command/login.dart';
 import 'command/logout.dart';
@@ -76,6 +77,8 @@ abstract class Message{
         return PrivateMessage.fromJSON(string);
       case SetId.type:
         return SetId.fromJSON(string);
+      case GameStarted.type:
+        return GameStarted.fromJSON(string);
       default:
         return null;
     }

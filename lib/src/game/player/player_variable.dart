@@ -126,4 +126,11 @@ class PlayerVariable<T>{
       default: return '';
     }
   }
+
+  printVariable(){
+
+    print(string);
+
+  }
+
 }

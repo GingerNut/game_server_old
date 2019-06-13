@@ -3,10 +3,12 @@ import 'dart:async';
 import 'dart:isolate';
 
 import 'package:game_server/src/messages/command/echo.dart';
+import 'package:game_server/src/messages/command/game_started.dart';
 import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/send_position.dart';
 import 'package:game_server/src/messages/command/setId.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
+import 'package:game_server/src/messages/command/start_game.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
 
 import 'package:game_server/src/game/player/player.dart';
@@ -72,6 +74,10 @@ abstract class ComputerIsolate{
             gameId = position.gameId;
             await analysePosition(position);
             ready = true;
+            break;
+
+          case GameStarted:
+            position.playerIds.forEach((p) => position.playerStatus[p] = PlayerStatus.playing);
             break;
 
           case YourTurn:

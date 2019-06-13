@@ -51,6 +51,7 @@ abstract class Position{
   bool canPlay(String id);
 
   makeMove(Move move){
+
     move.go(this);
     lastMove = move;
 
@@ -78,6 +79,7 @@ abstract class Position{
 
     switch(playerOrder){
       case PlayerOrder.sequential:
+
         String p = playerQueue.removeAt(0);
         if(playerStatus[p] == PlayerStatus.playing) playerQueue.add(p);
         break;
