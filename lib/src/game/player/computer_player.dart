@@ -1,12 +1,15 @@
 part of player;
 
 
+
+
 abstract class ComputerPlayer extends Player{
 
   bool computerReady = false;
 
   ReceivePort receivePort = ReceivePort();
   SendPort sendPort;
+  MoveBuilder get moveBuilder;
 
   StreamController<String> messagesIn;  // just for testing
 
@@ -28,7 +31,18 @@ abstract class ComputerPlayer extends Player{
       await Future.delayed(Duration(milliseconds : 1));
     }
 
+    send(SetId(id));
+
     send(SendPosition.fromGame(game));
+
+  }
+
+  moveUpdate(MakeMove move){
+    send(move);
+  }
+
+  yourTurn(){
+    send(YourTurn(gameId));
 
   }
 
@@ -47,9 +61,11 @@ abstract class ComputerPlayer extends Player{
         status = setStatus.status;
         break;
 
+      case MakeMove:
+        var makeMove = message as MakeMove;
+        Move move = makeMove.build(moveBuilder);
 
-
-
+        game.makeMove(move);
 
     }
 

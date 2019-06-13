@@ -21,6 +21,10 @@ class ServerPlayer extends Player{
     if (changed && connection != null) connection.send(SetStatus(newStatus));
   }
 
+  moveUpdate(MakeMove move){
+    connection.send(move);
+  }
+
   yourTurn(){
     if(connection != null) connection.send(YourTurn(gameId));
   }

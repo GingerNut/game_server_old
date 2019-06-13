@@ -80,10 +80,10 @@ void main()async{
 
     var ui = FieFoFumLocalInterface();
     var computer = FieFoFumComputerPlayer();
+    ui.addPlayer(Player());
+    ui.addPlayer(computer);
 
     setUp(()async{
-      ui.addPlayer(Player());
-      ui.addPlayer(computer);
       await ui.startGame(ui.newGame);
     });
 
@@ -96,8 +96,21 @@ void main()async{
       expect(response.runtimeType, EchoResponse);
       expect((response as EchoResponse).text, 'echo hey');
 
-    },//skip:''
+      ui.makeMove(MoveNumber());
+      expect((ui.position as FieFoFumPosition).count, 2);
+
+      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+
+      expect(response.runtimeType, MakeMove);
+      expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
+
+      expect((ui.position as FieFoFumPosition).count, 3);
+      expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
+
+
+    },
     );
+
 
 
     tearDown((){

@@ -1,5 +1,6 @@
 
 
+import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/position.dart';
@@ -37,6 +38,7 @@ abstract class Game {
 
   Future initialise() async{
     _position = getPosition();
+    _position.gameId = settings.id;
 
     List<String> playerIds = List();
     List<String> playerQueue = List();
@@ -113,6 +115,8 @@ abstract class Game {
         state = GameState.won;
       }
     }
+
+    players.forEach((p) => p.moveUpdate(MakeMove(settings.id, position.playerId, move)));
 
     if (state == GameState.inPlay) {
       players.firstWhere((p) => p.id ==_position.playerId).yourTurn();

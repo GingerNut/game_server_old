@@ -12,6 +12,7 @@ abstract class Position{
 
   Move lastMove;
 
+  String gameId;
   List<String> playerIds;
   List<String> playerQueue;
 
@@ -23,6 +24,7 @@ abstract class Position{
   String get string;
 
   String get json => jsonEncode({
+    'game_id' : gameId,
     'player_ids' : playerIds.join(','),
     'player_queue' : playerQueue.join(','),
     'player_status' : playerStatus.string,

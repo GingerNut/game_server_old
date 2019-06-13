@@ -5,6 +5,7 @@ import 'dart:isolate';
 import 'package:game_server/src/messages/command/echo.dart';
 import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/send_position.dart';
+import 'package:game_server/src/messages/command/setId.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
 
@@ -22,6 +23,8 @@ import '../position_builder.dart';
 abstract class ComputerIsolate{
 
     bool ready = false;
+    String gameId;
+    String playerId;
     final ReceivePort receivePort;
     final SendPort sendPort;
 
@@ -57,9 +60,15 @@ abstract class ComputerIsolate{
             send(echo.response);
             break;
 
+          case SetId:
+            var setid = message as SetId;
+            playerId = setid.text;
+            break;
+
           case SendPosition:
             SendPosition sendPosition = message as SendPosition;
             Position position = sendPosition.build(positionBuilder);
+            gameId = position.gameId;
             await analysePosition(position);
             ready = true;
             break;
@@ -87,7 +96,9 @@ abstract class ComputerIsolate{
 
     Future analysePosition(Position position);
 
-    doMove(Move move);
+    doMove(Move move){
+      position.makeMove(move);
+    }
 
     yourTurn(String details);
 

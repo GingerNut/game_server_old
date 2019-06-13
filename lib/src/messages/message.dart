@@ -15,6 +15,7 @@ import 'command/new_game.dart';
 import 'command/request_login.dart';
 import 'command/request_player_list.dart';
 import 'command/send_position.dart';
+import 'command/setId.dart';
 import 'command/set_player_status.dart';
 import 'command/start_game.dart';
 import 'command/tidy.dart';
@@ -73,6 +74,8 @@ abstract class Message{
         return ChatMessage.fromJSON(string);
       case PrivateMessage.type:
         return PrivateMessage.fromJSON(string);
+      case SetId.type:
+        return SetId.fromJSON(string);
       default:
         return null;
     }

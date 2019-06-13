@@ -12,6 +12,7 @@ abstract class PositionBuilder{
         var jsonObject = jsonDecode(string);
 
         Position position = getPosition();
+        position.gameId = jsonObject['game_id'];
         position.playerIds = jsonObject['player_ids'].split(',');
         position.playerQueue = jsonObject['player_queue'].split(',');
         position.playerStatus = PlayerVariable.playerVariablefromString(position, jsonObject['player_status']);

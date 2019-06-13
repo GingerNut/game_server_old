@@ -33,7 +33,7 @@ class FieFoFumPosition extends Position{
   }
 
   setFirstPlayer(){
-   playerQueue.shuffle();
+
   }
 
   bool canPlay(String id) => id == playerId;
