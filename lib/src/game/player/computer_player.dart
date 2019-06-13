@@ -37,14 +37,9 @@ abstract class ComputerPlayer extends Player{
 
   }
 
-  moveUpdate(MakeMove move){
-    send(move);
-  }
+  moveUpdate(MakeMove move)=> send(move);
 
-  yourTurn(){
-    send(YourTurn(gameId));
-
-  }
+  yourTurn()=> send(YourTurn(gameId));
 
 
   startComputer();

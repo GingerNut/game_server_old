@@ -1,15 +1,15 @@
 
 
-import 'package:game_server/src/game/player/player_variable.dart';
 import 'package:game_server/src/game/position.dart';
+
+import 'fie_fo_fum_position_builder.dart';
 
 class FieFoFumPosition extends Position{
 
   int count = 1;
   get playerOrder => PlayerOrder.sequential;
-  PlayerVariable<double> score;
-  PlayerVariable<double> gameTime;
-  PlayerVariable<double> moveTime;
+
+  get positionBuilder => FieFoFumPositionBuilder();
 
   String get string{
 
@@ -17,6 +17,7 @@ class FieFoFumPosition extends Position{
     string += count.toString();
     return string;
   }
+
 
   analyse() {
 

@@ -98,6 +98,7 @@ void main()async{
 
       ui.makeMove(MoveNumber());
       expect((ui.position as FieFoFumPosition).count, 2);
+      expect((ui.position.duplicate as FieFoFumPosition).count, 2);
 
       response = Message.inflate(await nextMessage(computer.messagesIn.stream));
 
@@ -106,6 +107,10 @@ void main()async{
 
       expect((ui.position as FieFoFumPosition).count, 3);
       expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
+
+      ui.makeMove(MoveFie());
+      expect((ui.position as FieFoFumPosition).count, 4);
+
 
 
     },

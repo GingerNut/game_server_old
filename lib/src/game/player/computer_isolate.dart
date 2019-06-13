@@ -13,6 +13,7 @@ import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/command/your_turn.dart';
 import 'package:game_server/src/messages/message.dart';
 
+
 import '../move.dart';
 import '../move_builder.dart';
 import '../position.dart';
@@ -97,7 +98,9 @@ abstract class ComputerIsolate{
     Future analysePosition(Position position);
 
     doMove(Move move){
+
       position.makeMove(move);
+
     }
 
     yourTurn(String details);

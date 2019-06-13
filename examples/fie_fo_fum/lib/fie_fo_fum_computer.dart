@@ -6,7 +6,11 @@ import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/command/make_move.dart';
 
 import 'fie_fo_fum_move_builder.dart';
+import 'fie_fo_fum_position.dart';
 import 'fie_fo_fum_position_builder.dart';
+import 'move_fie.dart';
+import 'move_fo.dart';
+import 'move_fum.dart';
 import 'move_number.dart';
 
 
@@ -16,9 +20,9 @@ class FieFoFumComputer extends ComputerIsolate{
   get moveBuilder => FieFoFumMoveBuilder();
   get positionBuilder => FieFoFumPositionBuilder();
 
-  findBestMove() {
+  List<Move> moves = new List();
 
-  }
+  Move bestMove;
 
   Future analysePosition(Position position) async{
 
@@ -29,9 +33,58 @@ class FieFoFumComputer extends ComputerIsolate{
     return;
   }
 
+  findPossibleMoves(){
+
+    moves.add(MoveNumber());
+    moves.add(MoveFie());
+    moves.add(MoveFo());
+    moves.add(MoveFum());
+  }
+
+  valueMoves(){
+    moves.forEach((m)=> tryMove(position, m));
+  }
+
+  findBestMove() {
+
+    double bestscore = -1000;
+    bestMove = moves[0];
+
+    moves.forEach((m) {
+      double score = m.trialPosition.score[playerId];
+
+      if(score > bestscore) {
+        bestscore = score;
+        bestMove = m;
+
+      }
+
+    });
+
+
+  }
+
+
+ tryMove(Position position, Move move){
+
+    Position trialPosition = position.duplicate;
+    trialPosition.makeMove(move);
+    move.trialPosition = trialPosition;
+
+  }
+
 
   yourTurn(String details) {
-    send(MakeMove(gameId, playerId, MoveNumber()));
+
+    moves.clear();
+
+    findPossibleMoves();
+
+    valueMoves();
+
+    findBestMove();
+
+    send(MakeMove(gameId, playerId, bestMove));
   }
 
 

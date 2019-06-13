@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/player/player_variable.dart';
+import 'package:game_server/src/game/position_builder.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/command/send_position.dart';
 
 import 'move.dart';
 
@@ -15,6 +17,8 @@ abstract class Position{
   String gameId;
   List<String> playerIds;
   List<String> playerQueue;
+
+  PositionBuilder get positionBuilder;
 
   PlayerVariable<PlayerStatus> playerStatus;
   PlayerVariable<double> score;
@@ -34,6 +38,8 @@ abstract class Position{
     'position' : string,
   }
   );
+
+  Position get duplicate => SendPosition.fromPosition(this).build(positionBuilder);
 
   String get playerId => playerQueue[0];
 

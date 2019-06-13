@@ -22,6 +22,12 @@ class SendPosition extends Message{
     positionString = position.json;
   }
 
+  SendPosition.fromPosition(Position position){
+
+    this.position = position;
+    positionString = position.json;
+  }
+
   SendPosition.fromJSON(String string){
 
     var jsonObject = jsonDecode(string);
