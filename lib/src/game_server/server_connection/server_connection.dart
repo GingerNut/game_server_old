@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:game_server/src/game/move.dart';
+import 'package:game_server/src/game/move_builder.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
@@ -11,6 +13,7 @@ import 'package:game_server/src/messages/command/echo.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/login.dart';
 import 'package:game_server/src/messages/command/logout.dart';
+import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/request_login.dart';
 import 'package:game_server/src/messages/command/request_player_list.dart';
@@ -38,6 +41,7 @@ class ServerConnection implements ChannelHost {
 
   Channel clientChannel;
   GameServer server;
+
   Random random = Random();
   StreamController<String> messagesIn;
 
@@ -140,6 +144,11 @@ class ServerConnection implements ChannelHost {
       case SetStatus:
         var setstatus = message as SetStatus;
         player.status = setstatus.status;
+        break;
+
+      case MakeMove:
+        MakeMove makeMove = message as MakeMove;
+        server.requestMove(makeMove);
         break;
 
       default:

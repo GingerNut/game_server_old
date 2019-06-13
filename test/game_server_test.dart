@@ -11,6 +11,7 @@ import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/echo.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/request_player_list.dart';
+import 'package:game_server/src/messages/command/send_position.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
@@ -24,13 +25,14 @@ import 'package:test/test.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_computer_player.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_local_interface.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
+import '../examples/fie_fo_fum/lib/fie_fo_fum_position_builder.dart';
 import '../examples/fie_fo_fum/lib/move_fie.dart';
 import '../examples/fie_fo_fum/lib/move_fo.dart';
 import '../examples/fie_fo_fum/lib/move_fum.dart';
 import '../examples/fie_fo_fum/lib/move_number.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_server.dart';
-import 'test_http_interface.dart';
-import 'test_stream_interface.dart';
+import '../examples/fie_fo_fum/lib/test_http_interface.dart';
+import '../examples/fie_fo_fum/lib/test_stream_interface.dart';
 
 
 void main()async{
@@ -90,7 +92,8 @@ void main()async{
       expect(response.runtimeType, EchoResponse);
       expect((response as EchoResponse).text, 'echo hey');
 
-    });
+    },//skip:''
+    );
 
 
     tearDown((){
@@ -98,6 +101,35 @@ void main()async{
       ui.game.tidyUp();
 
     });
+
+  });
+
+  group('Message testing',(){
+
+    var ui = FieFoFumLocalInterface();
+
+    setUp(() async{
+      ui.addPlayer(Player());
+      ui.addPlayer(Player());
+      ui.addPlayer(Player());
+      ui.addPlayer(Player());
+      await ui.startGame(ui.newGame);
+    });
+
+
+    test('SendPosition',(){
+      SendPosition sendPostiion = SendPosition.fromGame(ui.game);
+//      expect(sendPostiion.positionString, '1');
+//      var jsonObject = sendPostiion.json;
+//      expect(jsonObject, '{"type":"send_game","position_string":"1"}');
+//      expect(SendPosition.fromJSON(jsonObject).positionString, '1');
+      FieFoFumPosition position = sendPostiion.build(FieFoFumPositionBuilder());
+      expect(position.count , 1);
+
+
+    });
+
+
 
   });
 

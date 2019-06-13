@@ -1,7 +1,9 @@
 
 
+import 'package:game_server/src/game/move_builder.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/position.dart';
+import 'package:game_server/src/game/position_builder.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/game_server/advert_list.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';
@@ -10,18 +12,20 @@ import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
 import 'package:game_server/src/messages/command/logout.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
+import 'package:game_server/src/messages/command/send_position.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/start_game.dart';
 
 import 'interface.dart';
 
 abstract class HttpInterface extends Interface{
-
-  Position position;
   Settings onlineSettings = Settings();
 
   String id = 'Player';
   String password = '';
+
+  PositionBuilder get positionBuilder;
+  MoveBuilder get moveBuilder;
 
   ClientConnection connection;
   PlayerStatus _status;
@@ -44,6 +48,10 @@ abstract class HttpInterface extends Interface{
   joinGame(NewGame game)=> connection.send(JoinGame(game));
 
   startGame(NewGame game)=> connection.send(StartGame(game));
+
+  setPosition(SendPosition sendPosition) {
+    position = sendPosition.build(positionBuilder);
+  }
 
   set status (PlayerStatus status) {
     bool changed = false;

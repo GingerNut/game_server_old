@@ -14,7 +14,7 @@ import 'command/make_move.dart';
 import 'command/new_game.dart';
 import 'command/request_login.dart';
 import 'command/request_player_list.dart';
-import 'command/send_game.dart';
+import 'command/send_position.dart';
 import 'command/set_player_status.dart';
 import 'command/start_game.dart';
 import 'command/tidy.dart';
@@ -47,8 +47,8 @@ abstract class Message{
         return MakeMove.fromJSON(string);
       case NewGame.type:
         return NewGame.fromJSON(string);
-      case SendGame.type:
-        return SendGame.fromJSON(string);
+      case SendPosition.type:
+        return SendPosition.fromJSON(string);
       case SetStatus.type:
         return SetStatus.fromJSON(string);
       case StartGame.type:

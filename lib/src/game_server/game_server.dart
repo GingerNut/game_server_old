@@ -2,11 +2,14 @@
 
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/game_host.dart';
+import 'package:game_server/src/game/move.dart';
+import 'package:game_server/src/game/move_builder.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
+import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
@@ -23,6 +26,9 @@ abstract class GameServer implements GameHost{
   List<ServerPlayer> __playersOnline = List();
   AdvertList _adverts = AdvertList();
   Set<Game> _games = new Set();
+
+  get moveBuilder;
+
 
   int get numberOfClients => __playersOnline.length;
 
@@ -121,6 +127,20 @@ abstract class GameServer implements GameHost{
     _games.add(game);
 
     return Success();
+  }
+
+  requestMove(MakeMove makeMove){
+
+    Move move = makeMove.build(moveBuilder);
+
+    Game game = _games.firstWhere((g) {
+       return (g.id == makeMove.gameId);
+    } );
+
+    String playerId = makeMove.playerId;
+
+    if(game.position.canPlay(playerId)) game.makeMove(move);
+
   }
 
   addGeneralChat(ChatMessage message){

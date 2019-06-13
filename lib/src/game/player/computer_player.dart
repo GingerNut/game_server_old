@@ -28,11 +28,10 @@ abstract class ComputerPlayer extends Player{
       await Future.delayed(Duration(milliseconds : 1));
     }
 
-    sendGame();
+    send(SendPosition.fromGame(game));
 
   }
 
-  sendGame();
 
   startComputer();
 

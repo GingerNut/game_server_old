@@ -28,6 +28,8 @@ abstract class Position{
   String winner;
   bool gameOver = false;
 
+  bool canPlay(String id);
+
   makeMove(Move move){
     move.go(this);
     lastMove = move;

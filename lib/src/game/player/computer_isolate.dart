@@ -3,7 +3,8 @@ import 'dart:async';
 import 'dart:isolate';
 
 import 'package:game_server/src/messages/command/echo.dart';
-import 'package:game_server/src/messages/command/send_game.dart';
+import 'package:game_server/src/messages/command/make_move.dart';
+import 'package:game_server/src/messages/command/send_position.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
 
@@ -14,6 +15,7 @@ import 'package:game_server/src/messages/message.dart';
 import '../move.dart';
 import '../move_builder.dart';
 import '../position.dart';
+import '../position_builder.dart';
 
 
 
@@ -24,9 +26,8 @@ abstract class ComputerIsolate{
     final SendPort sendPort;
 
     Position position;
-    MoveBuilder moveBuilder;
-
-    MoveBuilder getMoveBuilder();
+    MoveBuilder get moveBuilder;
+    PositionBuilder get positionBuilder;
 
   ComputerIsolate(this.receivePort, this.sendPort){
     receivePort.listen((s) => handleMessage(s));
@@ -34,18 +35,12 @@ abstract class ComputerIsolate{
 
     initialise()async{
 
-        moveBuilder = getMoveBuilder();
-
         while(!ready ){
           await Future.delayed(Duration(milliseconds : 100));
         }
 
         send(SetStatus(PlayerStatus.ready));
     }
-
-
-
-
 
     handleMessage(String string) async{
 
@@ -62,8 +57,10 @@ abstract class ComputerIsolate{
             send(echo.response);
             break;
 
-          case SendGame:
-            await createPosition(string);
+          case SendPosition:
+            SendPosition sendPosition = message as SendPosition;
+            Position position = sendPosition.build(positionBuilder);
+            await analysePosition(position);
             ready = true;
             break;
 
@@ -71,8 +68,10 @@ abstract class ComputerIsolate{
             yourTurn(string);
             break;
 
-          case Move:
-            doMove(string);
+          case MakeMove:
+            MakeMove makeMove = message as MakeMove;
+            Move move = makeMove.build(moveBuilder);
+            doMove(move);
             break;
 
           default:
@@ -86,9 +85,9 @@ abstract class ComputerIsolate{
       sendPort.send(message.json);
     }
 
-    Future createPosition(String details);
+    Future analysePosition(Position position);
 
-    doMove(String details);
+    doMove(Move move);
 
     yourTurn(String details);
 

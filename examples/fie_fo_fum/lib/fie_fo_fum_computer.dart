@@ -1,30 +1,34 @@
 import 'dart:isolate';
 
+import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/computer_isolate.dart';
+import 'package:game_server/src/game/position.dart';
 
 import 'fie_fo_fum_move_builder.dart';
-import 'fie_fo_fum_sendgame.dart';
+import 'fie_fo_fum_position_builder.dart';
+
 
 class FieFoFumComputer extends ComputerIsolate{
   FieFoFumComputer(ReceivePort receivePort, SendPort sendPort) : super(receivePort, sendPort);
 
-  getMoveBuilder() => FieFoFumMoveBuilder();
+  get moveBuilder => FieFoFumMoveBuilder();
+  get positionBuilder => FieFoFumPositionBuilder();
 
   findBestMove() {
 
   }
 
-  Future createPosition(String details) async{
-    var sendGame = FieFoFumSendGame.fromString(details);
-    position = sendGame.position;
+  Future analysePosition(Position position) async{
 
-    await Future.delayed(Duration(milliseconds : 500));
+    this.position = position;
+
+    position.analyse();
 
     return;
   }
 
 
-  doMove(String details) {
+  doMove(Move move) {
 
   }
 

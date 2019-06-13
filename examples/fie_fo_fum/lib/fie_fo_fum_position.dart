@@ -13,12 +13,12 @@ class FieFoFumPosition extends Position{
   String get string{
 
     String string = '';
-
+    string += count.toString();
     return string;
   }
 
   analyse() {
-    score[playerId] ++;
+//    score[playerId] ++;
   }
 
 
@@ -34,6 +34,8 @@ class FieFoFumPosition extends Position{
   setFirstPlayer(){
    playerQueue.shuffle();
   }
+
+  bool canPlay(String id) => id == playerId;
 
 
   setupFirstPosition() {

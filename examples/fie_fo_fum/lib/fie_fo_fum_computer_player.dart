@@ -1,9 +1,10 @@
 import 'dart:isolate';
 
 import 'package:game_server/src/game/player/player.dart';
+import 'package:game_server/src/messages/command/send_position.dart';
 
 import 'fie_fo_fum_computer.dart';
-import 'fie_fo_fum_sendgame.dart';
+
 
 
 class FieFoFumComputerPlayer extends ComputerPlayer{
@@ -12,9 +13,6 @@ class FieFoFumComputerPlayer extends ComputerPlayer{
     await Isolate.spawn(setupFFFComputer, receivePort.sendPort);
   }
 
-  sendGame() {
-    send(FieFoFumSendGame.fromGame(game));
-  }
 }
 
 setupFFFComputer(SendPort sendPort) async {

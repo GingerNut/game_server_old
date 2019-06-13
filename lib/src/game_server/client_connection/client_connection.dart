@@ -12,6 +12,7 @@ import 'package:game_server/src/messages/command/login.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/request_login.dart';
 import 'package:game_server/src/messages/command/request_player_list.dart';
+import 'package:game_server/src/messages/command/send_position.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
@@ -96,6 +97,11 @@ abstract class ClientConnection implements ChannelHost{
 
       case NewGame:
         interface.adverts.add(message);
+        break;
+
+      case SendPosition:
+        SendPosition sendPosition = message as SendPosition;
+        interface.setPosition(sendPosition);
         break;
 
       case GameError:

@@ -5,6 +5,9 @@
 
 import 'dart:convert';
 
+import 'package:game_server/src/game/move.dart';
+import 'package:game_server/src/game/move_builder.dart';
+
 import '../message.dart';
 
 class MakeMove extends Message{
@@ -34,7 +37,6 @@ class MakeMove extends Message{
     'token': token
   });
 
-  @override
-  // TODO: implement string
-  String get string => null;
+  Move build(MoveBuilder builder) => builder.build(move);
+
 }
