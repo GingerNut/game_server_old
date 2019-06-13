@@ -1,5 +1,6 @@
 
 
+import 'package:game_server/src/game/player/player_variable.dart';
 import 'package:game_server/src/game/position.dart';
 
 class FieFoFumPosition extends Position{

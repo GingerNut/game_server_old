@@ -19,8 +19,7 @@ class SendPosition extends Message{
   SendPosition.fromGame(Game game){
 
     position = game.position;
-    positionString = position.string;
-
+    positionString = position.json;
   }
 
   SendPosition.fromJSON(String string){

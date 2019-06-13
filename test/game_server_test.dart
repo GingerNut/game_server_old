@@ -6,6 +6,7 @@ import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/player.dart';
+import 'package:game_server/src/game/player/player_variable.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
@@ -128,6 +129,9 @@ void main()async{
 //      expect(SendPosition.fromJSON(jsonObject).positionString, '1');
       FieFoFumPosition position = sendPostiion.build(FieFoFumPositionBuilder());
       expect(position.count , 1);
+      expect(position.playerIds, ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
+      expect(position.color['Player 1'], 7);
+      expect(position.color['Player 2'], 6);
 
       MakeMove makeMove = MakeMove('testGamne', 'player', MoveFie());
       Move move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
@@ -144,6 +148,7 @@ void main()async{
       makeMove = MakeMove('testGamne', 'player', MoveNumber());
       move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
       expect(move.runtimeType, MoveNumber);
+
 
 
     });
