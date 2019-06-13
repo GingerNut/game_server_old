@@ -84,6 +84,12 @@ class FieFoFumComputer extends ComputerIsolate{
 
     findBestMove();
 
+//    moves.forEach((m){
+//
+//      print(m.trialPosition.score[playerId]);
+//    });
+
+
     send(MakeMove(gameId, playerId, bestMove));
   }
 

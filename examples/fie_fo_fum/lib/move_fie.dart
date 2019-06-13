@@ -21,8 +21,14 @@ class MoveFie extends FieFoFumMove{
 
       if(test % 3 == 0 && test % 5 != 0) moveOk = true;
 
-      if(!moveOk) position.playerOut();
-      else position.score[position.playerId] ++;
+      if(!moveOk) {
+        print(position.playerId);
+        print(test);
+        position.playerOut();
+      }
+      else {
+        position.score[position.playerId] ++;
+      }
 
   }
 

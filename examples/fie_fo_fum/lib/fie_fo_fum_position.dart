@@ -37,7 +37,10 @@ class FieFoFumPosition extends Position{
 
   }
 
-  bool canPlay(String id) => id == playerId;
+  bool canPlay(String id) {
+
+    return (id == playerId) ;
+  }
 
 
   setupFirstPosition() {

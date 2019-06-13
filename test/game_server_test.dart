@@ -109,9 +109,14 @@ void main()async{
       expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
 
       ui.makeMove(MoveFie());
+      expect((ui.position as FieFoFumPosition).playerQueue , ['Computer 1', 'Player 1']);
+      expect((ui.position as FieFoFumPosition).playerId , 'Computer 1');
+      expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
       expect((ui.position as FieFoFumPosition).count, 4);
 
-
+      ui.makeMove(MoveFo());
+      expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveFie);
+      expect((ui.position as FieFoFumPosition).count, 6);
 
     },
     );

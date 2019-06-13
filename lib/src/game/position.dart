@@ -67,6 +67,7 @@ abstract class Position{
     }
 
     if (!gameOver) {
+
       setUpNewPosition();
     }
   }
