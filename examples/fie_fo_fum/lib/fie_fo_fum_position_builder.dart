@@ -14,7 +14,7 @@ class FieFoFumPositionBuilder extends PositionBuilder{
 
   getPosition() => FieFoFumPosition();
 
-  specifics(Position position, String string) {
+  extendedVariables(Position position, String string) {
 
     (position as FieFoFumPosition).count = int.parse(string);
 

@@ -12,7 +12,6 @@ abstract class PositionBuilder{
         var jsonObject = jsonDecode(string);
 
         Position position = getPosition();
-
         position.playerIds = jsonObject['player_ids'].split(',');
         position.playerQueue = jsonObject['player_queue'].split(',');
         position.playerStatus = PlayerVariable.playerVariablefromString(position, jsonObject['player_status']);
@@ -20,12 +19,12 @@ abstract class PositionBuilder{
         position.score = PlayerVariable.playerVariablefromString(position, jsonObject['score']);
         position.color = PlayerVariable.playerVariablefromString(position, jsonObject['color']);
 
-        specifics(position, jsonObject['position']);
+        extendedVariables(position, jsonObject['position']);
 
         return position;
     }
 
-    specifics(Position position, String string);
+    extendedVariables(Position position, String string);
 
 
 }
