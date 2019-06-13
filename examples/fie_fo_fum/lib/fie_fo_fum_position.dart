@@ -19,7 +19,7 @@ class FieFoFumPosition extends Position{
   }
 
   analyse() {
-//    score[playerId] ++;
+
   }
 
 

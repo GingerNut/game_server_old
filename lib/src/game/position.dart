@@ -24,6 +24,7 @@ abstract class Position{
 
   String get json => jsonEncode({
     'player_ids' : playerIds.join(','),
+    'player_queue' : playerQueue.join(','),
     'player_status' : playerStatus.string,
     'time_left': timeLeft.string,
     'score' : score.string,

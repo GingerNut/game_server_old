@@ -132,6 +132,7 @@ void main()async{
       expect(position.playerIds, ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
       expect(position.color['Player 1'], 7);
       expect(position.color['Player 2'], 6);
+      expect(position.playerId.substring(0,6)  , 'Player');
 
       MakeMove makeMove = MakeMove('testGamne', 'player', MoveFie());
       Move move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
