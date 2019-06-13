@@ -1,6 +1,8 @@
+import 'package:game_server/src/game/position.dart';
+
 abstract class PositionBuilder{
 
-    build(String string);
+    Position build(String string);
 
 
 }

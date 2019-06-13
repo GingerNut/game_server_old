@@ -1,6 +1,8 @@
+import 'move.dart';
+
 abstract class MoveBuilder{
 
-    build(String string);
+    Move build(String string);
 
 
 
