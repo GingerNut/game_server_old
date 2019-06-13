@@ -13,7 +13,6 @@ class SendPosition extends Message{
 
   Position position;
   String positionString;
-  List<Move> history;
 
   SendPosition();
 
@@ -45,6 +44,5 @@ class SendPosition extends Message{
   }
 
   Position build(PositionBuilder builder) => builder.build(positionString);
-
 
 }

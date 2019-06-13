@@ -13,7 +13,7 @@ class MoveFum extends FieFoFumMove{
   static const String type ='fum';
 
 
-  String get string => Move.code + type;
+  String get string => type;
 
   doMove(FieFoFumPosition position){
     bool moveOk = false;

@@ -12,7 +12,7 @@ import 'fie_fo_fum_position.dart';
 class MoveFie extends FieFoFumMove{
   static const String type ='fie';
 
-  String get string => Move.code + type;
+  String get string => type;
 
   doMove(FieFoFumPosition position) {
       bool moveOk = false;

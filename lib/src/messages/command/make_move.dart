@@ -13,30 +13,28 @@ import '../message.dart';
 class MakeMove extends Message{
   static const type = 'make_move';
 
-
   String gameId;
-  String move;
+  String moveString;
   String playerId;
-  String token;
 
-  MakeMove(this.gameId, this.playerId, this.token, this.move);
+  MakeMove(this.gameId, this.playerId, Move move){
+    moveString = move.string;
+  }
 
   MakeMove.fromJSON(String string){
     var jsonObject = jsonDecode(string);
 
     gameId = jsonObject['game_id'];
-    move = jsonObject['move'];
+    moveString = jsonObject['move'];
     playerId = jsonObject['player-id'];
-    token = jsonObject['token'];
   }
 
   get json => jsonEncode({
     'type': type,
-    'move' : move,
+    'move' : moveString,
     'player_id': playerId,
-    'token': token
   });
 
-  Move build(MoveBuilder builder) => builder.build(move);
+  Move build(MoveBuilder builder) => builder.build(moveString);
 
 }

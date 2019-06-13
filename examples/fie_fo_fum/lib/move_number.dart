@@ -14,7 +14,7 @@ import 'fie_fo_fum_position.dart';
 class MoveNumber extends FieFoFumMove{
   static const String type ='num';
 
-  String get string => Move.code + type;
+  String get string => type;
 
 
   Message doCheck(FieFoFumPosition position) {

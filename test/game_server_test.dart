@@ -4,11 +4,13 @@ import 'dart:async';
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/game.dart';
+import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/echo.dart';
+import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/request_player_list.dart';
 import 'package:game_server/src/messages/command/send_position.dart';
@@ -24,6 +26,7 @@ import 'package:test/test.dart';
 
 import '../examples/fie_fo_fum/lib/fie_fo_fum_computer_player.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_local_interface.dart';
+import '../examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position_builder.dart';
 import '../examples/fie_fo_fum/lib/move_fie.dart';
@@ -125,6 +128,22 @@ void main()async{
 //      expect(SendPosition.fromJSON(jsonObject).positionString, '1');
       FieFoFumPosition position = sendPostiion.build(FieFoFumPositionBuilder());
       expect(position.count , 1);
+
+      MakeMove makeMove = MakeMove('testGamne', 'player', MoveFie());
+      Move move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
+      expect(move.runtimeType, MoveFie);
+
+      makeMove = MakeMove('testGamne', 'player', MoveFo());
+      move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
+      expect(move.runtimeType, MoveFo);
+
+      makeMove = MakeMove('testGamne', 'player', MoveFum());
+      move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
+      expect(move.runtimeType, MoveFum);
+
+      makeMove = MakeMove('testGamne', 'player', MoveNumber());
+      move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
+      expect(move.runtimeType, MoveNumber);
 
 
     });
