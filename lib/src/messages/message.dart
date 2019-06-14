@@ -19,6 +19,7 @@ import 'command/send_position.dart';
 import 'command/setId.dart';
 import 'command/set_player_status.dart';
 import 'command/start_game.dart';
+import 'command/suggest_move.dart';
 import 'command/tidy.dart';
 import 'command/your_turn.dart';
 import 'error/game_error.dart';
@@ -47,6 +48,8 @@ abstract class Message{
         return Login.fromJSON(string);
       case MakeMove.type:
         return MakeMove.fromJSON(string);
+      case SuggestMove.type:
+        return SuggestMove.fromJSON(string);
       case NewGame.type:
         return NewGame.fromJSON(string);
       case SendPosition.type:

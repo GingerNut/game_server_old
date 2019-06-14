@@ -5,6 +5,7 @@ import 'package:game_server/src/messages/command/send_position.dart';
 
 import 'fie_fo_fum_computer.dart';
 import 'fie_fo_fum_move_builder.dart';
+import 'fie_fo_fum_position.dart';
 
 
 
@@ -14,6 +15,15 @@ class FieFoFumComputerPlayer extends ComputerPlayer{
 
   startComputer() async{
     await Isolate.spawn(setupFFFComputer, receivePort.sendPort);
+  }
+
+
+
+  @override
+  yourTurn() {
+//    print('from player your turn ' + (game.position as FieFoFumPosition).count.toString());
+    super.yourTurn();
+
   }
 
 }

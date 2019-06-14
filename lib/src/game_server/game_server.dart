@@ -139,7 +139,7 @@ abstract class GameServer implements GameHost{
 
     String playerId = makeMove.playerId;
 
-    if(game.position.canPlay(playerId)) game.makeMove(move);
+    if(game.position.canPlay(playerId)) game.makeMove(move, makeMove.gameId, makeMove.playerId);
 
   }
 

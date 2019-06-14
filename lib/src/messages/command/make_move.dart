@@ -26,7 +26,7 @@ class MakeMove extends Message{
 
     gameId = jsonObject['game_id'];
     moveString = jsonObject['move'];
-    playerId = jsonObject['player-id'];
+    playerId = jsonObject['player_id'];
   }
 
   get json => jsonEncode({

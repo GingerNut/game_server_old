@@ -71,6 +71,7 @@ abstract class ComputerIsolate{
           case SendPosition:
             SendPosition sendPosition = message as SendPosition;
             Position position = sendPosition.build(positionBuilder);
+            position.computer = true;
             gameId = position.gameId;
             await analysePosition(position);
             ready = true;
@@ -103,11 +104,7 @@ abstract class ComputerIsolate{
 
     Future analysePosition(Position position);
 
-    doMove(Move move){
-
-      position.makeMove(move);
-
-    }
+    doMove(Move move)=> position.makeMove(move);
 
     yourTurn(String details);
 

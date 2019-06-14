@@ -12,11 +12,11 @@ abstract class Move <P>{
   bool legal = false;
   String error;
 
+  int number;
+
   String get string;
 
   Position trialPosition;
-
-
 
 
   Message check(P position){

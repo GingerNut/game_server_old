@@ -16,6 +16,7 @@ import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/request_player_list.dart';
 import 'package:game_server/src/messages/command/send_position.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
+import 'package:game_server/src/messages/command/suggest_move.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/echo_response.dart';
@@ -101,7 +102,6 @@ void main()async{
       expect((ui.position.duplicate as FieFoFumPosition).count, 2);
 
       response = Message.inflate(await nextMessage(computer.messagesIn.stream));
-
       expect(response.runtimeType, MakeMove);
       expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
 
@@ -109,14 +109,25 @@ void main()async{
       expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
 
       ui.makeMove(MoveFie());
-      expect((ui.position as FieFoFumPosition).playerQueue , ['Computer 1', 'Player 1']);
-      expect((ui.position as FieFoFumPosition).playerId , 'Computer 1');
+      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
       expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
-      expect((ui.position as FieFoFumPosition).count, 4);
+
+      expect((ui.position as FieFoFumPosition).playerQueue , ['Player 1', 'Computer 1']);
+      expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
+
+      expect((ui.position as FieFoFumPosition).count, 5);
+      expect((ui.position as FieFoFumPosition).count, 5);
 
       ui.makeMove(MoveFo());
+
+      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
       expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveFie);
-      expect((ui.position as FieFoFumPosition).count, 6);
+      expect((ui.position as FieFoFumPosition).playerQueue , ['Player 1', 'Computer 1']);
+
+      expect((ui.position as FieFoFumPosition).count, 7);
+      ui.makeMove(MoveFie());
+
+      expect((ui.position as FieFoFumPosition).winner , 'Computer 1');
 
     },
     );

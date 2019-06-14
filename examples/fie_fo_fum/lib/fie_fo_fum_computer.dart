@@ -4,6 +4,7 @@ import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/computer_isolate.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/command/make_move.dart';
+import 'package:game_server/src/messages/command/suggest_move.dart';
 
 import 'fie_fo_fum_move_builder.dart';
 import 'fie_fo_fum_position.dart';
@@ -68,11 +69,12 @@ class FieFoFumComputer extends ComputerIsolate{
  tryMove(Position position, Move move){
 
     Position trialPosition = position.duplicate;
+    trialPosition.computer = true;
+    trialPosition.duplicated = true;
     trialPosition.makeMove(move);
     move.trialPosition = trialPosition;
 
   }
-
 
   yourTurn(String details) {
 
@@ -83,11 +85,6 @@ class FieFoFumComputer extends ComputerIsolate{
     valueMoves();
 
     findBestMove();
-
-//    moves.forEach((m){
-//
-//      print(m.trialPosition.score[playerId]);
-//    });
 
 
     send(MakeMove(gameId, playerId, bestMove));

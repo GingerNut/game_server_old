@@ -100,10 +100,19 @@ abstract class Game {
 
   getPosition();
 
-  Message makeMove(Move move) {
+  Message makeMove(Move move, String gameId, String playerId) {
     Message response = move.check(_position);
 
-    if(response is GameError) return response;
+    if(gameId != settings.id ) response == GameError('game id incorrect');
+
+    if(playerId != _position.playerId) response == GameError('player id incorrect');
+
+    if(response is GameError) {
+      print(response.text);
+      return response;
+    }
+
+    MakeMove update = MakeMove(gameId, playerId, move);
 
     _position.makeMove(move);
 
@@ -118,7 +127,7 @@ abstract class Game {
       }
     }
 
-    players.forEach((p) => p.moveUpdate(MakeMove(settings.id, position.playerId, move)));
+    players.forEach((p) => p.moveUpdate(update));
 
     if (state == GameState.inPlay) {
       players.firstWhere((p) => p.id ==_position.playerId).yourTurn();

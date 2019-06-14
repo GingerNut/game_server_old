@@ -12,6 +12,9 @@ import 'move.dart';
 
 abstract class Position{
 
+  bool computer = false;
+  bool duplicated = false;
+
   Move lastMove;
 
   String gameId;
@@ -76,6 +79,9 @@ abstract class Position{
   playerOut() => playerStatus[playerId] = PlayerStatus.out;
 
   setNextPlayer(){
+
+//    playerStatus.printVariable();
+//    print('\n');
 
     switch(playerOrder){
       case PlayerOrder.sequential:

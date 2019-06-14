@@ -37,6 +37,6 @@ startGame(NewGame newgame)async{
   await game.initialise();
 }
 
-makeMove(Move move) => game.makeMove(move);
+makeMove(Move move) => game.makeMove(move, game.settings.id, game.position.playerId);
 
 }

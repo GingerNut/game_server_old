@@ -58,11 +58,10 @@ abstract class ComputerPlayer extends Player{
         break;
 
       case MakeMove:
-        var makeMove = message as MakeMove;
-        Move move = makeMove.build(moveBuilder);
-
-        game.makeMove(move);
-
+        var suggestMove = message as MakeMove;
+        Move move = suggestMove.build(moveBuilder);
+        game.makeMove(move, suggestMove.gameId, suggestMove.playerId);
+        break;
     }
 
   }
