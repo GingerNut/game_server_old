@@ -17,6 +17,7 @@ import 'package:game_server/src/messages/command/request_player_list.dart';
 import 'package:game_server/src/messages/command/send_position.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:game_server/src/messages/response/confirm_move.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 import 'package:game_server/src/messages/response/player_list.dart';
 
@@ -109,6 +110,7 @@ abstract class ClientConnection implements ChannelHost{
       case MakeMove:
         MakeMove makeMove = message as MakeMove;
         interface.doMove(makeMove);
+        send(ConfirmMove(makeMove.number, makeMove.gameId, interface.id));
         break;
 
       case GameError:

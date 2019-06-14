@@ -31,6 +31,7 @@ abstract class Game {
   String get displayName => settings.displayName;
 
   List<Move> history = new List();
+  List<Player> unconfirmed = new List();
 
   String get string;
 
@@ -100,7 +101,7 @@ abstract class Game {
 
   getPosition();
 
-  Message makeMove(Move move, String gameId, String playerId) {
+  Future makeMove(Move move, String gameId, String playerId) async{
     Message response = move.check(_position);
 
     if(gameId != settings.id ) response == GameError('game id incorrect');
@@ -112,7 +113,7 @@ abstract class Game {
       return response;
     }
 
-    MakeMove update = MakeMove(gameId, playerId, move);
+    MakeMove update = MakeMove(gameId, playerId, move, _position.nextMoveNumber);
 
     _position.makeMove(move);
 
@@ -127,13 +128,38 @@ abstract class Game {
       }
     }
 
+    _setUnconfirmed();
+
     players.forEach((p) => p.moveUpdate(update));
+
+    while(unconfirmed.isNotEmpty){
+      await Future.delayed(Duration(milliseconds : 10));
+    }
 
     if (state == GameState.inPlay) {
       players.firstWhere((p) => p.id ==_position.playerId).yourTurn();
     }
 
     return Success();
+  }
+
+  _setUnconfirmed(){
+    players.forEach((p){
+
+      if(_position.playerStatus[p.id] == PlayerStatus.playing) unconfirmed.add(p);
+
+    });
+  }
+
+  confirmMove(String playerId, int move){
+
+    if(_position.lastMove.number == move){
+
+      unconfirmed.retainWhere((p){
+
+        return(p.id == playerId);
+      });
+    }
   }
 
   tidyUp(){

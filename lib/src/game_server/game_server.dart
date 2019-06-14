@@ -13,6 +13,7 @@ import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:game_server/src/messages/response/confirm_move.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
 import 'advert_list.dart';
@@ -140,6 +141,16 @@ abstract class GameServer implements GameHost{
     String playerId = makeMove.playerId;
 
     if(game.position.canPlay(playerId)) game.makeMove(move, makeMove.gameId, makeMove.playerId);
+
+  }
+
+  confirmMove(ConfirmMove confirm){
+
+    Game game = _games.firstWhere((g){
+      return(g.id == confirm.gameId);
+    });
+
+    game.confirmMove(confirm.playerId, confirm.number);
 
   }
 

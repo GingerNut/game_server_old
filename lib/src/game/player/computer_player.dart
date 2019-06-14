@@ -62,6 +62,12 @@ abstract class ComputerPlayer extends Player{
         Move move = suggestMove.build(moveBuilder);
         game.makeMove(move, suggestMove.gameId, suggestMove.playerId);
         break;
+
+      case ConfirmMove:
+        ConfirmMove confirm = message as ConfirmMove;
+        game.confirmMove(confirm.playerId, confirm.number);
+        break;
+
     }
 
   }

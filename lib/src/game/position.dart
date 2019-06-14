@@ -22,6 +22,7 @@ abstract class Position{
   List<String> playerQueue;
 
   PositionBuilder get positionBuilder;
+  int get nextMoveNumber => lastMove == null ? 0 : lastMove.number +1;
 
   PlayerVariable<PlayerStatus> playerStatus;
   PlayerVariable<double> score;
@@ -56,6 +57,9 @@ abstract class Position{
   makeMove(Move move){
 
     move.go(this);
+
+    move.number = nextMoveNumber;
+
     lastMove = move;
 
     analyse();
@@ -79,9 +83,6 @@ abstract class Position{
   playerOut() => playerStatus[playerId] = PlayerStatus.out;
 
   setNextPlayer(){
-
-//    playerStatus.printVariable();
-//    print('\n');
 
     switch(playerOrder){
       case PlayerOrder.sequential:

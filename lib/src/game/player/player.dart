@@ -12,10 +12,10 @@ import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/send_position.dart';
 import 'package:game_server/src/messages/command/setId.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
-import 'package:game_server/src/messages/command/suggest_move.dart';
 import 'package:game_server/src/messages/command/tidy.dart';
 import 'package:game_server/src/messages/command/your_turn.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:game_server/src/messages/response/confirm_move.dart';
 
 import '../game.dart';
 import '../game_timer.dart';
@@ -57,16 +57,16 @@ class Player{
 
   moveUpdate(MakeMove move){
 
-
+      game.confirmMove(id, move.number);
   }
 
 
   yourTurn(){
 
-    think();
+
   }
 
-  think(){}
+
 
   wait(){
 

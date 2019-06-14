@@ -7,7 +7,6 @@ import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/player/player_variable.dart';
-import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/echo.dart';
@@ -16,11 +15,9 @@ import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/request_player_list.dart';
 import 'package:game_server/src/messages/command/send_position.dart';
 import 'package:game_server/src/messages/command/set_player_status.dart';
-import 'package:game_server/src/messages/command/suggest_move.dart';
-import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:game_server/src/messages/response/confirm_move.dart';
 import 'package:game_server/src/messages/response/echo_response.dart';
-import 'package:game_server/src/messages/response/login_success.dart';
 import 'package:game_server/src/messages/response/player_list.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
@@ -47,6 +44,14 @@ void main()async{
     await for(String string in stream){
       return string;
     }
+  }
+
+  Future waitForAllConfirmed(Game game) async{
+
+    while(game.unconfirmed.length > 0){
+      await Future.delayed(Duration(milliseconds : 10));
+    }
+    return;
   }
 
 
@@ -102,13 +107,26 @@ void main()async{
       expect((ui.position.duplicate as FieFoFumPosition).count, 2);
 
       response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      expect(response.runtimeType, ConfirmMove);
+
+      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
       expect(response.runtimeType, MakeMove);
+
       expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
 
       expect((ui.position as FieFoFumPosition).count, 3);
       expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
 
       ui.makeMove(MoveFie());
+
+
+
+      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      expect(response.runtimeType, ConfirmMove);
+
+      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      expect(response.runtimeType, ConfirmMove);
+
       response = Message.inflate(await nextMessage(computer.messagesIn.stream));
       expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
 
@@ -121,10 +139,15 @@ void main()async{
       ui.makeMove(MoveFo());
 
       response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      expect(response.runtimeType, ConfirmMove);
+
+      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
       expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveFie);
       expect((ui.position as FieFoFumPosition).playerQueue , ['Player 1', 'Computer 1']);
 
       expect((ui.position as FieFoFumPosition).count, 7);
+
+      await waitForAllConfirmed(ui.game);
       ui.makeMove(MoveFie());
 
       expect((ui.position as FieFoFumPosition).winner , 'Computer 1');
@@ -157,10 +180,7 @@ void main()async{
 
     test('SendPosition',(){
       SendPosition sendPostiion = SendPosition.fromGame(ui.game);
-//      expect(sendPostiion.positionString, '1');
-//      var jsonObject = sendPostiion.json;
-//      expect(jsonObject, '{"type":"send_game","position_string":"1"}');
-//      expect(SendPosition.fromJSON(jsonObject).positionString, '1');
+
       FieFoFumPosition position = sendPostiion.build(FieFoFumPositionBuilder());
       expect(position.count , 1);
       expect(position.playerIds, ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
@@ -168,19 +188,19 @@ void main()async{
       expect(position.color['Player 2'], 6);
       expect(position.playerId.substring(0,6)  , 'Player');
 
-      MakeMove makeMove = MakeMove('testGamne', 'player', MoveFie());
+      MakeMove makeMove = MakeMove('testGamne', 'player', MoveFie(), ui.position.nextMoveNumber);
       Move move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
       expect(move.runtimeType, MoveFie);
 
-      makeMove = MakeMove('testGamne', 'player', MoveFo());
+      makeMove = MakeMove('testGamne', 'player', MoveFo(), ui.position.nextMoveNumber);
       move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
       expect(move.runtimeType, MoveFo);
 
-      makeMove = MakeMove('testGamne', 'player', MoveFum());
+      makeMove = MakeMove('testGamne', 'player', MoveFum(), ui.position.nextMoveNumber);
       move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
       expect(move.runtimeType, MoveFum);
 
-      makeMove = MakeMove('testGamne', 'player', MoveNumber());
+      makeMove = MakeMove('testGamne', 'player', MoveNumber(), ui.position.nextMoveNumber);
       move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
       expect(move.runtimeType, MoveNumber);
 
@@ -252,7 +272,6 @@ void main()async{
       expect(ui.position.playerQueue.length, 1);
       expect(ui.game.state , GameState.won);
       expect(ui.game.position.winner , winner);
-
     });
 
 

@@ -18,14 +18,6 @@ class FieFoFumComputerPlayer extends ComputerPlayer{
   }
 
 
-
-  @override
-  yourTurn() {
-//    print('from player your turn ' + (game.position as FieFoFumPosition).count.toString());
-    super.yourTurn();
-
-  }
-
 }
 
 setupFFFComputer(SendPort sendPort) async {

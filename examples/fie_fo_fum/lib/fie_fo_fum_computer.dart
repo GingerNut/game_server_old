@@ -4,7 +4,6 @@ import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/computer_isolate.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/messages/command/make_move.dart';
-import 'package:game_server/src/messages/command/suggest_move.dart';
 
 import 'fie_fo_fum_move_builder.dart';
 import 'fie_fo_fum_position.dart';
@@ -20,10 +19,6 @@ class FieFoFumComputer extends ComputerIsolate{
 
   get moveBuilder => FieFoFumMoveBuilder();
   get positionBuilder => FieFoFumPositionBuilder();
-
-  List<Move> moves = new List();
-
-  Move bestMove;
 
   Future analysePosition(Position position) async{
 
@@ -87,7 +82,7 @@ class FieFoFumComputer extends ComputerIsolate{
     findBestMove();
 
 
-    send(MakeMove(gameId, playerId, bestMove));
+    send(MakeMove(gameId, playerId, bestMove, position.nextMoveNumber));
   }
 
 

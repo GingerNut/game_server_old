@@ -21,6 +21,7 @@ import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/command/start_game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:game_server/src/messages/response/confirm_move.dart';
 import 'package:game_server/src/messages/response/echo_response.dart';
 import 'package:game_server/src/messages/response/login_success.dart';
 import 'package:game_server/src/messages/response/player_list.dart';
@@ -150,6 +151,12 @@ class ServerConnection implements ChannelHost {
         MakeMove makeMove = message as MakeMove;
         server.requestMove(makeMove);
         break;
+
+      case ConfirmMove:
+        ConfirmMove confirm = message as ConfirmMove;
+        server.confirmMove(confirm);
+        break;
+
 
       default:
         send(GameError('unknown command'));

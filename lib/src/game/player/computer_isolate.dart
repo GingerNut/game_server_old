@@ -14,6 +14,7 @@ import 'package:game_server/src/messages/command/tidy.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/messages/command/your_turn.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:game_server/src/messages/response/confirm_move.dart';
 
 
 import '../move.dart';
@@ -34,6 +35,9 @@ abstract class ComputerIsolate{
     Position position;
     MoveBuilder get moveBuilder;
     PositionBuilder get positionBuilder;
+
+    List<Move> moves = new List();
+    Move bestMove;
 
   ComputerIsolate(this.receivePort, this.sendPort){
     receivePort.listen((s) => handleMessage(s));
@@ -89,6 +93,7 @@ abstract class ComputerIsolate{
             MakeMove makeMove = message as MakeMove;
             Move move = makeMove.build(moveBuilder);
             doMove(move);
+            send(ConfirmMove(makeMove.number, makeMove.gameId, playerId));
             break;
 
           default:
