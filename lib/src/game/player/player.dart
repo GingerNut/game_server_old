@@ -7,6 +7,7 @@ import 'dart:isolate';
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/move_builder.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
+import 'package:game_server/src/injector.dart';
 import 'package:game_server/src/messages/command/game_started.dart';
 import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/send_position.dart';

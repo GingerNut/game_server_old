@@ -16,10 +16,13 @@ import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/confirm_move.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
+import '../injector.dart';
 import 'advert_list.dart';
 
 
-abstract class GameServer implements GameHost{
+class GameServer implements GameHost{
+
+  final Injector injector;
 
   Database db = Database();
 
@@ -28,7 +31,7 @@ abstract class GameServer implements GameHost{
   AdvertList _adverts = AdvertList();
   Set<Game> _games = new Set();
 
-  get moveBuilder;
+  GameServer(this.injector);
 
 
   int get numberOfClients => __playersOnline.length;
@@ -132,7 +135,7 @@ abstract class GameServer implements GameHost{
 
   requestMove(MakeMove makeMove){
 
-    Move move = makeMove.build(moveBuilder);
+    Move move = makeMove.build(injector.getMoveBuilder());
 
     Game game = _games.firstWhere((g) {
        return (g.id == makeMove.gameId);
@@ -179,6 +182,14 @@ abstract class GameServer implements GameHost{
 
 
 
+  }
+
+  @override
+  getGame(NewGame settings) => injector.getGame(this, settings);
+
+  @override
+  void set injector(Injector _injector) {
+    // TODO: implement injector
   }
 
 

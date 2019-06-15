@@ -7,10 +7,11 @@ import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 
+import '../injector.dart';
 import 'interface.dart';
 
 
-abstract class LocalInterface extends Interface implements GameHost{
+class LocalInterface extends Interface implements GameHost{
 
 //TODO local games server. Only one login allowed but that stays in background
 
@@ -20,9 +21,13 @@ Settings localSettings = Settings();
 Game game;
 NewGame newGame;
 
+getGame(NewGame newGame) => injector.getGame(this, newGame);
+
+
+
 Position get position => game.position;
 
-LocalInterface(){
+LocalInterface(Injector injector) : super(injector){
   resetGame();
 }
 
@@ -38,5 +43,9 @@ startGame(NewGame newgame)async{
 }
 
 makeMove(Move move) => game.makeMove(move, game.settings.id, game.position.playerId);
+
+
+
+
 
 }

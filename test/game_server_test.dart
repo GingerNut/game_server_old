@@ -7,6 +7,7 @@ import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/player/player_variable.dart';
+import 'package:game_server/src/interface/local_interface.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/echo.dart';
@@ -23,8 +24,8 @@ import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:test/test.dart';
 
+import '../examples/fie_fo_fum/lib/FieFoFumInjector.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_computer_player.dart';
-import '../examples/fie_fo_fum/lib/fie_fo_fum_local_interface.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position_builder.dart';
@@ -32,9 +33,8 @@ import '../examples/fie_fo_fum/lib/move_fie.dart';
 import '../examples/fie_fo_fum/lib/move_fo.dart';
 import '../examples/fie_fo_fum/lib/move_fum.dart';
 import '../examples/fie_fo_fum/lib/move_number.dart';
-import '../examples/fie_fo_fum/lib/fie_fo_fum_server.dart';
-import '../examples/fie_fo_fum/lib/test_http_interface.dart';
-import '../examples/fie_fo_fum/lib/test_stream_interface.dart';
+import 'package:game_server/src/interface/local_http_interface.dart';
+import 'package:game_server/src/interface/stream_http_interface.dart';
 
 
 void main()async{
@@ -56,7 +56,7 @@ void main()async{
 
 
   group('varous methods', (){
-    var ui = FieFoFumLocalInterface();
+    var ui = LocalInterface(FieFoFumInjector());
 
     setUp(() async{
       ui.addPlayer(Player());
@@ -84,7 +84,7 @@ void main()async{
 
   group('computer player basics',(){
 
-    var ui = FieFoFumLocalInterface();
+    var ui = LocalInterface(FieFoFumInjector());
     var computer = FieFoFumComputerPlayer();
     ui.addPlayer(Player());
     ui.addPlayer(computer);
@@ -167,7 +167,7 @@ void main()async{
 
   group('Message testing',(){
 
-    var ui = FieFoFumLocalInterface();
+    var ui = LocalInterface(FieFoFumInjector());
 
     setUp(() async{
       ui.addPlayer(Player());
@@ -215,7 +215,7 @@ void main()async{
 
   group('Fie fo fum basic game ', () {
 
-    var ui = FieFoFumLocalInterface();
+    var ui = LocalInterface(FieFoFumInjector());
 
     test('start local fie fo fum game',()async{
       ui.addPlayer(Player());
@@ -282,8 +282,8 @@ void main()async{
 
   group ('basic stream server',(){
 
-    GameServer server = FieFoFumServer();
-    TestStreamInterface ui = TestStreamInterface(server);
+    GameServer server = GameServer(FieFoFumInjector());
+    StreamHttpInterface ui = StreamHttpInterface(FieFoFumInjector(), server);
 
     setUp(() async {
       await server.db.testData();
@@ -318,11 +318,11 @@ void main()async{
   );
 
   group('Game test',() {
-    GameServer server = FieFoFumServer();
-    TestStreamInterface henry = TestStreamInterface(server);
-    TestStreamInterface james = TestStreamInterface(server);
-    TestStreamInterface sarah = TestStreamInterface(server);
-    TestStreamInterface trace = TestStreamInterface(server);
+    GameServer server = GameServer(FieFoFumInjector());
+    StreamHttpInterface henry = StreamHttpInterface(FieFoFumInjector(), server);
+    StreamHttpInterface james = StreamHttpInterface(FieFoFumInjector(), server);
+    StreamHttpInterface sarah = StreamHttpInterface(FieFoFumInjector(), server);
+    StreamHttpInterface trace = StreamHttpInterface(FieFoFumInjector(), server);
 
     setUp(() async {
       await server.db.testData();
@@ -434,8 +434,8 @@ void main()async{
 
 
   group('web socket connection',() {
-    TestHttpInterface emma = TestHttpInterface();
-    TestHttpInterface henry = TestHttpInterface();
+    LocalHostHttpInterface emma = LocalHostHttpInterface(FieFoFumInjector());
+    LocalHostHttpInterface henry = LocalHostHttpInterface(FieFoFumInjector());
 
     setUp(() async {
 
@@ -474,10 +474,10 @@ void main()async{
 
   group('Websocket Game test',() {
 
-    TestHttpInterface henry = TestHttpInterface();
-    TestHttpInterface james = TestHttpInterface();
-    TestHttpInterface sarah = TestHttpInterface();
-    TestHttpInterface trace = TestHttpInterface();
+    LocalHostHttpInterface henry = LocalHostHttpInterface(FieFoFumInjector());
+    LocalHostHttpInterface james = LocalHostHttpInterface(FieFoFumInjector());
+    LocalHostHttpInterface sarah = LocalHostHttpInterface(FieFoFumInjector());
+    LocalHostHttpInterface trace = LocalHostHttpInterface(FieFoFumInjector());
 
     setUp(() async {
 
@@ -492,52 +492,51 @@ void main()async{
 
     test('Logins and chat',() async{
 
-//      henry.connection.send(RequestPlayerList.code);
-//      expect( await nextMessage(henry.connection.messagesIn.stream),
-//          RequestPlayerList.code
-//              + 'Henry' + Command.delimiter
-//              + 'Jim' + Command.delimiter
-//              + 'Sarah' + Command .delimiter
-//              + 'Tracy') ;
-//
-//      henry.sendChat('hi');
-//      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), ChatMessage.code);
-//      expect(james.chatMessages.length,1);
-//      expect(james.chatMessages[0].from,'henry');
-//      expect(james.chatMessages[0].text,'hi');
-//
-//      james.sendChat('Hows it going');
-//      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), ChatMessage.code);
-//      expect(henry.chatMessages.length,2);
-//      expect(henry.chatMessages[0].from,'henry');
-//      expect(henry.chatMessages[0].text,'hi');
-//      expect(henry.chatMessages[1].from,'james');
-//      expect(henry.chatMessages[1].text,'Hows it going');
-////
-//      sarah.sendMessage('james', 'hello james');
-//      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), ChatMessage.code);
-//      expect((await nextMessage(james.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
-//      expect(james.privateMessages.length, 1);
-//      expect(james.privateMessages[0].from, 'sarah');
-//      expect(james.privateMessages[0].text, 'hello james');
-//
-//      expect((await nextMessage(sarah.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
-//      expect(sarah.privateMessages.length, 1);
-//      expect(sarah.privateMessages[0].from, 'sarah');
-//      expect(sarah.privateMessages[0].text, 'hello james');
-//
-//      james.sendMessage('sarah', 'yo');
-//      expect((await nextMessage(sarah.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
-//      expect(sarah.privateMessages.length, 2);
-//      expect(sarah.privateMessages[1].from, 'james');
-//      expect(sarah.privateMessages[1].text, 'yo');
-//
-//      henry.sendMessage('emma', 'hey Emma');
-//      expect((await nextMessage(henry.connection.messagesIn.stream)).substring(0,3), PrivateMessage.code);
-//      expect(henry.privateMessages.length, 1);
-//      expect(henry.privateMessages[0].from, 'server');
-//      expect(henry.privateMessages[0].text, 'emma is not online');
-//
+       henry.connection.send(RequestPlayerList());
+
+      var message = Message.inflate(await nextMessage(henry.connection.messagesIn.stream));
+
+      expect(message.runtimeType, PlayerList);
+      var playerList = message as PlayerList;
+      expect(playerList.players.length, 4);
+
+      expect(playerList.players, ['Henry', 'Jim', 'Sarah', 'Tracy']);
+
+      henry.sendChat('hi');
+      expect((Message.inflate(await nextMessage(james.connection.messagesIn.stream))).runtimeType, ChatMessage);
+      expect(james.chatMessages.length,1);
+      expect(james.chatMessages[0].from,'henry');
+      expect(james.chatMessages[0].text,'hi');
+
+      james.sendChat('Hows it going');
+      expect((Message.inflate(await nextMessage(henry.connection.messagesIn.stream))).runtimeType, ChatMessage);
+      expect(henry.chatMessages.length,2);
+      expect(henry.chatMessages[0].from,'henry');
+      expect(henry.chatMessages[0].text,'hi');
+      expect(henry.chatMessages[1].from,'james');
+      expect(henry.chatMessages[1].text,'Hows it going');
+
+      sarah.sendMessage('james', 'hello james');
+      expect((Message.inflate(await nextMessage(james.connection.messagesIn.stream))).runtimeType, PrivateMessage);
+      expect(james.privateMessages.length, 1);
+      expect(james.privateMessages[0].from, 'sarah');
+      expect(james.privateMessages[0].text, 'hello james');
+
+      expect(sarah.privateMessages.length, 1);
+      expect(sarah.privateMessages[0].from, 'sarah');
+      expect(sarah.privateMessages[0].text, 'hello james');
+
+      james.sendMessage('sarah', 'yo');
+      expect((Message.inflate(await nextMessage(sarah.connection.messagesIn.stream))).runtimeType, PrivateMessage);
+      expect(sarah.privateMessages.length, 2);
+      expect(sarah.privateMessages[1].from, 'james');
+      expect(sarah.privateMessages[1].text, 'yo');
+
+      henry.sendMessage('emma', 'hey Emma');
+      expect((Message.inflate(await nextMessage(henry.connection.messagesIn.stream))).runtimeType, PrivateMessage);
+      expect(henry.privateMessages.length, 1);
+      expect(henry.privateMessages[0].from, 'server');
+      expect(henry.privateMessages[0].text, 'emma is not online');
 
     });
 

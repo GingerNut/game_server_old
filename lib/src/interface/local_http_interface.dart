@@ -3,18 +3,20 @@
 import 'package:game_server/src/game/move_builder.dart';
 import 'package:game_server/src/game/position_builder.dart';
 import 'package:game_server/src/game_server/client_connection/io_client.dart';
+import 'package:game_server/src/injector.dart';
 import 'package:game_server/src/interface/http_interface.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 
-import 'fie_fo_fum_move_builder.dart';
-import 'fie_fo_fum_position_builder.dart';
 
 
 
-class TestHttpInterface extends HttpInterface{
+
+class LocalHostHttpInterface extends HttpInterface{
 
   String address = 'localhost';
   int port = 8080;
+
+  LocalHostHttpInterface(Injector injector) : super(injector);
 
   login(String id, String password) async{
     super.login(id, password);
@@ -22,8 +24,6 @@ class TestHttpInterface extends HttpInterface{
     await connection.login(id, password);
   }
 
-  get moveBuilder => FieFoFumMoveBuilder();
-  get positionBuilder => FieFoFumPositionBuilder();
 
 
 

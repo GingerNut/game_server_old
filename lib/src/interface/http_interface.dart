@@ -8,6 +8,7 @@ import 'package:game_server/src/game/position_builder.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/game_server/advert_list.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';
+import 'package:game_server/src/injector.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
@@ -20,14 +21,13 @@ import 'package:game_server/src/messages/command/start_game.dart';
 
 import 'interface.dart';
 
-abstract class HttpInterface extends Interface{
+class HttpInterface extends Interface{
   Settings onlineSettings = Settings();
 
   String id = 'Player';
   String password = '';
 
-  PositionBuilder get positionBuilder;
-  MoveBuilder get moveBuilder;
+  HttpInterface(Injector injector) : super(injector);
 
   ClientConnection connection;
   PlayerStatus _status;
@@ -52,7 +52,7 @@ abstract class HttpInterface extends Interface{
   startGame(NewGame game)=> connection.send(StartGame(game));
 
   setPosition(SendPosition sendPosition) {
-    position = sendPosition.build(positionBuilder);
+    position = sendPosition.build(injector.getPositionBuilder());
   }
 
   set status (PlayerStatus status) {
@@ -66,7 +66,7 @@ abstract class HttpInterface extends Interface{
   }
 
   doMove(MakeMove makeMove){
-    Move move = makeMove.build(moveBuilder);
+    Move move = makeMove.build(injector.getMoveBuilder());
     position.makeMove(move);
   }
 

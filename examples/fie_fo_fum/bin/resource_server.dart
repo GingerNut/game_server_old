@@ -3,19 +3,21 @@
 
 import 'dart:io';
 
+import 'package:game_server/game_server.dart';
 import 'package:game_server/src/game_server/server_connection/http_connection.dart';
 
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
-import '../lib/fie_fo_fum_server.dart';
+import '../lib/FieFoFumInjector.dart';
+
 
 
 void main() async{
   String address = 'localhost';
   int port = 8080;
 
-  FieFoFumServer gameServer = FieFoFumServer();
+  GameServer gameServer = GameServer(FieFoFumInjector());
   await gameServer.db.testData();
 
   var handler = webSocketHandler((webSocket) {

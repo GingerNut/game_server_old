@@ -9,18 +9,20 @@ import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:game_server/src/game/board/board.dart';
+import '../injector.dart';
 import 'game_host.dart';
 import 'move.dart';
 
-abstract class Game {
+class Game {
   GameState state = GameState.waitingForPlayers;
   final NewGame settings;
   final GameHost host;
+  final Injector injector;
 
   Board board;
   List get players => settings.players;
 
-  Game(this.host, this.settings);
+  Game(this.host, this.injector, this.settings);
 
   int get numberOfPlayers => players.length;
 
@@ -32,8 +34,6 @@ abstract class Game {
 
   List<Move> history = new List();
   List<Player> unconfirmed = new List();
-
-  String get string;
 
   setup() async {}
 
@@ -99,7 +99,7 @@ abstract class Game {
     return;
   }
 
-  getPosition();
+  getPosition() => injector.getPosition();
 
   Future makeMove(Move move, String gameId, String playerId) async{
     Message response = move.check(_position);
