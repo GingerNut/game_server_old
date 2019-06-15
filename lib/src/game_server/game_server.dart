@@ -16,13 +16,13 @@ import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/confirm_move.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
-import '../injector.dart';
+import '../game_dependency.dart';
 import 'advert_list.dart';
 
 
 class GameServer implements GameHost{
 
-  final Injector injector;
+  final GameDependency injector;
 
   Database db = Database();
 
@@ -188,7 +188,7 @@ class GameServer implements GameHost{
   getGame(NewGame settings) => injector.getGame(this, settings);
 
   @override
-  void set injector(Injector _injector) {
+  void set injector(GameDependency _injector) {
     // TODO: implement injector
   }
 

@@ -8,7 +8,7 @@ import 'package:game_server/src/game/position_builder.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/game_server/advert_list.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';
-import 'package:game_server/src/injector.dart';
+import 'package:game_server/src/game_dependency.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/messages/command/join_game.dart';
@@ -27,7 +27,7 @@ class HttpInterface extends Interface{
   String id = 'Player';
   String password = '';
 
-  HttpInterface(Injector injector) : super(injector);
+  HttpInterface(GameDependency injector) : super(injector);
 
   ClientConnection connection;
   PlayerStatus _status;

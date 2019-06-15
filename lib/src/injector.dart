@@ -1,20 +1,19 @@
-import 'game/game.dart';
-import 'game/game_host.dart';
-import 'game/move_builder.dart';
-import 'game/position.dart';
-import 'game/position_builder.dart';
-import 'messages/command/new_game.dart';
+import 'game_dependency.dart';
 
-abstract class Injector{
+class Injector{
+  static final Injector _singleton = Injector._internal();
 
-  Game getGame(GameHost host, NewGame newGame);
+  static GameDependency _gameDependency;
 
-  MoveBuilder getMoveBuilder();
+  static void configure(GameDependency dependency){
+    _gameDependency = dependency;
+  }
 
-  PositionBuilder getPositionBuilder();
+  factory Injector(){
+    return _singleton;
+  }
 
-  Position getPosition();
+  Injector._internal();
 
-
-
+  GameDependency get gameDependency => _gameDependency;
 }

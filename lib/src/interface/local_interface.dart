@@ -7,7 +7,7 @@ import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 
-import '../injector.dart';
+import '../game_dependency.dart';
 import 'interface.dart';
 
 
@@ -27,7 +27,7 @@ getGame(NewGame newGame) => injector.getGame(this, newGame);
 
 Position get position => game.position;
 
-LocalInterface(Injector injector) : super(injector){
+LocalInterface(GameDependency injector) : super(injector){
   resetGame();
 }
 

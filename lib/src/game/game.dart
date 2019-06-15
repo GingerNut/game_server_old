@@ -9,7 +9,7 @@ import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:game_server/src/game/board/board.dart';
-import '../injector.dart';
+import '../game_dependency.dart';
 import 'game_host.dart';
 import 'move.dart';
 
@@ -17,7 +17,7 @@ class Game {
   GameState state = GameState.waitingForPlayers;
   final NewGame settings;
   final GameHost host;
-  final Injector injector;
+  final GameDependency injector;
 
   Board board;
   List get players => settings.players;

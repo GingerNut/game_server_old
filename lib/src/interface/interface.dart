@@ -1,11 +1,11 @@
 import 'package:game_server/src/design/color_scheme.dart';
 import 'package:game_server/src/game/position.dart';
 
-import '../injector.dart';
+import '../game_dependency.dart';
 
 abstract class Interface{
 
-  Injector injector;
+  GameDependency injector;
 
   Position position;
 
