@@ -8,14 +8,16 @@ import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
+import '../../game_dependency.dart';
 import '../message.dart';
 
 class NewGame extends Message{
   static const String type = 'new_game';
+  GameDependency dependency;
 
   String id = 'game id';
   String displayName ='';
-  List players = new List();
+  List<Player> players = new List();
   int maxPlayers;
   int numberOfPlayers = 0;
   int playerType;
@@ -35,27 +37,27 @@ class NewGame extends Message{
     else return false;
   }
 
-  NewGame();
+  NewGame(this.dependency);
 
-  NewGame.fromSettings(Settings settings){
-    this.displayName = settings.onlineGameName;
-    this.maxPlayers = settings.numberOfPlayers;
-    this.gameTime = settings.gameTime;
-    this.moveTime = settings.moveTime;
-    this.timer = settings.timer;
-    this.playerHelp = settings.playerHelp;
+  NewGame.fromSettings(this.dependency){
+    this.displayName = dependency.settings.onlineGameName;
+    this.maxPlayers = dependency.settings.maxPlayers;
+    this.gameTime = dependency.settings.gameTime;
+    this.moveTime = dependency.settings.moveTime;
+    this.timer = dependency.settings.timer;
+    this.playerHelp = dependency.settings.playerHelp;
   }
 
 
 
 
 
-  NewGame.local(Settings settings){
+  NewGame.local(this.dependency){
     id = 'local game';
-    maxPlayers = Settings.maxPlayers;
-    gameTime = settings.gameTime;
-    moveTime = settings.moveTime;
-    timer = settings.timer;
+    maxPlayers = dependency.settings.maxPlayers;
+    gameTime = dependency.settings.gameTime;
+    moveTime = dependency.settings.moveTime;
+    timer = dependency.settings.timer;
     playerHelp = false;
   }
 
@@ -72,7 +74,7 @@ class NewGame extends Message{
 
   addLocalPlayer(Player player){
 
-    if(players.length < Settings.maxPlayers) players.add(player);
+    if(players.length < dependency.settings.maxPlayers) players.add(player);
 
     players.forEach((p){
       if(p.displayName == null){

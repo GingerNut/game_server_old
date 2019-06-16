@@ -1,6 +1,6 @@
 
 import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/game/game_host.dart';
+
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/position.dart';
@@ -11,7 +11,7 @@ import '../game_dependency.dart';
 import 'interface.dart';
 
 
-class LocalInterface extends Interface implements GameHost{
+class LocalInterface extends Interface{
 
 //TODO local games server. Only one login allowed but that stays in background
 
@@ -21,7 +21,7 @@ Settings localSettings = Settings();
 Game game;
 NewGame newGame;
 
-getGame(NewGame newGame) => injector.getGame(this, newGame);
+getGame(NewGame newGame) => dependency.getGame(newGame);
 
 
 
@@ -32,7 +32,7 @@ LocalInterface(GameDependency injector) : super(injector){
 }
 
 resetGame(){
-  newGame = NewGame.local(localSettings);
+  newGame = NewGame.local(dependency);
 }
 
 addPlayer(Player player) => newGame.addLocalPlayer(player);
@@ -42,7 +42,7 @@ startGame(NewGame newgame)async{
   await game.initialise();
 }
 
-makeMove(Move move) => game.makeMove(move, game.settings.id, game.position.playerId);
+makeMove(Move move) => game.makeMove(move, game.gameId, game.position.playerId);
 
 
 

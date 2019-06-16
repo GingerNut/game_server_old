@@ -79,6 +79,7 @@ class ServerConnection implements ChannelHost {
         Record record = await server.db.getRecordWithId(login.playerId);
 
         if(record == null) {
+
           loginAttempts --;
           send(GameError('player not found'));
         } else if(login.password != record.password){
@@ -86,7 +87,6 @@ class ServerConnection implements ChannelHost {
           loginAttempts --;
           send(GameError('password incorrect'));
         } else if(server.clientWithLogin(login.playerId)){
-
           server.removeConnection(this);
           send(GameError('already logged in'));
 
@@ -155,6 +155,11 @@ class ServerConnection implements ChannelHost {
       case ConfirmMove:
         ConfirmMove confirm = message as ConfirmMove;
         server.confirmMove(confirm);
+        break;
+
+      case GameError:
+        var error = message as GameError;
+        print (error.text);
         break;
 
 

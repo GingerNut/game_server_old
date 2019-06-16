@@ -10,26 +10,40 @@ import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:game_server/src/game/board/board.dart';
 import '../game_dependency.dart';
-import 'game_host.dart';
 import 'move.dart';
 
 class Game {
   GameState state = GameState.waitingForPlayers;
-  final NewGame settings;
-  final GameHost host;
-  final GameDependency dependency;
+  GameDependency dependency;
+
+  String gameId;
+  String displayName;
+  bool timer;
+  bool playerHelp;
+  double gameTime;
+  double moveTime;
+  List<Player> players;
 
   Board board;
-  List get players => settings.players;
 
-  Game(this.host, this.dependency, this.settings);
+  Game.fromNewGame(this.dependency, NewGame newGame){
+    timer = dependency.settings.timer;
+    playerHelp = dependency.settings.playerHelp;
+    gameTime = dependency.settings.gameTime;
+    moveTime = dependency.settings.moveTime;
+
+    this.players = newGame.players;
+    this.gameId = newGame.id;
+    this.displayName = newGame.displayName;
+    this.playerHelp = newGame.playerHelp;
+    this.timer = newGame.timer;
+    this.gameTime = newGame.gameTime;
+    this.moveTime = newGame.moveTime;
+  }
 
   int get numberOfPlayers => players.length;
 
   Position position;
-
-  String get id => settings.id;
-  String get displayName => settings.displayName;
 
   List<Move> history = new List();
   List<Player> unconfirmed = new List();
@@ -38,15 +52,13 @@ class Game {
 
   Future initialise() async{
     position = dependency.getPosition();
-    position.gameId = settings.id;
-
     List<String> playerIds = List();
     List<String> playerQueue = List();
 
       for (int i = 0; i < numberOfPlayers; i ++) {
         Player player = players[i];
         player.game = this;
-        player.gameId = settings.id;
+        player.gameId = gameId;
         playerIds.add(player.id);
         playerQueue.add(player.id);
       }
@@ -71,7 +83,7 @@ class Game {
 
     players.forEach((p) => p.status = PlayerStatus.playing);
 
-    players.forEach((p) => p.gameStarted(id));
+    players.forEach((p) => p.gameStarted(gameId));
 
     players.firstWhere((p) => p.id ==position.playerId).yourTurn();
     return;
@@ -101,7 +113,7 @@ class Game {
   Future makeMove(Move move, String gameId, String playerId) async{
     Message response = move.check(position);
 
-    if(gameId != settings.id ) response == GameError('game id incorrect');
+    if(gameId != gameId ) response == GameError('game id incorrect');
 
     if(playerId != position.playerId) response == GameError('player id incorrect');
 

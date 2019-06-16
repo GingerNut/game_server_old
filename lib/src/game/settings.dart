@@ -7,8 +7,7 @@ import 'package:game_server/src/game/player/player.dart';
 
 class Settings{
 
-  int numberOfPlayers = 4;
-  static const int maxPlayers = 6;
+  int maxPlayers = 6;
   int playerType = Player.human;
   bool playerHelp = false;
   bool randomStart = true;
@@ -23,7 +22,7 @@ class Settings{
   String get string {
     String string = '';
 
-    string += numberOfPlayers.toString();
+    string += maxPlayers.toString();
     string += '\n';
 
     string += playerType.toString();
@@ -48,7 +47,7 @@ class Settings{
 
     List<String> settingsList = string.split('\n');
 
-    numberOfPlayers = int.parse(settingsList[0]);
+    maxPlayers = int.parse(settingsList[0]);
 
     playerType = int.parse(settingsList[1]);
 

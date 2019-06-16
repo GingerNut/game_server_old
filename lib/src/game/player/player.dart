@@ -45,11 +45,11 @@ class Player{
   GameTimer timer;
 
   initialise(){
-    timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
+    timer = GameTimer(this, game.gameTime, moveTime: game.moveTime);
 
     game.position.playerStatus[id] = status;
 
-    if(game.id == 'local game') status = PlayerStatus.ready;
+    if(game.gameId == 'local game') status = PlayerStatus.ready;
 
     //TODO get timer working
 

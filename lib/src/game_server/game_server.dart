@@ -1,7 +1,6 @@
 
 
 import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/game/game_host.dart';
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/move_builder.dart';
 import 'package:game_server/src/game/player/player.dart';
@@ -20,7 +19,7 @@ import '../game_dependency.dart';
 import 'advert_list.dart';
 
 
-class GameServer implements GameHost{
+class GameServer{
 
   final GameDependency injector;
 
@@ -118,6 +117,7 @@ class GameServer implements GameHost{
   }
 
   Future<Message> startGame(String gameId) async{
+
     NewGame advert = _adverts.getAdvertrWithId(gameId);
 
     if(advert.players.length < advert.maxPlayers) return GameError('game not yet full');
@@ -138,7 +138,7 @@ class GameServer implements GameHost{
     Move move = makeMove.build(injector.getMoveBuilder());
 
     Game game = _games.firstWhere((g) {
-       return (g.id == makeMove.gameId);
+       return (g.gameId == makeMove.gameId);
     } );
 
     String playerId = makeMove.playerId;
@@ -150,7 +150,7 @@ class GameServer implements GameHost{
   confirmMove(ConfirmMove confirm){
 
     Game game = _games.firstWhere((g){
-      return(g.id == confirm.gameId);
+      return(g.gameId == confirm.gameId);
     });
 
     game.confirmMove(confirm.playerId, confirm.number);
@@ -185,7 +185,7 @@ class GameServer implements GameHost{
   }
 
   @override
-  getGame(NewGame settings) => injector.getGame(this, settings);
+  getGame(NewGame settings) => injector.getGame(settings);
 
   @override
   void set injector(GameDependency _injector) {

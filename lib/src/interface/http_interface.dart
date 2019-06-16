@@ -22,13 +22,12 @@ import 'package:game_server/src/messages/command/start_game.dart';
 import 'interface.dart';
 
 class HttpInterface extends Interface{
-  Settings onlineSettings = Settings();
+
 
   String id = 'Player';
   String password = '';
 
-  HttpInterface(GameDependency injector) : super(injector);
-
+  HttpInterface(GameDependency dependency) : super(dependency);
   ClientConnection connection;
   PlayerStatus _status;
   AdvertList adverts = new AdvertList();
@@ -45,14 +44,14 @@ class HttpInterface extends Interface{
     connection.close();
   }
 
-  advertiseGame()=> connection.send(NewGame.fromSettings(onlineSettings));
+  advertiseGame()=> connection.send(NewGame.fromSettings(dependency));
 
   joinGame(NewGame game)=> connection.send(JoinGame(game));
 
   startGame(NewGame game)=> connection.send(StartGame(game));
 
   setPosition(SendPosition sendPosition) {
-    position = sendPosition.build(injector.getPositionBuilder());
+    position = sendPosition.build(dependency.getPositionBuilder());
   }
 
   set status (PlayerStatus status) {
@@ -66,7 +65,7 @@ class HttpInterface extends Interface{
   }
 
   doMove(MakeMove makeMove){
-    Move move = makeMove.build(injector.getMoveBuilder());
+    Move move = makeMove.build(dependency.getMoveBuilder());
     position.makeMove(move);
   }
 

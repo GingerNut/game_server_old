@@ -5,13 +5,13 @@ import '../game_dependency.dart';
 
 abstract class Interface{
 
-  GameDependency injector;
+  GameDependency dependency;
 
   Position position;
 
   ColorScheme colorScheme;
 
-  Interface(this.injector);
+  Interface(this.dependency);
 
 
 

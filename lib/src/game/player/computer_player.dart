@@ -20,7 +20,7 @@ class ComputerPlayer extends Player{
 
   initialise() async{
     messagesIn = await StreamController.broadcast();
-    timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
+    timer = GameTimer(this, game.gameTime, moveTime: game.moveTime);
     receivePort.listen((d){
 
       if(d is SendPort) {

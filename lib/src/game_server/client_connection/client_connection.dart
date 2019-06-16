@@ -114,7 +114,8 @@ abstract class ClientConnection implements ChannelHost{
         break;
 
       case GameError:
-        loginStatus = LoginStatus.error;
+        var error = message as GameError;
+        print (error.text);
         break;
 
     }
