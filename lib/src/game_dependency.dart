@@ -3,7 +3,7 @@ import 'dart:isolate';
 import 'game/game.dart';
 import 'game/game_host.dart';
 import 'game/move_builder.dart';
-import 'game/player/computer_isolate.dart';
+import 'game/player/computer.dart';
 import 'game/position.dart';
 import 'game/position_builder.dart';
 import 'messages/command/new_game.dart';

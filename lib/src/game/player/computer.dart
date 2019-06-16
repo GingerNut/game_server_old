@@ -25,7 +25,7 @@ import '../position_builder.dart';
 
 
 
-class ComputerIsolate{
+class Computer{
 
     bool ready = false;
     String gameId;
@@ -38,7 +38,7 @@ class ComputerIsolate{
     PositionBuilder get positionBuilder => dependency.getPositionBuilder();
     GameDependency dependency;
 
-  ComputerIsolate(this.dependency, this.receivePort, this.sendPort){
+  Computer(this.dependency, this.receivePort, this.sendPort){
     receivePort.listen((s) => handleMessage(s));
   }
 

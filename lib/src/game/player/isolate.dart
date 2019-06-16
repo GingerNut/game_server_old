@@ -2,7 +2,7 @@
 import 'dart:isolate';
 
 import '../../game_dependency.dart';
-import 'computer_isolate.dart';
+import 'computer.dart';
 
 
 

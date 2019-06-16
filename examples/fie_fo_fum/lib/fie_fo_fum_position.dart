@@ -1,7 +1,7 @@
 
 
 import 'package:game_server/src/game/move.dart';
-import 'package:game_server/src/game/player/computer_isolate.dart';
+import 'package:game_server/src/game/player/computer.dart';
 import 'package:game_server/src/game/position.dart';
 
 import 'fie_fo_fum_position_builder.dart';

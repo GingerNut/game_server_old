@@ -6,7 +6,7 @@ import 'dart:isolate';
 
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/move_builder.dart';
-import 'package:game_server/src/game/player/computer_isolate.dart';
+import 'package:game_server/src/game/player/computer.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/game_dependency.dart';
 import 'package:game_server/src/injector.dart';
