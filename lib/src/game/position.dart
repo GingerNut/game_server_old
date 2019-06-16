@@ -9,25 +9,25 @@ import 'package:game_server/src/game/position_builder.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/send_position.dart';
 
+import '../game_dependency.dart';
 import 'move.dart';
 
 abstract class Position{
 
   Move lastMove;
+  GameDependency get dependency;
 
   String gameId;
   List<String> playerIds;
   List<String> playerQueue;
 
-  PositionBuilder get positionBuilder;
+  PositionBuilder get positionBuilder => dependency.getPositionBuilder();
   int get nextMoveNumber => lastMove == null ? 0 : lastMove.number +1;
 
   PlayerVariable<PlayerStatus> playerStatus;
   PlayerVariable<double> score;
   PlayerVariable<double> timeLeft;
   PlayerVariable<int> color;
-
-  String get string;
 
   String get json => jsonEncode({
     'game_id' : gameId,
@@ -37,9 +37,13 @@ abstract class Position{
 //    'time_left': timeLeft.string,
     'score' : score.string,
     'color': color.string,
-    'position' : string,
+    'position' : externalVariablesString,
   }
   );
+
+  String get externalVariablesString;
+
+  setExternalVariables(String string);
 
   Position get duplicate => SendPosition.fromPosition(this).build(positionBuilder);
 
@@ -61,7 +65,6 @@ abstract class Position{
     lastMove = move;
 
     analyse();
-    checkWin();
 
     setNextPlayer();
 
@@ -115,17 +118,17 @@ abstract class Position{
     score = PlayerVariable(this, 0);
    // timeLeft = PlayerVariable(this, settings.gameTime);
     color = PlayerVariable.fromList(this, Palette.defaultPlayerColours);
+
+    initialiseExternalVariables();
   }
 
-  setFirstPlayer();
+  initialiseExternalVariables();
 
-  setupFirstPosition();
+  setFirstPlayer();
 
   setUpNewPosition();
 
   analyse();
-
-  checkWin();
 
   List<Move> getPossibleMoves();
 

@@ -80,7 +80,6 @@ class Player{
     Position position = game.position;
 
     status = PlayerStatus.out;
-    position.checkWin();
   }
 
   tidyUp(){}

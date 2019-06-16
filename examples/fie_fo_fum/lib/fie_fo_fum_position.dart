@@ -3,8 +3,9 @@
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/computer.dart';
 import 'package:game_server/src/game/position.dart';
+import 'package:game_server/src/game_dependency.dart';
 
-import 'fie_fo_fum_position_builder.dart';
+import 'fie_fo_fum_injector.dart';
 import 'move_fie.dart';
 import 'move_fo.dart';
 import 'move_fum.dart';
@@ -12,68 +13,29 @@ import 'move_number.dart';
 
 class FieFoFumPosition extends Position{
 
-  int count = 1;
+  int count;
+
   get playerOrder => PlayerOrder.sequential;
+  get dependency => FieFoFumInjector();
 
-  get positionBuilder => FieFoFumPositionBuilder();
-
-  String get string{
+  String get externalVariablesString{
 
     String string = '';
     string += count.toString();
     return string;
   }
 
+  initialiseExternalVariables() => count = 1;
 
-  makeMove(Move move){
+  setExternalVariables(String string)=> count = int.parse(string);
 
-//    if(playerIds.any((s){
-//      return (s.substring(0,3) == 'Com');
-//    })){
-//
-//      if(!computer)print('from analyse '
-//          + count.toString() + ' '
-//          + playerQueue.toString() + ' '
-//          + move.runtimeType.toString() + ''
-//          + '\n');
-//    }
+  analyse() {}
 
-    super.makeMove(move);
-  }
+  setUpNewPosition() => count ++;
 
+  setFirstPlayer(){}
 
-  analyse() {
-
-
-
-
-
-  }
-
-
-  checkWin() {
-
-  }
-
-
-  setUpNewPosition() {
-    count ++;
-  }
-
-  setFirstPlayer(){
-
-  }
-
-  bool canPlay(String id) {
-
-    return (id == playerId) ;
-  }
-
-
-  setupFirstPosition() {
-
-
-  }
+  bool canPlay(String id) => (id == playerId);
 
   List<Move> getPossibleMoves() => [MoveNumber(), MoveFie(), MoveFo(), MoveFum()];
 

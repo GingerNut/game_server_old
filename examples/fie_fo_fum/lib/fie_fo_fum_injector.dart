@@ -11,7 +11,7 @@ import 'package:game_server/src/messages/command/new_game.dart';
 
 import 'fie_fo_fum_move_builder.dart';
 import 'fie_fo_fum_position.dart';
-import 'fie_fo_fum_position_builder.dart';
+
 
 class FieFoFumInjector extends GameDependency{
 
@@ -21,7 +21,7 @@ class FieFoFumInjector extends GameDependency{
   
   MoveBuilder getMoveBuilder() => FieFoFumMoveBuilder();
 
-  PositionBuilder getPositionBuilder() => FieFoFumPositionBuilder();
+  PositionBuilder getPositionBuilder() => PositionBuilder(this);
 
   Uri get computerUri => Uri.parse('C://Users/Stephen/growing_games/game_server/examples/fie_fo_fum/lib/fie_fo_fum_isolate.dart');
 

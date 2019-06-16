@@ -27,7 +27,6 @@ import 'package:test/test.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
-import '../examples/fie_fo_fum/lib/fie_fo_fum_position_builder.dart';
 import '../examples/fie_fo_fum/lib/move_fie.dart';
 import '../examples/fie_fo_fum/lib/move_fo.dart';
 import '../examples/fie_fo_fum/lib/move_fum.dart';
@@ -71,7 +70,7 @@ void main()async{
         expect(position.count, 1);
 
         FieFoFumPosition duplicate = position.duplicate;
-        FieFoFumPosition sent = FieFoFumPositionBuilder().build(position.json);
+        FieFoFumPosition sent = FieFoFumInjector().getPositionBuilder().build(position.json);
 
         expect(duplicate.playerIds, position.playerIds);
         expect(duplicate.playerQueue, position.playerQueue);
@@ -86,7 +85,7 @@ void main()async{
         expect(position.playerQueue, ['b', 'c', 'd','a']);
 
         duplicate = position.duplicate;
-        sent = FieFoFumPositionBuilder().build(position.json);
+        sent = FieFoFumInjector().getPositionBuilder().build(position.json);
 
         expect(duplicate.playerIds, position.playerIds);
         expect(duplicate.playerQueue, position.playerQueue);
@@ -229,7 +228,7 @@ void main()async{
     test('SendPosition',(){
       SendPosition sendPostiion = SendPosition.fromGame(ui.game);
 
-      FieFoFumPosition position = sendPostiion.build(FieFoFumPositionBuilder());
+      FieFoFumPosition position = sendPostiion.build(FieFoFumInjector().getPositionBuilder());
       expect(position.count , 1);
       expect(position.playerIds, ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
       expect(position.color['Player 1'], 7);
