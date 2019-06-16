@@ -44,8 +44,6 @@ class Player{
 
   GameTimer timer;
 
-  double get timeLeft => game.position.timeLeft(this);
-
   initialise(){
     timer = GameTimer(this, game.settings.gameTime, moveTime: game.settings.moveTime);
 

@@ -18,12 +18,7 @@ class FieFoFumPosition extends Position{
   get playerOrder => PlayerOrder.sequential;
   get dependency => FieFoFumInjector();
 
-  String get externalVariablesString{
-
-    String string = '';
-    string += count.toString();
-    return string;
-  }
+  get externalVariablesString => count.toString();
 
   initialiseExternalVariables() => count = 1;
 

@@ -17,17 +17,16 @@ class Game {
   GameState state = GameState.waitingForPlayers;
   final NewGame settings;
   final GameHost host;
-  final GameDependency injector;
+  final GameDependency dependency;
 
   Board board;
   List get players => settings.players;
 
-  Game(this.host, this.injector, this.settings);
+  Game(this.host, this.dependency, this.settings);
 
   int get numberOfPlayers => players.length;
 
-  Position _position;
-  get position => _position;
+  Position position;
 
   String get id => settings.id;
   String get displayName => settings.displayName;
@@ -38,8 +37,8 @@ class Game {
   setup() async {}
 
   Future initialise() async{
-    _position = getPosition();
-    _position.gameId = settings.id;
+    position = dependency.getPosition();
+    position.gameId = settings.id;
 
     List<String> playerIds = List();
     List<String> playerQueue = List();
@@ -51,16 +50,16 @@ class Game {
         playerIds.add(player.id);
         playerQueue.add(player.id);
       }
-
-      _position.playerIds = playerIds;
-    _position.playerQueue = playerQueue;
-    _position.initialise();
+      
+      position.playerIds = playerIds;
+    position.playerQueue = playerQueue;
+    position.initialise();
 
     players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 
-    _position.setFirstPlayer();
+    position.setFirstPlayer();
 
-    _position.analyse();
+    position.analyse();
 
     state = GameState.waitingForAllReady;
 
@@ -74,7 +73,7 @@ class Game {
 
     players.forEach((p) => p.gameStarted(id));
 
-    players.firstWhere((p) => p.id ==_position.playerId).yourTurn();
+    players.firstWhere((p) => p.id ==position.playerId).yourTurn();
     return;
   }
 
@@ -99,23 +98,21 @@ class Game {
     return;
   }
 
-  getPosition() => injector.getPosition();
-
   Future makeMove(Move move, String gameId, String playerId) async{
-    Message response = move.check(_position);
+    Message response = move.check(position);
 
     if(gameId != settings.id ) response == GameError('game id incorrect');
 
-    if(playerId != _position.playerId) response == GameError('player id incorrect');
+    if(playerId != position.playerId) response == GameError('player id incorrect');
 
     if(response is GameError) {
       print(response.text);
       return response;
     }
 
-    MakeMove update = MakeMove(gameId, playerId, move, _position.nextMoveNumber);
+    MakeMove update = MakeMove(gameId, playerId, move, position.nextMoveNumber);
 
-    _position.makeMove(move);
+    position.makeMove(move);
 
     history.add(move);
 
@@ -137,7 +134,7 @@ class Game {
     }
 
     if (state == GameState.inPlay) {
-      players.firstWhere((p) => p.id ==_position.playerId).yourTurn();
+      players.firstWhere((p) => p.id ==position.playerId).yourTurn();
     }
 
     return Success();
@@ -146,14 +143,14 @@ class Game {
   _setUnconfirmed(){
     players.forEach((p){
 
-      if(_position.playerStatus[p.id] == PlayerStatus.playing) unconfirmed.add(p);
+      if(position.playerStatus[p.id] == PlayerStatus.playing) unconfirmed.add(p);
 
     });
   }
 
   confirmMove(String playerId, int move){
 
-    if(_position.lastMove.number == move){
+    if(position.lastMove.number == move){
 
       unconfirmed.retainWhere((p){
 
