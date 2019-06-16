@@ -38,7 +38,7 @@ class Player{
   String displayName;
   String gameId;
 
-  Timer countdownTimer;
+  Timer timer;
   Stopwatch stopwatch = Stopwatch();
 
   set status (PlayerStatus newStatus) => game.position.playerStatus[id] = newStatus;
@@ -51,18 +51,13 @@ class Player{
 
     if(game.gameId == 'local game') status = PlayerStatus.ready;
 
-    //TODO get timer working
-
   }
 
-  moveUpdate(MakeMove move){
-
-      game.confirmMove(id, move.number);
-  }
+  moveUpdate(MakeMove move)=> game.confirmMove(id, move.number);
 
 
   yourTurn(){
-    countdownTimer = Timer(Duration(milliseconds: (game.position.timeLeft[id] * 1000).round()), (){
+    timer = Timer(Duration(milliseconds: (game.position.timeLeft[id] * 1000).round()), (){
       outOfTime();
     });
 
@@ -73,24 +68,17 @@ class Player{
 
   stopTimer(){
     stopwatch.stop();
-    countdownTimer.cancel();
+    timer?.cancel();
     game.position.timeLeft[id] -= stopwatch.elapsed.inSeconds;
   }
 
-  wait(){
-
-  }
+  wait(){  }
 
   gameStarted(String gameId){}
 
-  outOfTime(){
-
-   game.position.playerStatus[id] = PlayerStatus.out;
-  }
+  outOfTime()=> game.position.playerStatus[id] = PlayerStatus.out;
 
   tidyUp(){}
-
-
 }
 
 
