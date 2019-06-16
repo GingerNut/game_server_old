@@ -38,14 +38,14 @@ class Player{
   String displayName;
   String gameId;
 
+  Timer countdownTimer;
+  Stopwatch stopwatch = Stopwatch();
+
   set status (PlayerStatus newStatus) => game.position.playerStatus[id] = newStatus;
 
   PlayerStatus get status => game == null ? PlayerStatus.queuing : game.position.playerStatus[id];
 
-  GameTimer timer;
-
   initialise(){
-    timer = GameTimer(this, game.gameTime, moveTime: game.moveTime);
 
     game.position.playerStatus[id] = status;
 
@@ -62,11 +62,20 @@ class Player{
 
 
   yourTurn(){
+    countdownTimer = Timer(Duration(milliseconds: (game.position.timeLeft[id] * 1000).round()), (){
+      outOfTime();
+    });
 
+    stopwatch.reset();
+    stopwatch.start();
 
   }
 
-
+  stopTimer(){
+    stopwatch.stop();
+    countdownTimer.cancel();
+    game.position.timeLeft[id] -= stopwatch.elapsed.inSeconds;
+  }
 
   wait(){
 
@@ -75,9 +84,8 @@ class Player{
   gameStarted(String gameId){}
 
   outOfTime(){
-    Position position = game.position;
 
-    status = PlayerStatus.out;
+   game.position.playerStatus[id] = PlayerStatus.out;
   }
 
   tidyUp(){}

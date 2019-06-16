@@ -35,10 +35,11 @@ class Game {
     this.players = newGame.players;
     this.gameId = newGame.id;
     this.displayName = newGame.displayName;
-    this.playerHelp = newGame.playerHelp;
-    this.timer = newGame.timer;
-    this.gameTime = newGame.gameTime;
-    this.moveTime = newGame.moveTime;
+
+    if(newGame.playerHelp != null) this.playerHelp = newGame.playerHelp;
+    if(newGame.timer != null) this.timer = newGame.timer;
+    if(newGame.gameTime != null) this.gameTime = newGame.gameTime;
+    if(newGame.moveTime != null) this.moveTime = newGame.moveTime;
   }
 
   int get numberOfPlayers => players.length;
@@ -67,6 +68,8 @@ class Game {
     position.playerQueue = playerQueue;
     position.initialise();
 
+    position.setTimers(gameTime);
+
     players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 
     position.setFirstPlayer();
@@ -85,7 +88,12 @@ class Game {
 
     players.forEach((p) => p.gameStarted(gameId));
 
-    players.firstWhere((p) => p.id ==position.playerId).yourTurn();
+    Player player =  players.firstWhere((p) => p.id ==position.playerId);
+
+    position.timeLeft[player.id] += moveTime;
+
+    player.yourTurn();
+
     return;
   }
 
@@ -121,6 +129,8 @@ class Game {
       print(response.text);
       return response;
     }
+
+    players.forEach((p) => p.stopTimer());
 
     MakeMove update = MakeMove(gameId, playerId, move, position.nextMoveNumber);
 

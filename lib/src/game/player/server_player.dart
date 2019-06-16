@@ -28,6 +28,7 @@ class ServerPlayer extends Player{
   gameStarted(String gameId) => connection.send(GameStarted(gameId));
 
   yourTurn(){
+    super.yourTurn();
     if(connection != null) connection.send(YourTurn(gameId));
   }
 

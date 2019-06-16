@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:game_server/src/design/palette.dart';
@@ -55,6 +56,8 @@ abstract class Position{
   bool gameOver = false;
 
   bool canPlay(String id);
+
+
 
   makeMove(Move move){
 
@@ -116,11 +119,13 @@ abstract class Position{
   initialise(){
     playerStatus = PlayerVariable(this, PlayerStatus.ingameNotReady);
     score = PlayerVariable(this, 0);
-   // timeLeft = PlayerVariable(this, settings.gameTime);
+
     color = PlayerVariable.fromList(this, Palette.defaultPlayerColours);
 
     initialiseExternalVariables();
   }
+
+  setTimers(double gameTime)=> timeLeft = PlayerVariable(this, gameTime);
 
   initialiseExternalVariables();
 

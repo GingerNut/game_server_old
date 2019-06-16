@@ -20,7 +20,6 @@ class ComputerPlayer extends Player{
 
   initialise() async{
     messagesIn = await StreamController.broadcast();
-    timer = GameTimer(this, game.gameTime, moveTime: game.moveTime);
     receivePort.listen((d){
 
       if(d is SendPort) {
@@ -44,7 +43,10 @@ class ComputerPlayer extends Player{
 
   moveUpdate(MakeMove move)=> send(move);
 
-  yourTurn()=> send(YourTurn(gameId));
+  yourTurn(){
+    super.yourTurn();
+    send(YourTurn(gameId));
+  }
 
   gameStarted(String gameId) => send(GameStarted(gameId));
 

@@ -10,7 +10,7 @@ class FieFoFumSettings extends Settings{
 
   bool timer = true;
   double gameTime = 5.0;
-  double moveTime = 5.0;
+  double moveTime = 3.0;
   String onlineGameName = 'Fie Fo Fum Game';
 
 

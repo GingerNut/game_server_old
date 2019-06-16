@@ -113,6 +113,17 @@ void main()async{
       await ui.startGame(ui.newGame);
     });
 
+    test('timer', ()async{
+
+      await Future.delayed(Duration(milliseconds : 1000));
+
+      await ui.game.makeMove(MoveNumber(), ui.game.gameId, ui.position.playerId);
+      expect(ui.position.timeLeft['Player 1'], 7);
+//      await Future.delayed(Duration(seconds : 8));
+//      expect(ui.position.playerStatus['Player 2'], PlayerStatus.out);
+
+    });
+
     test('player variable',()async{
 
       expect(ui.game.position.playerStatus.string,
