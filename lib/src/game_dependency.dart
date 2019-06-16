@@ -18,7 +18,7 @@ abstract class GameDependency{
 
   Position getPosition();
 
-  ComputerIsolate getComputer(ReceivePort receivePort, SendPort sendPort);
+  Uri get computerUri;
 
 
 }

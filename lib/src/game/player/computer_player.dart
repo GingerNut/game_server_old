@@ -3,13 +3,18 @@ part of player;
 
 
 
-abstract class ComputerPlayer extends Player{
+class ComputerPlayer extends Player{
+
+  final GameDependency dependency;
 
   bool computerReady = false;
 
   ReceivePort receivePort = ReceivePort();
   SendPort sendPort;
-  MoveBuilder get moveBuilder;
+
+  ComputerPlayer(this.dependency);
+
+  MoveBuilder get moveBuilder => dependency.getMoveBuilder();
 
   StreamController<String> messagesIn;  // just for testing
 
@@ -25,7 +30,7 @@ abstract class ComputerPlayer extends Player{
       }
     });
 
-    await startComputer();
+    await Isolate.spawnUri(dependency.computerUri, null,  receivePort.sendPort);
 
     while(sendPort == null){
       await Future.delayed(Duration(milliseconds : 1));
@@ -42,8 +47,6 @@ abstract class ComputerPlayer extends Player{
   yourTurn()=> send(YourTurn(gameId));
 
   gameStarted(String gameId) => send(GameStarted(gameId));
-
-  startComputer();
 
   handleMessage(String string){
     messagesIn.sink.add(string);

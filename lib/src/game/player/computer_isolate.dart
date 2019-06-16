@@ -17,6 +17,7 @@ import 'package:game_server/src/messages/message.dart';
 import 'package:game_server/src/messages/response/confirm_move.dart';
 
 
+import '../../game_dependency.dart';
 import '../move.dart';
 import '../move_builder.dart';
 import '../position.dart';
@@ -24,7 +25,7 @@ import '../position_builder.dart';
 
 
 
-abstract class ComputerIsolate{
+class ComputerIsolate{
 
     bool ready = false;
     String gameId;
@@ -33,13 +34,14 @@ abstract class ComputerIsolate{
     final SendPort sendPort;
 
     Position position;
-    MoveBuilder get moveBuilder;
-    PositionBuilder get positionBuilder;
+    MoveBuilder get moveBuilder => dependency.getMoveBuilder();
+    PositionBuilder get positionBuilder => dependency.getPositionBuilder();
+    GameDependency dependency;
 
     List<Move> moves = new List();
     Move bestMove;
 
-  ComputerIsolate(this.receivePort, this.sendPort){
+  ComputerIsolate(this.dependency, this.receivePort, this.sendPort){
     receivePort.listen((s) => handleMessage(s));
   }
 
@@ -74,7 +76,7 @@ abstract class ComputerIsolate{
 
           case SendPosition:
             SendPosition sendPosition = message as SendPosition;
-            Position position = sendPosition.build(positionBuilder);
+            position = sendPosition.build(positionBuilder);
             position.computer = true;
             gameId = position.gameId;
             await analysePosition(position);
@@ -86,7 +88,9 @@ abstract class ComputerIsolate{
             break;
 
           case YourTurn:
-            yourTurn(string);
+            Move move = await position.findBestMove(this);
+            MakeMove makeMove = MakeMove(gameId, playerId, move , move.number);
+            send(makeMove);
             break;
 
           case MakeMove:
@@ -103,17 +107,11 @@ abstract class ComputerIsolate{
 
     }
 
-    send(Message message) {
-      sendPort.send(message.json);
-    }
+    send(Message message) => sendPort.send(message.json);
 
-    Future analysePosition(Position position);
+    Future analysePosition(Position position) => position.analyse();
 
     doMove(Move move)=> position.makeMove(move);
-
-    yourTurn(String details);
-
-    findBestMove();
 
     }
 

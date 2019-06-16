@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:game_server/src/design/palette.dart';
+import 'package:game_server/src/game/player/computer_isolate.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/player/player_variable.dart';
 import 'package:game_server/src/game/position_builder.dart';
@@ -128,6 +129,8 @@ abstract class Position{
   analyse();
 
   checkWin();
+
+  findBestMove(ComputerIsolate computer);
 
   static String playerStatusToString(PlayerStatus p){
 
