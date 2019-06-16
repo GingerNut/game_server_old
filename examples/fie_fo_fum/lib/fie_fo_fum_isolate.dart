@@ -11,8 +11,8 @@ main(List<String> args, SendPort sendPort) {
   ReceivePort receivePort = new ReceivePort();
   sendPort.send(receivePort.sendPort);
 
-  Computer isolate = Computer(FieFoFumInjector(), receivePort, sendPort);
+  Computer computer = Computer(FieFoFumInjector(), receivePort, sendPort);
 
-  isolate.initialise();
+  computer.initialise();
 
 }

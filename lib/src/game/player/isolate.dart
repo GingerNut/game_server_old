@@ -1,24 +1,15 @@
-
 import 'dart:isolate';
 
-import '../../game_dependency.dart';
-import 'computer.dart';
+import 'package:game_server/src/game/player/computer.dart';
 
 
-
-
-
-main(SendPort sendPort) {
+main(List<String> args, SendPort sendPort) {
 
   ReceivePort receivePort = new ReceivePort();
   sendPort.send(receivePort.sendPort);
 
+  //Computer computer = Computer(SomeInjector(), receivePort, sendPort);
 
-
-//  ComputerIsolate isolate = ComputerIsolate(GameDependency(), receivePort, sendPort);
-
-//  isolate.initialise();
-
-
+//  computer.initialise();
 
 }

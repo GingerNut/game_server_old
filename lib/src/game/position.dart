@@ -13,9 +13,6 @@ import 'move.dart';
 
 abstract class Position{
 
-  bool computer = false;
-  bool duplicated = false;
-
   Move lastMove;
 
   String gameId;
@@ -37,7 +34,7 @@ abstract class Position{
     'player_ids' : playerIds.join(','),
     'player_queue' : playerQueue.join(','),
     'player_status' : playerStatus.string,
-    'time_left': timeLeft.string,
+//    'time_left': timeLeft.string,
     'score' : score.string,
     'color': color.string,
     'position' : string,
@@ -113,10 +110,10 @@ abstract class Position{
 
   }
 
-  initialise(NewGame settings){
+  initialise(){
     playerStatus = PlayerVariable(this, PlayerStatus.ingameNotReady);
     score = PlayerVariable(this, 0);
-    timeLeft = PlayerVariable(this, settings.gameTime);
+   // timeLeft = PlayerVariable(this, settings.gameTime);
     color = PlayerVariable.fromList(this, Palette.defaultPlayerColours);
   }
 

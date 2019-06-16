@@ -7,7 +7,6 @@ import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/player.dart';
 import 'package:game_server/src/game/player/player_variable.dart';
-import 'package:game_server/src/injector.dart';
 import 'package:game_server/src/interface/local_interface.dart';
 import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/messages/chat/private_message.dart';
@@ -48,7 +47,7 @@ void main()async{
 
   Future waitForAllConfirmed(Game game) async{
 
-    while(game.unconfirmed.length > 0){
+    while(game.unconfirmed.isNotEmpty){
       await Future.delayed(Duration(milliseconds : 10));
     }
     return;
@@ -56,16 +55,50 @@ void main()async{
 
 
 
-  group('injector',(){
+  group('position sending and duplicating',(){
 
-    test('basicc', (){
+    test('duplicating and sending fie fo fum game', (){
+        FieFoFumPosition position = FieFoFumPosition();
 
-      Injector injector = Injector();
-      Injector.configure(FieFoFumInjector());
+        position.playerIds = ['a', 'b', 'c', 'd'];
+        position.playerQueue = ['a', 'b', 'c', 'd'];
+        position.gameId = 'game';
 
-      expect(injector.gameDependency.runtimeType, FieFoFumInjector);
+        position.initialise();
 
+        position.playerIds.forEach((p) => position.playerStatus[p] = PlayerStatus.playing);
+
+        expect(position.count, 1);
+
+        FieFoFumPosition duplicate = position.duplicate;
+        FieFoFumPosition sent = FieFoFumPositionBuilder().build(position.json);
+
+        expect(duplicate.playerIds, position.playerIds);
+        expect(duplicate.playerQueue, position.playerQueue);
+        expect(duplicate.count, position.count);
+
+        expect(sent.playerIds, position.playerIds);
+        expect(sent.playerQueue, position.playerQueue);
+        expect(sent.count, position.count);
+
+        position.makeMove(MoveNumber());
+        expect(position.count , 2);
+        expect(position.playerQueue, ['b', 'c', 'd','a']);
+
+        duplicate = position.duplicate;
+        sent = FieFoFumPositionBuilder().build(position.json);
+
+        expect(duplicate.playerIds, position.playerIds);
+        expect(duplicate.playerQueue, position.playerQueue);
+        expect(duplicate.count, position.count);
+
+        expect(sent.playerIds, position.playerIds);
+        expect(sent.playerQueue, position.playerQueue);
+        expect(sent.count, position.count);
+        
     });
+
+  
 
 
   });

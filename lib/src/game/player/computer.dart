@@ -74,7 +74,6 @@ class Computer{
           case SendPosition:
             SendPosition sendPosition = message as SendPosition;
             position = sendPosition.build(positionBuilder);
-            position.computer = true;
             gameId = position.gameId;
             await analysePosition(position);
             ready = true;
@@ -119,8 +118,6 @@ class Computer{
       moves.forEach((m){
 
         Position trialPosition = position.duplicate;
-        trialPosition.computer = true;
-        trialPosition.duplicated = true;
         trialPosition.makeMove(m);
         m.trialPosition = trialPosition;
 

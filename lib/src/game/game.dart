@@ -54,7 +54,7 @@ class Game {
 
       _position.playerIds = playerIds;
     _position.playerQueue = playerQueue;
-    _position.initialise(settings);
+    _position.initialise();
 
     players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 
