@@ -75,50 +75,8 @@ class FieFoFumPosition extends Position{
 
   }
 
-  @override
-  Future<Move> findBestMove(ComputerIsolate computer) async{
+  List<Move> getPossibleMoves() => [MoveNumber(), MoveFie(), MoveFo(), MoveFum()];
 
-    findPossibleMoves(){
-
-    computer.moves.add(MoveNumber());
-    computer.moves.add(MoveFie());
-    computer.moves.add(MoveFo());
-    computer.moves.add(MoveFum());
-  }
-
-    tryMove(Position position, Move move){
-
-      Position trialPosition = position.duplicate;
-      trialPosition.computer = true;
-      trialPosition.duplicated = true;
-      trialPosition.makeMove(move);
-      move.trialPosition = trialPosition;
-    }
-
-
-    computer.moves.clear();
-
-    findPossibleMoves();
-
-    computer.moves.forEach((m)=> tryMove(this, m));
-
-    double bestscore = -1000;
-    computer.bestMove = computer.moves[0];
-
-    computer.moves.forEach((m) {
-      double score = m.trialPosition.score[playerId];
-
-      if(score > bestscore) {
-        bestscore = score;
-        computer.bestMove = m;
-
-      }
-
-    });
-
-    return computer.bestMove;
-
-  }
-
+  double value(String playerId) => score[playerId];
 
 }

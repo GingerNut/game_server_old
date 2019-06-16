@@ -130,7 +130,9 @@ abstract class Position{
 
   checkWin();
 
-  findBestMove(ComputerIsolate computer);
+  List<Move> getPossibleMoves();
+
+  double value(String playerId);
 
   static String playerStatusToString(PlayerStatus p){
 

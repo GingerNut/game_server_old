@@ -38,9 +38,6 @@ class ComputerIsolate{
     PositionBuilder get positionBuilder => dependency.getPositionBuilder();
     GameDependency dependency;
 
-    List<Move> moves = new List();
-    Move bestMove;
-
   ComputerIsolate(this.dependency, this.receivePort, this.sendPort){
     receivePort.listen((s) => handleMessage(s));
   }
@@ -88,7 +85,7 @@ class ComputerIsolate{
             break;
 
           case YourTurn:
-            Move move = await position.findBestMove(this);
+            Move move = await findBestMove();
             MakeMove makeMove = MakeMove(gameId, playerId, move , move.number);
             send(makeMove);
             break;
@@ -112,6 +109,39 @@ class ComputerIsolate{
     Future analysePosition(Position position) => position.analyse();
 
     doMove(Move move)=> position.makeMove(move);
+
+    Future<Move> findBestMove() async{
+
+      Move bestMove;
+
+      List<Move> moves = position.getPossibleMoves();
+
+      moves.forEach((m){
+
+        Position trialPosition = position.duplicate;
+        trialPosition.computer = true;
+        trialPosition.duplicated = true;
+        trialPosition.makeMove(m);
+        m.trialPosition = trialPosition;
+
+      });
+
+      double bestscore = -1000;
+      bestMove = moves[0];
+
+      moves.forEach((m) {
+        double score = m.trialPosition.score[playerId];
+
+        if(score > bestscore) {
+          bestscore = score;
+          bestMove = m;
+
+        }
+
+      });
+
+      return bestMove;
+    }
 
     }
 
