@@ -1,6 +1,9 @@
+import 'dart:isolate';
+
 import 'game/game.dart';
 import 'game/game_host.dart';
 import 'game/move_builder.dart';
+import 'game/player/computer_isolate.dart';
 import 'game/position.dart';
 import 'game/position_builder.dart';
 import 'messages/command/new_game.dart';
@@ -14,6 +17,8 @@ abstract class GameDependency{
   PositionBuilder getPositionBuilder();
 
   Position getPosition();
+
+  ComputerIsolate getComputer(ReceivePort receivePort, SendPort sendPort);
 
 
 }

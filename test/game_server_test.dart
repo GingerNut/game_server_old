@@ -56,12 +56,12 @@ void main()async{
   }
 
 
+
   group('injector',(){
 
     test('basicc', (){
 
       Injector injector = Injector();
-
       Injector.configure(FieFoFumInjector());
 
       expect(injector.gameDependency.runtimeType, FieFoFumInjector);
