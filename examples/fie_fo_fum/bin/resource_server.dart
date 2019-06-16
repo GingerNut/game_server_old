@@ -9,7 +9,7 @@ import 'package:game_server/src/game_server/server_connection/http_connection.da
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
-import '../lib/FieFoFumInjector.dart';
+import '../lib/fie_fo_fum_injector.dart';
 
 
 

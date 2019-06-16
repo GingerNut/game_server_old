@@ -25,7 +25,7 @@ import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:test/test.dart';
 
-import '../examples/fie_fo_fum/lib/FieFoFumInjector.dart';
+import '../examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position_builder.dart';
