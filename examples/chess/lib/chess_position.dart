@@ -1,5 +1,6 @@
 
 
+import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/board/board.dart';
 import 'package:game_server/src/game/board/piece.dart';
 import 'package:game_server/src/game/move.dart';
@@ -14,8 +15,8 @@ class ChessPosition extends Position{
   Board board;
   List<Piece> whiteArmy = List();
   List<Piece> blackArmy = List();
-  PlayerVariable first;
-
+  String whitePlayer;
+  String blackPlayer;
 
 
   Piece makePawn(){
@@ -70,7 +71,9 @@ class ChessPosition extends Position{
 
 
   initialiseExternalVariables() {
-    first = PlayerVariable<bool>(playerIds, false);
+
+    board = Board.squareTiles(8, ConnectionScheme.allDirections);
+
   }
 
   PlayerOrder get playerOrder => PlayerOrder.sequential;

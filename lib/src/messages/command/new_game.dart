@@ -13,11 +13,12 @@ import '../message.dart';
 
 class NewGame extends Message{
   static const String type = 'new_game';
-  GameDependency dependency;
+  Settings settings;
 
   String id = 'game id';
   String displayName ='';
   List<Player> players = new List();
+  String firstPlayer;
   int maxPlayers;
   int numberOfPlayers = 0;
   int playerType;
@@ -37,27 +38,28 @@ class NewGame extends Message{
     else return false;
   }
 
-  NewGame(this.dependency);
+  NewGame(this.settings);
 
-  NewGame.fromSettings(this.dependency){
-    this.displayName = dependency.settings.onlineGameName;
-    this.maxPlayers = dependency.settings.maxPlayers;
-    this.gameTime = dependency.settings.gameTime;
-    this.moveTime = dependency.settings.moveTime;
-    this.timer = dependency.settings.timer;
-    this.playerHelp = dependency.settings.playerHelp;
+  NewGame.fromSettings(this.settings){
+    this.displayName = settings.onlineGameName;
+    this.maxPlayers = settings.maxPlayers;
+    this.gameTime = settings.gameTime;
+    this.moveTime = settings.moveTime;
+    this.timer = settings.timer;
+    this.playerHelp = settings.playerHelp;
+    this.firstPlayer = firstPlayer;
   }
 
 
 
 
 
-  NewGame.local(this.dependency){
+  NewGame.local(this.settings){
     id = 'local game';
-    numberOfPlayers = dependency.settings.maxPlayers;
-    gameTime = dependency.settings.gameTime;
-    moveTime = dependency.settings.moveTime;
-    timer = dependency.settings.timer;
+    numberOfPlayers = settings.maxPlayers;
+    gameTime = settings.gameTime;
+    moveTime = settings.moveTime;
+    timer = settings.timer;
     playerHelp = false;
   }
 
@@ -74,7 +76,7 @@ class NewGame extends Message{
 
   addLocalPlayer(Player player){
 
-    if(players.length < dependency.settings.maxPlayers) players.add(player);
+    if(players.length < settings.maxPlayers) players.add(player);
 
     players.forEach((p){
       if(p.displayName == null){
@@ -112,6 +114,7 @@ class NewGame extends Message{
     timer = jsonObject['time'] == 'TRUE' ? true : false;
     moveTime = jsonObject['move_time'];
     gameTime = jsonObject['game_time'];
+    firstPlayer = jsonObject['first_player'];
   }
 
   get json => jsonEncode({
@@ -122,7 +125,9 @@ class NewGame extends Message{
     'number_of_players':numberOfPlayers,
     'timer': timer == true ? 'TRUE' : 'FALSE',
     'move_time':moveTime,
-    'game_time':gameTime
+    'game_time':gameTime,
+    'first_player' : firstPlayer
+
   });
 
 }

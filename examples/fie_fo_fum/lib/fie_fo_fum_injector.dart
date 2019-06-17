@@ -1,5 +1,6 @@
 
 
+import 'package:game_server/src/game/board/notation.dart';
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/move_builder.dart';
@@ -31,6 +32,8 @@ class FieFoFumInjector extends GameDependency{
   Settings get settings => FieFoFumSettings();
 
   Uri get computerUri => Uri.parse('C://Users/Stephen/growing_games/game_server/examples/fie_fo_fum/lib/fie_fo_fum_isolate.dart');
+
+  Notation get notation => null;
 
 //  Uri get computerUri => Uri.dataFromString(isolateString);
 //

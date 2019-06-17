@@ -7,6 +7,8 @@ class Tile{
   final int i;
   final int j;
 
+  String label;
+
   Tile north;
   Tile northEast;
   Tile east;

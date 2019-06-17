@@ -25,6 +25,7 @@ import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:test/test.dart';
 
+import '../examples/chess/lib/chess_notation.dart';
 import '../examples/chess/lib/chess_position.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
@@ -53,6 +54,19 @@ void main()async{
     }
     return;
   }
+
+  group('notation', (){
+
+    test('chess notation', (){
+
+      expect(ChessNotation().labelTile(0,0), 'a1');
+      expect(ChessNotation().labelTile(3,1), 'b4');
+      expect(ChessNotation().labelTile(5,3), 'd6');
+      expect(ChessNotation().labelTile(7,7), 'h8');
+    });
+
+
+  });
 
   group('board connections',(){
 

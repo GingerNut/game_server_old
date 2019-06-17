@@ -51,7 +51,6 @@ class PlayerVariable<T>{
 
     List<String> details = sections[3].split(PlayerVariable.internalMinorDelimiter);
 
-
     List values;
 
     switch(type){

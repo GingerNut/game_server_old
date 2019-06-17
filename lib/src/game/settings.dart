@@ -17,6 +17,8 @@ class Settings{
   double moveTime = 12;
   String onlineGameName = 'New Game';
 
+  String firstPlayer;
+
 
 
   String get string {

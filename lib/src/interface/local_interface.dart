@@ -32,7 +32,7 @@ LocalInterface(GameDependency injector) : super(injector){
 }
 
 resetGame(){
-  newGame = NewGame.local(dependency);
+  newGame = NewGame.local(dependency.settings);
 }
 
 addPlayer(Player player) => newGame.addLocalPlayer(player);

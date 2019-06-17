@@ -44,7 +44,7 @@ class HttpInterface extends Interface{
     connection.close();
   }
 
-  advertiseGame()=> connection.send(NewGame.fromSettings(dependency));
+  advertiseGame()=> connection.send(NewGame.fromSettings(dependency.settings));
 
   joinGame(NewGame game)=> connection.send(JoinGame(game));
 

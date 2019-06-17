@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'game/board/board.dart';
+import 'game/board/notation.dart';
 import 'game/game.dart';
 import 'game/move_builder.dart';
 import 'game/player/computer.dart';
@@ -20,6 +21,8 @@ abstract class GameDependency{
   PositionBuilder getPositionBuilder();
 
   Position getPosition();
+
+  Notation get notation;
 
   Settings get settings;
 
