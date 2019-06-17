@@ -29,6 +29,8 @@ class FieFoFumInjector extends GameDependency{
 
   PositionBuilder getPositionBuilder() => PositionBuilder(this);
 
+  setPositionType(Position position) => position as FieFoFumPosition;
+
   Settings get settings => FieFoFumSettings();
 
   Uri get computerUri => Uri.parse('C://Users/Stephen/growing_games/game_server/examples/fie_fo_fum/lib/fie_fo_fum_isolate.dart');

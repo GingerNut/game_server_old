@@ -46,7 +46,9 @@ class Game {
 
   int get numberOfPlayers => players.length;
 
-  Position position;
+  Position _position;
+
+  Position get position => dependency.setPositionType(_position);
 
   List<Move> history = new List();
   List<Player> unconfirmed = new List();
@@ -54,7 +56,7 @@ class Game {
   setup() async {}
 
   Future initialise() async{
-    position = dependency.getPosition();
+    _position = dependency.getPosition();
     List<String> playerIds = List();
     List<String> playerQueue = List();
 
@@ -66,18 +68,18 @@ class Game {
         playerQueue.add(player.id);
       }
       
-      position.playerIds = playerIds;
-    position.playerQueue = playerQueue;
+      _position.playerIds = playerIds;
+    _position.playerQueue = playerQueue;
 
-    position.initialise();
+    _position.initialise();
 
-    position.setTimers(gameTime);
+    _position.setTimers(gameTime);
 
     players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 
-    position.setFirstPlayer(firstPlayer);
+    _position.setFirstPlayer(firstPlayer);
 
-    position.analyse();
+    _position.analyse();
 
     state = GameState.waitingForAllReady;
 
@@ -91,9 +93,9 @@ class Game {
 
     players.forEach((p) => p.gameStarted(gameId));
 
-    Player player =  players.firstWhere((p) => p.id ==position.playerId);
+    Player player =  players.firstWhere((p) => p.id ==_position.playerId);
 
-    position.timeLeft[player.id] += moveTime;
+    _position.timeLeft[player.id] += moveTime;
 
     player.yourTurn();
 
@@ -122,11 +124,11 @@ class Game {
   }
 
   Future makeMove(Move move, String gameId, String playerId) async{
-    Message response = move.check(position);
+    Message response = move.check(_position);
 
     if(gameId != gameId ) response == GameError('game id incorrect');
 
-    if(playerId != position.playerId) response == GameError('player id incorrect');
+    if(playerId != _position.playerId) response == GameError('player id incorrect');
 
     if(response is GameError) {
       print(response.text);
@@ -135,14 +137,14 @@ class Game {
 
     players.forEach((p) => p.stopTimer());
 
-    MakeMove update = MakeMove(gameId, playerId, move, position.nextMoveNumber);
+    MakeMove update = MakeMove(gameId, playerId, move, _position.nextMoveNumber);
 
-    position.makeMove(move);
+    _position.makeMove(move);
 
     history.add(move);
 
-    if(position.gameOver){
-      if(position.winner == null ) {
+    if(_position.gameOver){
+      if(_position.winner == null ) {
         state = GameState.drawn;
       }
       else {
@@ -159,7 +161,7 @@ class Game {
     }
 
     if (state == GameState.inPlay) {
-      players.firstWhere((p) => p.id ==position.playerId).yourTurn();
+      players.firstWhere((p) => p.id ==_position.playerId).yourTurn();
     }
 
     return Success();
@@ -168,14 +170,14 @@ class Game {
   _setUnconfirmed(){
     players.forEach((p){
 
-      if(position.playerStatus[p.id] == PlayerStatus.playing) unconfirmed.add(p);
+      if(_position.playerStatus[p.id] == PlayerStatus.playing) unconfirmed.add(p);
 
     });
   }
 
   confirmMove(String playerId, int move){
 
-    if(position.lastMove.number == move){
+    if(_position.lastMove.number == move){
 
       unconfirmed.retainWhere((p){
 

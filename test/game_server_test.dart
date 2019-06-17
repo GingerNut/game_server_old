@@ -81,7 +81,6 @@ void main()async{
 
     });
 
-
   });
 
 
@@ -404,6 +403,11 @@ void main()async{
       expect(chessGame.position.playerId, white.id);
       expect(chessGame.position.playerQueue[0], white.id);
       expect(chessGame.position.playerQueue[1], black.id);
+
+      ChessPosition chessPosition = chessGame.position;
+
+      expect(chessPosition.whiteArmy.length, 16);
+      expect(chessPosition.blackArmy.length, 16);
 
     });
 

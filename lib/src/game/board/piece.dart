@@ -1,6 +1,8 @@
 import 'tile.dart';
 
 class Piece{
+
+  Tile startingPosition;
   MovementPattern movementPattern;
   String name;
   Tile tile;

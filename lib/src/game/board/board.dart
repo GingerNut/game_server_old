@@ -25,6 +25,16 @@ class Board{
 
   String get string => null;
 
+  Tile tile(int i, int j){
+
+    Tile tile;
+    tiles.forEach((t){
+      if(t.i == i && t.j == j) tile = t;
+    });
+
+    return tile;
+  }
+
   Board.fromString(String string);
 
   Board.squareTiles(int size, ConnectionScheme connectionScheme){

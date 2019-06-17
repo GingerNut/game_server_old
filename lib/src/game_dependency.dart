@@ -22,6 +22,8 @@ abstract class GameDependency{
 
   Position getPosition();
 
+  Position setPositionType(Position position);
+
   Notation get notation;
 
   Settings get settings;

@@ -1,3 +1,5 @@
+import 'package:game_server/src/game/board/piece.dart';
+
 import 'board.dart';
 
 class Tile{
@@ -8,6 +10,7 @@ class Tile{
   final int j;
 
   String label;
+  List<Piece> pieces = List();
 
   Tile north;
   Tile northEast;
