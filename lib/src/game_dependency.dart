@@ -1,5 +1,6 @@
 import 'dart:isolate';
 
+import 'game/board/board.dart';
 import 'game/game.dart';
 import 'game/move_builder.dart';
 import 'game/player/computer.dart';
@@ -11,6 +12,8 @@ import 'messages/command/new_game.dart';
 abstract class GameDependency{
 
   Game getGame(NewGame newGame);
+
+  Board getBoard();
 
   MoveBuilder getMoveBuilder();
 

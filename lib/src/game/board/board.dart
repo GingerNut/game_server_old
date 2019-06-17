@@ -13,14 +13,13 @@ abstract class Board{
 
   static List<int> directions = [North_East, East, South_East, South_West, West, North_West];
 
+  Board();
+
   makeBoard(){}
 
   String get string;
 
   Board.fromString(String string);
-
-
-  //TODO chess board
 
 }
 
