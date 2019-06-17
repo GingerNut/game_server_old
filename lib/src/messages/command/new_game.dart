@@ -54,7 +54,7 @@ class NewGame extends Message{
 
   NewGame.local(this.dependency){
     id = 'local game';
-    maxPlayers = dependency.settings.maxPlayers;
+    numberOfPlayers = dependency.settings.maxPlayers;
     gameTime = dependency.settings.gameTime;
     moveTime = dependency.settings.moveTime;
     timer = dependency.settings.timer;

@@ -5,6 +5,7 @@
 // multiples of 3
 
 import 'package:game_server/src/game/move.dart';
+import 'package:game_server/src/game/player/player.dart';
 
 import 'fie_fo_fum_move.dart';
 import 'fie_fo_fum_position.dart';
@@ -22,7 +23,7 @@ class MoveFie extends FieFoFumMove{
       if(test % 3 == 0 && test % 5 != 0) moveOk = true;
 
       if(!moveOk) {
-         position.playerOut();
+         position.playerStatus[position.playerId] = PlayerStatus.out;
       }
       else {
         position.score[position.playerId] ++;

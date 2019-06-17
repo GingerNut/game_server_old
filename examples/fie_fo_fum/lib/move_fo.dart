@@ -19,7 +19,7 @@ class MoveFo extends FieFoFumMove{
     bool moveOk = false;
     int test = position.count;
     if(test % 3 != 0 && test % 5 == 0) moveOk = true;
-    if(!moveOk) position.playerOut();
+    if(!moveOk) position.playerStatus[position.playerId] = PlayerStatus.out;
     else position.score[position.playerId] ++;
   }
 

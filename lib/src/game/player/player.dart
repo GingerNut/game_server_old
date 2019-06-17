@@ -76,7 +76,10 @@ class Player{
 
   gameStarted(String gameId){}
 
-  outOfTime()=> game.position.playerStatus[id] = PlayerStatus.out;
+  outOfTime(){
+    game.position.playerStatus[id] = PlayerStatus.out;
+    game.position.nextPlayer();
+  }
 
   tidyUp(){}
 }

@@ -69,6 +69,12 @@ abstract class Position{
 
     analyse();
 
+    nextPlayer();
+
+  }
+
+  nextPlayer(){
+
     setNextPlayer();
 
     if(playerQueue.length < 2 && playerIds.length > 1){
@@ -84,7 +90,6 @@ abstract class Position{
     }
   }
 
-  playerOut() => playerStatus[playerId] = PlayerStatus.out;
 
   setNextPlayer(){
 
