@@ -1,11 +1,9 @@
 
 
-import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/board/board.dart';
 import 'package:game_server/src/game/board/piece.dart';
 import 'package:game_server/src/game/board/tile.dart';
 import 'package:game_server/src/game/move.dart';
-import 'package:game_server/src/game/player/player_variable.dart';
 import 'package:game_server/src/game/position.dart';
 import 'package:game_server/src/game_dependency.dart';
 
@@ -130,13 +128,9 @@ class ChessPosition extends Position{
     blackKing.startingPosition = board.tile(4, 7);
     blackArmy.add(blackKing);
 
-    whiteArmy.forEach((p) {
-      p.startingPosition.pieces.add(p);
-    }
-      );
+    whiteArmy.forEach((p) => p.startingPosition.piece = p);
 
-
-    blackArmy.forEach((p) => p.startingPosition.pieces.add(p));
+    blackArmy.forEach((p) => p.startingPosition.piece = p);
   }
 
 
@@ -152,7 +146,7 @@ class ChessPosition extends Position{
       for (int i = 0 ; i < 8 ; i ++){
         Tile tile = board.tile(i, j);
 
-        if (tile.pieces.isNotEmpty) string += tile.pieces.first.name;
+        if (tile.pieces.isNotEmpty) string += tile.piece.name;
         else string += ' ';
 
         string += ' | ';

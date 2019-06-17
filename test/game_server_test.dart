@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/board/board.dart';
+import 'package:game_server/src/game/board/tile.dart';
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/player.dart';
@@ -29,6 +30,7 @@ import '../examples/chess/lib/chess_injector.dart';
 import '../examples/chess/lib/chess_notation.dart';
 import '../examples/chess/lib/chess_position.dart';
 import '../examples/chess/lib/chess_settings.dart';
+import '../examples/chess/lib/pieces/pawn.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
@@ -70,7 +72,7 @@ void main()async{
 
   });
 
-  group('board connections',(){
+  group('board functions',(){
 
     test('all directions square',(){
 
@@ -80,6 +82,29 @@ void main()async{
 
 
     });
+
+    test('pices getting teken',(){
+
+      var board = Board.squareTiles(8, ConnectionScheme.allDirections);
+
+      expect(board.tiles.length, 64);
+
+      Pawn pawn = Pawn();
+
+      Tile tile = board.tile(0, 0);
+      pawn.startingPosition = tile;
+      pawn.setup();
+
+      expect(pawn.tile, board.tile(0,0));
+      Pawn second = Pawn();
+      second.tile = tile;
+
+      expect(tile.taken, pawn);
+      expect(tile.taken, null);
+      expect(second.tile, tile);
+
+    });
+
 
   });
 
