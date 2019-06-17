@@ -145,13 +145,13 @@ void main()async{
       List<String> playerIds = ['a', 'b', 'c', 'd'];
 
       expect(ui.game.position.playerStatus.string,
-          PlayerVariable.playerVariablefromString(ui.game.position.playerIds,ui.game.position.playerStatus.string).string);
+          PlayerVariable.playerVariablefromString(ui.game.position.playerStatus.string).string);
 
       expect(ui.game.position.score.string,
-          PlayerVariable.playerVariablefromString(ui.game.position.playerIds,ui.game.position.score.string).string);
+          PlayerVariable.playerVariablefromString(ui.game.position.score.string).string);
 
       expect(ui.game.position.color.string,
-          PlayerVariable.playerVariablefromString(ui.game.position.playerIds,ui.game.position.color.string).string);
+          PlayerVariable.playerVariablefromString(ui.game.position.color.string).string);
 
       PlayerVariable<bool> bools = PlayerVariable(playerIds, false);
 
@@ -162,7 +162,7 @@ void main()async{
       expect(bools['c'], false);
       expect(bools['d'], true);
 
-      expect(bools.string, PlayerVariable.playerVariablefromString(playerIds, bools.string).string);
+      expect(bools.string, PlayerVariable.playerVariablefromString( bools.string).string);
 
 
     });

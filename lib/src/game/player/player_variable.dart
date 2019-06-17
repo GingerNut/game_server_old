@@ -11,11 +11,12 @@ class PlayerVariable<T>{
   static const String playerStatusString = 'pls';
   static const String playerStatusBool = 'boo';
 
-  final List<String> playerIds;
+  List<String> playerIds;
 
   T startingValue;
   List<T> _variable;
-  static const String internalDelimiter = ',';
+  static const String internalMajorDelimiter = '\n';
+  static const String internalMinorDelimiter = ',';
 
   PlayerVariable(this.playerIds, this.startingValue){
     _variable = new List(playerIds.length);
@@ -38,17 +39,23 @@ class PlayerVariable<T>{
 
   }
 
-  static PlayerVariable playerVariablefromString(List<String> playerIds, String string){
+  static PlayerVariable playerVariablefromString(String string){
 
-    List<String> details = string.split(PlayerVariable.internalDelimiter);
+    List<String> sections = string.split(PlayerVariable.internalMajorDelimiter);
 
-    String type = details[0];
-    int number = int.parse(details[1]);
+    String type = sections[0];
+
+    List<String> playerIds = sections[1].split(internalMinorDelimiter);
+
+    int number = int.parse(sections[2]);
+
+    List<String> details = sections[3].split(PlayerVariable.internalMinorDelimiter);
+
 
     List values;
 
     switch(type){
-      case integerString:  values = List<int>(number);
+      case integerString: values = List<int>(number);
       break;
 
       case doubleString: values = List<double>(number);
@@ -63,16 +70,16 @@ class PlayerVariable<T>{
 
     for(int i = 0 ; i < number ; i ++){
       switch(type){
-        case integerString: values[i] = int.parse(details[2 + i]);
+        case integerString: values[i] = int.parse(details[i]);
         break;
 
-        case doubleString: values[i] = double.parse(details[2 + i]);
+        case doubleString: values[i] = double.parse(details[i]);
         break;
 
-        case playerStatusString: values[i] = Position.playerStatusFromString(details[2 + i]);
+        case playerStatusString: values[i] = Position.playerStatusFromString(details[i]);
         break;
 
-        case playerStatusBool: values[i] = (details[2 + i]) == 'TRUE';
+        case playerStatusBool: values[i] = (details[i]) == 'TRUE';
         break;
       }
 
@@ -106,9 +113,16 @@ class PlayerVariable<T>{
     String string = '';
 
     string += type;
-    string += internalDelimiter;
+
+    string += internalMajorDelimiter;
+
+    string += playerIds.join(internalMinorDelimiter);
+
+    string += internalMajorDelimiter;
+
     string += _variable.length.toString();
-    string += internalDelimiter;
+
+    string += internalMajorDelimiter;
 
     _variable.forEach((v){
 
@@ -126,7 +140,7 @@ class PlayerVariable<T>{
         break;
       }
 
-      string += internalDelimiter;
+      string += internalMinorDelimiter;
     });
 
     return string;
