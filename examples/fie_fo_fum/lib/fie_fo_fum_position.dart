@@ -28,8 +28,6 @@ class FieFoFumPosition extends Position{
 
   setUpNewPosition() => count ++;
 
-  setFirstPlayer(){}
-
   bool canPlay(String id) => (id == playerId);
 
   List<Move> getPossibleMoves() => [MoveNumber(), MoveFie(), MoveFo(), MoveFum()];

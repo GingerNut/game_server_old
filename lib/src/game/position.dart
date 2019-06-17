@@ -134,7 +134,18 @@ abstract class Position{
 
   initialiseExternalVariables();
 
-  setFirstPlayer();
+  setFirstPlayer(String firstPlayer){
+    if (firstPlayer != null) {
+      if (playerIds.contains(firstPlayer)) {
+
+        bool found = playerQueue.remove(firstPlayer);
+        if(found) playerQueue.insert(0, firstPlayer);
+      }
+    } else {
+      playerQueue.shuffle();
+
+    }
+  }
 
   setUpNewPosition();
 

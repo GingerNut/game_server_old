@@ -25,8 +25,10 @@ import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:test/test.dart';
 
+import '../examples/chess/lib/chess_injector.dart';
 import '../examples/chess/lib/chess_notation.dart';
 import '../examples/chess/lib/chess_position.dart';
+import '../examples/chess/lib/chess_settings.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
@@ -140,7 +142,7 @@ void main()async{
       ui.addPlayer(Player());
       ui.addPlayer(Player());
       ui.addPlayer(Player());
-      await ui.startGame(ui.newGame);
+      await ui.startGame(ui.newGame ..firstPlayer ='Player 1');
     });
 
     test('timer', ()async{
@@ -192,7 +194,7 @@ void main()async{
     ui.addPlayer(computer);
 
     setUp(()async{
-      await ui.startGame(ui.newGame);
+      await ui.startGame(ui.newGame .. firstPlayer = 'Player 1');
     });
 
 
@@ -378,6 +380,55 @@ void main()async{
 
 
 
+
+  });
+
+  group('chess basic game',(){
+
+    test('game setup',() async{
+
+      NewGame advert = NewGame(ChessSettings());
+      Player white = Player()
+        ..id = 'white player';
+      Player black = Player()
+        .. id = 'black player';
+
+      advert.players.add(white);
+      advert.players.add(black);
+      advert.firstPlayer = white.id;
+
+      var chessGame = Game.fromNewGame(ChessInjector(), advert);
+
+      chessGame.initialise();
+
+      expect(chessGame.position.playerId, white.id);
+      expect(chessGame.position.playerQueue[0], white.id);
+      expect(chessGame.position.playerQueue[1], black.id);
+
+    });
+
+    test('game setup random first player',() async{
+
+      NewGame advert = NewGame(ChessSettings());
+      Player white = Player()
+        ..id = 'white player';
+      Player black = Player()
+        .. id = 'black player';
+
+      advert.players.add(white);
+      advert.players.add(black);
+
+      var chessGame = Game.fromNewGame(ChessInjector(), advert);
+
+      chessGame.initialise();
+
+      expect(chessGame.position.playerId, (chessGame.position as ChessPosition).whitePlayer);
+      expect(chessGame.position.playerQueue[0], (chessGame.position as ChessPosition).whitePlayer);
+      expect(chessGame.position.playerQueue[1], (chessGame.position as ChessPosition).blackPlayer);
+      expect(((chessGame.position as ChessPosition).whitePlayer
+          == (chessGame.position as ChessPosition).blackPlayer), false);
+
+    });
 
   });
 

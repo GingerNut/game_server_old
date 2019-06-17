@@ -83,15 +83,16 @@ class ChessPosition extends Position{
     return null;
   }
 
-  setFirstPlayer() {
+  setFirstPlayer(String firstPlayer) {
+   super.setFirstPlayer(firstPlayer);
 
-
+   whitePlayer = playerQueue[0];
+   blackPlayer = playerQueue[1];
   }
 
   @override
   setUpNewPosition() {
-    // TODO: implement setUpNewPosition
-    return null;
+
   }
 
   @override

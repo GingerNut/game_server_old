@@ -23,6 +23,7 @@ class Game {
   double gameTime;
   double moveTime;
   List<Player> players;
+  String firstPlayer;
 
   Board board;
 
@@ -36,6 +37,7 @@ class Game {
     this.gameId = newGame.id;
     this.displayName = newGame.displayName;
 
+    if(newGame.firstPlayer != null) this.firstPlayer = newGame.firstPlayer;
     if(newGame.playerHelp != null) this.playerHelp = newGame.playerHelp;
     if(newGame.timer != null) this.timer = newGame.timer;
     if(newGame.gameTime != null) this.gameTime = newGame.gameTime;
@@ -66,13 +68,14 @@ class Game {
       
       position.playerIds = playerIds;
     position.playerQueue = playerQueue;
+
     position.initialise();
 
     position.setTimers(gameTime);
 
     players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 
-    position.setFirstPlayer();
+    position.setFirstPlayer(firstPlayer);
 
     position.analyse();
 
