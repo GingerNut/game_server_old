@@ -7,26 +7,28 @@ class PlayerVariable<T>{
   static const String integerString = 'igr';
   static const String doubleString = 'dbl';
   static const String playerStatusString = 'pls';
+  static const String playerStatusBool = 'boo';
 
-  final Position position;
+  final List<String> playerIds;
+
   T startingValue;
   List<T> _variable;
   static const String internalDelimiter = ',';
 
-  PlayerVariable(this.position, this.startingValue){
-    _variable = new List(position.playerIds.length);
+  PlayerVariable(this.playerIds, this.startingValue){
+    _variable = new List(playerIds.length);
 
-    for(int i = 0 ; i < position.playerIds.length ; i ++){
+    for(int i = 0 ; i < playerIds.length ; i ++){
       _variable[i] = startingValue;
     }
   }
 
-  PlayerVariable.fromList(this.position, List<T> values){
-    _variable = new List(position.playerIds.length);
+  PlayerVariable.fromList(this.playerIds, List<T> values){
+    _variable = new List(playerIds.length);
 
-    position.playerIds.forEach((p){
+    playerIds.forEach((p){
 
-      int index = position.playerIds.indexOf(p);
+      int index = playerIds.indexOf(p);
 
       _variable[index] = values[index];
 
@@ -34,7 +36,7 @@ class PlayerVariable<T>{
 
   }
 
-  static PlayerVariable playerVariablefromString(Position position, String string){
+  static PlayerVariable playerVariablefromString(List<String> playerIds, String string){
 
     List<String> details = string.split(PlayerVariable.internalDelimiter);
 
@@ -52,6 +54,9 @@ class PlayerVariable<T>{
 
       case playerStatusString: values = List<PlayerStatus>(number);
       break;
+
+      case playerStatusBool: values = List<bool>(number);
+      break;
     }
 
     for(int i = 0 ; i < number ; i ++){
@@ -64,19 +69,25 @@ class PlayerVariable<T>{
 
         case playerStatusString: values[i] = Position.playerStatusFromString(details[2 + i]);
         break;
+
+        case playerStatusBool: values[i] = (details[2 + i]) == 'TRUE';
+        break;
       }
 
     }
 
 
     switch(type){
-      case integerString:  return PlayerVariable<int>.fromList(position, values);
+      case integerString:  return PlayerVariable<int>.fromList(playerIds, values);
     break;
 
-    case doubleString: return PlayerVariable<double>.fromList(position, values);
+    case doubleString: return PlayerVariable<double>.fromList(playerIds, values);
     break;
 
-    case playerStatusString: return PlayerVariable<PlayerStatus>.fromList(position, values);
+    case playerStatusString: return PlayerVariable<PlayerStatus>.fromList(playerIds, values);
+    break;
+
+    case playerStatusBool: return PlayerVariable<bool>.fromList(playerIds, values);
     break;
 
   }
@@ -85,9 +96,9 @@ class PlayerVariable<T>{
 
   }
 
-  operator [](String playerId) => _variable[position.playerIds.indexOf(playerId)];
+  operator [](String playerId) => _variable[playerIds.indexOf(playerId)];
 
-  operator []=(String playerId, T value) => _variable[position.playerIds.indexOf(playerId)] = value;
+  operator []=(String playerId, T value) => _variable[playerIds.indexOf(playerId)] = value;
 
   String get string {
     String string = '';
@@ -107,6 +118,9 @@ class PlayerVariable<T>{
         break;
 
         case PlayerStatus: string += Position.playerStatusToString(v as PlayerStatus);
+      break;
+
+        case bool: string += v == true ? 'TRUE' : 'FALSE';
         break;
       }
 
@@ -123,6 +137,7 @@ class PlayerVariable<T>{
       case double: return doubleString;
       case PlayerStatus:
         return playerStatusString;
+      case bool: return playerStatusBool;
       default: return '';
     }
   }

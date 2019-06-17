@@ -25,6 +25,7 @@ import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:test/test.dart';
 
+import '../examples/chess/lib/chess_position.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
 import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
@@ -141,14 +142,28 @@ void main()async{
 
     test('player variable',()async{
 
+      List<String> playerIds = ['a', 'b', 'c', 'd'];
+
       expect(ui.game.position.playerStatus.string,
-          PlayerVariable.playerVariablefromString(ui.game.position,ui.game.position.playerStatus.string).string);
+          PlayerVariable.playerVariablefromString(ui.game.position.playerIds,ui.game.position.playerStatus.string).string);
 
       expect(ui.game.position.score.string,
-          PlayerVariable.playerVariablefromString(ui.game.position,ui.game.position.score.string).string);
+          PlayerVariable.playerVariablefromString(ui.game.position.playerIds,ui.game.position.score.string).string);
 
       expect(ui.game.position.color.string,
-          PlayerVariable.playerVariablefromString(ui.game.position,ui.game.position.color.string).string);
+          PlayerVariable.playerVariablefromString(ui.game.position.playerIds,ui.game.position.color.string).string);
+
+      PlayerVariable<bool> bools = PlayerVariable(playerIds, false);
+
+      bools['d'] = true;
+
+      expect(bools['a'], false);
+      expect(bools['b'], false);
+      expect(bools['c'], false);
+      expect(bools['d'], true);
+
+      expect(bools.string, PlayerVariable.playerVariablefromString(playerIds, bools.string).string);
+
 
     });
 

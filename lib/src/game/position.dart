@@ -122,15 +122,15 @@ abstract class Position{
   }
 
   initialise(){
-    playerStatus = PlayerVariable(this, PlayerStatus.ingameNotReady);
-    score = PlayerVariable(this, 0);
+    playerStatus = PlayerVariable(playerIds, PlayerStatus.ingameNotReady);
+    score = PlayerVariable(playerIds, 0);
 
-    color = PlayerVariable.fromList(this, Palette.defaultPlayerColours);
+    color = PlayerVariable.fromList(playerIds, Palette.defaultPlayerColours);
 
     initialiseExternalVariables();
   }
 
-  setTimers(double gameTime)=> timeLeft = PlayerVariable(this, gameTime);
+  setTimers(double gameTime)=> timeLeft = PlayerVariable(playerIds, gameTime);
 
   initialiseExternalVariables();
 

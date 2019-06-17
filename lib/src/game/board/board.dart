@@ -22,7 +22,6 @@ class Board{
   Board();
 
   List<Tile> tiles;
-  List<Piece> pieces;
 
   String get string => null;
 

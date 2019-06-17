@@ -7,7 +7,7 @@ import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/game_dependency.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 
-import 'chess_board.dart';
+import 'chess_position.dart';
 import 'chess_settings.dart';
 
 class ChessInjector extends GameDependency{
@@ -19,16 +19,13 @@ class ChessInjector extends GameDependency{
 
   }
 
-  Board getBoard() => ChessBoard();
+  Board getBoard(){}
 
   MoveBuilder getMoveBuilder() {
 
   }
 
-
-  Position getPosition() {
-
-  }
+  Position getPosition() => ChessPosition();
 
   PositionBuilder getPositionBuilder() {
 
