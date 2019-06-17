@@ -4,6 +4,8 @@ import '../position.dart';
 
 class PlayerVariable<T>{
 
+  // supported types - int, double, playerStatus, bool
+
   static const String integerString = 'igr';
   static const String doubleString = 'dbl';
   static const String playerStatusString = 'pls';
