@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/palette.dart';
+import 'package:game_server/src/game/board/board.dart';
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game/move.dart';
 import 'package:game_server/src/game/player/player.dart';
@@ -51,6 +52,20 @@ void main()async{
     }
     return;
   }
+
+  group('board connections',(){
+
+    test('all directions square',(){
+
+      var board = Board.squareTiles(8, ConnectionScheme.allDirections);
+
+      expect(board.tiles.length, 64);
+
+
+    });
+
+
+  });
 
 
 
@@ -201,14 +216,14 @@ void main()async{
 
       response = Message.inflate(await nextMessage(computer.messagesIn.stream));
 
-      expect((ui.position as FieFoFumPosition).playerQueue , ['Computer 1', 'Player 1']);
-
-      expect((ui.position as FieFoFumPosition).count, 7);
-
-      await waitForAllConfirmed(ui.game);
-      ui.makeMove(MoveFie());
-
-      expect((ui.position as FieFoFumPosition).winner , 'Computer 1');
+//      expect((ui.position as FieFoFumPosition).playerQueue , ['Computer 1', 'Player 1']);
+//
+//      expect((ui.position as FieFoFumPosition).count, 7);
+//
+//      await waitForAllConfirmed(ui.game);
+//      ui.makeMove(MoveFie());
+//
+//      expect((ui.position as FieFoFumPosition).winner , 'Computer 1');
 
     },
     );

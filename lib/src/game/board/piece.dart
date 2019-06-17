@@ -1,8 +1,33 @@
+import 'tile.dart';
+
 class Piece{
+  MovementPattern movementPattern;
+  String name;
+  Tile tile;
 
 
 
 
 }
 
-//TODO chess pieces
+class MovementPattern{
+
+
+
+
+}
+
+
+enum pieceMovement{
+  horizontal,
+  vertical,
+  diagonal,
+  horizontalAndVertical,
+  all
+}
+
+enum capturePattern{
+  take,
+  surround
+}
+
