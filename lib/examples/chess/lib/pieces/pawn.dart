@@ -10,9 +10,25 @@ class Pawn extends ChessPiece{
     name = 'P';
   }
 
-  @override
-  // TODO: implement legalMoves
-  List<Tile> get legalMoves => null;
+  List<Tile> get legalMoves {
+    List<Tile> moves = List();
+
+    int direction = chessColor == ChessColor.white ? Board.North : Board.South;
+
+      Tile nextTile = tile.nextInDirection(direction);
+      if(nextTile != null){
+        moves.add(nextTile);
+
+        if(tile == startingPosition){
+
+        nextTile = nextTile.nextInDirection(direction);
+
+        if(nextTile != null) moves.add(nextTile);
+
+        }
+      }
+    return moves;
+}
 
 
 }

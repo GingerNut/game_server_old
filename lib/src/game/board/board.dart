@@ -99,7 +99,7 @@ class Board{
               break;
 
             case South_East:
-              if(i > 0 && j < height -1) t.southEast = tileArray[i - 1][j+1];
+              if(i < width -1 &&  j > 0) t.southEast = tileArray[i + 1][j-1];
               t.connections.add(t.southEast);
               break;
 
@@ -119,7 +119,7 @@ class Board{
               break;
 
             case North_West:
-              if(i < width -1 && j > 0) t.northWest = tileArray[i + 1][j-1];
+              if(i > 0 && j < height -1) t.northWest = tileArray[i - 1][j+1];
               t.connections.add(t.northWest);
               break;
           }
