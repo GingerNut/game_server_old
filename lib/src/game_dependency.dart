@@ -14,8 +14,6 @@ abstract class GameDependency{
 
   Game getGame(NewGame newGame);
 
-  Board getBoard();
-
   MoveBuilder getMoveBuilder();
 
   PositionBuilder getPositionBuilder();

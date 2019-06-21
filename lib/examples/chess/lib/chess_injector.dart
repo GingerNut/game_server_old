@@ -21,8 +21,6 @@ class ChessInjector extends GameDependency{
 
   }
 
-  Board getBoard(){}
-
   MoveBuilder getMoveBuilder() {
 
   }

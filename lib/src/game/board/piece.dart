@@ -1,23 +1,35 @@
+import 'package:game_server/src/game/position.dart';
+
 import 'board.dart';
 import 'tile.dart';
 
-class Piece{
+abstract class Piece{
+
+  final Board board;
 
   Tile startingPosition;
   MovementPattern movementPattern;
   String name;
   Tile _tile;
 
+  Piece captured;
+
+  Piece(this.board);
+
   set tile (Tile tile){
     _tile = tile;
-    tile.piece = this;
+
+    if(tile.pieces.isNotEmpty) captured = tile.pieces.first;
+    tile.pieces.clear();
+    tile.pieces.add(this);
   }
 
   Tile get tile => _tile;
 
+  List<Tile> get legalMoves;
+
 
 setup(){
-  startingPosition.piece = this;
   tile = startingPosition;
 }
 

@@ -5,6 +5,7 @@ import 'package:game_server/examples/chess/lib/chess_injector.dart';
 import 'package:game_server/examples/chess/lib/chess_notation.dart';
 import 'package:game_server/examples/chess/lib/chess_position.dart';
 import 'package:game_server/examples/chess/lib/chess_settings.dart';
+import 'package:game_server/examples/chess/lib/pieces/chess_board.dart';
 import 'package:game_server/examples/chess/lib/pieces/pawn.dart';
 import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
 import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
@@ -84,24 +85,24 @@ void main()async{
 
     });
 
-    test('pices getting teken',(){
+    test('pieces getting teken',(){
 
-      var board = Board.squareTiles(8, ConnectionScheme.allDirections);
+      ChessBoard board = ChessBoard.empty();
 
       expect(board.tiles.length, 64);
 
-      Pawn pawn = Pawn();
+      Pawn pawn = Pawn(board);
 
       Tile tile = board.tile(0, 0);
       pawn.startingPosition = tile;
       pawn.setup();
 
       expect(pawn.tile, board.tile(0,0));
-      Pawn second = Pawn();
+      Pawn second = Pawn(board);
       second.tile = tile;
 
-      expect(tile.taken, pawn);
-      expect(tile.taken, null);
+      expect(second.captured, pawn);
+      expect(pawn.captured, null);
       expect(second.tile, tile);
 
     });
@@ -432,8 +433,8 @@ void main()async{
 
       ChessPosition chessPosition = chessGame.position;
 
-      expect(chessPosition.whiteArmy.length, 16);
-      expect(chessPosition.blackArmy.length, 16);
+      expect(chessPosition.board.whiteArmy.length, 16);
+      expect(chessPosition.board.blackArmy.length, 16);
 
     });
 
@@ -622,7 +623,7 @@ void main()async{
 
     setUp(() async {
 
-      // dart C:\Users\Stephen\growing_games\game_server\bin\resource_server.dart
+      // dart /Users/stephenpoole/WebstormProjects/game_server/bin/resource_server.dart
 
       await emma.login('emma', 'e1234');
     });

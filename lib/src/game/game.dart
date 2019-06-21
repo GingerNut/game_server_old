@@ -48,7 +48,7 @@ class Game {
 
   Position _position;
 
-  Position get position => dependency.setPositionType(_position);
+  Position get position => _position;
 
   List<Move> history = new List();
   List<Player> unconfirmed = new List();
@@ -57,6 +57,7 @@ class Game {
 
   Future initialise() async{
     _position = dependency.getPosition();
+
     List<String> playerIds = List();
     List<String> playerQueue = List();
 

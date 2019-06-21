@@ -34,10 +34,7 @@ class FieFoFumInjector extends GameDependency{
 
   String testAddress = 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_isolate.dart';
 
-
-  Uri get computerUri {
-    return Uri.parse(testAddress);
-  }
+  Uri get computerUri => Uri.parse(testAddress);
 
   Notation get notation => null;
 
