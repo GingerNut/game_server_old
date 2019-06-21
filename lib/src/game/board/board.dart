@@ -3,6 +3,7 @@
 
 import 'package:game_server/src/game/board/piece.dart';
 import 'package:game_server/src/game/board/tile.dart';
+import 'package:game_server/src/game_dependency.dart';
 
 class Board{
   static const int North = 1;
@@ -18,6 +19,7 @@ class Board{
   static List<int> squareOrthogonalDirections = [North, East, West, South];
   static List<int> squareDiagonalDirections = [North_East, South_East, South_West, North_West];
   static List<int> squareAllDirections = [North, North_East, East, South_East, South, South_West, West, North_West];
+
 
   Board();
 

@@ -1,12 +1,16 @@
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:game_server/examples/chess/lib/chess_injector.dart';
 import 'package:game_server/examples/chess/lib/chess_notation.dart';
 import 'package:game_server/examples/chess/lib/chess_position.dart';
 import 'package:game_server/examples/chess/lib/chess_settings.dart';
-import 'package:game_server/examples/chess/lib/pieces/chess_board.dart';
+import 'package:game_server/examples/chess/lib/chess_board.dart';
+import 'package:game_server/examples/chess/lib/pieces/bishop.dart';
+import 'package:game_server/examples/chess/lib/pieces/chess_piece.dart';
 import 'package:game_server/examples/chess/lib/pieces/pawn.dart';
+import 'package:game_server/examples/chess/lib/pieces/rook.dart';
 import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
 import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
 import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
@@ -410,6 +414,67 @@ void main()async{
   });
 
   group('chess basic game',(){
+
+    test('moves for pieces',(){
+      ChessBoard board = ChessBoard.empty();
+
+      Rook rook = Rook(board)
+      ..startingPosition = board.tile(0, 0)
+      ..chessColor = ChessColor.white
+      ..tile = board.tile(4,5);
+
+      List<Tile> legalMoves = rook.legalMoves;
+
+      expect(legalMoves.length, 14);
+      expect(legalMoves.contains(board.tile(3,5)), true);
+      expect(legalMoves.contains(board.tile(2,5)), true);
+      expect(legalMoves.contains(board.tile(1,5)), true);
+      expect(legalMoves.contains(board.tile(0,5)), true);
+      expect(legalMoves.contains(board.tile(5,5)), true);
+      expect(legalMoves.contains(board.tile(6,5)), true);
+      expect(legalMoves.contains(board.tile(7,5)), true);
+      expect(legalMoves.contains(board.tile(4,6)), true);
+      expect(legalMoves.contains(board.tile(4,7)), true);
+      expect(legalMoves.contains(board.tile(4,4)), true);
+      expect(legalMoves.contains(board.tile(4,3)), true);
+      expect(legalMoves.contains(board.tile(4,2)), true);
+      expect(legalMoves.contains(board.tile(4,1)), true);
+      expect(legalMoves.contains(board.tile(4,0)), true);
+
+      board = ChessBoard.empty();
+
+      Bishop bishop = Bishop(board)
+        ..startingPosition = board.tile(0, 0)
+        ..chessColor = ChessColor.white
+        ..tile = board.tile(4,5);
+
+      legalMoves.clear();
+
+      legalMoves = bishop.legalMoves;
+
+      expect(legalMoves.length, 11);
+      expect(legalMoves.contains(board.tile(3,4)), true);
+      expect(legalMoves.contains(board.tile(2,3)), true);
+      expect(legalMoves.contains(board.tile(1,2)), true);
+      expect(legalMoves.contains(board.tile(0,1)), true);
+      expect(legalMoves.contains(board.tile(5,4)), true);
+      expect(legalMoves.contains(board.tile(6,3)), true);
+      expect(legalMoves.contains(board.tile(7,2)), true);
+      expect(legalMoves.contains(board.tile(5,6)), true);
+      expect(legalMoves.contains(board.tile(6,7)), true);
+      expect(legalMoves.contains(board.tile(3,6)), true);
+      expect(legalMoves.contains(board.tile(2,7)), true);
+
+
+
+
+
+
+
+    });
+
+
+
 
     test('game setup',() async{
 

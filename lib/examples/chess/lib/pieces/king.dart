@@ -1,9 +1,10 @@
+import 'package:game_server/examples/chess/lib/pieces/chess_piece.dart';
 import 'package:game_server/src/game/board/board.dart';
 import 'package:game_server/src/game/board/piece.dart';
 import 'package:game_server/src/game/board/tile.dart';
 
 
-class King extends Piece{
+class King extends ChessPiece{
 
 
 

@@ -1,6 +1,7 @@
 
 
 import 'package:game_server/src/game/board/piece.dart';
+import 'package:game_server/src/game_dependency.dart';
 
 import 'board.dart';
 
@@ -25,6 +26,28 @@ class Tile{
   Tile northWest;
 
   Tile(this.board, this.i, this.j);
+
+  Tile nextInDirection(int direction){
+   switch(direction){
+
+     case Board.North: return north;
+     case Board.North_East: return northEast;
+     case Board.East: return east;
+     case Board.South_East: return southEast;
+     case Board.South: return south;
+     case Board.South_West: return southWest;
+     case Board.West: return west;
+     case Board.North_West: return northWest;
+   }
+  }
+
+  printTile(GameDependency dependency){
+
+
+    print('tile $i $j');
+
+
+  }
 
 
 

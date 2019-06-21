@@ -4,6 +4,7 @@ import 'package:game_server/src/game/board/notation.dart';
 // i is horizontal
 
 class ChessNotation extends Notation{
+
   @override
   String labelTile(int i, int j) {
 

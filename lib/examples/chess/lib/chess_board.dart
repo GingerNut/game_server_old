@@ -1,3 +1,7 @@
+import 'package:game_server/examples/chess/lib/chess_injector.dart';
+import 'package:game_server/examples/chess/lib/pieces/bishop.dart';
+import 'package:game_server/examples/chess/lib/pieces/king.dart';
+import 'package:game_server/examples/chess/lib/pieces/knight.dart';
 import 'package:game_server/examples/chess/lib/pieces/pawn.dart';
 import 'package:game_server/examples/chess/lib/pieces/queen.dart';
 import 'package:game_server/examples/chess/lib/pieces/rook.dart';
@@ -5,9 +9,7 @@ import 'package:game_server/src/game/board/board.dart';
 
 import 'package:game_server/src/game/board/piece.dart';
 
-import 'bishop.dart';
-import 'king.dart';
-import 'knight.dart';
+
 
 class ChessBoard extends Board{
 

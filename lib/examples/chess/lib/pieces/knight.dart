@@ -3,7 +3,9 @@ import 'package:game_server/src/game/board/piece.dart';
 import 'package:game_server/src/game/board/tile.dart';
 import 'package:game_server/src/game/position.dart';
 
-class Knight extends Piece{
+import 'chess_piece.dart';
+
+class Knight extends ChessPiece{
 
   Knight(Board board) : super(board){
     name = 'N';
