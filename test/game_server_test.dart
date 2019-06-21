@@ -1,6 +1,18 @@
 
 import 'dart:async';
 
+import 'package:game_server/examples/chess/lib/chess_injector.dart';
+import 'package:game_server/examples/chess/lib/chess_notation.dart';
+import 'package:game_server/examples/chess/lib/chess_position.dart';
+import 'package:game_server/examples/chess/lib/chess_settings.dart';
+import 'package:game_server/examples/chess/lib/pieces/pawn.dart';
+import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
+import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
+import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
+import 'package:game_server/examples/fie_fo_fum/lib/move_fie.dart';
+import 'package:game_server/examples/fie_fo_fum/lib/move_fo.dart';
+import 'package:game_server/examples/fie_fo_fum/lib/move_fum.dart';
+import 'package:game_server/examples/fie_fo_fum/lib/move_number.dart';
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game/board/board.dart';
@@ -26,18 +38,7 @@ import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:test/test.dart';
 
-import '../examples/chess/lib/chess_injector.dart';
-import '../examples/chess/lib/chess_notation.dart';
-import '../examples/chess/lib/chess_position.dart';
-import '../examples/chess/lib/chess_settings.dart';
-import '../examples/chess/lib/pieces/pawn.dart';
-import '../examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
-import '../examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
-import '../examples/fie_fo_fum/lib/fie_fo_fum_position.dart';
-import '../examples/fie_fo_fum/lib/move_fie.dart';
-import '../examples/fie_fo_fum/lib/move_fo.dart';
-import '../examples/fie_fo_fum/lib/move_fum.dart';
-import '../examples/fie_fo_fum/lib/move_number.dart';
+
 import 'package:game_server/src/interface/local_http_interface.dart';
 import 'package:game_server/src/interface/stream_http_interface.dart';
 
