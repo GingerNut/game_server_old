@@ -10,9 +10,25 @@ class Queen extends ChessPiece{
     name = 'Q';
   }
 
-  @override
-  // TODO: implement legalMoves
-  List<Tile> get legalMoves => null;
+  List<Tile> get legalMoves {
+
+    List<Tile> moves = List();
+
+    Board.squareAllDirections.forEach((d){
+
+      Tile nextTile = tile.nextInDirection(d);
+
+      while(nextTile != null){
+
+        moves.add(nextTile);
+
+        nextTile = nextTile.nextInDirection(d);
+      }
+
+    });
+
+    return moves;
+  }
 
 
 }

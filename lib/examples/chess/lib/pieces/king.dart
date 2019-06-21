@@ -12,9 +12,20 @@ class King extends ChessPiece{
     name = 'K';
   }
 
-  @override
-  // TODO: implement legalMoves
-  List<Tile> get legalMoves => null;
+  List<Tile> get legalMoves {
 
+    List<Tile> moves = List();
+
+    Board.squareAllDirections.forEach((d){
+
+      Tile nextTile = tile.nextInDirection(d);
+
+        moves.add(nextTile);
+
+
+    });
+
+    return moves;
+  }
 
 }

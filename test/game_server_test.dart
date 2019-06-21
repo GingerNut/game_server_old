@@ -9,7 +9,9 @@ import 'package:game_server/examples/chess/lib/chess_settings.dart';
 import 'package:game_server/examples/chess/lib/chess_board.dart';
 import 'package:game_server/examples/chess/lib/pieces/bishop.dart';
 import 'package:game_server/examples/chess/lib/pieces/chess_piece.dart';
+import 'package:game_server/examples/chess/lib/pieces/king.dart';
 import 'package:game_server/examples/chess/lib/pieces/pawn.dart';
+import 'package:game_server/examples/chess/lib/pieces/queen.dart';
 import 'package:game_server/examples/chess/lib/pieces/rook.dart';
 import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_injector.dart';
 import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_move_builder.dart';
@@ -466,9 +468,61 @@ void main()async{
       expect(legalMoves.contains(board.tile(2,7)), true);
 
 
+      Queen queen = Queen(board)
+        ..startingPosition = board.tile(0, 0)
+        ..chessColor = ChessColor.white
+        ..tile = board.tile(4,5);
 
+      legalMoves.clear();
 
+      legalMoves = queen.legalMoves;
 
+      expect(legalMoves.length, 25);
+      expect(legalMoves.contains(board.tile(3,4)), true);
+      expect(legalMoves.contains(board.tile(2,3)), true);
+      expect(legalMoves.contains(board.tile(1,2)), true);
+      expect(legalMoves.contains(board.tile(0,1)), true);
+      expect(legalMoves.contains(board.tile(5,4)), true);
+      expect(legalMoves.contains(board.tile(6,3)), true);
+      expect(legalMoves.contains(board.tile(7,2)), true);
+      expect(legalMoves.contains(board.tile(5,6)), true);
+      expect(legalMoves.contains(board.tile(6,7)), true);
+      expect(legalMoves.contains(board.tile(3,6)), true);
+      expect(legalMoves.contains(board.tile(2,7)), true);
+
+      expect(legalMoves.contains(board.tile(3,4)), true);
+      expect(legalMoves.contains(board.tile(2,3)), true);
+      expect(legalMoves.contains(board.tile(1,2)), true);
+      expect(legalMoves.contains(board.tile(0,1)), true);
+      expect(legalMoves.contains(board.tile(5,4)), true);
+      expect(legalMoves.contains(board.tile(6,3)), true);
+      expect(legalMoves.contains(board.tile(7,2)), true);
+      expect(legalMoves.contains(board.tile(5,6)), true);
+      expect(legalMoves.contains(board.tile(6,7)), true);
+      expect(legalMoves.contains(board.tile(3,6)), true);
+      expect(legalMoves.contains(board.tile(2,7)), true);
+
+      King king = King(board)
+        ..startingPosition = board.tile(0, 0)
+        ..chessColor = ChessColor.white
+        ..tile = board.tile(4,5);
+
+      legalMoves.clear();
+
+      legalMoves = king.legalMoves;
+
+      expect(legalMoves.length, 8);
+
+      expect(legalMoves.contains(board.tile(3,5)), true);
+      expect(legalMoves.contains(board.tile(3,6)), true);
+      expect(legalMoves.contains(board.tile(3,4)), true);
+
+      expect(legalMoves.contains(board.tile(4,4)), true);
+      expect(legalMoves.contains(board.tile(4,6)), true);
+
+      expect(legalMoves.contains(board.tile(5,4)), true);
+      expect(legalMoves.contains(board.tile(5,6)), true);
+      expect(legalMoves.contains(board.tile(5,5)), true);
 
 
     });
