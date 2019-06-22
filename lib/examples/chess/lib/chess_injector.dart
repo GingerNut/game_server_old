@@ -1,3 +1,4 @@
+import 'package:game_server/examples/chess/lib/chess_move_builder.dart';
 import 'package:game_server/src/game/board/board.dart';
 import 'package:game_server/src/game/board/notation.dart';
 import 'package:game_server/src/game/game.dart';
@@ -14,24 +15,17 @@ import 'chess_settings.dart';
 
 class ChessInjector extends GameDependency{
 
-  Uri get computerUri => null;
+  Uri get computerUri => Uri.dataFromString('package:game_server/examples/chess/lib/chess_isolate.dart');
+  
+  Game getGame(NewGame newGame) => Game.fromNewGame(this, newGame);
 
-
-  Game getGame(NewGame newGame) {
-
-  }
-
-  MoveBuilder getMoveBuilder() {
-
-  }
+  MoveBuilder getMoveBuilder() => ChessMoveBuilder();
 
   Position getPosition() => ChessPosition();
 
   setPositionType(Position position) => position as ChessPosition;
 
-  PositionBuilder getPositionBuilder() {
-
-  }
+  PositionBuilder getPositionBuilder() => PositionBuilder(this);
 
   Settings get settings => ChessSettings();
 
