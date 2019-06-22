@@ -8,7 +8,6 @@ abstract class Piece{
   final Board board;
 
   Tile startingPosition;
-  MovementPattern movementPattern;
   String name;
   Tile _tile;
 
@@ -37,24 +36,4 @@ bool isFriendly(Piece piece);
 
 }
 
-class MovementPattern{
-
-
-
-
-}
-
-
-enum pieceMovement{
-  horizontal,
-  vertical,
-  diagonal,
-  horizontalAndVertical,
-  all
-}
-
-enum capturePattern{
-  take,
-  surround
-}
 
