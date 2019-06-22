@@ -11,6 +11,7 @@ import 'package:game_server/src/messages/command/new_game.dart';
 import 'package:game_server/src/messages/command/send_position.dart';
 
 import '../game_dependency.dart';
+import 'board/board.dart';
 import 'move.dart';
 
 abstract class Position{

@@ -1,6 +1,8 @@
+import 'package:game_server/examples/chess/lib/chess_move.dart';
 import 'package:game_server/src/game/board/board.dart';
 import 'package:game_server/src/game/board/piece.dart';
 import 'package:game_server/src/game/board/tile.dart';
+import 'package:game_server/src/game/move.dart';
 
 abstract class ChessPiece extends Piece{
   ChessPiece(Board board) : super(board);
@@ -37,6 +39,13 @@ abstract class ChessPiece extends Piece{
 
     }
 
+
+  }
+
+  Move createMove(Tile to){
+    if(!legalMoves.contains(tile)) return null;
+
+    return ChessMove(tile, to);
 
   }
 
