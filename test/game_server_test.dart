@@ -588,7 +588,35 @@ void main()async{
 
     });
 
+    test('pieces interacting',(){
 
+      ChessBoard board = ChessBoard.empty();
+
+      Rook whiteRook = Rook(board)
+        ..startingPosition = board.tile(0, 0)
+        ..chessColor = ChessColor.white
+        ..tile = board.tile(4,5);
+
+      Pawn whitePawn = Pawn(board)
+        ..startingPosition = board.tile(0, 0)
+        ..chessColor = ChessColor.white
+        ..tile = board.tile(3,5);
+
+      Pawn blackPawn = Pawn(board)
+        ..startingPosition = board.tile(0, 0)
+        ..chessColor = ChessColor.black
+        ..tile = board.tile(1,6);
+
+      expect(whiteRook.isFriendly(whitePawn), true);
+      expect(board.tile(2,5).tileOccupation(whiteRook ), OccupationStatus.neutral);
+      expect(board.tile(4,5).tileOccupation(whitePawn ), OccupationStatus.friendly);
+      expect(board.tile(3,5).tileOccupation(whiteRook ), OccupationStatus.friendly);
+
+      expect(whiteRook.isFriendly(blackPawn), false);
+      expect(board.tile(2,5).tileOccupation(blackPawn ), OccupationStatus.neutral);
+      expect(board.tile(4,5).tileOccupation(blackPawn ), OccupationStatus.enemy);
+      expect(board.tile(3,5).tileOccupation(blackPawn ), OccupationStatus.enemy);
+    });
 
 
     test('game setup',() async{

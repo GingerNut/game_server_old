@@ -7,9 +7,7 @@ abstract class ChessPiece extends Piece{
 
   ChessColor chessColor;
 
-
-
-
+  bool isFriendly(Piece piece)=> chessColor == (piece as ChessPiece).chessColor;
 
 
 }

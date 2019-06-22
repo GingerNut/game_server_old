@@ -1,6 +1,7 @@
 
 
 import 'package:game_server/src/game/board/piece.dart';
+import 'package:game_server/src/game/board/piece.dart' as prefix0;
 import 'package:game_server/src/game_dependency.dart';
 
 import 'board.dart';
@@ -41,6 +42,12 @@ class Tile{
    }
   }
 
+  OccupationStatus tileOccupation(Piece piece){
+      if(pieces.isEmpty) return OccupationStatus.neutral;
+
+      else return pieces.first.isFriendly(piece)? OccupationStatus.friendly : OccupationStatus.enemy;
+  }
+
   printTile(GameDependency dependency){
 
 
@@ -50,9 +57,6 @@ class Tile{
   }
 
 
-
-
-
-
-
 }
+
+enum OccupationStatus{neutral, friendly, enemy}

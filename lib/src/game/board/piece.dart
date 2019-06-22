@@ -33,6 +33,8 @@ setup(){
   tile = startingPosition;
 }
 
+bool isFriendly(Piece piece);
+
 }
 
 class MovementPattern{
