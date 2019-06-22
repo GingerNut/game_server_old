@@ -13,6 +13,9 @@ class Tile{
   final int i;
   final int j;
 
+  bool operator == (t) => t is Tile && t.i == i && t.j == j;
+  int get hashCode => i * j;
+
   String label;
 
   List<Piece> pieces = List();

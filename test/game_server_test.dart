@@ -467,6 +467,7 @@ void main()async{
       expect(legalMoves.contains(board.tile(3,6)), true);
       expect(legalMoves.contains(board.tile(2,7)), true);
 
+      board = ChessBoard.empty();
 
       Queen queen = Queen(board)
         ..startingPosition = board.tile(0, 0)
@@ -502,6 +503,8 @@ void main()async{
       expect(legalMoves.contains(board.tile(3,6)), true);
       expect(legalMoves.contains(board.tile(2,7)), true);
 
+      board = ChessBoard.empty();
+
       King king = King(board)
         ..startingPosition = board.tile(0, 0)
         ..chessColor = ChessColor.white
@@ -524,6 +527,8 @@ void main()async{
       expect(legalMoves.contains(board.tile(5,6)), true);
       expect(legalMoves.contains(board.tile(5,5)), true);
 
+      board = ChessBoard.empty();
+
       Pawn pawn = Pawn(board)
         ..startingPosition = board.tile(4, 1)
         ..chessColor = ChessColor.white
@@ -543,8 +548,10 @@ void main()async{
       expect(legalMoves.contains(board.tile(4,2)), true);
       expect(legalMoves.contains(board.tile(4,3)), true);
 
+      board = ChessBoard.empty();
+
       pawn = Pawn(board)
-        ..startingPosition = board.tile(4, 6)
+        ..startingPosition = board.tile(4, 7)
         ..chessColor = ChessColor.black
         ..tile = board.tile(4,5);
 
@@ -555,13 +562,21 @@ void main()async{
       expect(legalMoves.length, 1);
       expect(legalMoves.contains(board.tile(4,4)), true);
 
-      pawn.tile = pawn.startingPosition;
-      legalMoves.clear();
-      legalMoves = pawn.legalMoves;
-      expect(legalMoves.length, 2);
-      expect(legalMoves.contains(board.tile(4,5)), true);
-      expect(legalMoves.contains(board.tile(4,4)), true);
+      Board newBoard = ChessBoard.empty();
 
+      Pawn blackPawn = Pawn(newBoard)
+        ..startingPosition = newBoard.tile(4, 7)
+        ..chessColor = ChessColor.black;
+
+      blackPawn.tile = blackPawn.startingPosition;
+
+      legalMoves.clear();
+      legalMoves = blackPawn.legalMoves;
+      expect(legalMoves.length, 2);
+      expect(legalMoves.contains(newBoard.tile(4,6)), true);
+      expect(legalMoves.contains(newBoard.tile(4,5)), true);
+
+      board = ChessBoard.empty();
 
       Knight knight = Knight(board)
         ..startingPosition = board.tile(0, 0)

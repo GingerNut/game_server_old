@@ -9,6 +9,36 @@ abstract class ChessPiece extends Piece{
 
   bool isFriendly(Piece piece)=> chessColor == (piece as ChessPiece).chessColor;
 
+  search(List<Tile> moves, int direction){
+    Tile nextTile = tile.nextInDirection(direction);
+
+
+    while(nextTile != null){
+
+      var tileOccupation = nextTile.tileOccupation(this);
+
+      switch(tileOccupation){
+
+
+        case OccupationStatus.neutral:
+          moves.add(nextTile);
+          nextTile = nextTile.nextInDirection(direction);
+          break;
+
+        case OccupationStatus.friendly:
+          nextTile = null;
+          break;
+
+        case OccupationStatus.enemy:
+          moves.add(nextTile);
+          nextTile = null;
+          break;
+      }
+
+    }
+
+
+  }
 
 }
 

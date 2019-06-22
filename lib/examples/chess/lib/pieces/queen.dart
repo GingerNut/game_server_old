@@ -16,14 +16,7 @@ class Queen extends ChessPiece{
 
     Board.squareAllDirections.forEach((d){
 
-      Tile nextTile = tile.nextInDirection(d);
-
-      while(nextTile != null){
-
-        moves.add(nextTile);
-
-        nextTile = nextTile.nextInDirection(d);
-      }
+      search(moves, d);
 
     });
 

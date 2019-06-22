@@ -14,18 +14,7 @@ class Bishop extends ChessPiece{
 
     List<Tile> moves = List();
 
-    Board.squareDiagonalDirections.forEach((d){
-
-      Tile nextTile = tile.nextInDirection(d);
-
-      while(nextTile != null){
-
-        moves.add(nextTile);
-
-        nextTile = nextTile.nextInDirection(d);
-      }
-
-    });
+    Board.squareDiagonalDirections.forEach((d)=> search(moves, d));
 
     return moves;
   }

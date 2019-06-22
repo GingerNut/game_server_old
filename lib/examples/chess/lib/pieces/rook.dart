@@ -18,15 +18,8 @@ class Rook extends ChessPiece{
 
     Board.squareOrthogonalDirections.forEach((d){
 
+    search(moves, d);
 
-      Tile nextTile = tile.nextInDirection(d);
-
-      while(nextTile != null){
-
-          moves.add(nextTile);
-
-          nextTile = nextTile.nextInDirection(d);
-      }
 
     });
 
