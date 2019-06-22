@@ -1,4 +1,5 @@
 import 'package:game_server/examples/chess/lib/chess_position.dart';
+import 'package:game_server/examples/chess/lib/pieces/chess_piece.dart';
 import 'package:game_server/src/game/board/piece.dart';
 import 'package:game_server/src/game/board/tile.dart';
 import 'package:game_server/src/game/move.dart';
@@ -44,9 +45,24 @@ class ChessMove extends Move<ChessPosition>{
 
   doMove(ChessPosition position) {
 
+    ChessPiece piece = position.board.tile(fromI, fromJ).pieces.first;
 
+    piece.tile = position.board.tile(toI, toJ);
 
+    ChessPiece captured = piece.captured;
 
+    switch(piece.chessColor){
+
+      case ChessColor.white:
+        position.board.blackArmy.remove(captured);
+        break;
+
+      case ChessColor.black:
+        position.board.whiteArmy.remove(captured);
+        break;
+    }
+
+    return Success();
 
   }
 
