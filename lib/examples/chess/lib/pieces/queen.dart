@@ -8,6 +8,7 @@ class Queen extends ChessPiece{
 
   Queen(Board board) : super(board){
     name = 'Q';
+    value = 7;
   }
 
   List<Tile> get legalMoves {

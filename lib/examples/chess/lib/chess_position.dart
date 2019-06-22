@@ -1,6 +1,7 @@
 
 
 import 'package:game_server/examples/chess/lib/chess_board.dart';
+import 'package:game_server/examples/chess/lib/chess_move.dart';
 import 'package:game_server/src/game/board/board.dart';
 import 'package:game_server/src/game/board/piece.dart';
 import 'package:game_server/src/game/board/tile.dart';
@@ -25,7 +26,13 @@ class ChessPosition extends Position{
 
 
 
-  String get string => null;
+  String get string {
+
+    String string = '';
+
+
+    return string;
+  }
 
   @override
   analyse() {
@@ -33,26 +40,33 @@ class ChessPosition extends Position{
   }
 
   @override
-  bool canPlay(String id) {
-
-
-  }
+  bool canPlay(String id) => (playerId == id);
 
   GameDependency get dependency => ChessInjector();
 
   String get externalVariablesString => null;
 
   List<Move> getPossibleMoves() {
+    List<Move> moves = List();
+
+    List<Piece> army;
+
+    if(playerId == whitePlayer) army = board.whiteArmy;
+    else army = board.blackArmy;
+
+    army.forEach((p){
+
+      List<Tile> tiles = p.legalMoves;
+
+      tiles.forEach((t) => moves.add(ChessMove(p.tile, t)));
+
+    });
+
+    return moves;
 
   }
 
-  initialiseExternalVariables() {
-      board = ChessBoard();
-
-
-
-  }
-
+  initialiseExternalVariables() => board = ChessBoard();
 
 
   printBoard(){
@@ -84,10 +98,7 @@ class ChessPosition extends Position{
 
   PlayerOrder get playerOrder => PlayerOrder.sequential;
 
-  setExternalVariables(String string) {
-    // TODO: implement setExternalVariables
-    return null;
-  }
+  setExternalVariables(String string) {}
 
   setFirstPlayer(String firstPlayer) {
    super.setFirstPlayer(firstPlayer);
@@ -97,9 +108,7 @@ class ChessPosition extends Position{
   }
 
   @override
-  setUpNewPosition() {
-
-  }
+  setUpNewPosition() {}
 
   @override
   double value(String playerId) {

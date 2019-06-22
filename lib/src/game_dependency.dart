@@ -16,7 +16,7 @@ abstract class GameDependency{
 
   MoveBuilder getMoveBuilder();
 
-  PositionBuilder getPositionBuilder();
+  PositionBuilder getPositionBuilder() => PositionBuilder(this);
 
   Position getPosition();
 

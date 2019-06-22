@@ -10,6 +10,7 @@ class King extends ChessPiece{
 
   King(Board board) : super(board){
     name = 'K';
+    value = 9;
   }
 
   List<Tile> get legalMoves {

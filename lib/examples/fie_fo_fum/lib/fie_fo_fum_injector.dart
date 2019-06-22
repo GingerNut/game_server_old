@@ -26,8 +26,6 @@ class FieFoFumInjector extends GameDependency{
   
   MoveBuilder getMoveBuilder() => FieFoFumMoveBuilder();
 
-  PositionBuilder getPositionBuilder() => PositionBuilder(this);
-
   setPositionType(Position position) => position as FieFoFumPosition;
 
   Settings get settings => FieFoFumSettings();

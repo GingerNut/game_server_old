@@ -8,6 +8,7 @@ abstract class ChessPiece extends Piece{
   ChessPiece(Board board) : super(board);
 
   ChessColor chessColor;
+  double value;
 
   bool isFriendly(Piece piece)=> chessColor == (piece as ChessPiece).chessColor;
 

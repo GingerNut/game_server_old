@@ -9,6 +9,7 @@ class Pawn extends ChessPiece{
 
   Pawn(Board board) : super(board){
     name = 'P';
+    value = 1;
   }
 
   List<Tile> get legalMoves {

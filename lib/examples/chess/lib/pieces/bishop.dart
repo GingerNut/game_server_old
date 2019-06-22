@@ -6,8 +6,10 @@ import 'package:game_server/src/game/position.dart';
 
 class Bishop extends ChessPiece{
 
+
   Bishop(Board board ) : super(board){
     name = 'B';
+    value = 3;
   }
 
   List<Tile> get legalMoves {
