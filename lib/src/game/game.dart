@@ -8,7 +8,6 @@ import 'dart:isolate';
 import 'package:game_server/src/design/palette.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 
-import 'package:game_server/src/game_dependency.dart';
 import 'package:game_server/src/messages/message.dart';
 
 part 'move.dart';
@@ -17,6 +16,7 @@ part 'position.dart';
 part 'position_builder.dart';
 part 'settings.dart';
 part 'server_player.dart';
+part 'game_dependency.dart';
 
 part 'board/notation.dart';
 part 'board/board.dart';

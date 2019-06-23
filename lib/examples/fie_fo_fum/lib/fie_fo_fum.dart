@@ -1,9 +1,6 @@
 library fie_fo_fum;
 
-import 'dart:isolate';
-
 import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/game_dependency.dart';
 import 'package:game_server/src/messages/message.dart';
 
 

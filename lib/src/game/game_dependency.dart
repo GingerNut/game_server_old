@@ -1,7 +1,4 @@
-
-import 'package:game_server/game_server.dart';
-
-import 'messages/message.dart';
+part of game;
 
 abstract class GameDependency{
 

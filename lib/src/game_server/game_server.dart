@@ -4,7 +4,6 @@ import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/messages/message.dart';
-import 'package:game_server/src/game_dependency.dart';
 import 'advert_list.dart';
 
 
@@ -177,7 +176,7 @@ class GameServer{
   getGame(NewGame settings) => injector.getGame(settings);
 
   @override
-  void set injector(GameDependency _injector) {
+  set injector(GameDependency _injector) {
     // TODO: implement injector
   }
 

@@ -1,7 +1,5 @@
 
 import 'dart:async';
-import 'dart:math';
-
 
 import 'package:game_server/examples/chess/lib/chess.dart';
 import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum.dart';
@@ -22,14 +20,6 @@ void main()async{
     await for(String string in stream){
       return string;
     }
-  }
-
-  Future waitForAllConfirmed(Game game) async{
-
-    while(game.unconfirmed.isNotEmpty){
-      await Future.delayed(Duration(milliseconds : 10));
-    }
-    return;
   }
 
   group('notation', (){
