@@ -1,13 +1,18 @@
+library server_connection;
+
 import 'dart:async';
 import 'dart:math';
 
 import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 
 import '../../../game_server.dart';
 
+part 'http_connection.dart';
+part 'stream_connection.dart';
 
 
 class ServerConnection implements ChannelHost {

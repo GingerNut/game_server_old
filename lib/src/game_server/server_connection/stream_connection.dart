@@ -1,11 +1,4 @@
-
-
-import 'package:web_socket_channel/web_socket_channel.dart';
-
-import 'server_connection.dart';
-
-
-
+part of server_connection;
 
 class StreamConnection extends ServerConnection{
 
