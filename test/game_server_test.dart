@@ -155,6 +155,10 @@ void main()async{
       expect(color.asInt, 0x12345678);
       expect(color.string, '0x12345678');
 
+      expect(GameColor.fromString('#ffffff').r, 255);
+      expect(GameColor.fromString('#ffffff').g, 255);
+      expect(GameColor.fromString('#ffffff').b, 255);
+
     });
 
     test('player variable',()async{

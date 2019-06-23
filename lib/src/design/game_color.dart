@@ -7,6 +7,19 @@ class GameColor{
   int g;
   int b;
 
+  GameColor.fromString(String string){
+
+    string = string.substring(1);
+
+    String RString = string.substring(0,2);
+    String GString = string.substring(2,4);
+    String BString = string.substring(4);
+
+    r = int.parse(RString, radix: 16);
+    g = int.parse(GString, radix: 16);
+    b = int.parse(BString, radix: 16);
+  }
+
   GameColor(int color){
     b = color % 256;
 
