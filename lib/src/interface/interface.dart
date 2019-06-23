@@ -20,7 +20,7 @@ abstract class Interface{
 
   Position position;
 
-  ColorScheme colorScheme;
+  Theme theme;
 
   Interface(this.dependency);
 

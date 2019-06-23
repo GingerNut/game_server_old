@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:game_server/examples/chess/lib/chess.dart';
 import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum.dart';
@@ -140,6 +141,19 @@ void main()async{
       expect(ui.position.timeLeft['Player 1'], 7);
 //      await Future.delayed(Duration(seconds : 8));
 //      expect(ui.position.playerStatus['Player 2'], PlayerStatus.out);
+
+    });
+
+    test('color functions',(){
+
+      var color = GameColor(0x12345678);
+      expect(color.a, 18);
+      expect(color.r, 52);
+      expect(color.g, 86);
+      expect(color.b, 120);
+
+      expect(color.asInt, 0x12345678);
+      expect(color.string, '0x12345678');
 
     });
 
