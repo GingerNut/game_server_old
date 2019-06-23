@@ -24,7 +24,4 @@ abstract class Interface{
 
   Interface(this.dependency);
 
-
-
-
 }

@@ -8,7 +8,7 @@ class Settings{
   bool playerHelp = false;
   bool randomStart = true;
 
-   bool timer = true;
+  bool timer = true;
   double gameTime = 300.0;
   double moveTime = 12;
   String onlineGameName = 'New Game';
