@@ -1,4 +1,4 @@
-
+part of design;
 
 class ColorPalette{
 

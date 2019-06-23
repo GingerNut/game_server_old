@@ -5,7 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
-import 'package:game_server/src/design/palette.dart';
+import 'package:game_server/src/design/design.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 
 import 'package:game_server/src/messages/message.dart';

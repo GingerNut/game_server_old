@@ -1,4 +1,4 @@
-import 'color_palette.dart';
+part of design;
 
 class ColorScheme{
 

@@ -1,7 +1,7 @@
 library interface;
 
 
-import 'package:game_server/src/design/color_scheme.dart';
+import 'package:game_server/src/design/design.dart';
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game_server/advert_list.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';

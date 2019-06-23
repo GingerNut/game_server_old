@@ -10,7 +10,6 @@ environment:
 dependencies:
   args: ^1.4.2
   shelf:
-  quiver:
   shelf_web_socket:
   web_socket_channel:
 
