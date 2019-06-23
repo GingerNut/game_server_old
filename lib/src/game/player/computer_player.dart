@@ -1,6 +1,4 @@
-part of player;
-
-
+part of game;
 
 
 class ComputerPlayer extends Player{

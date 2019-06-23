@@ -1,6 +1,4 @@
-import 'dart:isolate';
-
-import 'package:game_server/src/game/player/computer.dart';
+part of game;
 
 
 main(List<String> args, SendPort sendPort) {

@@ -1,10 +1,4 @@
-
-
-import 'package:game_server/src/game/board/piece.dart';
-import 'package:game_server/src/game/board/piece.dart' as prefix0;
-import 'package:game_server/src/game_dependency.dart';
-
-import 'board.dart';
+part of game;
 
 class Tile{
 

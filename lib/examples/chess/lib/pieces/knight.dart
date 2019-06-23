@@ -1,10 +1,5 @@
-import 'package:game_server/examples/chess/lib/chess_injector.dart';
-import 'package:game_server/src/game/board/board.dart';
-import 'package:game_server/src/game/board/piece.dart';
-import 'package:game_server/src/game/board/tile.dart';
-import 'package:game_server/src/game/position.dart';
 
-import 'chess_piece.dart';
+part of chess;
 
 class Knight extends ChessPiece{
 

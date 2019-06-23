@@ -1,10 +1,11 @@
 
+
+
 import 'dart:isolate';
 
-import 'package:game_server/src/game/player/computer.dart';
+import 'package:game_server/src/game/game.dart';
 
-import 'fie_fo_fum_injector.dart';
-
+import 'fie_fo_fum.dart';
 
 main(List<String> args, SendPort sendPort) {
 

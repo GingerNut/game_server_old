@@ -3,8 +3,8 @@
 
 import 'dart:convert';
 
-import 'package:game_server/src/game/player/player.dart';
-import 'package:game_server/src/game/settings.dart';
+
+import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/response/success.dart';
 

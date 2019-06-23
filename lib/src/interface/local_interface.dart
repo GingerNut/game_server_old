@@ -1,10 +1,6 @@
 
 import 'package:game_server/src/game/game.dart';
 
-import 'package:game_server/src/game/move.dart';
-import 'package:game_server/src/game/player/player.dart';
-import 'package:game_server/src/game/position.dart';
-import 'package:game_server/src/game/settings.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
 
 import '../game_dependency.dart';

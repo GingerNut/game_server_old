@@ -1,10 +1,10 @@
 
+
 import 'dart:isolate';
 
-import 'package:game_server/src/game/player/computer.dart';
+import 'package:game_server/src/game/game.dart';
 
-import 'chess_injector.dart';
-
+import 'chess.dart';
 
 main(List<String> args, SendPort sendPort) {
 

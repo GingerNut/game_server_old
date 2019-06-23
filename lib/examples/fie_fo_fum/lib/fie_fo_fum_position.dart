@@ -1,15 +1,4 @@
-
-
-import 'package:game_server/src/game/move.dart';
-import 'package:game_server/src/game/player/computer.dart';
-import 'package:game_server/src/game/position.dart';
-import 'package:game_server/src/game_dependency.dart';
-
-import 'fie_fo_fum_injector.dart';
-import 'move_fie.dart';
-import 'move_fo.dart';
-import 'move_fum.dart';
-import 'move_number.dart';
+part of fie_fo_fum;
 
 class FieFoFumPosition extends Position{
 

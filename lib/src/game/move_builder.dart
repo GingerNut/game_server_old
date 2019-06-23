@@ -1,4 +1,4 @@
-import 'move.dart';
+part of game;
 
 abstract class MoveBuilder{
 

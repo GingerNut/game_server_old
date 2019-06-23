@@ -1,4 +1,4 @@
-part of player;
+part of game;
 
 
 

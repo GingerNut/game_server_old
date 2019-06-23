@@ -1,9 +1,4 @@
-import 'dart:convert';
-
-import 'package:game_server/src/game/player/player_variable.dart';
-import 'package:game_server/src/game/position.dart';
-
-import '../game_dependency.dart';
+part of game;
 
 class PositionBuilder{
 

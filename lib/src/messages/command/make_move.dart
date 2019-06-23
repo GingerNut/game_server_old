@@ -5,8 +5,8 @@
 
 import 'dart:convert';
 
-import 'package:game_server/src/game/move.dart';
-import 'package:game_server/src/game/move_builder.dart';
+
+import 'package:game_server/src/game/game.dart';
 
 import '../message.dart';
 

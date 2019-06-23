@@ -1,8 +1,5 @@
-import 'package:game_server/examples/chess/lib/chess_move.dart';
-import 'package:game_server/src/game/board/board.dart';
-import 'package:game_server/src/game/board/piece.dart';
-import 'package:game_server/src/game/board/tile.dart';
-import 'package:game_server/src/game/move.dart';
+part of chess;
+
 
 abstract class ChessPiece extends Piece{
   ChessPiece(Board board) : super(board);

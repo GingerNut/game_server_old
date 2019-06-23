@@ -1,3 +1,5 @@
+part of game;
+
 abstract class Notation{
 
   //j = vertical

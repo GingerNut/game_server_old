@@ -1,4 +1,4 @@
-import 'package:game_server/src/game/board/notation.dart';
+part of chess;
 
 //j = vertical
 // i is horizontal

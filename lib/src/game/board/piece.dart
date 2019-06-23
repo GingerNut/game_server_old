@@ -1,7 +1,4 @@
-import 'package:game_server/src/game/position.dart';
-
-import 'board.dart';
-import 'tile.dart';
+part of game;
 
 abstract class Piece{
 

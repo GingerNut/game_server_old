@@ -1,21 +1,4 @@
-
-
-import 'package:game_server/examples/chess/lib/chess_board.dart';
-import 'package:game_server/examples/chess/lib/chess_move.dart';
-import 'package:game_server/src/game/board/board.dart';
-import 'package:game_server/src/game/board/piece.dart';
-import 'package:game_server/src/game/board/tile.dart';
-import 'package:game_server/src/game/move.dart';
-import 'package:game_server/src/game/position.dart';
-import 'package:game_server/src/game_dependency.dart';
-
-import 'chess_injector.dart';
-import 'pieces/bishop.dart';
-import 'pieces/king.dart';
-import 'pieces/knight.dart';
-import 'pieces/pawn.dart';
-import 'pieces/queen.dart';
-import 'pieces/rook.dart';
+part of chess;
 
 class ChessPosition extends Position{
 

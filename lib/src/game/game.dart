@@ -1,16 +1,48 @@
+library game;
 
 
+import 'dart:async';
+import 'dart:convert';
+import 'dart:isolate';
+
+import 'package:game_server/src/design/palette.dart';
+import 'package:game_server/src/game_server/server_connection/server_connection.dart';
+import 'package:game_server/src/messages/command/echo.dart';
+import 'package:game_server/src/messages/command/game_started.dart';
 import 'package:game_server/src/messages/command/make_move.dart';
 import 'package:game_server/src/messages/command/new_game.dart';
-import 'package:game_server/src/game/player/player.dart';
-import 'package:game_server/src/game/position.dart';
+import 'package:game_server/src/messages/command/send_position.dart';
+import 'package:game_server/src/messages/command/setId.dart';
+import 'package:game_server/src/messages/command/set_player_status.dart';
+import 'package:game_server/src/messages/command/tidy.dart';
+import 'package:game_server/src/messages/command/your_turn.dart';
 import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
+import 'package:game_server/src/messages/response/confirm_move.dart';
 import 'package:game_server/src/messages/response/success.dart';
 
-import 'package:game_server/src/game/board/board.dart';
-import '../game_dependency.dart';
-import 'move.dart';
+import 'package:game_server/src/game_dependency.dart';
+
+part 'move.dart';
+part 'move_builder.dart';
+part 'position.dart';
+part 'position_builder.dart';
+part 'settings.dart';
+part 'server_player.dart';
+
+part 'board/notation.dart';
+part 'board/board.dart';
+part 'board/markings.dart';
+part 'board/piece.dart';
+part 'board/tile.dart';
+
+part 'player/computer.dart';
+part 'player/computer_player.dart';
+part 'player/isolate.dart';
+part 'player/player.dart';
+part 'player/player_variable.dart';
+part 'player/server_player.dart';
+
 
 class Game {
   GameState state = GameState.waitingForPlayers;

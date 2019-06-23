@@ -1,6 +1,4 @@
-import 'package:game_server/src/game/player/player.dart';
-
-import '../position.dart';
+part of game;
 
 class PlayerVariable<T>{
 

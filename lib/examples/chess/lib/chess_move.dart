@@ -1,11 +1,4 @@
-import 'package:game_server/examples/chess/lib/chess_position.dart';
-import 'package:game_server/examples/chess/lib/pieces/chess_piece.dart';
-import 'package:game_server/src/game/board/piece.dart';
-import 'package:game_server/src/game/board/tile.dart';
-import 'package:game_server/src/game/move.dart';
-import 'package:game_server/src/messages/error/game_error.dart';
-import 'package:game_server/src/messages/message.dart';
-import 'package:game_server/src/messages/response/success.dart';
+part of chess;
 
 class ChessMove extends Move<ChessPosition>{
 

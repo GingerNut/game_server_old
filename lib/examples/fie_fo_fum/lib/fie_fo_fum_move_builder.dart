@@ -1,11 +1,4 @@
-
-
-import 'package:game_server/src/game/move_builder.dart';
-
-import 'move_fie.dart';
-import 'move_fo.dart';
-import 'move_fum.dart';
-import 'move_number.dart';
+part of fie_fo_fum;
 
 class FieFoFumMoveBuilder extends MoveBuilder{
 

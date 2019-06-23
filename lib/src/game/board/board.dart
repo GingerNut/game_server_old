@@ -1,9 +1,4 @@
-
-
-
-import 'package:game_server/src/game/board/piece.dart';
-import 'package:game_server/src/game/board/tile.dart';
-import 'package:game_server/src/game_dependency.dart';
+part of game;
 
 class Board{
   static const int North = 1;

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:game_server/src/game/player/player.dart';
-import 'package:game_server/src/game/position.dart';
+import 'package:game_server/src/game/game.dart';
 
 import '../message.dart';
 

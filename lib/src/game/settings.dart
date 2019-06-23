@@ -1,9 +1,5 @@
+part of game;
 
-
-
-
-
-import 'package:game_server/src/game/player/player.dart';
 
 class Settings{
 

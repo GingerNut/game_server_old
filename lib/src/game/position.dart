@@ -1,18 +1,5 @@
 
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:game_server/src/design/palette.dart';
-import 'package:game_server/src/game/player/computer.dart';
-import 'package:game_server/src/game/player/player.dart';
-import 'package:game_server/src/game/player/player_variable.dart';
-import 'package:game_server/src/game/position_builder.dart';
-import 'package:game_server/src/messages/command/new_game.dart';
-import 'package:game_server/src/messages/command/send_position.dart';
-
-import '../game_dependency.dart';
-import 'board/board.dart';
-import 'move.dart';
+part of game;
 
 abstract class Position{
 

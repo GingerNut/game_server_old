@@ -1,29 +1,4 @@
-
-import 'dart:async';
-import 'dart:isolate';
-
-import 'package:game_server/src/messages/command/echo.dart';
-import 'package:game_server/src/messages/command/game_started.dart';
-import 'package:game_server/src/messages/command/make_move.dart';
-import 'package:game_server/src/messages/command/send_position.dart';
-import 'package:game_server/src/messages/command/setId.dart';
-import 'package:game_server/src/messages/command/set_player_status.dart';
-import 'package:game_server/src/messages/command/start_game.dart';
-import 'package:game_server/src/messages/command/tidy.dart';
-
-import 'package:game_server/src/game/player/player.dart';
-import 'package:game_server/src/messages/command/your_turn.dart';
-import 'package:game_server/src/messages/message.dart';
-import 'package:game_server/src/messages/response/confirm_move.dart';
-
-
-import '../../game_dependency.dart';
-import '../move.dart';
-import '../move_builder.dart';
-import '../position.dart';
-import '../position_builder.dart';
-
-
+part of game;
 
 class Computer{
 

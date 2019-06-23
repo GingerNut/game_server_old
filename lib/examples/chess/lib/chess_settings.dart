@@ -1,5 +1,4 @@
-import 'package:game_server/src/game/player/player.dart';
-import 'package:game_server/src/game/settings.dart';
+part of chess;
 
 class ChessSettings extends Settings{
 

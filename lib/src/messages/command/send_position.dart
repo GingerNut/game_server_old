@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:game_server/src/game/board/board.dart';
+
 import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/game/move.dart';
-import 'package:game_server/src/game/position.dart';
-import 'package:game_server/src/game/position_builder.dart';
+
 
 import '../message.dart';
 

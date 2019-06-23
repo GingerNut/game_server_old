@@ -1,5 +1,6 @@
 import 'package:game_server/src/design/color_scheme.dart';
-import 'package:game_server/src/game/position.dart';
+import 'package:game_server/src/game/game.dart';
+
 
 import '../game_dependency.dart';
 
