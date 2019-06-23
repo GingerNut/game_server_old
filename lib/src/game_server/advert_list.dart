@@ -1,4 +1,5 @@
-import 'package:game_server/src/messages/command/new_game.dart';
+
+import 'package:game_server/src/messages/message.dart';
 
 class AdvertList{
 

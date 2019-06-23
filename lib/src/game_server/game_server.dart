@@ -2,16 +2,9 @@
 
 import 'package:game_server/src/game/game.dart';
 
-import 'package:game_server/src/messages/chat/chat_message.dart';
-import 'package:game_server/src/messages/chat/private_message.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
-import 'package:game_server/src/messages/command/make_move.dart';
-import 'package:game_server/src/messages/command/new_game.dart';
-import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
-import 'package:game_server/src/messages/response/confirm_move.dart';
-import 'package:game_server/src/messages/response/success.dart';
 
 import '../game_dependency.dart';
 import 'advert_list.dart';

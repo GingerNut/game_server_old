@@ -1,8 +1,5 @@
+part of message;
 
-import 'dart:convert';
-
-
-import '../message.dart';
 
 class PrivateMessage extends Message{
   static const String type = 'private_message';

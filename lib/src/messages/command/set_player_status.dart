@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:game_server/src/game/game.dart';
-
-import '../message.dart';
+part of message;
 
 class SetStatus extends Message{
   static const type = 'set_player_status';

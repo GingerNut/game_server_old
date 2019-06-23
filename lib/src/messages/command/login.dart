@@ -1,10 +1,4 @@
-
-
-
-
-import 'dart:convert';
-
-import '../message.dart';
+part of message;
 
 class Login extends Message{
   static const type ='login';

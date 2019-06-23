@@ -1,11 +1,4 @@
-
-
-
-
-import 'dart:convert';
-
-import '../message.dart';
-import 'new_game.dart';
+part of message;
 
 class JoinGame extends Message{
   static const type = 'join_game';

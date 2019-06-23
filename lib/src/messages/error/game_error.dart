@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import '../message.dart';
+part of message;
 
 class GameError extends Message{
   static const String type = 'game_error';

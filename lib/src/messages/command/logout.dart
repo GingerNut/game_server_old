@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import '../message.dart';
+part of message;
 
 class Logout extends Message{
   static const type = 'logout';

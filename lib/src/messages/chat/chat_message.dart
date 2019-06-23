@@ -1,8 +1,6 @@
+part of message;
 
-import 'dart:convert';
 
-
-import '../message.dart';
 
 class ChatMessage extends Message{
   static const String type = 'chat_message';

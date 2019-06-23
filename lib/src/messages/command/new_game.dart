@@ -1,15 +1,4 @@
-
-
-
-import 'dart:convert';
-
-
-import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/messages/error/game_error.dart';
-import 'package:game_server/src/messages/response/success.dart';
-
-import '../../game_dependency.dart';
-import '../message.dart';
+part of message;
 
 class NewGame extends Message{
   static const String type = 'new_game';

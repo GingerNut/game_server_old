@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import '../message.dart';
+part of message;
 
 class EchoResponse extends Message{
   static const type = 'echo_response';

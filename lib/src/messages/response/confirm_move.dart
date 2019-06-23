@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import '../message.dart';
+part of message;
 
 class ConfirmMove extends Message{
   static const type = 'confirm_move';

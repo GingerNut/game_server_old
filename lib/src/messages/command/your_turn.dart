@@ -1,9 +1,4 @@
-
-
-
-import 'dart:convert';
-
-import '../message.dart';
+part of message;
 
 class YourTurn extends Message{
   static const String type = 'your_turn';

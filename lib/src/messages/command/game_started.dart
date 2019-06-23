@@ -1,10 +1,4 @@
-
-
-
-import 'dart:convert';
-
-import '../message.dart';
-import 'new_game.dart';
+part of message;
 
 class GameStarted extends Message{
   static const String type = 'game_started';

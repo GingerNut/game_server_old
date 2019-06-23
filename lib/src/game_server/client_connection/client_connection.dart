@@ -2,24 +2,11 @@
 
 
 import 'dart:async';
-import 'dart:convert';
-
 
 import 'package:game_server/src/interface/http_interface.dart';
-import 'package:game_server/src/messages/chat/chat_message.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
-import 'package:game_server/src/messages/chat/private_message.dart';
-import 'package:game_server/src/messages/command/login.dart';
-import 'package:game_server/src/messages/command/make_move.dart';
-import 'package:game_server/src/messages/command/new_game.dart';
-import 'package:game_server/src/messages/command/request_login.dart';
-import 'package:game_server/src/messages/command/request_player_list.dart';
-import 'package:game_server/src/messages/command/send_position.dart';
-import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
-import 'package:game_server/src/messages/response/confirm_move.dart';
-import 'package:game_server/src/messages/response/login_success.dart';
-import 'package:game_server/src/messages/response/player_list.dart';
+
 
 enum LoginStatus {requesting, good, error}
 

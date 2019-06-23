@@ -5,15 +5,8 @@ import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game_server/advert_list.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';
 import 'package:game_server/src/game_dependency.dart';
-import 'package:game_server/src/messages/chat/chat_message.dart';
-import 'package:game_server/src/messages/chat/private_message.dart';
-import 'package:game_server/src/messages/command/join_game.dart';
-import 'package:game_server/src/messages/command/logout.dart';
-import 'package:game_server/src/messages/command/make_move.dart';
-import 'package:game_server/src/messages/command/new_game.dart';
-import 'package:game_server/src/messages/command/send_position.dart';
-import 'package:game_server/src/messages/command/set_player_status.dart';
-import 'package:game_server/src/messages/command/start_game.dart';
+import 'package:game_server/src/messages/message.dart';
+
 
 import 'interface.dart';
 

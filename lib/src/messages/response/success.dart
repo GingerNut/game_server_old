@@ -1,12 +1,4 @@
-
-
-
-
-
-
-import 'dart:convert';
-
-import '../message.dart';
+part of message;
 
 class Success extends Message{
   static const String type = 'success';

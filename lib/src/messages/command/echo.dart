@@ -1,8 +1,5 @@
-import 'dart:convert';
+part of message;
 
-import 'package:game_server/src/messages/response/echo_response.dart';
-
-import '../message.dart';
 
 class Echo extends Message{
   static const type = 'echo';

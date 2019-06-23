@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:game_server/src/messages/response/echo_response.dart';
-
-import '../message.dart';
+part of message;
 
 class SetId extends Message{
   static const type = 'set_id';

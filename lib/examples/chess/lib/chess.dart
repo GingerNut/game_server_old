@@ -1,13 +1,8 @@
 library chess;
 
-import 'dart:isolate';
-
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game_dependency.dart';
-import 'package:game_server/src/messages/command/new_game.dart';
-import 'package:game_server/src/messages/error/game_error.dart';
 import 'package:game_server/src/messages/message.dart';
-import 'package:game_server/src/messages/response/success.dart';
 
 part 'chess_board.dart';
 part 'chess_injector.dart';

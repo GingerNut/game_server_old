@@ -1,14 +1,4 @@
-
-
-
-
-
-import 'dart:convert';
-
-
-import 'package:game_server/src/game/game.dart';
-
-import '../message.dart';
+part of message;
 
 class MakeMove extends Message{
   static const type = 'make_move';

@@ -10,19 +10,7 @@ import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/palette.dart';
 
 import 'package:game_server/src/interface/local_interface.dart';
-import 'package:game_server/src/messages/chat/chat_message.dart';
-import 'package:game_server/src/messages/chat/private_message.dart';
-import 'package:game_server/src/messages/command/echo.dart';
-import 'package:game_server/src/messages/command/make_move.dart';
-import 'package:game_server/src/messages/command/new_game.dart';
-import 'package:game_server/src/messages/command/request_player_list.dart';
-import 'package:game_server/src/messages/command/send_position.dart';
-import 'package:game_server/src/messages/command/set_player_status.dart';
 import 'package:game_server/src/messages/message.dart';
-import 'package:game_server/src/messages/response/confirm_move.dart';
-import 'package:game_server/src/messages/response/echo_response.dart';
-import 'package:game_server/src/messages/response/player_list.dart';
-import 'package:game_server/src/messages/response/success.dart';
 
 import 'package:test/test.dart';
 

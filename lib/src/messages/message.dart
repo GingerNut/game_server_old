@@ -1,29 +1,36 @@
+library message;
+
 import 'dart:convert';
 
-import 'package:game_server/src/messages/response/confirm_move.dart';
-import 'package:game_server/src/messages/response/login_success.dart';
-import 'package:game_server/src/messages/response/echo_response.dart';
-import 'package:game_server/src/messages/response/player_list.dart';
+import 'package:game_server/src/game/game.dart';
 
-import 'chat/chat_message.dart';
-import 'chat/private_message.dart';
-import 'command/echo.dart';
-import 'command/game_started.dart';
-import 'command/join_game.dart';
-import 'command/login.dart';
-import 'command/logout.dart';
-import 'command/make_move.dart';
-import 'command/new_game.dart';
-import 'command/request_login.dart';
-import 'command/request_player_list.dart';
-import 'command/send_position.dart';
-import 'command/setId.dart';
-import 'command/set_player_status.dart';
-import 'command/start_game.dart';
-import 'command/tidy.dart';
-import 'command/your_turn.dart';
-import 'error/game_error.dart';
-import 'response/success.dart';
+part 'chat/chat_message.dart';
+part 'chat/private_message.dart';
+
+part 'command/echo.dart';
+part 'command/game_started.dart';
+part 'command/join_game.dart';
+part 'command/login.dart';
+part 'command/logout.dart';
+part 'command/make_move.dart';
+part 'command/new_game.dart';
+part 'command/request_login.dart';
+part 'command/request_player_list.dart';
+part 'command/send_position.dart';
+part 'command/set_player_status.dart';
+part 'command/setId.dart';
+part 'command/start_game.dart';
+part 'command/tidy.dart';
+part 'command/your_turn.dart';
+
+part 'error/game_error.dart';
+
+part 'response/confirm_move.dart';
+part 'response/echo_response.dart';
+part 'response/login_success.dart';
+part 'response/player_list.dart';
+part 'response/response.dart';
+part 'response/success.dart';
 
 abstract class Message{
 

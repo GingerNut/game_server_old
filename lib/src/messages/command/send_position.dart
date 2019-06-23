@@ -1,10 +1,4 @@
-import 'dart:convert';
-
-
-import 'package:game_server/src/game/game.dart';
-
-
-import '../message.dart';
+part of message;
 
 class SendPosition extends Message{
   static const type = 'send_game';

@@ -1,11 +1,4 @@
-
-
-
-import 'dart:convert';
-import 'package:game_server/src/messages/response/success.dart';
-
-import '../message.dart';
-import 'response.dart';
+part of message;
 
 class LoginSuccess extends Success{
     static const String type = 'login_success';
