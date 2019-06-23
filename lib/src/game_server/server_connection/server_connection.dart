@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:game_server/src/game_server/channel/channel.dart';
-import 'package:game_server/src/game_server/database/record.dart';
+import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/messages/message.dart';
 
 

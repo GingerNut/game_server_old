@@ -1,8 +1,4 @@
-
-
-import 'package:game_server/src/game_server/channel/channel.dart';
-import 'package:game_server/src/game_server/client_connection/client_connection.dart';
-import 'package:game_server/src/interface/http_interface.dart';
+part of client_connection;
 
 class IoClientConnection extends ClientConnection{
   final String address;

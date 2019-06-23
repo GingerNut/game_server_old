@@ -1,8 +1,4 @@
-import 'package:game_server/game_server.dart';
-import 'package:game_server/src/game_server/channel/channel.dart';
-import 'package:game_server/src/game_server/server_connection/stream_connection.dart';
-import 'package:game_server/src/game_server/client_connection/client_connection.dart';
-import 'package:game_server/src/interface/http_interface.dart';
+part of client_connection;
 
 
 class StreamClientConnection extends ClientConnection{

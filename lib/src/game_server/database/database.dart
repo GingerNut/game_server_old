@@ -1,8 +1,10 @@
+library database;
 
+import 'dart:io';
 
 import 'package:game_server/src/messages/message.dart';
 
-import 'record.dart';
+part 'record.dart';
 
 class Database{
 

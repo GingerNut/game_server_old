@@ -1,7 +1,8 @@
 
 
-import 'package:game_server/src/game_server/client_connection/io_client.dart';
+
 import 'package:game_server/src/game_dependency.dart';
+import 'package:game_server/src/game_server/client_connection/client_connection.dart';
 import 'package:game_server/src/interface/http_interface.dart';
 
 

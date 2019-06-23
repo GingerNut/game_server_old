@@ -1,5 +1,5 @@
 import 'package:game_server/game_server.dart';
-import 'package:game_server/src/game_server/client_connection/stream_connection.dart';
+import 'package:game_server/src/game_server/client_connection/client_connection.dart';
 import 'package:game_server/src/interface/http_interface.dart';
 
 import '../game_dependency.dart';
