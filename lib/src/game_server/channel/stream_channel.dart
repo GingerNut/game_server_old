@@ -1,7 +1,4 @@
-import 'dart:async';
-
-import 'channel.dart';
-
+part of channel;
 
 
 

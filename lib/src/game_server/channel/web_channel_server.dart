@@ -1,9 +1,4 @@
-
-import 'package:web_socket_channel/web_socket_channel.dart';
-
-
-import 'channel.dart';
-
+part of channel;
 
 class WebChannelServer extends Channel{
   WebChannelServer(ChannelHost host, this.socketChannel) : super(host);

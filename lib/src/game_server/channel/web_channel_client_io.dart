@@ -1,9 +1,4 @@
-
-
-import 'package:web_socket_channel/io.dart';
-
-import 'channel.dart';
-
+part of channel;
 
 class IOWebChannelClient extends Channel{
   IOWebSocketChannel webSocketChannel;

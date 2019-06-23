@@ -1,7 +1,4 @@
-
-
-import 'channel.dart';
-
+part of channel;
 
 class HMTLWebChannelClient extends Channel{
   HMTLWebChannelClient(ChannelHost host) : super(host);

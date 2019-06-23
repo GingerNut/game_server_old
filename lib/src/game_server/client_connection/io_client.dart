@@ -1,6 +1,6 @@
 
 
-import 'package:game_server/src/game_server/channel/web_channel_client_io.dart';
+import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';
 import 'package:game_server/src/interface/http_interface.dart';
 
