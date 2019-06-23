@@ -1,11 +1,4 @@
-
-import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/messages/message.dart';
-
-
-import '../game_dependency.dart';
-import 'interface.dart';
-
+part of interface;
 
 class LocalInterface extends Interface{
 

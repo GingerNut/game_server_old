@@ -1,14 +1,4 @@
-
-
-
-import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/game_server/advert_list.dart';
-import 'package:game_server/src/game_server/client_connection/client_connection.dart';
-import 'package:game_server/src/game_dependency.dart';
-import 'package:game_server/src/messages/message.dart';
-
-
-import 'interface.dart';
+part of interface;
 
 class HttpInterface extends Interface{
 

@@ -8,15 +8,11 @@ import 'package:game_server/examples/fie_fo_fum/lib/fie_fo_fum.dart';
 
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/palette.dart';
+import 'package:game_server/src/interface/interface.dart';
 
-import 'package:game_server/src/interface/local_interface.dart';
 import 'package:game_server/src/messages/message.dart';
 
 import 'package:test/test.dart';
-
-
-import 'package:game_server/src/interface/local_http_interface.dart';
-import 'package:game_server/src/interface/stream_http_interface.dart';
 
 
 void main()async{
