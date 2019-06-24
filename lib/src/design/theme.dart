@@ -6,8 +6,8 @@ class Theme{
   GameColor get button => GameColor(0xFF4CAF50);
   GameColor get buttonShadow => GameColor(0xFF4CAF50);
 
-  GameColor get lightText => GameColor(0xFFFFFFFF);
-  GameColor get darkText => GameColor(0x00000000);
+  GameColor get lightText => GameColor.fromString('#ffffff');
+  GameColor get darkText => GameColor.fromString('#000000');
 
   GameColor get tileLight => GameColor(0xFFFFECB3);
   GameColor get tileDetail => GameColor(0xFFFF6F00);
