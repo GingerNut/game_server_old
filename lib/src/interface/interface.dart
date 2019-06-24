@@ -18,7 +18,7 @@ part 'stream_http_interface.dart';
 
 abstract class Interface{
 
-  StreamController<Message> events = StreamController();
+  StreamController<Message> events = StreamController.broadcast();
 
   GameDependency dependency;
 
