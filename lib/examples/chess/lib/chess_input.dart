@@ -13,11 +13,16 @@ class ChessInput extends Input{
 
     print('here');
 
-    if(firstTap && tile.pieces.first != null){
+    if(firstTap){
+    if(tile.pieces.first != null) {
 
       piece = tile.pieces.first;
 
+      print(piece.name);
+
       firstTap = false;
+    }
+
     } else {
 
       if(piece.legalMoves.contains(tile)){
