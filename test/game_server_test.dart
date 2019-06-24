@@ -122,7 +122,8 @@ void main()async{
       ui.addPlayer(Player());
       ui.addPlayer(Player());
       ui.addPlayer(Player());
-      await ui.startGame(ui.newGame ..firstPlayer ='Player 1');
+      ui.newGame.firstPlayer = 'Player 1';
+      await ui.startLocalGame();
     });
 
     test('timer', ()async{
@@ -193,7 +194,8 @@ void main()async{
     ui.addPlayer(computer);
 
     setUp(()async{
-      await ui.startGame(ui.newGame .. firstPlayer = 'Player 1');
+      ui.newGame.firstPlayer = "Player 1";
+      await ui.startLocalGame();
     });
 
 
@@ -277,7 +279,7 @@ void main()async{
       ui.addPlayer(Player());
       ui.addPlayer(Player());
       ui.addPlayer(Player());
-      await ui.startGame(ui.newGame);
+      await ui.startLocalGame();
     });
 
 
@@ -328,7 +330,7 @@ void main()async{
 
       expect(ui.newGame.players.length, 4);
 
-      await ui.startGame(ui.newGame);
+      await ui.startLocalGame();
       expect(ui.game.position.playerIds, ['Player 1', 'Player 2', 'Player 3', 'Player 4']);
 
       expect(ui.position.color['Player 1'], Palette.COLOR_WHITE);

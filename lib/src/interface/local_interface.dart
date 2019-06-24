@@ -26,8 +26,8 @@ resetGame(){
 
 addPlayer(Player player) => newGame.addLocalPlayer(player);
 
-startGame(NewGame newgame)async{
-  game = getGame(newgame);
+startLocalGame()async{
+  game = getGame(newGame);
   await game.initialise();
 }
 
