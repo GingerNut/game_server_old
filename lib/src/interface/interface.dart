@@ -1,6 +1,8 @@
 library interface;
 
 
+import 'dart:async';
+
 import 'package:game_server/src/design/design.dart';
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game_server/advert_list.dart';
@@ -15,6 +17,8 @@ part 'local_interface.dart';
 part 'stream_http_interface.dart';
 
 abstract class Interface{
+
+  StreamController<Message> events = StreamController();
 
   GameDependency dependency;
 
