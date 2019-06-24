@@ -207,7 +207,7 @@ void main()async{
       expect(response.runtimeType, EchoResponse);
       expect((response as EchoResponse).text, 'echo hey');
 
-      ui.makeMove(MoveNumber());
+      ui.tryMove(MoveNumber());
       expect((ui.position as FieFoFumPosition).count, 2);
       expect((ui.position.duplicate as FieFoFumPosition).count, 2);
 
@@ -222,7 +222,7 @@ void main()async{
       expect((ui.position as FieFoFumPosition).count, 3);
       expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
 
-      ui.makeMove(MoveFie());
+      ui.tryMove(MoveFie());
 
 
 
@@ -241,7 +241,7 @@ void main()async{
       expect((ui.position as FieFoFumPosition).count, 5);
       expect((ui.position as FieFoFumPosition).count, 5);
 
-      ui.makeMove(MoveFo());
+      ui.tryMove(MoveFo());
 
       response = Message.inflate(await nextMessage(computer.messagesIn.stream));
 //      expect(response.runtimeType, ConfirmMove);
@@ -342,37 +342,37 @@ void main()async{
 
       expect(ui.position.playerQueue.length, 4);
       expect((ui.game.position as FieFoFumPosition).count, 1);
-      ui.makeMove(MoveNumber());   // 1 so this is correct 0
+      ui.tryMove(MoveNumber());   // 1 so this is correct 0
       expect(ui.position.playerQueue.length, 4);
-      ui.makeMove(MoveFie());   // 2 so this is wrong 1 out
+      ui.tryMove(MoveFie());   // 2 so this is wrong 1 out
       expect(ui.position.playerQueue.length, 3);
-      ui.makeMove(MoveFie());   // 3 so this is good 2
+      ui.tryMove(MoveFie());   // 3 so this is good 2
       expect(ui.position.playerQueue.length, 3);
-      ui.makeMove(MoveFo());   // 4 so this is wrong 3 out
+      ui.tryMove(MoveFo());   // 4 so this is wrong 3 out
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveFo());   // 5 so this is godd 0
+      ui.tryMove(MoveFo());   // 5 so this is godd 0
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveFie());   // 6 so this is godd 2
+      ui.tryMove(MoveFie());   // 6 so this is godd 2
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveNumber());   // 7 so this is godd 0
+      ui.tryMove(MoveNumber());   // 7 so this is godd 0
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveNumber());   // 8 so this is godd 2
+      ui.tryMove(MoveNumber());   // 8 so this is godd 2
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveFie());   // 9 so this is godd 0
+      ui.tryMove(MoveFie());   // 9 so this is godd 0
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveFo());   //10 so this is godd 2
+      ui.tryMove(MoveFo());   //10 so this is godd 2
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveNumber());   // 11 so this is godd 0
+      ui.tryMove(MoveNumber());   // 11 so this is godd 0
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveFie());   // 12 so this is godd 2
+      ui.tryMove(MoveFie());   // 12 so this is godd 2
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveNumber());   // 13 so this is godd 0
+      ui.tryMove(MoveNumber());   // 13 so this is godd 0
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveNumber());   // 14 so this is godd 2
+      ui.tryMove(MoveNumber());   // 14 so this is godd 2
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveFum());   // 15 so this is godd 0
+      ui.tryMove(MoveFum());   // 15 so this is godd 0
       expect(ui.position.playerQueue.length, 2);
-      ui.makeMove(MoveFo());   // 16 so this is bad 2
+      ui.tryMove(MoveFo());   // 16 so this is bad 2
       expect(ui.position.playerQueue.length, 1);
       expect(ui.game.state , GameState.won);
       expect(ui.game.position.winner , winner);

@@ -12,7 +12,7 @@ abstract class GameDependency{
 
   Position setPositionType(Position position);
 
-  Input getInput();
+  Input getInput(Interface interface);
 
   Notation get notation;
 

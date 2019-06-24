@@ -9,7 +9,7 @@ class FieFoFumInjector extends GameDependency{
 
   Position getPosition() => FieFoFumPosition();
 
-  getInput() => FieFoFumInput();
+  getInput(Interface interface) => FieFoFumInput(interface);
   
   MoveBuilder getMoveBuilder() => FieFoFumMoveBuilder();
 

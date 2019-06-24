@@ -30,14 +30,9 @@ abstract class Interface{
   Theme theme = Theme();
 
   Interface(this.dependency){
-    input = dependency.getInput();
+    input = dependency.getInput(this);
   }
 
-  tryMove(Move move){
-    position.makeMove(move);
-
-    events.add(Success());
-
-  }
+  tryMove(Move move);
 
 }

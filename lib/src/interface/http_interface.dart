@@ -54,5 +54,6 @@ class HttpInterface extends Interface{
 
   sendMessage(String to, String text) => connection.send(PrivateMessage(id, to, text));
 
+  tryMove (Move move){}
 
 }

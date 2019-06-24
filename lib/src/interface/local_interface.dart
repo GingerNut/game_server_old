@@ -31,8 +31,10 @@ startLocalGame()async{
   await game.initialise();
 }
 
-makeMove(Move move) => game.makeMove(move, game.gameId, game.position.playerId);
-
+tryMove(Move move) {
+  game.makeMove(move, game.gameId, game.position.playerId);
+  events.add(Success());
+}
 
 
 
