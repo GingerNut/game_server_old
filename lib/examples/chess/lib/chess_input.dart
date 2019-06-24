@@ -10,6 +10,9 @@ class ChessInput extends Input{
   ChessInput(this.ui);
 
   tapTile(Tile tile){
+
+    print('here');
+
     if(firstTap && tile.pieces.first != null){
 
       piece = tile.pieces.first;
