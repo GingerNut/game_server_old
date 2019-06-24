@@ -7,7 +7,7 @@ class Theme{
   GameColor get buttonShadow => GameColor(0xFF4CAF50);
 
   GameColor get lightText => GameColor(0xFFFFFFFF);
-  GameColor get darkText => GameColor(0x0000000);
+  GameColor get darkText => GameColor(0x00000000);
 
   GameColor get tileLight => GameColor(0xFFFFECB3);
   GameColor get tileDetail => GameColor(0xFFFF6F00);
