@@ -17,6 +17,7 @@ class ChessInput extends Input{
 
         Move move = ChessMove(piece.tile, tile);
 
+
         print('move ');
 
       }

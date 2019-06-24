@@ -33,4 +33,11 @@ abstract class Interface{
     input = dependency.getInput();
   }
 
+  tryMove(Move move){
+    position.makeMove(move);
+
+    events.add(Success());
+
+  }
+
 }
