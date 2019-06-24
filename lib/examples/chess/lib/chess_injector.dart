@@ -10,6 +10,8 @@ class ChessInjector extends GameDependency{
 
   Position getPosition() => ChessPosition();
 
+  getInput() => ChessInput();
+
   setPositionType(Position position) => position as ChessPosition;
 
   Settings get settings => ChessSettings();

@@ -15,6 +15,7 @@ part 'http_interface.dart';
 part 'local_http_interface.dart';
 part 'local_interface.dart';
 part 'stream_http_interface.dart';
+part 'input.dart';
 
 abstract class Interface{
 
@@ -22,10 +23,14 @@ abstract class Interface{
 
   GameDependency dependency;
 
+  Input input;
+
   Position position;
 
   Theme theme = Theme();
 
-  Interface(this.dependency);
+  Interface(this.dependency){
+    input = dependency.getInput();
+  }
 
 }
