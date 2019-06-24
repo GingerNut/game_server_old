@@ -1,8 +1,8 @@
 part of design;
 
 class Theme{
-  GameColor get background => GameColor(0xFF4CAF50);
-  GameColor get highlight => GameColor(0xFF4CAF50);
+  GameColor get background => GameColor.fromString('#006400');
+  GameColor get highlight => GameColor.fromString('#8FBC8F');
   GameColor get button => GameColor(0xFF4CAF50);
   GameColor get buttonShadow => GameColor(0xFF4CAF50);
 

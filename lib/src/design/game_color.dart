@@ -2,10 +2,18 @@ part of design;
 
 class GameColor{
 
-  int a;
+  int a = 255;
   int r;
   int g;
   int b;
+
+  operator == (c) => c is GameColor
+      && c.r == r
+      && c.g == g
+      && c.b == b
+      && c.a == a;
+
+  int get hashCode => asInt;
 
   GameColor.fromString(String string){
 
