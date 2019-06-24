@@ -13,7 +13,7 @@ class GameColor{
       && c.b == b
       && c.a == a;
 
-  int get hashCode => asInt;
+  int get hashCode => toInt;
 
   GameColor.fromString(String string){
 
@@ -42,8 +42,8 @@ class GameColor{
     a = color ~/ 256.0;
   }
 
-  int get asInt => a * 256 * 256 * 256 + r * 256 * 256 + g * 256 + b;
+  int get toInt => a * 256 * 256 * 256 + r * 256 * 256 + g * 256 + b;
 
-  String get string => '0x' + asInt.toRadixString(16);
+  String get string => '0x' + toInt.toRadixString(16);
 
 }

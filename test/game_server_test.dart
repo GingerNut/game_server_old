@@ -144,7 +144,7 @@ void main()async{
       expect(color.g, 86);
       expect(color.b, 120);
 
-      expect(color.asInt, 0x12345678);
+      expect(color.toInt, 0x12345678);
       expect(color.string, '0x12345678');
 
       expect(GameColor.fromString('#ffffff').r, 255);
