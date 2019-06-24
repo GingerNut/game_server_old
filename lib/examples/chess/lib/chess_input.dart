@@ -11,9 +11,8 @@ class ChessInput extends Input{
 
   tapTile(Tile tile){
 
-    print('here');
-
     if(firstTap){
+
     if(tile.pieces.first != null) {
 
       piece = tile.pieces.first;
@@ -38,7 +37,7 @@ class ChessInput extends Input{
 
 
     }
-
+    if(tile.pieces.isEmpty) firstTap = true;
 
   }
 
