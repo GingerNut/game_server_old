@@ -3,7 +3,7 @@ part of chess;
 class ChessInput extends Input{
 
   final Interface ui;
-  Tile selected;
+  ChessPiece selected;
 
   bool firstTap = true;
   Piece piece;
