@@ -13,7 +13,7 @@ class ChessInput extends Input{
 
     if(firstTap){
 
-    if(tile.pieces.first != null) {
+    if(tile.pieces.isNotEmpty) {
 
       piece = tile.pieces.first;
 
@@ -22,22 +22,12 @@ class ChessInput extends Input{
 
     } else {
 
-      Tile t = (ui.position as ChessPosition).board.tile(0, 1);
-
-      t.north.printTile(ChessInjector());
-
-      print(piece.legalMoves.length);
-
-      piece.legalMoves.forEach((t) => t.printTile(ChessInjector()));
-
       if(piece != null && piece.legalMoves.contains(tile)){
 
         Move move = ChessMove(piece.tile, tile);
 
         ui.tryMove(move);
 
-
-        print('move ');
 
       }
 
