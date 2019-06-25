@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:game_server/game_server.dart';
+import 'package:game_server/game_server.dart' as prefix0;
 
 import 'package:test/test.dart';
 
@@ -627,6 +628,8 @@ void main()async{
       expect(chessPosition.board.whiteArmy.length, 16);
       expect(chessPosition.board.blackArmy.length, 16);
 
+      
+
     });
 
     test('game setup random first player',() async{
@@ -649,6 +652,21 @@ void main()async{
       expect(chessGame.position.playerQueue[1], (chessGame.position as ChessPosition).blackPlayer);
       expect(((chessGame.position as ChessPosition).whitePlayer
           == (chessGame.position as ChessPosition).blackPlayer), false);
+
+    });
+
+    test('local interface chess game',(){
+
+      LocalInterface ui = LocalInterface(ChessInjector());
+      ui.addPlayer(Player());
+      ui.addPlayer(Player());
+      ui.startLocalGame();
+
+      (ui.input as ChessInput).tapTile((ui.position as ChessPosition).board.tile(0,1));
+
+      (ui.input as ChessInput).tapTile((ui.position as ChessPosition).board.tile(0,2));
+
+
 
     });
 

@@ -87,9 +87,16 @@ class ChessBoard extends Board{
     blackKing.startingPosition = tile(4, 7);
     blackArmy.add(blackKing);
 
-    whiteArmy.forEach((p) => p.tile = p.startingPosition);
+    whiteArmy.forEach((p) {
+      p.tile = p.startingPosition;
+      (p as ChessPiece).chessColor = ChessColor.white;
+    }) ;
 
-    blackArmy.forEach((p) => p.tile = p.startingPosition);
+    blackArmy.forEach((p) {
+
+      p.tile = p.startingPosition;
+      (p as ChessPiece).chessColor = ChessColor.black;
+    } );
     
     
     

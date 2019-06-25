@@ -17,14 +17,20 @@ class ChessInput extends Input{
 
       piece = tile.pieces.first;
 
-      print(piece.name);
-
       firstTap = false;
     }
 
     } else {
 
-      if(piece.legalMoves.contains(tile)){
+      Tile t = (ui.position as ChessPosition).board.tile(0, 1);
+
+      t.north.printTile(ChessInjector());
+
+      print(piece.legalMoves.length);
+
+      piece.legalMoves.forEach((t) => t.printTile(ChessInjector()));
+
+      if(piece != null && piece.legalMoves.contains(tile)){
 
         Move move = ChessMove(piece.tile, tile);
 
