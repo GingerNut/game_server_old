@@ -17,11 +17,14 @@ class ChessInput extends Input{
     if(tile.pieces.isNotEmpty) {
 
       piece = tile.pieces.first;
+      selected = piece;
 
       firstTap = false;
     }
 
     } else {
+
+      selected = null;
 
       if(piece != null && piece.legalMoves.contains(tile)){
 
@@ -29,7 +32,6 @@ class ChessInput extends Input{
 
         ui.tryMove(move);
 
-        selected = null;
         firstTap = true;
 
       }
