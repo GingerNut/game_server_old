@@ -29,6 +29,8 @@ class ChessInput extends Input{
 
         ui.tryMove(move);
 
+        selected = null;
+        firstTap = true;
 
       }
 
