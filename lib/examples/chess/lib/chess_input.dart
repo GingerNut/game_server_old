@@ -35,6 +35,8 @@ class ChessInput extends Input{
     }
     if(tile.pieces.isEmpty) firstTap = true;
 
+    ui.events.add(Success());
+
   }
 
 
