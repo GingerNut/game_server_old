@@ -17,7 +17,7 @@ class King extends ChessPiece{
 
       Tile nextTile = tile.nextInDirection(d);
 
-        if(nextTile.tileOccupation(this) != OccupationStatus.friendly )moves.add(nextTile);
+        if(nextTile != null && nextTile.tileOccupation(this) != OccupationStatus.friendly )moves.add(nextTile);
 
 
     });
