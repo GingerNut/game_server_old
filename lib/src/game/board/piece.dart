@@ -13,6 +13,7 @@ abstract class Piece{
   Piece(this.board);
 
   set tile (Tile tile){
+    if(_tile != null) _tile.pieces.remove(this);
     _tile = tile;
 
     if(tile.pieces.isNotEmpty) captured = tile.pieces.first;
