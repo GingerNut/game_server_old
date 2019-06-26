@@ -17,10 +17,11 @@ class ChessInput extends Input{
     if(tile.pieces.isNotEmpty) {
 
       piece = tile.pieces.first;
-      selected = piece;
-
-      firstTap = false;
-    }
+      if((piece as ChessPiece).chessColor == (ui.position as ChessPosition).playerColor){
+          selected = piece;
+          firstTap = false;
+      }
+      }
 
     } else {
 
