@@ -6,6 +6,7 @@ abstract class Piece{
 
   Tile startingPosition;
   String name;
+  String notation;
   Tile _tile;
 
   Piece captured;

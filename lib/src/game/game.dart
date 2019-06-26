@@ -18,7 +18,6 @@ part 'settings.dart';
 part 'server_player.dart';
 part 'game_dependency.dart';
 
-part 'board/notation.dart';
 part 'board/board.dart';
 part 'board/markings.dart';
 part 'board/piece.dart';

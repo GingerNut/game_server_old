@@ -20,10 +20,12 @@ void main()async{
 
     test('chess notation', (){
 
-      expect(ChessNotation().labelTile(0,0), 'a1');
-      expect(ChessNotation().labelTile(3,1), 'b4');
-      expect(ChessNotation().labelTile(5,3), 'd6');
-      expect(ChessNotation().labelTile(7,7), 'h8');
+      ChessBoard board = ChessBoard();
+
+      expect(board.tile(0,0).label, 'a1');
+      expect(board.tile(3,1).label, 'b4');
+      expect(board.tile(5,3).label, 'd6');
+      expect(board.tile(7,7).label, 'h8');
     });
 
 

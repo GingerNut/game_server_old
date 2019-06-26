@@ -98,9 +98,47 @@ class ChessBoard extends Board{
       (p as ChessPiece).chessColor = ChessColor.black;
     } );
     
+    tiles.forEach((t) => t.label = labelTile(t));
     
     
-    
+  }
+
+
+  String labelTile(Tile t) {
+
+    String label = '';
+
+    switch(t.j){
+      case 0: label += 'a';
+      break;
+
+      case 1: label += 'b';
+      break;
+
+      case 2: label += 'c';
+      break;
+
+      case 3: label += 'd';
+      break;
+
+      case 4: label += 'e';
+      break;
+
+      case 5: label += 'f';
+      break;
+
+      case 6: label += 'g';
+      break;
+
+      case 7: label += 'h';
+      break;
+
+    }
+
+    label += (t.i + 1).toString();
+
+    return label;
+
   }
   
   

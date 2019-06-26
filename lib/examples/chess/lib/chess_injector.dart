@@ -16,7 +16,6 @@ class ChessInjector extends GameDependency{
 
   Settings get settings => ChessSettings();
 
-  Notation get notation => ChessNotation();
 
 
 

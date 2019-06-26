@@ -22,6 +22,8 @@ class King extends ChessPiece{
 
     });
 
+    //TODO: add casling
+
     return moves;
   }
 

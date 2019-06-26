@@ -27,6 +27,8 @@ class Pawn extends ChessPiece{
         }
       }
 
+      //TODO: add en pasane
+
       switch (direction){
         case Board.North:
           if(tile.northEast?.tileOccupation(this) == OccupationStatus.enemy)moves.add(tile.northEast);

@@ -19,7 +19,5 @@ class FieFoFumInjector extends GameDependency{
 
   Uri get computerUri => Uri.parse('package:game_server/examples/fie_fo_fum/lib/fie_fo_fum_isolate.dart');
 
-  Notation get notation => null;
-
 }
 

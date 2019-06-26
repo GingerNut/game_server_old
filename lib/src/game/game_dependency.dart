@@ -14,8 +14,6 @@ abstract class GameDependency{
 
   Input getInput(Interface interface);
 
-  Notation get notation;
-
   Settings get settings;
 
   Uri get computerUri;

@@ -8,7 +8,6 @@ part 'chess_board.dart';
 part 'chess_injector.dart';
 part 'chess_move.dart';
 part 'chess_move_builder.dart';
-part 'chess_notation.dart';
 part 'chess_position.dart';
 part 'chess_settings.dart';
 part 'pieces/bishop.dart';
