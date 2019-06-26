@@ -7,7 +7,7 @@ class ChessPosition extends Position{
   String whitePlayer;
   String blackPlayer;
 
-
+  ChessColor get playerColor => whitePlayer == playerId ? ChessColor.white : ChessColor.black;
 
   String get string {
 

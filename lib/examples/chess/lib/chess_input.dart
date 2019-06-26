@@ -24,13 +24,16 @@ class ChessInput extends Input{
 
     } else {
 
-      selected = null;
+      if(piece != null
+          && piece.legalMoves.contains(tile)
+          && selected.chessColor == (ui.position as ChessPosition).playerColor){
 
-      if(piece != null && piece.legalMoves.contains(tile)){
+        selected = null;
 
         Move move = ChessMove(piece.tile, tile);
 
         ui.tryMove(move);
+
 
         firstTap = true;
 
