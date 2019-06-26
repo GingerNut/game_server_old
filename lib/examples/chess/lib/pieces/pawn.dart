@@ -26,6 +26,19 @@ class Pawn extends ChessPiece{
 
         }
       }
+
+      switch (direction){
+        case Board.North:
+          if(tile.northEast?.tileOccupation(this) == OccupationStatus.enemy)moves.add(tile.northEast);
+          if(tile.northWest?.tileOccupation(this) == OccupationStatus.enemy)moves.add(tile.northWest);
+          break;
+
+        case Board.South:
+          if(tile.southEast?.tileOccupation(this) == OccupationStatus.enemy)moves.add(tile.southEast);
+          if(tile.southWest?.tileOccupation(this) == OccupationStatus.enemy)moves.add(tile.southWest);
+          break;
+      }
+
     return moves;
 }
 
