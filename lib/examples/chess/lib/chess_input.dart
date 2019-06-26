@@ -36,10 +36,10 @@ class ChessInput extends Input{
         ui.tryMove(move);
 
 
-        firstTap = true;
+
 
       }
-
+      firstTap = true;
 
     }
     if(tile.pieces.isEmpty) firstTap = true;
