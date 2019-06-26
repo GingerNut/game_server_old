@@ -6,7 +6,6 @@ class ChessInput extends Input{
   ChessPiece selected;
 
   bool firstTap = true;
-  Piece piece;
 
   ChessInput(this.ui);
 
@@ -16,26 +15,28 @@ class ChessInput extends Input{
 
     if(tile.pieces.isNotEmpty) {
 
-      piece = tile.pieces.first;
-      if((piece as ChessPiece).chessColor == (ui.position as ChessPosition).playerColor){
-          selected = piece;
+      selected = tile.pieces.first;
+
+      if((selected as ChessPiece).chessColor == (ui.position as ChessPosition).playerColor){
           firstTap = false;
+      } else{
+        selected = null;
       }
       }
 
     } else {
 
-      if(piece != null
-          && piece.legalMoves.contains(tile)
+      if(selected != null
+          && selected.legalMoves.contains(tile)
           && selected.chessColor == (ui.position as ChessPosition).playerColor){
 
-        selected = null;
 
-        Move move = ChessMove(piece.tile, tile);
+
+        Move move = ChessMove(selected.tile, tile);
 
         ui.tryMove(move);
 
-
+        selected = null;
 
 
       }
