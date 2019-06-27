@@ -4,8 +4,8 @@ part of chess;
 
 class ChessBoard extends Board{
 
-  List<Piece> whiteArmy = List();
-  List<Piece> blackArmy = List();
+  List<ChessPiece> whiteArmy = List();
+  List<ChessPiece> blackArmy = List();
 
   ChessBoard.empty() : super.squareTiles(8, ConnectionScheme.allDirections);
   

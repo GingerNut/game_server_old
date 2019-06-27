@@ -670,8 +670,19 @@ void main()async{
     test('basic ai functions',() async{
       LocalInterface ui = LocalInterface(ChessInjector());
       ui.addPlayer(Player());
-      ui.addPlayer(ComputerPlayer(ChessInjector()));
+
+      ComputerPlayer computerPlayer = ComputerPlayer(ChessInjector());
+
+      ui.addPlayer(computerPlayer);
+      ui.newGame.firstPlayer = ('Player 1');
       await ui.startLocalGame();
+
+      ChessMove move = ChessMove((ui.position as ChessPosition).board.tile(1, 1),
+      (ui.position as ChessPosition).board.tile(1, 3));
+
+      ui.tryMove(move);
+
+      await Future.delayed(Duration(milliseconds : 100));
 
 
     });

@@ -9,14 +9,6 @@ class ChessPosition extends Position{
 
   ChessColor get playerColor => whitePlayer == playerId ? ChessColor.white : ChessColor.black;
 
-  String get string {
-
-    String string = '';
-
-
-    return string;
-  }
-
   @override
   analyse() {
 
@@ -28,69 +20,85 @@ class ChessPosition extends Position{
   GameDependency get dependency => ChessInjector();
 
   String get externalVariablesString {
-    String string = '';
+
+
+    List<String> whiteList = List();
 
     board.whiteArmy.forEach((p) {
+      String string = '';
       string += p.name;
       string += p.tile.i.toString();
       string += p.tile.j.toString();
-      string += Message.internalDelimiter;
+
+      whiteList.add(string);
     });
+
+    List<String> blackList = List();
+
+    board.blackArmy.forEach((p) {
+      String string = '';
+      string += p.name;
+      string += p.tile.i.toString();
+      string += p.tile.j.toString();
+
+      blackList.add(string);
+    });
+
+    String string = '';
+
+    string += whiteList.join(Message.internalDelimiter);
 
     string += Message.delimiter;
 
-    board.blackArmy.forEach((p) {
-      string += p.name;
-      string += p.tile.i.toString();
-      string += p.tile.j.toString();
-      string += Message.internalDelimiter;
-    });
+    string += blackList.join(Message.internalDelimiter);
 
     return string;
   }
 
   setExternalVariables(String s) {
 
-    makePiece(String string, ChessColor color) {
+    makePiece(String pieceString, ChessColor color, List<ChessPiece> army) {
 
-      setCoords(String string, ChessPiece piece) {
-        int i = int.parse(s.substring(1, 2));
-        int j = int.parse(s.substring(2, 3));
+      ChessPiece p;
 
-        piece.tile = board.tile(i, j);
-      }
-
-      switch (s.substring(0, 1)) {
+      switch (pieceString.substring(0, 1)) {
         case 'P':
-          var p = Pawn(board);
-          setCoords(s, p);
+           p = Pawn(board);
+
           break;
 
         case 'R':
-          var p = Rook(board);
-          setCoords(s,p);
+           p = Rook(board);
+
           break;
 
         case 'N':
-          var p = Knight(board);
-          setCoords(s,p);
+           p = Knight(board);
+
           break;
 
         case 'B':
-          var p = Bishop(board);
-          setCoords(s,p);
+           p = Bishop(board);
+
           break;
 
         case 'K':
-          var p = King(board);
-          setCoords(s,p);
+           p = King(board);
+
           break;
 
         case 'Q':
-          var p = Queen(board);
-          setCoords(s,p);
+           p = Queen(board);
+
           break;
       }
+
+      int i = int.parse(pieceString.substring(1, 2));
+      int j = int.parse(pieceString.substring(2));
+
+      p.tile = board.tile(i, j);
+
+      army.add(p);
     }
 
     board = ChessBoard();
@@ -99,11 +107,11 @@ class ChessPosition extends Position{
 
     List<String> white = details[0].split(Message.internalDelimiter);
 
-    white.forEach((s) => makePiece(s, ChessColor.white));
+    white.forEach((s) => makePiece(s, ChessColor.white, board.whiteArmy));
 
     List<String> black = details[1].split(Message.internalDelimiter);
 
-    black.forEach((s) => makePiece(s, ChessColor.black));
+    black.forEach((s) => makePiece(s, ChessColor.black, board.blackArmy));
 
   }
 
@@ -125,8 +133,6 @@ class ChessPosition extends Position{
       tiles.forEach((t) => moves.add(ChessMove(p.tile, t)));
 
     });
-
-    print(moves);
 
     return moves;
 
@@ -182,7 +188,7 @@ class ChessPosition extends Position{
   @override
   double value(String playerId) {
     // TODO: implement value
-    return null;
+    return 0;
   }
 
 
