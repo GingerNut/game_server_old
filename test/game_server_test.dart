@@ -684,6 +684,8 @@ void main()async{
 
       await Future.delayed(Duration(milliseconds : 100));
 
+      (ui.position as ChessPosition).printBoard();
+
 
     });
 
