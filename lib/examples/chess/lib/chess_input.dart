@@ -31,9 +31,11 @@ class ChessInput extends Input{
 
         ui.tryMove(move);
 
-        selected = null;
 
       }
+
+      selected = null;
+      legalMoves.clear();
 
     }
 
