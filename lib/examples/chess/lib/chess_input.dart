@@ -5,6 +5,7 @@ class ChessInput extends Input{
   final Interface ui;
   Tile selected;
   List<Tile> legalMoves = List();
+  bool whiteAtBottom = true;
 
   ChessInput(this.ui);
 
