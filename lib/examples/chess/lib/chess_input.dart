@@ -4,33 +4,28 @@ class ChessInput extends Input{
 
   final Interface ui;
   ChessPiece selected;
-
-  bool firstTap = true;
+  List<Tile> legalMoves = List();
 
   ChessInput(this.ui);
 
   tapTile(Tile tile){
 
-    if(firstTap){
+    if(selected == null){
 
     if(tile.pieces.isNotEmpty) {
 
-      selected = tile.pieces.first;
+      ChessPiece tapped = tile.pieces.first;
 
-      if((selected as ChessPiece).chessColor == (ui.position as ChessPosition).playerColor){
-          firstTap = false;
-      } else{
-        selected = null;
+      if(tapped.chessColor == (ui.position as ChessPosition).playerColor){
+          selected = tapped;
+          legalMoves = selected.legalMoves;
       }
       }
 
     } else {
 
-      if(selected != null
-          && selected.legalMoves.contains(tile)
-          && selected.chessColor == (ui.position as ChessPosition).playerColor){
-
-
+      if(selected.tile == tile
+          || selected.legalMoves.contains(tile)){
 
         Move move = ChessMove(selected.tile, tile);
 
@@ -38,12 +33,9 @@ class ChessInput extends Input{
 
         selected = null;
 
-
       }
-      firstTap = true;
 
     }
-    if(tile.pieces.isEmpty) firstTap = true;
 
     ui.events.add(Success());
 
