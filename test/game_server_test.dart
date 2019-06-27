@@ -21,6 +21,7 @@ void main()async{
     test('chess notation', (){
 
       ChessBoard board = ChessBoard();
+      board.startingPosition();
 
       expect(board.tile(0,0).label, 'a1');
       expect(board.tile(3,1).label, 'b4');
@@ -51,7 +52,7 @@ void main()async{
       Pawn pawn = Pawn(board);
 
       Tile tile = board.tile(0, 0);
-      pawn.startingPosition = tile;
+      pawn.tile = tile;
       pawn.setup();
 
       expect(pawn.tile, board.tile(0,0));
@@ -392,7 +393,6 @@ void main()async{
       ChessBoard board = ChessBoard.empty();
 
       Rook rook = Rook(board)
-      ..startingPosition = board.tile(0, 0)
       ..chessColor = ChessColor.white
       ..tile = board.tile(4,5);
 
@@ -417,7 +417,6 @@ void main()async{
       board = ChessBoard.empty();
 
       Bishop bishop = Bishop(board)
-        ..startingPosition = board.tile(0, 0)
         ..chessColor = ChessColor.white
         ..tile = board.tile(4,5);
 
@@ -441,7 +440,6 @@ void main()async{
       board = ChessBoard.empty();
 
       Queen queen = Queen(board)
-        ..startingPosition = board.tile(0, 0)
         ..chessColor = ChessColor.white
         ..tile = board.tile(4,5);
 
@@ -477,7 +475,6 @@ void main()async{
       board = ChessBoard.empty();
 
       King king = King(board)
-        ..startingPosition = board.tile(0, 0)
         ..chessColor = ChessColor.white
         ..tile = board.tile(4,5);
 
@@ -501,7 +498,6 @@ void main()async{
       board = ChessBoard.empty();
 
       Pawn pawn = Pawn(board)
-        ..startingPosition = board.tile(4, 1)
         ..chessColor = ChessColor.white
         ..tile = board.tile(4,5);
 
@@ -512,7 +508,7 @@ void main()async{
       expect(legalMoves.length, 1);
       expect(legalMoves.contains(board.tile(4,6)), true);
 
-      pawn.tile = pawn.startingPosition;
+      pawn.tile = board.tile(4,1);
       legalMoves.clear();
       legalMoves = pawn.legalMoves;
       expect(legalMoves.length, 2);
@@ -522,7 +518,6 @@ void main()async{
       board = ChessBoard.empty();
 
       pawn = Pawn(board)
-        ..startingPosition = board.tile(4, 7)
         ..chessColor = ChessColor.black
         ..tile = board.tile(4,5);
 
@@ -536,10 +531,8 @@ void main()async{
       Board newBoard = ChessBoard.empty();
 
       Pawn blackPawn = Pawn(newBoard)
-        ..startingPosition = newBoard.tile(4, 7)
+        ..tile = newBoard.tile(4, 7)
         ..chessColor = ChessColor.black;
-
-      blackPawn.tile = blackPawn.startingPosition;
 
       legalMoves.clear();
       legalMoves = blackPawn.legalMoves;
@@ -550,7 +543,6 @@ void main()async{
       board = ChessBoard.empty();
 
       Knight knight = Knight(board)
-        ..startingPosition = board.tile(0, 0)
         ..chessColor = ChessColor.white
         ..tile = board.tile(4,5);
 
@@ -579,17 +571,14 @@ void main()async{
       ChessBoard board = ChessBoard.empty();
 
       Rook whiteRook = Rook(board)
-        ..startingPosition = board.tile(0, 0)
         ..chessColor = ChessColor.white
         ..tile = board.tile(4,5);
 
       Pawn whitePawn = Pawn(board)
-        ..startingPosition = board.tile(0, 0)
         ..chessColor = ChessColor.white
         ..tile = board.tile(3,5);
 
       Pawn blackPawn = Pawn(board)
-        ..startingPosition = board.tile(0, 0)
         ..chessColor = ChessColor.black
         ..tile = board.tile(1,6);
 
@@ -634,6 +623,12 @@ void main()async{
 
     });
 
+    test('game duplication',(){});
+
+
+
+
+
     test('game setup random first player',() async{
 
       NewGame advert = NewGame(ChessSettings());
@@ -672,11 +667,11 @@ void main()async{
 
     });
 
-    test('basic ai functions',(){
+    test('basic ai functions',() async{
       LocalInterface ui = LocalInterface(ChessInjector());
       ui.addPlayer(Player());
-      ui.addPlayer(prefix0.ComputerPlayer(ChessInjector()));
-      ui.startLocalGame();
+      ui.addPlayer(ComputerPlayer(ChessInjector()));
+      await ui.startLocalGame();
 
 
     });

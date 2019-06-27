@@ -59,7 +59,8 @@ class ChessMove extends Move<ChessPosition>{
 
   }
 
-  String get string => fromI.toString() + delimiter
+  String get string =>
+      fromI.toString() + delimiter
       + fromJ.toString() + delimiter
       + toI.toString() + delimiter
       + toJ.toString();

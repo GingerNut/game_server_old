@@ -34,8 +34,8 @@ part 'response/success.dart';
 
 abstract class Message{
 
-  String delimiter = '\n';
-  String internalDelimiter = ',';
+  static String delimiter = '\n';
+  static String internalDelimiter = ',';
 
   String get json;
 

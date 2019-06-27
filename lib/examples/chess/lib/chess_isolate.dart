@@ -1,10 +1,5 @@
-
-
 import 'dart:isolate';
-
-import 'package:game_server/src/game/game.dart';
-
-import 'chess.dart';
+import 'package:game_server/game_server.dart';
 
 main(List<String> args, SendPort sendPort) {
 

@@ -27,9 +27,88 @@ class ChessPosition extends Position{
 
   GameDependency get dependency => ChessInjector();
 
-  String get externalVariablesString => '';
+  String get externalVariablesString {
+    String string = '';
 
-  //TODO: external variable set up
+    board.whiteArmy.forEach((p) {
+      string += p.name;
+      string += p.tile.i.toString();
+      string += p.tile.j.toString();
+      string += Message.internalDelimiter;
+    });
+
+    string += Message.delimiter;
+
+    board.blackArmy.forEach((p) {
+      string += p.name;
+      string += p.tile.i.toString();
+      string += p.tile.j.toString();
+      string += Message.internalDelimiter;
+    });
+
+    return string;
+  }
+
+  setExternalVariables(String s) {
+
+    makePiece(String string, ChessColor color) {
+
+      setCoords(String string, ChessPiece piece) {
+        int i = int.parse(s.substring(1, 2));
+        int j = int.parse(s.substring(2, 3));
+
+        piece.tile = board.tile(i, j);
+      }
+
+      switch (s.substring(0, 1)) {
+        case 'P':
+          var p = Pawn(board);
+          setCoords(s, p);
+          break;
+
+        case 'R':
+          var p = Rook(board);
+          setCoords(s,p);
+          break;
+
+        case 'N':
+          var p = Knight(board);
+          setCoords(s,p);
+          break;
+
+        case 'B':
+          var p = Bishop(board);
+          setCoords(s,p);
+          break;
+
+        case 'K':
+          var p = King(board);
+          setCoords(s,p);
+          break;
+
+        case 'Q':
+          var p = Queen(board);
+          setCoords(s,p);
+          break;
+      }
+    }
+
+    board = ChessBoard();
+
+    List<String> details = s.split(Message.delimiter);
+
+    List<String> white = details[0].split(Message.internalDelimiter);
+
+    white.forEach((s) => makePiece(s, ChessColor.white));
+
+    List<String> black = details[1].split(Message.internalDelimiter);
+
+    black.forEach((s) => makePiece(s, ChessColor.black));
+
+  }
+
+
+
 
   List<Move> getPossibleMoves() {
     List<Move> moves = List();
@@ -53,7 +132,10 @@ class ChessPosition extends Position{
 
   }
 
-  initialiseExternalVariables() => board = ChessBoard();
+  initialiseExternalVariables() {
+    board = ChessBoard();
+    board.startingPosition();
+  }
 
 
   printBoard(){
@@ -85,7 +167,7 @@ class ChessPosition extends Position{
 
   PlayerOrder get playerOrder => PlayerOrder.sequential;
 
-  setExternalVariables(String string) {}
+
 
   setFirstPlayer(String firstPlayer) {
    super.setFirstPlayer(firstPlayer);

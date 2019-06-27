@@ -1,9 +1,5 @@
-
-
-
 import 'dart:isolate';
-
-import 'package:game_server/src/game/game.dart';
+import 'package:game_server/game_server.dart';
 
 import 'fie_fo_fum.dart';
 

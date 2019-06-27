@@ -13,7 +13,7 @@ class PrivateMessage extends Message{
   PrivateMessage(this.from, this.to, this.text);
 
   PrivateMessage.fromString(String string){
-    List<String> details = string.split(delimiter);
+    List<String> details = string.split(Message.delimiter);
 
     from = details[0];
     to = details[1];
@@ -22,8 +22,8 @@ class PrivateMessage extends Message{
   }
 
   String get string => code
-      + from + delimiter
-      + to + delimiter
+      + from + Message.delimiter
+      + to + Message.delimiter
       + text;
 
   PrivateMessage.fromJSON(String string){

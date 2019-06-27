@@ -4,7 +4,6 @@ abstract class Piece{
 
   final Board board;
 
-  Tile startingPosition;
   String name;
   String notation;
   Tile _tile;
@@ -28,7 +27,7 @@ abstract class Piece{
 
 
 setup(){
-  tile = startingPosition;
+
 }
 
 bool isFriendly(Piece piece);

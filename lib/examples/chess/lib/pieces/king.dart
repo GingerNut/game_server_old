@@ -2,7 +2,7 @@ part of chess;
 
 class King extends ChessPiece{
 
-
+  bool notYetMoved = true;
 
   King(Board board) : super(board){
     name = 'K';
