@@ -10,16 +10,23 @@ class ChessInput extends Input{
 
   tapTile(Tile tile){
 
-    if(selected == null){
-
-    if(tile.pieces.isNotEmpty) {
+    setSelected(Tile t){
 
       ChessPiece tapped = tile.pieces.first;
 
       if(tapped.chessColor == (ui.position as ChessPosition).playerColor){
-          selected = tapped.tile;
-          legalMoves = tapped.legalMoves;
+        selected = tapped.tile;
+        legalMoves = tapped.legalMoves;
       }
+
+    }
+
+
+    if(selected == null){
+
+    if(tile.pieces.isNotEmpty) {
+
+        setSelected(tile);
       }
 
     } else {
@@ -31,11 +38,23 @@ class ChessInput extends Input{
 
         ui.tryMove(move);
 
+        selected = null;
+        legalMoves.clear();
+      } else{
+
+        selected = null;
+        legalMoves.clear();
+
+        if(tile.pieces.isNotEmpty) {
+
+        setSelected(tile);
+      }
+
+
 
       }
 
-      selected = null;
-      legalMoves.clear();
+
 
     }
 
