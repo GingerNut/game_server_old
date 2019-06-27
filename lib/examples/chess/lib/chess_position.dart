@@ -45,6 +45,8 @@ class ChessPosition extends Position{
 
     });
 
+    print(moves);
+
     return moves;
 
   }
