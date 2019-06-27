@@ -3,7 +3,7 @@ part of chess;
 class ChessInput extends Input{
 
   final Interface ui;
-  ChessPiece selected;
+  Tile selected;
   List<Tile> legalMoves = List();
 
   ChessInput(this.ui);
@@ -17,17 +17,17 @@ class ChessInput extends Input{
       ChessPiece tapped = tile.pieces.first;
 
       if(tapped.chessColor == (ui.position as ChessPosition).playerColor){
-          selected = tapped;
-          legalMoves = selected.legalMoves;
+          selected = tapped.tile;
+          legalMoves = tapped.legalMoves;
       }
       }
 
     } else {
 
-      if(selected.tile == tile
-          || selected.legalMoves.contains(tile)){
+      if(selected == tile
+          || legalMoves.contains(tile)){
 
-        Move move = ChessMove(selected.tile, tile);
+        Move move = ChessMove(selected, tile);
 
         ui.tryMove(move);
 
