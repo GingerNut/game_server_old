@@ -18,8 +18,8 @@ class Pawn extends ChessPiece{
       if(nextTile != null && nextTile.tileOccupation(this) == OccupationStatus.neutral){
         moves.add(nextTile);
 
-        if(chessColor == ChessColor.white && tile.j == 1
-        || chessColor == ChessColor.black && tile.j ==7){
+        if((chessColor == ChessColor.white && tile.j == 1)
+        || (chessColor == ChessColor.black && tile.j ==7)){
 
         nextTile = nextTile.nextInDirection(direction);
 
