@@ -18,6 +18,4 @@ class ChessInjector extends GameDependency{
 
 
 
-
-
 }

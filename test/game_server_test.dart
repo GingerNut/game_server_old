@@ -672,6 +672,15 @@ void main()async{
 
     });
 
+    test('basic ai functions',(){
+      LocalInterface ui = LocalInterface(ChessInjector());
+      ui.addPlayer(Player());
+      ui.addPlayer(prefix0.ComputerPlayer(ChessInjector()));
+      ui.startLocalGame();
+
+
+    });
+
   });
 
 

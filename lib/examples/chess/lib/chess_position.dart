@@ -27,7 +27,9 @@ class ChessPosition extends Position{
 
   GameDependency get dependency => ChessInjector();
 
-  String get externalVariablesString => null;
+  String get externalVariablesString => '';
+
+  //TODO: external variable set up
 
   List<Move> getPossibleMoves() {
     List<Move> moves = List();
