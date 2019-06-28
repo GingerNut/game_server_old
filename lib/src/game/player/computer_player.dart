@@ -18,7 +18,10 @@ class ComputerPlayer extends Player{
 
   initialise() async{
     messagesIn = await StreamController.broadcast();
+
     receivePort.listen((d){
+
+      print('had a message');
 
       if(d is SendPort) {
         sendPort = d;
@@ -39,7 +42,7 @@ class ComputerPlayer extends Player{
 
     while(sendPort == null){
       print('waiting');
-      await Future.delayed(Duration(milliseconds : 1));
+      await Future.delayed(Duration(milliseconds : 100));
     }
 
     send(SetId(id));
