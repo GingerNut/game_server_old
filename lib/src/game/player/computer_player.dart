@@ -21,8 +21,6 @@ class ComputerPlayer extends Player{
 
     receivePort.listen((d){
 
-      print('had a message');
-
       if(d is SendPort) {
         sendPort = d;
       } else if(d is String) {
