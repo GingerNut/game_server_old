@@ -531,14 +531,14 @@ void main()async{
       Board newBoard = ChessBoard.empty();
 
       Pawn blackPawn = Pawn(newBoard)
-        ..tile = newBoard.tile(4, 7)
+        ..tile = newBoard.tile(4, 6)
         ..chessColor = ChessColor.black;
 
       legalMoves.clear();
       legalMoves = blackPawn.legalMoves;
       expect(legalMoves.length, 2);
-      expect(legalMoves.contains(newBoard.tile(4,6)), true);
       expect(legalMoves.contains(newBoard.tile(4,5)), true);
+      expect(legalMoves.contains(newBoard.tile(4,4)), true);
 
       board = ChessBoard.empty();
 
@@ -623,7 +623,12 @@ void main()async{
 
     });
 
-    test('game duplication',(){});
+    test('game duplication',(){
+
+
+
+
+    });
 
 
 
