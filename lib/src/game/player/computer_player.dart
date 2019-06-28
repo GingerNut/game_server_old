@@ -38,6 +38,7 @@ class ComputerPlayer extends Player{
 
 
     while(sendPort == null){
+      print('waiting');
       await Future.delayed(Duration(milliseconds : 1));
     }
 
