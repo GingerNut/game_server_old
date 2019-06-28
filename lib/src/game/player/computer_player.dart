@@ -28,7 +28,10 @@ class ComputerPlayer extends Player{
     });
 
     try{
+
+      print('starting isolate');
       await Isolate.spawnUri(dependency.computerUri, null,  receivePort.sendPort);
+      print('done');
     } on IsolateSpawnException catch(e){
       print('isolate exception');
     }
