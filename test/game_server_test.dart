@@ -313,6 +313,16 @@ void main()async{
       move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
       expect(move.runtimeType, MoveNumber);
 
+    });
+
+    test('game messages', (){
+
+      expect(GameMessage('ready').message, GameMessage.inflate(GameMessage('ready').json).message);
+      expect(ChangeScreen('start').screen, GameMessage.inflate(ChangeScreen('start').json).screen);
+      expect(RefreshScreen().runtimeType, GameMessage.inflate(RefreshScreen().json).runtimeType);
+
+      expect(GameMessage('ready').message, Message.inflate(GameMessage('ready').json).message);
+      expect(ChangeScreen('start').screen, Message.inflate(ChangeScreen('start').json).screen);
 
 
     });

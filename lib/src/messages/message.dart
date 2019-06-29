@@ -25,6 +25,10 @@ part 'command/your_turn.dart';
 
 part 'error/game_error.dart';
 
+part 'game_message/game_message.dart';
+part 'game_message/change_screen.dart';
+part 'game_message/refresh_screen.dart';
+
 part 'response/confirm_move.dart';
 part 'response/echo_response.dart';
 part 'response/login_success.dart';
@@ -39,7 +43,7 @@ abstract class Message{
 
   String get json;
 
-  static Message inflate(String string) {
+  static inflate(String string) {
     var jsonObject = jsonDecode(string);
 
     switch (jsonObject['type']) {
@@ -89,6 +93,12 @@ abstract class Message{
         return SetId.fromJSON(string);
       case GameStarted.type:
         return GameStarted.fromJSON(string);
+      case GameMessage.type:
+        return GameMessage.fromJSON(string);
+      case RefreshScreen.type:
+        return RefreshScreen.fromJSON(string);
+      case ChangeScreen.type:
+        return ChangeScreen.fromJSON(string);
       default:
         return null;
     }
