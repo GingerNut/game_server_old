@@ -162,11 +162,11 @@ void main()async{
 
     test('setting variables' , (){
 
-      expect( IntSetting(6).value, IntSetting.fromString(IntSetting(6).string).value);
-      expect( DoubleSetting(6.0).value, DoubleSetting.fromString(DoubleSetting(6.0).string).value);
-      expect( BoolSetting(true).value, BoolSetting.fromString(BoolSetting(true).string).value);
-      expect( BoolSetting(false).value, BoolSetting.fromString(BoolSetting(false).string).value);
-      expect( StringSetting('help').value, StringSetting.fromString(StringSetting('help').string).value);
+      expect( IntSetting(6).value, IntSetting.fromJSON(IntSetting(6).json).value);
+      expect( DoubleSetting(6.0).value, DoubleSetting.fromJSON(DoubleSetting(6.0).json).value);
+      expect( BoolSetting(true).value, BoolSetting.fromJSON(BoolSetting(true).json).value);
+      expect( BoolSetting(false).value, BoolSetting.fromJSON(BoolSetting(false).json).value);
+      expect( StringSetting('help').value, StringSetting.fromJSON(StringSetting('help').json).value);
     });
 
     test('player variable',()async{

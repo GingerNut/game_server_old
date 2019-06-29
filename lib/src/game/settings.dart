@@ -16,14 +16,14 @@ class Settings{
   String firstPlayer;
 
   get json => jsonEncode({
-    'max_players': maxPlayers.string,
-    'player_type' : playerType.string,
-    'player_help' : playerHelp.string,
-    'random_start' : randomStart.string,
-    'timer': timer.string,
-    'game_time' : gameTime.string,
-    'move_time' : moveTime.string,
-    'online_game' : onlineGameName.string,
+    'max_players': maxPlayers.json,
+    'player_type' : playerType.json,
+    'player_help' : playerHelp.json,
+    'random_start' : randomStart.json,
+    'timer': timer.json,
+    'game_time' : gameTime.json,
+    'move_time' : moveTime.json,
+    'online_game' : onlineGameName.json,
   });
 
   Settings();

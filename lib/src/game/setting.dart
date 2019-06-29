@@ -2,6 +2,8 @@ part of game;
 
 abstract class Setting<T>{
 
+  String name;
+
   T _value;
 
   get value => _value;
@@ -16,38 +18,56 @@ class IntSetting extends Setting<int>{
     _value = value;
   }
 
-  String get string => _value.toString();
 
-  IntSetting.fromString(String string){
-    _value = int.parse(string);
+  String get json => jsonEncode({
+      'name' : name,
+      'value' : _value
+  });
+
+  IntSetting.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
+    name = jsonObject['name'];
+    _value = jsonObject['value'];
+
   }
 
 }
 
-class DoubleSetting extends Setting<double>{
+class DoubleSetting extends Setting<double> {
 
-  DoubleSetting(double value){
+  DoubleSetting(double value) {
     _value = value;
   }
 
-  String get string => _value.toString();
+  String get json =>
+      jsonEncode({
+        'name': name,
+        'value': _value
+      });
 
-  DoubleSetting.fromString(String string){
-    _value = double.parse(string);
+  DoubleSetting.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
+    name = jsonObject['name'];
+    _value = jsonObject['value'];
   }
-
 }
 
-class BoolSetting extends Setting<bool>{
+class BoolSetting extends Setting<bool> {
 
-  BoolSetting(bool value){
+  BoolSetting(bool value) {
     _value = value;
   }
 
-  String get string => _value == true ? 'TRUE' : 'FALSE';
+  String get json =>
+      jsonEncode({
+        'name': name,
+        'value': _value == true ? 'TRUE' : 'FALSE',
+      });
 
-  BoolSetting.fromString(String string){
-    _value = string == 'TRUE' ? true : false;
+  BoolSetting.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
+    name = jsonObject['name'];
+    _value = jsonObject['value'] == 'TRUE' ? true : false;
   }
 }
 
@@ -56,10 +76,16 @@ class StringSetting extends Setting<String>{
     _value = value;
   }
 
-  String get string => _value;
+  String get json =>
+      jsonEncode({
+        'name': name,
+        'value': _value
+      });
 
-  StringSetting.fromString(String string){
-    _value = string;
+  StringSetting.fromJSON(String string){
+    var jsonObject = jsonDecode(string);
+    name = jsonObject['name'];
+    _value = jsonObject['value'];
   }
 
 
