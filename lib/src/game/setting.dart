@@ -50,3 +50,17 @@ class BoolSetting extends Setting<bool>{
     _value = string == 'TRUE' ? true : false;
   }
 }
+
+class StringSetting extends Setting<String>{
+  StringSetting(String value){
+    _value = value;
+  }
+
+  String get string => _value;
+
+  StringSetting.fromString(String string){
+    _value = string;
+  }
+
+
+}

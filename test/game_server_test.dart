@@ -166,6 +166,7 @@ void main()async{
       expect( DoubleSetting(6.0).value, DoubleSetting.fromString(DoubleSetting(6.0).string).value);
       expect( BoolSetting(true).value, BoolSetting.fromString(BoolSetting(true).string).value);
       expect( BoolSetting(false).value, BoolSetting.fromString(BoolSetting(false).string).value);
+      expect( StringSetting('help').value, StringSetting.fromString(StringSetting('help').string).value);
     });
 
     test('player variable',()async{

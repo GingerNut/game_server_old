@@ -2,26 +2,15 @@ part of fie_fo_fum;
 
 class FieFoFumSettings extends Settings{
 
-  int maxPlayers = 4;
-  int playerType = Player.human;
-  bool playerHelp = false;
-  bool randomStart = false;
+  IntSetting maxPlayers = IntSetting(4);
+  IntSetting playerType = IntSetting(Player.human);
+  BoolSetting playerHelp = BoolSetting(false);
+  BoolSetting randomStart = BoolSetting(false);
 
-  bool timer = true;
-  double gameTime = 5.0;
-  double moveTime = 3.0;
-  String onlineGameName = 'Fie Fo Fum Game';
-
-
-
-
-
-
-
-
-
-
-
+  BoolSetting timer = BoolSetting(true);
+  DoubleSetting gameTime = DoubleSetting(5.0);
+  DoubleSetting moveTime = DoubleSetting(3);
+  StringSetting onlineGameName = StringSetting('Fie Fo Fum Game');
 
 
 }

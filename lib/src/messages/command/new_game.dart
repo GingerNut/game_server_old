@@ -30,12 +30,12 @@ class NewGame extends Message{
   NewGame(this.settings);
 
   NewGame.fromSettings(this.settings){
-    this.displayName = settings.onlineGameName;
-    this.maxPlayers = settings.maxPlayers;
-    this.gameTime = settings.gameTime;
-    this.moveTime = settings.moveTime;
-    this.timer = settings.timer;
-    this.playerHelp = settings.playerHelp;
+    this.displayName = settings.onlineGameName.value;
+    this.maxPlayers = settings.maxPlayers.value;
+    this.gameTime = settings.gameTime.value;
+    this.moveTime = settings.moveTime.value;
+    this.timer = settings.timer.value;
+    this.playerHelp = settings.playerHelp.value;
     this.firstPlayer = firstPlayer;
   }
 
@@ -45,10 +45,10 @@ class NewGame extends Message{
 
   NewGame.local(this.settings){
     id = 'local game';
-    numberOfPlayers = settings.maxPlayers;
-    gameTime = settings.gameTime;
-    moveTime = settings.moveTime;
-    timer = settings.timer;
+    numberOfPlayers = settings.maxPlayers.value;
+    gameTime = settings.gameTime.value;
+    moveTime = settings.moveTime.value;
+    timer = settings.timer.value;
     playerHelp = false;
   }
 
@@ -65,7 +65,7 @@ class NewGame extends Message{
 
   addLocalPlayer(Player player){
 
-    if(players.length < settings.maxPlayers) players.add(player);
+    if(players.length < settings.maxPlayers.value) players.add(player);
 
     players.forEach((p){
       if(p.displayName == null){

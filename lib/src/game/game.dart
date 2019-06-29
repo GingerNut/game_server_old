@@ -48,10 +48,10 @@ class Game {
   Board board;
 
   Game.fromNewGame(this.dependency, NewGame newGame){
-    timer = dependency.settings.timer;
-    playerHelp = dependency.settings.playerHelp;
-    gameTime = dependency.settings.gameTime;
-    moveTime = dependency.settings.moveTime;
+    timer = dependency.settings.timer.value;
+    playerHelp = dependency.settings.playerHelp.value;
+    gameTime = dependency.settings.gameTime.value;
+    moveTime = dependency.settings.moveTime.value;
 
     this.players = newGame.players;
     this.gameId = newGame.id;

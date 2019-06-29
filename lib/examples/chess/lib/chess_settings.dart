@@ -2,14 +2,15 @@ part of chess;
 
 class ChessSettings extends Settings{
 
-  int maxPlayers = 2;
-  int playerType = Player.human;
-  bool playerHelp = true;
-  bool randomStart = false;
+  IntSetting maxPlayers = IntSetting(2);
+  IntSetting playerType = IntSetting(Player.human);
+  BoolSetting playerHelp = BoolSetting(false);
+  BoolSetting randomStart = BoolSetting(true);
 
-  bool timer = true;
-  double gameTime = 300.0;
-  double moveTime = 12;
-  String onlineGameName = 'Chess Game';
+  BoolSetting timer = BoolSetting(true);
+  DoubleSetting gameTime = DoubleSetting(300.0);
+  DoubleSetting moveTime = DoubleSetting(12);
+  StringSetting onlineGameName = StringSetting('New Chess Game');
+
 
 }
