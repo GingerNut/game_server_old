@@ -19,7 +19,7 @@ part 'input.dart';
 
 abstract class Interface{
 
-  StreamController<Message> events = StreamController.broadcast();
+  StreamController<GameMessage> events = StreamController.broadcast();
 
   GameDependency dependency;
 

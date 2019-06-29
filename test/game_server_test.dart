@@ -318,11 +318,11 @@ void main()async{
     test('game messages', (){
 
       expect(GameMessage('ready').message, GameMessage.inflate(GameMessage('ready').json).message);
-      expect(ChangeScreen('start').screen, GameMessage.inflate(ChangeScreen('start').json).screen);
+      expect(ChangeScreen('start').message, GameMessage.inflate(ChangeScreen('start').json).message);
       expect(RefreshScreen().runtimeType, GameMessage.inflate(RefreshScreen().json).runtimeType);
 
       expect(GameMessage('ready').message, Message.inflate(GameMessage('ready').json).message);
-      expect(ChangeScreen('start').screen, Message.inflate(ChangeScreen('start').json).screen);
+      expect(ChangeScreen('start').message, Message.inflate(ChangeScreen('start').json).message);
 
 
     });

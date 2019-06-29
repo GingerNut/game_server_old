@@ -33,7 +33,7 @@ startLocalGame()async{
 
 tryMove(Move move) {
   game.makeMove(move, game.gameId, game.position.playerId);
-  events.add(Success());
+  events.add(RefreshScreen());
 }
 
 

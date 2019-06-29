@@ -1,11 +1,11 @@
 part of message;
 
-class RefreshScreen extends Message{
+class RefreshScreen extends GameMessage{
   static const type = 'update_screen';
 
-  RefreshScreen();
+  RefreshScreen() : super(null);
 
-  RefreshScreen.fromJSON(String string){
+  RefreshScreen.fromJSON(String string) : super(null){
     var jsonObject = jsonDecode(string);
 
   }
