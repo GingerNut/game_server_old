@@ -11,8 +11,6 @@ class ChessBoard extends Board{
   
   ChessBoard() : super.squareTiles(8, ConnectionScheme.allDirections);
 
-
-
   startingPosition(){
     //j = vertical
     // i is horizontal
@@ -99,8 +97,8 @@ class ChessBoard extends Board{
     } );
     
     tiles.forEach((t) => t.label = labelTile(t));
-    
-    
+
+
   }
 
 

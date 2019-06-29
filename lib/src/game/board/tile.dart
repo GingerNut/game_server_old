@@ -45,13 +45,7 @@ class Tile{
       else return pieces.first.isFriendly(piece)? OccupationStatus.friendly : OccupationStatus.enemy;
   }
 
-  printTile(GameDependency dependency){
 
-
-    print('tile $i $j');
-
-
-  }
 
 
 }

@@ -160,6 +160,12 @@ void main()async{
 
     });
 
+    test('watchable variable' , (){
+
+      expect( Watchable<int>(6), 6);
+
+    });
+
     test('player variable',()async{
 
       List<String> playerIds = ['a', 'b', 'c', 'd'];
