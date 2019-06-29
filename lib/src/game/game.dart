@@ -29,7 +29,7 @@ part 'player/isolate.dart';
 part 'player/player.dart';
 part 'player/player_variable.dart';
 part 'player/server_player.dart';
-part 'package:game_server/src/game/watchable_variable.dart';
+part 'package:game_server/src/game/setting.dart';
 
 
 class Game {

@@ -160,10 +160,12 @@ void main()async{
 
     });
 
-    test('watchable variable' , (){
+    test('setting variables' , (){
 
-      expect( Watchable<int>(6), 6);
-
+      expect( IntSetting(6).value, IntSetting.fromString(IntSetting(6).string).value);
+      expect( DoubleSetting(6.0).value, DoubleSetting.fromString(DoubleSetting(6.0).string).value);
+      expect( BoolSetting(true).value, BoolSetting.fromString(BoolSetting(true).string).value);
+      expect( BoolSetting(false).value, BoolSetting.fromString(BoolSetting(false).string).value);
     });
 
     test('player variable',()async{
