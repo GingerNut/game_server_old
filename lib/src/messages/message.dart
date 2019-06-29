@@ -43,7 +43,7 @@ abstract class Message{
 
   String get json;
 
-  static inflate(String string) {
+  static Message inflate(String string) {
     var jsonObject = jsonDecode(string);
 
     switch (jsonObject['type']) {

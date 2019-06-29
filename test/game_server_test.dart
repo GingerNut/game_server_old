@@ -321,8 +321,8 @@ void main()async{
       expect(ChangeScreen('start').message, GameMessage.inflate(ChangeScreen('start').json).message);
       expect(RefreshScreen().runtimeType, GameMessage.inflate(RefreshScreen().json).runtimeType);
 
-      expect(GameMessage('ready').message, Message.inflate(GameMessage('ready').json).message);
-      expect(ChangeScreen('start').message, Message.inflate(ChangeScreen('start').json).message);
+      expect(GameMessage('ready').message, (Message.inflate(GameMessage('ready').json) as GameMessage).message);
+      expect(ChangeScreen('start').message, (Message.inflate(ChangeScreen('start').json) as ChangeScreen).message);
 
 
     });
