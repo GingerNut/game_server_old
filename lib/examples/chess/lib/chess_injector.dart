@@ -16,6 +16,4 @@ class ChessInjector extends GameDependency{
 
   Settings get settings => ChessSettings();
 
-
-
 }

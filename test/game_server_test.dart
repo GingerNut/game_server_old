@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:game_server/game_server.dart';
-import 'package:game_server/game_server.dart' as prefix0;
 
 import 'package:test/test.dart';
 
@@ -326,12 +325,10 @@ void main()async{
 
     test('game messages', (){
 
-      expect(GameMessage('ready').message, GameMessage.inflate(GameMessage('ready').json).message);
-      expect(ChangeScreen('start').message, GameMessage.inflate(ChangeScreen('start').json).message);
+      expect(ChangeScreen('start').screen, GameMessage.inflate(ChangeScreen('start').json).screen);
       expect(RefreshScreen().runtimeType, GameMessage.inflate(RefreshScreen().json).runtimeType);
 
-      expect(GameMessage('ready').message, (Message.inflate(GameMessage('ready').json) as GameMessage).message);
-      expect(ChangeScreen('start').message, (Message.inflate(ChangeScreen('start').json) as ChangeScreen).message);
+     expect(ChangeScreen('start').screen, (Message.inflate(ChangeScreen('start').json) as ChangeScreen).screen);
 
 
     });

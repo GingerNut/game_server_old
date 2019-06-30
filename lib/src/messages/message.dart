@@ -3,6 +3,7 @@ library message;
 import 'dart:convert';
 
 import 'package:game_server/src/game/game.dart';
+import 'game_message/game_message.dart';
 
 part 'chat/chat_message.dart';
 part 'chat/private_message.dart';
@@ -24,10 +25,6 @@ part 'command/tidy.dart';
 part 'command/your_turn.dart';
 
 part 'error/game_error.dart';
-
-part 'game_message/game_message.dart';
-part 'game_message/change_screen.dart';
-part 'game_message/refresh_screen.dart';
 
 part 'response/confirm_move.dart';
 part 'response/echo_response.dart';
@@ -93,14 +90,13 @@ abstract class Message{
         return SetId.fromJSON(string);
       case GameStarted.type:
         return GameStarted.fromJSON(string);
-      case GameMessage.type:
-        return GameMessage.fromJSON(string);
       case RefreshScreen.type:
         return RefreshScreen.fromJSON(string);
       case ChangeScreen.type:
         return ChangeScreen.fromJSON(string);
-      default:
-        return null;
+      case GameTimer.type:
+        return GameTimer.fromJSON(string);
+
     }
   }
 

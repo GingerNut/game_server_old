@@ -1,18 +1,20 @@
-part of message;
+part of game_message;
 
 class ChangeScreen extends GameMessage{
   static const type = 'change_screen';
 
-  ChangeScreen(String screen) : super(screen);
+  String screen;
 
-  ChangeScreen.fromJSON(String string) : super(null){
+  ChangeScreen(this.screen);
+
+  ChangeScreen.fromJSON(String string){
     var jsonObject = jsonDecode(string);
-    message = jsonObject['screen'];
+    screen = jsonObject['screen'];
   }
 
   get json => jsonEncode({
     'type': type,
-    'screen' : message
+    'screen' : screen
   });
 
 

@@ -1,33 +1,28 @@
-part of message;
+library game_message;
 
-class GameMessage extends Message {
-  static const type = 'game_message';
+import 'dart:convert';
 
-  String message;
+import 'package:game_server/game_server.dart';
 
-  GameMessage(this.message);
+part 'change_screen.dart';
+part 'game_timer.dart';
+part 'refresh_screen.dart';
 
-  GameMessage.fromJSON(String string){
-    var jsonObject = jsonDecode(string);
-    message = jsonObject['message'];
-  }
-
-  get json =>
-      jsonEncode({
-        'type': type,
-        'message': message,
-      });
+abstract class GameMessage extends Message {
 
   static inflate(String string) {
     var jsonObject = jsonDecode(string);
 
     switch (jsonObject['type']) {
-      case GameMessage.type:
-        return GameMessage.fromJSON(string);
       case RefreshScreen.type:
         return RefreshScreen.fromJSON(string);
+
       case ChangeScreen.type:
         return ChangeScreen.fromJSON(string);
+
+      case GameTimer.type:
+        return GameTimer.fromJSON(string);
+
       default:
         return null;
     }
