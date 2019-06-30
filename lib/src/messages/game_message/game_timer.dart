@@ -2,7 +2,7 @@ part of game_message;
 
 
 class GameTimer extends GameMessage{
-  static const String type = 'start_timer';
+  static const String type = 'game_timer';
 
   String instruction;
   String playerId;
