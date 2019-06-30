@@ -37,13 +37,19 @@ abstract class Player{
     stopwatch.reset();
     stopwatch.start();
 
+    go();
   }
+
+  go();
 
   stopTimer(){
     stopwatch.stop();
     timer?.cancel();
     game.position.timeLeft[id] -= stopwatch.elapsed.inSeconds;
+    stop();
   }
+
+  stop();
 
   wait(){  }
 

@@ -48,10 +48,11 @@ class ComputerPlayer extends Player{
 
   moveUpdate(MakeMove move)=> send(move);
 
-  yourTurn(){
-    super.yourTurn();
+  go(){
     send(YourTurn(gameId));
   }
+
+  stop(){}
 
   gameStarted(String gameId) => send(GameStarted(gameId));
 

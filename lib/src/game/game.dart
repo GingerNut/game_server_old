@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/design.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/interface/interface.dart';
