@@ -7,11 +7,10 @@ class LocalPlayer extends Player{
   LocalPlayer(this.ui);
 
   go(){
-    print('here');
-    ui.events.add(GameTimer.start(game.position));
+    ui.events.sink.add(GameTimer.start(game.position));
   }
 
   stop(){
-    ui.events.add(GameTimer.stop(game.position));
+    ui.events.sink.add(GameTimer.stop(game.position));
   }
 }
