@@ -18,6 +18,10 @@ class Theme{
   GameColor get stop => GameColor(0xFFF44336);
   GameColor get wait => GameColor(0xFFFFC107);
 
+  GameColor get white => GameColor.fromString('#ffffff');
+  GameColor get black => GameColor.fromString('#000000');
+  GameColor get grey => GameColor.fromString('#777777');
+
   GameColor get noPlayer => GameColor(0XFF9E9E9E);
   List<GameColor> get defaultPlayerColors => [
     GameColor(0xFF3F51B5),
