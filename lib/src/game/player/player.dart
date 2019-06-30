@@ -1,7 +1,7 @@
 part of game;
 
 
-class Player{
+abstract class Player{
   static const int human = 0;
   static const int computer = 1;
   static const int internet = 2;

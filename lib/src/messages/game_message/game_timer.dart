@@ -10,12 +10,23 @@ class GameTimer extends GameMessage{
 
   GameTimer(this.playerId, this.timeLeft, this.instruction);
 
+  GameTimer.start(Position position){
+    playerId = position.playerId;
+    timeLeft = position.timeLeft[playerId];
+    instruction = 'start';
+  }
+
+  GameTimer.stop(Position position){
+    playerId = position.playerId;
+    timeLeft = position.timeLeft[playerId];
+    instruction = 'stop';
+  }
+
   GameTimer.fromJSON(String string){
     var jsonObject = jsonDecode(string);
     instruction = jsonObject['instruction'];
     playerId = jsonObject['player_id'];
     timeLeft = jsonObject['time_left'];
-
   }
 
   get json =>
@@ -25,12 +36,5 @@ class GameTimer extends GameMessage{
         'player_id' : playerId,
         'time_left' : timeLeft
       });
-
-
-
-
-
-
-
 
 }

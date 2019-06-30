@@ -121,10 +121,10 @@ void main()async{
     var ui = LocalInterface(FieFoFumInjector());
 
     setUp(() async{
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
       ui.newGame.firstPlayer = 'Player 1';
       await ui.startLocalGame();
     });
@@ -202,7 +202,7 @@ void main()async{
 
     var ui = LocalInterface(FieFoFumInjector());
     var computer = ComputerPlayer(FieFoFumInjector());
-    ui.addPlayer(Player());
+    ui.addPlayer(LocalPlayer());
     ui.addPlayer(computer);
 
     setUp(()async{
@@ -287,10 +287,10 @@ void main()async{
     var ui = LocalInterface(FieFoFumInjector());
 
     setUp(() async{
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
       await ui.startLocalGame();
     });
 
@@ -343,10 +343,10 @@ void main()async{
     var ui = LocalInterface(FieFoFumInjector());
 
     test('start local fie fo fum game',()async{
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
 
       expect(ui.newGame.players.length, 4);
 
@@ -613,9 +613,9 @@ void main()async{
     test('game setup',() async{
 
       NewGame advert = NewGame(ChessSettings());
-      Player white = Player()
+      Player white = LocalPlayer()
         ..id = 'white player';
-      Player black = Player()
+      Player black = LocalPlayer()
         .. id = 'black player';
 
       advert.players.add(white);
@@ -653,9 +653,9 @@ void main()async{
     test('game setup random first player',() async{
 
       NewGame advert = NewGame(ChessSettings());
-      Player white = Player()
+      Player white = LocalPlayer()
         ..id = 'white player';
-      Player black = Player()
+      Player black = LocalPlayer()
         .. id = 'black player';
 
       advert.players.add(white);
@@ -676,8 +676,8 @@ void main()async{
     test('local interface chess game',(){
 
       LocalInterface ui = LocalInterface(ChessInjector());
-      ui.addPlayer(Player());
-      ui.addPlayer(Player());
+      ui.addPlayer(LocalPlayer());
+      ui.addPlayer(LocalPlayer());
       ui.startLocalGame();
 
       (ui.input as ChessInput).tapTile((ui.position as ChessPosition).board.tile(0,1));
@@ -690,7 +690,7 @@ void main()async{
 
     test('basic ai functions',() async{
       LocalInterface ui = LocalInterface(ChessInjector());
-      ui.addPlayer(Player());
+      ui.addPlayer(LocalPlayer());
 
       ComputerPlayer computerPlayer = ComputerPlayer(ChessInjector());
 
