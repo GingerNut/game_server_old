@@ -19,6 +19,8 @@ Position get position => game.position;
 LocalInterface(GameDependency injector) : super(injector){
   localSettings = dependency.settings;
   resetGame();
+
+  events.stream.listen((d){print(d);});
 }
 
 resetGame(){
