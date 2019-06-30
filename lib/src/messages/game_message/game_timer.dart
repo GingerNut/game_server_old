@@ -20,6 +20,12 @@ class GameTimer extends GameMessage{
     instruction = 'stop';
   }
 
+  GameTimer.tick(Position position){
+    playerId = position.playerId;
+    timeLeft = position.timeLeft[playerId];
+    instruction = 'tick';
+  }
+
   GameTimer.fromJSON(String string){
     var jsonObject = jsonDecode(string);
     instruction = jsonObject['instruction'];
