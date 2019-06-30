@@ -13,6 +13,7 @@ class NewGame extends Message{
   int playerType;
   bool playerHelp;
   bool timer;
+  bool randomStarter = true;
   double moveTime;
   double gameTime;
 
@@ -37,6 +38,7 @@ class NewGame extends Message{
     this.timer = settings.timer.value;
     this.playerHelp = settings.playerHelp.value;
     this.firstPlayer = firstPlayer;
+    this.randomStarter = settings.randomStart.value;
   }
 
 
@@ -50,6 +52,7 @@ class NewGame extends Message{
     moveTime = settings.moveTime.value;
     timer = settings.timer.value;
     playerHelp = false;
+    randomStarter = settings.randomStart.value;
   }
 
   Future<Message> requestJoin(Player player) async{
@@ -104,6 +107,7 @@ class NewGame extends Message{
     moveTime = jsonObject['move_time'];
     gameTime = jsonObject['game_time'];
     firstPlayer = jsonObject['first_player'];
+    randomStarter = jsonObject['random_starter'] == 'TRUE' ? true : false;
   }
 
   get json => jsonEncode({
@@ -115,7 +119,8 @@ class NewGame extends Message{
     'timer': timer == true ? 'TRUE' : 'FALSE',
     'move_time':moveTime,
     'game_time':gameTime,
-    'first_player' : firstPlayer
+    'first_player' : firstPlayer,
+    'random_starter' : randomStarter == true? 'TRUE' : 'FALSE',
 
   });
 

@@ -175,8 +175,8 @@ class ChessPosition extends Position{
 
 
 
-  setFirstPlayer(String firstPlayer) {
-   super.setFirstPlayer(firstPlayer);
+  setFirstPlayer(bool random, String firstPlayer) {
+   super.setFirstPlayer(random, firstPlayer);
 
    whitePlayer = playerQueue[0];
    blackPlayer = playerQueue[1];

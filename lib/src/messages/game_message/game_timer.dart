@@ -8,8 +8,6 @@ class GameTimer extends GameMessage{
   String playerId;
   double timeLeft;
 
-  GameTimer(this.playerId, this.timeLeft, this.instruction);
-
   GameTimer.start(Position position){
     playerId = position.playerId;
     timeLeft = position.timeLeft[playerId];

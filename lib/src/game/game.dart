@@ -41,6 +41,7 @@ class Game {
   String gameId;
   String displayName;
   bool timer;
+  bool randomStarter = true;
   bool playerHelp;
   double gameTime;
   double moveTime;
@@ -50,20 +51,25 @@ class Game {
   Board board;
 
   Game.fromNewGame(this.dependency, NewGame newGame){
-    timer = dependency.settings.timer.value;
-    playerHelp = dependency.settings.playerHelp.value;
-    gameTime = dependency.settings.gameTime.value;
-    moveTime = dependency.settings.moveTime.value;
+    timer = newGame.timer;
+    playerHelp = newGame.playerHelp;
+    gameTime = newGame.gameTime;
+    moveTime = newGame.moveTime;
+    randomStarter = newGame.randomStarter;
 
-    this.players = newGame.players;
-    this.gameId = newGame.id;
-    this.displayName = newGame.displayName;
+    players = newGame.players;
+    gameId = newGame.id;
+    displayName = newGame.displayName;
 
-    if(newGame.firstPlayer != null) this.firstPlayer = newGame.firstPlayer;
-    if(newGame.playerHelp != null) this.playerHelp = newGame.playerHelp;
-    if(newGame.timer != null) this.timer = newGame.timer;
-    if(newGame.gameTime != null) this.gameTime = newGame.gameTime;
-    if(newGame.moveTime != null) this.moveTime = newGame.moveTime;
+    if(newGame.firstPlayer != null) {
+      firstPlayer = newGame.firstPlayer;
+      randomStarter = false;
+    }
+
+    if(playerHelp == null) playerHelp = dependency.settings.playerHelp.value;
+    if(timer == null) timer = dependency.settings.timer.value;
+    if(gameTime == null) gameTime = dependency.settings.gameTime.value;
+    if(moveTime == null) moveTime = dependency.settings.moveTime.value;
   }
 
   int get numberOfPlayers => players.length;
@@ -100,7 +106,7 @@ class Game {
 
     players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 
-    _position.setFirstPlayer(firstPlayer);
+    _position.setFirstPlayer(randomStarter, firstPlayer);
 
     _position.analyse();
 

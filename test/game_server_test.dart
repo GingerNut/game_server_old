@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:game_server/game_server.dart';
 import 'package:game_server/game_server.dart' as prefix0;
@@ -9,12 +10,13 @@ import 'package:test/test.dart';
 
 void main()async{
 
-  Future <String> nextMessage(Stream<String> stream )async{
+  Future <T> next<T>(Stream<T> stream )async{
 
-    await for(String string in stream){
-      return string;
+    await for(T message in stream){
+      return message;
     }
   }
+
 
   group('notation', (){
 
@@ -215,7 +217,7 @@ void main()async{
     test('Basic computer connection', () async{
       computer.send(Echo('hey'));
 
-      Message response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      Message response = Message.inflate(await next(computer.messagesIn.stream));
 
       expect(response.runtimeType, EchoResponse);
       expect((response as EchoResponse).text, 'echo hey');
@@ -224,10 +226,10 @@ void main()async{
       expect((ui.position as FieFoFumPosition).count, 2);
       expect((ui.position.duplicate as FieFoFumPosition).count, 2);
 
-      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      response = Message.inflate(await next(computer.messagesIn.stream));
       expect(response.runtimeType, ConfirmMove);
 
-      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      response = Message.inflate(await next(computer.messagesIn.stream));
       expect(response.runtimeType, MakeMove);
 
       expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
@@ -239,13 +241,13 @@ void main()async{
 
 
 
-      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      response = Message.inflate(await next(computer.messagesIn.stream));
       expect(response.runtimeType, ConfirmMove);
 
-      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      response = Message.inflate(await next(computer.messagesIn.stream));
       expect(response.runtimeType, ConfirmMove);
 
-      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      response = Message.inflate(await next(computer.messagesIn.stream));
       expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
 
       expect((ui.position as FieFoFumPosition).playerQueue , ['Player 1', 'Computer 1']);
@@ -256,10 +258,10 @@ void main()async{
 
       ui.tryMove(MoveFo());
 
-      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      response = Message.inflate(await next(computer.messagesIn.stream));
 //      expect(response.runtimeType, ConfirmMove);
 
-      response = Message.inflate(await nextMessage(computer.messagesIn.stream));
+      response = Message.inflate(await next(computer.messagesIn.stream));
 
 //      expect((ui.position as FieFoFumPosition).playerQueue , ['Computer 1', 'Player 1']);
 //
@@ -331,6 +333,37 @@ void main()async{
 
      expect(ChangeScreen('start').screen, (Message.inflate(ChangeScreen('start').json) as ChangeScreen).screen);
 
+
+    });
+
+    test('game timer tests',() async{
+
+      LocalInterface ui = LocalInterface(ChessInjector());
+      ui.localSettings.randomStart.value = false;
+      expect(ui.localSettings.randomStart.value, false);
+
+      ui.resetGame();
+
+      ui.addPlayer(LocalPlayer(ui));
+      ui.addPlayer(LocalPlayer(ui));
+
+      expect(ui.newGame.randomStarter, false);
+
+      ui.startLocalGame();
+
+      GameMessage message = await next(ui.events.stream);
+
+      expect(message.runtimeType, GameTimer);
+
+      GameTimer timer = message as GameTimer;
+
+      expect(timer.instruction, 'start');
+      expect(timer.playerId, 'Player 1');
+      expect(timer.timeLeft, 312.0);
+
+      expect(timer.instruction, GameTimer.fromJSON(timer.json).instruction);
+      expect(timer.playerId, GameTimer.fromJSON(timer.json).playerId);
+      expect(timer.timeLeft, GameTimer.fromJSON(timer.json).timeLeft);
 
     });
 
@@ -777,7 +810,7 @@ void main()async{
       expect(server.numberOfClients, 4);
       henry.connection.send(RequestPlayerList());
 
-      var message = Message.inflate(await nextMessage(henry.connection.messagesIn.stream));
+      var message = Message.inflate(await next(henry.connection.messagesIn.stream));
 
       expect(message.runtimeType, PlayerList);
       var playerList = message as PlayerList;
@@ -786,13 +819,13 @@ void main()async{
       expect(playerList.players, ['Henry', 'Jim', 'Sarah', 'Tracy']);
 
       henry.sendChat('hi');
-      expect((Message.inflate(await nextMessage(james.connection.messagesIn.stream))).runtimeType, ChatMessage);
+      expect((Message.inflate(await next(james.connection.messagesIn.stream))).runtimeType, ChatMessage);
       expect(james.chatMessages.length,1);
       expect(james.chatMessages[0].from,'henry');
       expect(james.chatMessages[0].text,'hi');
 
       james.sendChat('Hows it going');
-      expect((Message.inflate(await nextMessage(henry.connection.messagesIn.stream))).runtimeType, ChatMessage);
+      expect((Message.inflate(await next(henry.connection.messagesIn.stream))).runtimeType, ChatMessage);
       expect(henry.chatMessages.length,2);
       expect(henry.chatMessages[0].from,'henry');
       expect(henry.chatMessages[0].text,'hi');
@@ -800,7 +833,7 @@ void main()async{
       expect(henry.chatMessages[1].text,'Hows it going');
 
       sarah.sendMessage('james', 'hello james');
-      expect((Message.inflate(await nextMessage(james.connection.messagesIn.stream))).runtimeType, PrivateMessage);
+      expect((Message.inflate(await next(james.connection.messagesIn.stream))).runtimeType, PrivateMessage);
       expect(james.privateMessages.length, 1);
       expect(james.privateMessages[0].from, 'sarah');
       expect(james.privateMessages[0].text, 'hello james');
@@ -810,13 +843,13 @@ void main()async{
       expect(sarah.privateMessages[0].text, 'hello james');
 
       james.sendMessage('sarah', 'yo');
-      expect((Message.inflate(await nextMessage(sarah.connection.messagesIn.stream))).runtimeType, PrivateMessage);
+      expect((Message.inflate(await next(sarah.connection.messagesIn.stream))).runtimeType, PrivateMessage);
       expect(sarah.privateMessages.length, 2);
       expect(sarah.privateMessages[1].from, 'james');
       expect(sarah.privateMessages[1].text, 'yo');
 
       henry.sendMessage('emma', 'hey Emma');
-      expect((Message.inflate(await nextMessage(henry.connection.messagesIn.stream))).runtimeType, PrivateMessage);
+      expect((Message.inflate(await next(henry.connection.messagesIn.stream))).runtimeType, PrivateMessage);
       expect(henry.privateMessages.length, 1);
       expect(henry.privateMessages[0].from, 'server');
       expect(henry.privateMessages[0].text, 'emma is not online');
@@ -828,27 +861,27 @@ void main()async{
       expect(server.numberOfClients, 4);
       expect(james.adverts.length, 0);
       henry.advertiseGame();
-      expect((Message.inflate(await nextMessage(james.connection.messagesIn.stream))).runtimeType, NewGame);
+      expect((Message.inflate(await next(james.connection.messagesIn.stream))).runtimeType, NewGame);
       expect(james.adverts.length, 1);
       james.joinGame(james.adverts[0]);
-       expect((Message.inflate(await nextMessage(james.connection.messagesIn.stream))).runtimeType, Success);
+       expect((Message.inflate(await next(james.connection.messagesIn.stream))).runtimeType, Success);
 
       henry.joinGame(henry.adverts[0]);
-      expect((Message.inflate(await nextMessage(henry.connection.messagesIn.stream))).runtimeType, Success);
+      expect((Message.inflate(await next(henry.connection.messagesIn.stream))).runtimeType, Success);
       sarah.joinGame(sarah.adverts[0]);
-     expect((Message.inflate(await nextMessage(sarah.connection.messagesIn.stream))).runtimeType, Success);
+     expect((Message.inflate(await next(sarah.connection.messagesIn.stream))).runtimeType, Success);
       trace.joinGame(trace.adverts[0]);
-      expect((Message.inflate(await nextMessage(trace.connection.messagesIn.stream))).runtimeType, Success);
+      expect((Message.inflate(await next(trace.connection.messagesIn.stream))).runtimeType, Success);
 
       henry.startGame(henry.adverts[0]);
-      expect((Message.inflate(await nextMessage(henry.connection.messagesIn.stream))).runtimeType, Success);
+      expect((Message.inflate(await next(henry.connection.messagesIn.stream))).runtimeType, Success);
 
       henry.status = PlayerStatus.ready;
       james.status = PlayerStatus.ready;
       sarah.status = PlayerStatus.ready;
       trace.status = PlayerStatus.ready;
 
-      var message = Message.inflate(await nextMessage(henry.connection.messagesIn.stream));
+      var message = Message.inflate(await next(henry.connection.messagesIn.stream));
 
       expect(message.runtimeType, SetStatus);
       var setStatus = message as SetStatus;
@@ -932,7 +965,7 @@ void main()async{
 
        henry.connection.send(RequestPlayerList());
 
-      var message = Message.inflate(await nextMessage(henry.connection.messagesIn.stream));
+      var message = Message.inflate(await next(henry.connection.messagesIn.stream));
 
       expect(message.runtimeType, PlayerList);
       var playerList = message as PlayerList;
@@ -941,13 +974,13 @@ void main()async{
       expect(playerList.players, ['Henry', 'Jim', 'Sarah', 'Tracy']);
 
       henry.sendChat('hi');
-      expect((Message.inflate(await nextMessage(james.connection.messagesIn.stream))).runtimeType, ChatMessage);
+      expect((Message.inflate(await next(james.connection.messagesIn.stream))).runtimeType, ChatMessage);
       expect(james.chatMessages.length,1);
       expect(james.chatMessages[0].from,'henry');
       expect(james.chatMessages[0].text,'hi');
 
       james.sendChat('Hows it going');
-      expect((Message.inflate(await nextMessage(henry.connection.messagesIn.stream))).runtimeType, ChatMessage);
+      expect((Message.inflate(await next(henry.connection.messagesIn.stream))).runtimeType, ChatMessage);
       expect(henry.chatMessages.length,2);
       expect(henry.chatMessages[0].from,'henry');
       expect(henry.chatMessages[0].text,'hi');
@@ -955,7 +988,7 @@ void main()async{
       expect(henry.chatMessages[1].text,'Hows it going');
 
       sarah.sendMessage('james', 'hello james');
-      expect((Message.inflate(await nextMessage(james.connection.messagesIn.stream))).runtimeType, PrivateMessage);
+      expect((Message.inflate(await next(james.connection.messagesIn.stream))).runtimeType, PrivateMessage);
       expect(james.privateMessages.length, 1);
       expect(james.privateMessages[0].from, 'sarah');
       expect(james.privateMessages[0].text, 'hello james');
@@ -965,13 +998,13 @@ void main()async{
       expect(sarah.privateMessages[0].text, 'hello james');
 
       james.sendMessage('sarah', 'yo');
-      expect((Message.inflate(await nextMessage(sarah.connection.messagesIn.stream))).runtimeType, PrivateMessage);
+      expect((Message.inflate(await next(sarah.connection.messagesIn.stream))).runtimeType, PrivateMessage);
       expect(sarah.privateMessages.length, 2);
       expect(sarah.privateMessages[1].from, 'james');
       expect(sarah.privateMessages[1].text, 'yo');
 
       henry.sendMessage('emma', 'hey Emma');
-      expect((Message.inflate(await nextMessage(henry.connection.messagesIn.stream))).runtimeType, PrivateMessage);
+      expect((Message.inflate(await next(henry.connection.messagesIn.stream))).runtimeType, PrivateMessage);
       expect(henry.privateMessages.length, 1);
       expect(henry.privateMessages[0].from, 'server');
       expect(henry.privateMessages[0].text, 'emma is not online');

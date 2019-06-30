@@ -6,22 +6,23 @@ class LocalInterface extends Interface{
 
 //pass and play
 
-Settings localSettings = Settings();
+Settings localSettings;
 Game game;
 NewGame newGame;
 
-getGame(NewGame newGame) => dependency.getGame(newGame);
 
+getGame(NewGame newGame) => dependency.getGame(newGame);
 
 
 Position get position => game.position;
 
 LocalInterface(GameDependency injector) : super(injector){
+  localSettings = dependency.settings;
   resetGame();
 }
 
 resetGame(){
-  newGame = NewGame.local(dependency.settings);
+  newGame = NewGame.local(localSettings);
 }
 
 addPlayer(Player player) => newGame.addLocalPlayer(player);

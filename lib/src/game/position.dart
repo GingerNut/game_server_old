@@ -122,7 +122,7 @@ abstract class Position{
 
   initialiseExternalVariables();
 
-  setFirstPlayer(String firstPlayer){
+  setFirstPlayer(bool random, String firstPlayer){
     if (firstPlayer != null) {
       if (playerIds.contains(firstPlayer)) {
 
@@ -130,7 +130,7 @@ abstract class Position{
         if(found) playerQueue.insert(0, firstPlayer);
       }
     } else {
-      playerQueue.shuffle();
+      if(random == true) playerQueue.shuffle();
 
     }
   }
