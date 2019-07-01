@@ -1,4 +1,4 @@
 
 
 
-export 'package:game_server/local_interface.dart';
+export 'package:game_server/src/interface/local_interface.dart';
