@@ -3,7 +3,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:game_server/game_server.dart';
-import 'package:game_server/game_server.dart' as prefix0;
+import 'package:game_server/src/interface/local_http_interface.dart';
+import 'package:game_server/src/interface/local_interface.dart';
+import 'package:game_server/src/interface/stream_http_interface.dart';
+
 
 import 'package:test/test.dart';
 

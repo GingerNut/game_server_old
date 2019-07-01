@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
+import 'package:game_server/src/interface/http_interface.dart';
 import 'package:game_server/src/interface/interface.dart';
 import 'package:game_server/src/messages/message.dart';
 

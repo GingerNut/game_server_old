@@ -1,6 +1,9 @@
 
 
-part of interface;
+import 'package:game_server/src/game_server/client_connection/client_connection.dart';
+
+import '../../game.dart';
+import 'http_interface.dart';
 
 class LocalHostHttpInterface extends HttpInterface{
 

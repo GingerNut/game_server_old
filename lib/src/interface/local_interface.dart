@@ -1,4 +1,9 @@
-part of interface;
+
+import 'interface.dart';
+
+
+import '../../game.dart';
+import '../../game_message.dart';
 
 class LocalInterface extends Interface{
 

@@ -1,6 +1,7 @@
 library fie_fo_fum;
 
 import 'package:game_server/src/game/game.dart';
+import 'package:game_server/src/interface/input.dart';
 import 'package:game_server/src/interface/interface.dart';
 import 'package:game_server/src/messages/message.dart';
 
