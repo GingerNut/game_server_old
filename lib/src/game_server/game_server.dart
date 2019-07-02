@@ -4,8 +4,9 @@ import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/messages/message.dart';
-import 'advert_list.dart';
 
+part 'server_player.dart';
+part 'advert_list.dart';
 
 class GameServer{
 

@@ -1,5 +1,5 @@
+part of game_server;
 
-import 'package:game_server/src/messages/message.dart';
 
 class AdvertList{
 

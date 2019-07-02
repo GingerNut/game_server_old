@@ -4,21 +4,17 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
-import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/design.dart';
-import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 import 'package:game_server/src/interface/input.dart';
 import 'package:game_server/src/interface/interface.dart';
-import 'package:game_server/src/interface/local_interface.dart';
-
 import 'package:game_server/src/messages/message.dart';
+
 
 part 'move.dart';
 part 'move_builder.dart';
 part 'position.dart';
 part 'position_builder.dart';
 part 'settings.dart';
-part 'server_player.dart';
 part 'game_dependency.dart';
 
 part 'board/board.dart';
@@ -30,9 +26,7 @@ part 'player/computer.dart';
 part 'player/computer_player.dart';
 part 'player/isolate.dart';
 part 'player/player.dart';
-part 'player/local_player.dart';
 part 'player/player_variable.dart';
-part 'player/server_player.dart';
 part 'package:game_server/src/game/setting.dart';
 
 
