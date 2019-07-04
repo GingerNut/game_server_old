@@ -1,10 +1,9 @@
 library chess;
 
-import 'package:game_server/game_server.dart';
-import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/interface/input.dart';
-import 'package:game_server/src/interface/interface.dart';
-import 'package:game_server/src/messages/message.dart';
+import 'package:core_game/html_game.dart';
+import 'package:core_game/src/messages/game_message/game_message.dart';
+import 'package:core_game/src/messages/message.dart';
+
 
 part 'chess_board.dart';
 part 'chess_injector.dart';

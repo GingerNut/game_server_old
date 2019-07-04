@@ -1,11 +1,10 @@
 
 
+import 'package:core_game/html_game.dart';
+import 'package:core_game/src/messages/message.dart';
 import 'package:game_server/src/game_server/client_connection/client_connection.dart';
 
-import '../../game.dart';
-import '../../game_message.dart';
 import '../../game_server.dart';
-import 'interface.dart';
 
 class HttpInterface extends Interface{
 

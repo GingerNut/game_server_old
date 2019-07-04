@@ -1,9 +1,9 @@
 
 
 
-import 'package:core_game/html_game.dart';
-import 'package:core_game/src/messages/game_message/game_message.dart';
-import 'package:core_game/src/messages/message.dart';
+import '../../html_game.dart';
+import '../messages/game_message/game_message.dart';
+import '../messages/message.dart';
 
 class LocalInterface extends Interface{
 

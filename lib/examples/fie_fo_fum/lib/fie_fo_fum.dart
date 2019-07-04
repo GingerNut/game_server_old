@@ -1,9 +1,8 @@
 library fie_fo_fum;
 
-import 'package:game_server/src/game/game.dart';
-import 'package:game_server/src/interface/input.dart';
-import 'package:game_server/src/interface/interface.dart';
-import 'package:game_server/src/messages/message.dart';
+import 'package:core_game/html_game.dart';
+import 'package:core_game/src/messages/message.dart';
+
 
 
 part 'fie_fo_fum_injector.dart';

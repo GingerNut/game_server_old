@@ -1,11 +1,10 @@
 
 
 
+import 'package:core_game/html_game.dart';
+import 'package:core_game/src/messages/game_message/game_message.dart';
 
-import 'package:game_server/game.dart';
-
-import '../../game_message.dart';
-import '../../local_interface.dart';
+import 'local_interface.dart';
 
 class LocalPlayer extends Player{
 
