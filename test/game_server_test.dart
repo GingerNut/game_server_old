@@ -17,6 +17,8 @@ import 'package:game_server/src/interface/stream_http_interface.dart';
 
 import 'package:test/test.dart';
 
+import '../games/chess/lib/chess.dart';
+
 
 
 

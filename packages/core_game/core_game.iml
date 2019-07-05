@@ -4,8 +4,10 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.dart_tool" />
-      <excludeFolder url="file://$MODULE_DIR$/../html_game/.pub" />
-      <excludeFolder url="file://$MODULE_DIR$/../html_game/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../core_game/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/../../core_game/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../html_game/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/../../html_game/build" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />
