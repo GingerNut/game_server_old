@@ -2,7 +2,8 @@ library database;
 
 import 'dart:io';
 
-import 'package:core_game/src/messages/message.dart';
+import 'package:game_server/src/game/game.dart';
+
 
 
 

@@ -4,12 +4,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
-import '../design/design.dart';
-import '../messages/game_message/game_message.dart';
 import '../messages/message.dart';
+import '../design/design.dart';
 
-
-
+export '../messages/message.dart';
+export '../design/design.dart';
 
 part 'move.dart';
 part 'move_builder.dart';
@@ -33,6 +32,8 @@ part 'player/player_variable.dart';
 
 part 'interface.dart';
 part 'input.dart';
+part 'local_interface.dart';
+
 
 
 class Game {

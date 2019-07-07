@@ -2,7 +2,7 @@ library channel;
 
 import 'dart:async';
 
-import 'package:core_game/src/messages/message.dart';
+import 'package:game_server/src/game/game.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 

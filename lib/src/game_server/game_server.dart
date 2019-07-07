@@ -1,7 +1,6 @@
 library game_server;
 
-import 'package:core_game/html_game.dart';
-import 'package:core_game/src/messages/message.dart';
+import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
 

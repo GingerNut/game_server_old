@@ -1,7 +1,7 @@
 library fie_fo_fum;
 
-import 'package:core_game/html_game.dart';
-import 'package:core_game/src/messages/message.dart';
+import 'package:game_server/src/game/game.dart';
+
 
 
 

@@ -12,11 +12,6 @@ dependencies:
   shelf:
   shelf_web_socket:
   web_socket_channel:
-  core_game:
-    path: packages/core_game
-
-  chess:
-    path: games/chess
 
 
 dev_dependencies:

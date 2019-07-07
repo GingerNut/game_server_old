@@ -3,9 +3,8 @@ library server_connection;
 import 'dart:async';
 import 'dart:math';
 
-import 'package:core_game/html_game.dart';
-import 'package:core_game/src/messages/message.dart';
 import 'package:game_server/game_server.dart';
+import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game_server/channel/channel.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -165,15 +164,15 @@ class ServerConnection implements ChannelHost {
 
   String _getSecret(){
 
-    var rand = new Random();
-    var codeUnits = new List.generate(
+    var rand = Random();
+    var codeUnits = List.generate(
         16,
             (index){
           return rand.nextInt(33)+89;
         }
     );
 
-    return new String.fromCharCodes(codeUnits);
+    return String.fromCharCodes(codeUnits);
   }
 
 
