@@ -183,6 +183,8 @@ class Game {
       }
     }
 
+    move.gamePosition = position.json;
+
     _setUnconfirmed();
 
     players.forEach((p) => p.moveUpdate(update));

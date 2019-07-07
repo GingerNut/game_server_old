@@ -12,6 +12,8 @@ abstract class Move <P>{
 
   Position trialPosition;
 
+  String gamePosition;
+
 
   Message check(P position){
 
