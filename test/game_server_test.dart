@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:math';
 
 
-import 'package:game_server/examples/chess/chess.dart';
+import 'package:game_server/games/chess/chess.dart';
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/design.dart';
 import 'package:game_server/src/game/game.dart';

@@ -3,6 +3,7 @@ library game_server;
 import 'package:game_server/src/game/game.dart';
 import 'package:game_server/src/game_server/database/database.dart';
 import 'package:game_server/src/game_server/server_connection/server_connection.dart';
+import 'package:game_server/src/messages/game_message/game_message.dart';
 import 'package:game_server/src/messages/message.dart';
 
 part 'server_player.dart';

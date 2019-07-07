@@ -28,7 +28,10 @@ class ServerPlayer extends Player{
   gameStarted(String gameId) => connection.send(GameStarted(gameId));
 
   go(){
-    if(connection != null) connection.send(YourTurn(gameId));
+    if(connection != null) {
+      connection.send(YourTurn(gameId));
+      if(game.timer) connection.send(GameTimer.start(game.position));
+    }
   }
 
   stop(){}
