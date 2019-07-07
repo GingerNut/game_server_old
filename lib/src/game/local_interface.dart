@@ -3,8 +3,6 @@ part of game;
 
 class LocalInterface extends Interface{
 
-//TODO local games server. Only one login allowed but that stays in background
-
 //pass and play
 
 Settings localSettings;

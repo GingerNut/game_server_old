@@ -359,6 +359,7 @@ void main()async{
       ui.addPlayer(LocalPlayer(ui));
 
       expect(ui.newGame.randomStarter, false);
+      expect(ui.newGame.timer, true);
 
       ui.startLocalGame();
 
