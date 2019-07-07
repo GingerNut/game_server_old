@@ -59,7 +59,7 @@ class ChessInput extends Input{
 
     }
 
-//    ui.events.add(RefreshScreen());
+    ui.events.add(RefreshScreen());
 
   }
 

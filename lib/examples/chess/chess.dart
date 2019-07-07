@@ -1,5 +1,6 @@
 library chess;
 
+import 'package:game_server/game_server.dart';
 import 'package:game_server/src/game/game.dart';
 
 

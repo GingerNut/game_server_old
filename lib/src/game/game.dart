@@ -4,13 +4,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:game_server/src/design/design.dart';
 import 'package:game_server/src/messages/game_message/game_message.dart';
+import 'package:game_server/src/messages/message.dart';
 
-import '../messages/message.dart';
-import '../design/design.dart';
-
-export '../messages/message.dart';
-export '../design/design.dart';
 
 part 'move.dart';
 part 'move_builder.dart';
@@ -35,6 +32,7 @@ part 'player/player_variable.dart';
 part 'interface.dart';
 part 'input.dart';
 part 'local_interface.dart';
+part 'local_player.dart';
 
 
 
