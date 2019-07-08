@@ -5,6 +5,7 @@ abstract class Position{
 
   Move lastMove;
   GameDependency get dependency;
+  String initialPosition;
 
   String gameId;
   List<String> playerIds;
@@ -116,6 +117,8 @@ abstract class Position{
     color = PlayerVariable.fromList(playerIds, Palette.defaultPlayerColours);
 
     initialiseExternalVariables();
+
+    initialPosition = json;
   }
 
   setTimers(double gameTime)=> timeLeft = PlayerVariable(playerIds, gameTime);

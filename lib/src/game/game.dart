@@ -102,13 +102,13 @@ class Game {
       _position.playerIds = playerIds;
     _position.playerQueue = playerQueue;
 
-    _position.initialise();
-
     _position.setTimers(gameTime);
 
-    players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
-
     _position.setFirstPlayer(randomStarter, firstPlayer);
+
+    _position.initialise();
+
+    players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 
     _position.analyse();
 

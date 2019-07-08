@@ -14,6 +14,10 @@ abstract class Move <P>{
 
   String gamePosition;
 
+  Move parent;
+  List<Move> children;
+  String resultingPosition;
+
 
   Message check(P position){
 

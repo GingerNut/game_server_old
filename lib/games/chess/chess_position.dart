@@ -7,6 +7,11 @@ class ChessPosition extends Position{
   String whitePlayer;
   String blackPlayer;
 
+  List<Tile> tiles = List();
+
+  List<ChessPiece> whiteArmy = List();
+  List<ChessPiece> blackArmy = List();
+
   ChessColor get playerColor => whitePlayer == playerId ? ChessColor.white : ChessColor.black;
 
   @override
@@ -24,7 +29,7 @@ class ChessPosition extends Position{
 
     List<String> whiteList = List();
 
-    board.whiteArmy.forEach((p) {
+    whiteArmy.forEach((p) {
       String string = '';
       string += p.name;
       string += p.tile.i.toString();
@@ -35,7 +40,7 @@ class ChessPosition extends Position{
 
     List<String> blackList = List();
 
-    board.blackArmy.forEach((p) {
+    blackArmy.forEach((p) {
       String string = '';
       string += p.name;
       string += p.tile.i.toString();
@@ -107,11 +112,19 @@ class ChessPosition extends Position{
 
     List<String> white = details[0].split(Message.internalDelimiter);
 
-    white.forEach((s) => makePiece(s, ChessColor.white, board.whiteArmy));
+    white.forEach((s) => makePiece(s, ChessColor.white, whiteArmy));
 
     List<String> black = details[1].split(Message.internalDelimiter);
 
-    black.forEach((s) => makePiece(s, ChessColor.black, board.blackArmy));
+    black.forEach((s) => makePiece(s, ChessColor.black, blackArmy));
+
+  }
+
+  clearPieces(){
+
+    whiteArmy.clear();
+    blackArmy.clear();
+    board.tiles.forEach((t) => t.pieces.clear());
 
   }
 
@@ -123,8 +136,8 @@ class ChessPosition extends Position{
 
     List<Piece> army;
 
-    if(playerId == whitePlayer) army = board.whiteArmy;
-    else army = board.blackArmy;
+    if(playerId == whitePlayer) army = whiteArmy;
+    else army = blackArmy;
 
     army.forEach((p){
 
@@ -139,8 +152,50 @@ class ChessPosition extends Position{
   }
 
   initialiseExternalVariables() {
-    board = ChessBoard();
-    board.startingPosition();
+
+    String pieces = 'P01,P11,P21,P31,P41,P51,P61,P71,R00,R70,N10,N60,B20,B50,Q30,K40\nP06,P16,P26,P36,P46,P56,P66,P76,R07,R77,N17,N67,B27,B57,Q37,K47';
+
+    setExternalVariables(pieces);
+
+    board.tiles.forEach((t) => t.label = labelTile(t));
+
+  }
+
+  String labelTile(Tile t) {
+
+    String label = '';
+
+    switch(t.j){
+      case 0: label += 'a';
+      break;
+
+      case 1: label += 'b';
+      break;
+
+      case 2: label += 'c';
+      break;
+
+      case 3: label += 'd';
+      break;
+
+      case 4: label += 'e';
+      break;
+
+      case 5: label += 'f';
+      break;
+
+      case 6: label += 'g';
+      break;
+
+      case 7: label += 'h';
+      break;
+
+    }
+
+    label += (t.i + 1).toString();
+
+    return label;
+
   }
 
 
