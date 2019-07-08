@@ -3,7 +3,7 @@ part of chess;
 
 class Knight extends ChessPiece{
 
-  Knight(Board board) : super(board){
+  Knight(Tiles board) : super(board){
     name = 'N';
     value = 3;
   }
@@ -14,39 +14,39 @@ class Knight extends ChessPiece{
     Tile first;
     Tile second;
 
-    first = tile.nextInDirection(Board.North);
+    first = tile.nextInDirection(Tiles.North);
     if(first != null) {
-      second = first.nextInDirection(Board.North_West);
+      second = first.nextInDirection(Tiles.North_West);
       if(second != null && second.tileOccupation(this) != OccupationStatus.friendly) moves.add(second);
 
-      second = first.nextInDirection(Board.North_East);
+      second = first.nextInDirection(Tiles.North_East);
       if(second != null && second.tileOccupation(this) != OccupationStatus.friendly) moves.add(second);
     }
 
-    first = tile.nextInDirection(Board.South);
+    first = tile.nextInDirection(Tiles.South);
     if(first != null) {
-      second = first.nextInDirection(Board.South_West);
+      second = first.nextInDirection(Tiles.South_West);
       if(second != null && second.tileOccupation(this) != OccupationStatus.friendly) moves.add(second);
 
-      second = first.nextInDirection(Board.South_East);
+      second = first.nextInDirection(Tiles.South_East);
       if(second != null && second.tileOccupation(this) != OccupationStatus.friendly) moves.add(second);
     }
 
-    first = tile.nextInDirection(Board.East);
+    first = tile.nextInDirection(Tiles.East);
     if(first != null) {
-      second = first.nextInDirection(Board.North_East);
+      second = first.nextInDirection(Tiles.North_East);
       if(second != null && second.tileOccupation(this) != OccupationStatus.friendly) moves.add(second);
 
-      second = first.nextInDirection(Board.South_East);
+      second = first.nextInDirection(Tiles.South_East);
       if(second != null && second.tileOccupation(this) != OccupationStatus.friendly) moves.add(second);
     }
 
-    first = tile.nextInDirection(Board.West);
+    first = tile.nextInDirection(Tiles.West);
     if(first != null) {
-      second = first.nextInDirection(Board.North_West);
+      second = first.nextInDirection(Tiles.North_West);
       if(second != null && second.tileOccupation(this) != OccupationStatus.friendly) moves.add(second);
 
-      second = first.nextInDirection(Board.South_West);
+      second = first.nextInDirection(Tiles.South_West);
       if(second != null && second.tileOccupation(this) != OccupationStatus.friendly) moves.add(second);
     }
 

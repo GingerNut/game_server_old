@@ -2,7 +2,7 @@ part of chess;
 
 class Rook extends ChessPiece{
 
-  Rook(Board board) : super(board){
+  Rook(Tiles board) : super(board){
     name = 'R';
     value = 5;
   }
@@ -11,7 +11,7 @@ class Rook extends ChessPiece{
 
     List<Tile> moves = List();
 
-    Board.squareOrthogonalDirections.forEach((d){
+    Tiles.squareOrthogonalDirections.forEach((d){
 
     search(moves, d);
 

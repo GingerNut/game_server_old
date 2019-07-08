@@ -2,12 +2,11 @@ part of chess;
 
 class ChessPosition extends Position{
 
-  ChessBoard board;
+  Tiles tiles;
 
   String whitePlayer;
   String blackPlayer;
 
-  List<Tile> tiles = List();
 
   List<ChessPiece> whiteArmy = List();
   List<ChessPiece> blackArmy = List();
@@ -25,7 +24,6 @@ class ChessPosition extends Position{
   GameDependency get dependency => ChessInjector();
 
   String get externalVariablesString {
-
 
     List<String> whiteList = List();
 
@@ -68,32 +66,32 @@ class ChessPosition extends Position{
 
       switch (pieceString.substring(0, 1)) {
         case 'P':
-           p = Pawn(board);
+           p = Pawn(tiles);
 
           break;
 
         case 'R':
-           p = Rook(board);
+           p = Rook(tiles);
 
           break;
 
         case 'N':
-           p = Knight(board);
+           p = Knight(tiles);
 
           break;
 
         case 'B':
-           p = Bishop(board);
+           p = Bishop(tiles);
 
           break;
 
         case 'K':
-           p = King(board);
+           p = King(tiles);
 
           break;
 
         case 'Q':
-           p = Queen(board);
+           p = Queen(tiles);
 
           break;
       }
@@ -101,12 +99,12 @@ class ChessPosition extends Position{
       int i = int.parse(pieceString.substring(1, 2));
       int j = int.parse(pieceString.substring(2));
 
-      p.tile = board.tile(i, j);
+      p.tile = tiles.tile(i, j);
 
       army.add(p);
     }
 
-    board = ChessBoard();
+    tiles = Tiles.squareTiles(8, ConnectionScheme.allDirections);
 
     List<String> details = s.split(Message.delimiter);
 
@@ -124,7 +122,7 @@ class ChessPosition extends Position{
 
     whiteArmy.clear();
     blackArmy.clear();
-    board.tiles.forEach((t) => t.pieces.clear());
+    tiles.tiles.forEach((t) => t.pieces.clear());
 
   }
 
@@ -157,7 +155,7 @@ class ChessPosition extends Position{
 
     setExternalVariables(pieces);
 
-    board.tiles.forEach((t) => t.label = labelTile(t));
+    tiles.tiles.forEach((t) => t.label = labelTile(t));
 
   }
 
@@ -208,7 +206,7 @@ class ChessPosition extends Position{
       String string = ' | ';
 
       for (int i = 0 ; i < 8 ; i ++){
-        Tile tile = board.tile(i, j);
+        Tile tile = tiles.tile(i, j);
 
         if (tile.pieces.isNotEmpty) string += tile.pieces.first.name;
         else string += ' ';

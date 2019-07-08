@@ -3,7 +3,7 @@ part of game;
 class Tile{
 
   List<Tile> connections = List();
-  final Board board;
+  final Tiles board;
   final int i;
   final int j;
 
@@ -28,14 +28,14 @@ class Tile{
   Tile nextInDirection(int direction){
    switch(direction){
 
-     case Board.North: return north;
-     case Board.North_East: return northEast;
-     case Board.East: return east;
-     case Board.South_East: return southEast;
-     case Board.South: return south;
-     case Board.South_West: return southWest;
-     case Board.West: return west;
-     case Board.North_West: return northWest;
+     case Tiles.North: return north;
+     case Tiles.North_East: return northEast;
+     case Tiles.East: return east;
+     case Tiles.South_East: return southEast;
+     case Tiles.South: return south;
+     case Tiles.South_West: return southWest;
+     case Tiles.West: return west;
+     case Tiles.North_West: return northWest;
    }
   }
 

@@ -4,7 +4,7 @@ class King extends ChessPiece{
 
   bool notYetMoved = true;
 
-  King(Board board) : super(board){
+  King(Tiles board) : super(board){
     name = 'K';
     value = 9;
   }
@@ -13,7 +13,7 @@ class King extends ChessPiece{
 
     List<Tile> moves = List();
 
-    Board.squareAllDirections.forEach((d){
+    Tiles.squareAllDirections.forEach((d){
 
       Tile nextTile = tile.nextInDirection(d);
 

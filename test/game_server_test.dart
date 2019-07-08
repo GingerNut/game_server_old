@@ -39,18 +39,18 @@ void main()async{
 
       ChessPosition position = ui.game.position;
 
-      Board board = position.board;
+      Tiles tiles = position.tiles;
 
-      expect(board.tile(0,0).label, 'a1');
-      expect(board.tile(3,1).label, 'b4');
-      expect(board.tile(5,3).label, 'd6');
-      expect(board.tile(7,7).label, 'h8');
+      expect(tiles.tile(0,0).label, 'a1');
+      expect(tiles.tile(3,1).label, 'b4');
+      expect(tiles.tile(5,3).label, 'd6');
+      expect(tiles.tile(7,7).label, 'h8');
     });
 
 
   });
 
-  group('board functions',(){
+  group('tiles functions',(){
     
     ChessPosition position;
     
@@ -68,9 +68,9 @@ void main()async{
 
     test('all directions square',(){
 
-      var board = Board.squareTiles(8, ConnectionScheme.allDirections);
+      var tiles = Tiles.squareTiles(8, ConnectionScheme.allDirections);
 
-      expect(board.tiles.length, 64);
+      expect(tiles.tiles.length, 64);
 
 
     });
@@ -79,16 +79,16 @@ void main()async{
 
       position.clearPieces();
 
-      expect(position.board.tiles.length, 64);
+      expect(position.tiles.tiles.length, 64);
 
-      Pawn pawn = Pawn(position.board);
+      Pawn pawn = Pawn(position.tiles);
 
-      Tile tile = position.board.tile(0, 0);
+      Tile tile = position.tiles.tile(0, 0);
       pawn.tile = tile;
       pawn.setup();
 
-      expect(pawn.tile, position.board.tile(0,0));
-      Pawn second = Pawn(position.board);
+      expect(pawn.tile, position.tiles.tile(0,0));
+      Pawn second = Pawn(position.tiles);
       second.tile = tile;
 
       expect(second.captured, pawn);
@@ -489,91 +489,91 @@ void main()async{
     
       position.clearPieces();
 
-      Rook rook = Rook(position.board)
+      Rook rook = Rook(position.tiles)
       ..chessColor = ChessColor.white
-      ..tile = position.board.tile(4,5);
+      ..tile = position.tiles.tile(4,5);
 
       List<Tile> legalMoves = rook.legalMoves;
 
       expect(legalMoves.length, 14);
-      expect(legalMoves.contains(position.board.tile(3,5)), true);
-      expect(legalMoves.contains(position.board.tile(2,5)), true);
-      expect(legalMoves.contains(position.board.tile(1,5)), true);
-      expect(legalMoves.contains(position.board.tile(0,5)), true);
-      expect(legalMoves.contains(position.board.tile(5,5)), true);
-      expect(legalMoves.contains(position.board.tile(6,5)), true);
-      expect(legalMoves.contains(position.board.tile(7,5)), true);
-      expect(legalMoves.contains(position.board.tile(4,6)), true);
-      expect(legalMoves.contains(position.board.tile(4,7)), true);
-      expect(legalMoves.contains(position.board.tile(4,4)), true);
-      expect(legalMoves.contains(position.board.tile(4,3)), true);
-      expect(legalMoves.contains(position.board.tile(4,2)), true);
-      expect(legalMoves.contains(position.board.tile(4,1)), true);
-      expect(legalMoves.contains(position.board.tile(4,0)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(2,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(1,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(0,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(6,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(7,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,7)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,2)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,1)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,0)), true);
 
       position.clearPieces();
 
-      Bishop bishop = Bishop(position.board)
+      Bishop bishop = Bishop(position.tiles)
         ..chessColor = ChessColor.white
-        ..tile = position.board.tile(4,5);
+        ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
 
       legalMoves = bishop.legalMoves;
 
       expect(legalMoves.length, 11);
-      expect(legalMoves.contains(position.board.tile(3,4)), true);
-      expect(legalMoves.contains(position.board.tile(2,3)), true);
-      expect(legalMoves.contains(position.board.tile(1,2)), true);
-      expect(legalMoves.contains(position.board.tile(0,1)), true);
-      expect(legalMoves.contains(position.board.tile(5,4)), true);
-      expect(legalMoves.contains(position.board.tile(6,3)), true);
-      expect(legalMoves.contains(position.board.tile(7,2)), true);
-      expect(legalMoves.contains(position.board.tile(5,6)), true);
-      expect(legalMoves.contains(position.board.tile(6,7)), true);
-      expect(legalMoves.contains(position.board.tile(3,6)), true);
-      expect(legalMoves.contains(position.board.tile(2,7)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(2,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(1,2)), true);
+      expect(legalMoves.contains(position.tiles.tile(0,1)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(6,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(7,2)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(6,7)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(2,7)), true);
 
       position.clearPieces();
 
-      Queen queen = Queen(position.board)
+      Queen queen = Queen(position.tiles)
         ..chessColor = ChessColor.white
-        ..tile = position.board.tile(4,5);
+        ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
 
       legalMoves = queen.legalMoves;
 
       expect(legalMoves.length, 25);
-      expect(legalMoves.contains(position.board.tile(3,4)), true);
-      expect(legalMoves.contains(position.board.tile(2,3)), true);
-      expect(legalMoves.contains(position.board.tile(1,2)), true);
-      expect(legalMoves.contains(position.board.tile(0,1)), true);
-      expect(legalMoves.contains(position.board.tile(5,4)), true);
-      expect(legalMoves.contains(position.board.tile(6,3)), true);
-      expect(legalMoves.contains(position.board.tile(7,2)), true);
-      expect(legalMoves.contains(position.board.tile(5,6)), true);
-      expect(legalMoves.contains(position.board.tile(6,7)), true);
-      expect(legalMoves.contains(position.board.tile(3,6)), true);
-      expect(legalMoves.contains(position.board.tile(2,7)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(2,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(1,2)), true);
+      expect(legalMoves.contains(position.tiles.tile(0,1)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(6,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(7,2)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(6,7)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(2,7)), true);
 
-      expect(legalMoves.contains(position.board.tile(3,4)), true);
-      expect(legalMoves.contains(position.board.tile(2,3)), true);
-      expect(legalMoves.contains(position.board.tile(1,2)), true);
-      expect(legalMoves.contains(position.board.tile(0,1)), true);
-      expect(legalMoves.contains(position.board.tile(5,4)), true);
-      expect(legalMoves.contains(position.board.tile(6,3)), true);
-      expect(legalMoves.contains(position.board.tile(7,2)), true);
-      expect(legalMoves.contains(position.board.tile(5,6)), true);
-      expect(legalMoves.contains(position.board.tile(6,7)), true);
-      expect(legalMoves.contains(position.board.tile(3,6)), true);
-      expect(legalMoves.contains(position.board.tile(2,7)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(2,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(1,2)), true);
+      expect(legalMoves.contains(position.tiles.tile(0,1)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(6,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(7,2)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(6,7)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(2,7)), true);
 
       position.clearPieces();
 
-      King king = King(position.board)
+      King king = King(position.tiles)
         ..chessColor = ChessColor.white
-        ..tile = position.board.tile(4,5);
+        ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
 
@@ -581,67 +581,67 @@ void main()async{
 
       expect(legalMoves.length, 8);
 
-      expect(legalMoves.contains(position.board.tile(3,5)), true);
-      expect(legalMoves.contains(position.board.tile(3,6)), true);
-      expect(legalMoves.contains(position.board.tile(3,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,4)), true);
 
-      expect(legalMoves.contains(position.board.tile(4,4)), true);
-      expect(legalMoves.contains(position.board.tile(4,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,6)), true);
 
-      expect(legalMoves.contains(position.board.tile(5,4)), true);
-      expect(legalMoves.contains(position.board.tile(5,6)), true);
-      expect(legalMoves.contains(position.board.tile(5,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,5)), true);
 
       position.clearPieces();
 
-      Pawn pawn = Pawn(position.board)
+      Pawn pawn = Pawn(position.tiles)
         ..chessColor = ChessColor.white
-        ..tile = position.board.tile(4,5);
+        ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
 
       legalMoves = pawn.legalMoves;
 
       expect(legalMoves.length, 1);
-      expect(legalMoves.contains(position.board.tile(4,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,6)), true);
 
-      pawn.tile = position.board.tile(4,1);
+      pawn.tile = position.tiles.tile(4,1);
       legalMoves.clear();
       legalMoves = pawn.legalMoves;
       expect(legalMoves.length, 2);
-      expect(legalMoves.contains(position.board.tile(4,2)), true);
-      expect(legalMoves.contains(position.board.tile(4,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,2)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,3)), true);
 
       position.clearPieces();
 
-      pawn = Pawn(position.board)
+      pawn = Pawn(position.tiles)
         ..chessColor = ChessColor.black
-        ..tile = position.board.tile(4,5);
+        ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
 
       legalMoves = pawn.legalMoves;
 
       expect(legalMoves.length, 1);
-      expect(legalMoves.contains(position.board.tile(4,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,4)), true);
 
       position.clearPieces();
 
-      Pawn blackPawn = Pawn(position.board)
-        ..tile = position.board.tile(4, 6)
+      Pawn blackPawn = Pawn(position.tiles)
+        ..tile = position.tiles.tile(4, 6)
         ..chessColor = ChessColor.black;
 
       legalMoves.clear();
       legalMoves = blackPawn.legalMoves;
       expect(legalMoves.length, 2);
-      expect(legalMoves.contains(position.board.tile(4,5)), true);
-      expect(legalMoves.contains(position.board.tile(4,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,5)), true);
+      expect(legalMoves.contains(position.tiles.tile(4,4)), true);
 
       position.clearPieces();
 
-      Knight knight = Knight(position.board)
+      Knight knight = Knight(position.tiles)
         ..chessColor = ChessColor.white
-        ..tile = position.board.tile(4,5);
+        ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
 
@@ -649,17 +649,17 @@ void main()async{
 
       expect(legalMoves.length, 8);
 
-      expect(legalMoves.contains(position.board.tile(3,7)), true);
-      expect(legalMoves.contains(position.board.tile(5,7)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,7)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,7)), true);
 
-      expect(legalMoves.contains(position.board.tile(2,4)), true);
-      expect(legalMoves.contains(position.board.tile(2,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(2,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(2,6)), true);
 
-      expect(legalMoves.contains(position.board.tile(5,3)), true);
-      expect(legalMoves.contains(position.board.tile(3,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(5,3)), true);
+      expect(legalMoves.contains(position.tiles.tile(3,3)), true);
 
-      expect(legalMoves.contains(position.board.tile(6,6)), true);
-      expect(legalMoves.contains(position.board.tile(6,4)), true);
+      expect(legalMoves.contains(position.tiles.tile(6,6)), true);
+      expect(legalMoves.contains(position.tiles.tile(6,4)), true);
 
     });
 
@@ -667,27 +667,27 @@ void main()async{
 
       position.clearPieces();
 
-      Rook whiteRook = Rook(position.board)
+      Rook whiteRook = Rook(position.tiles)
         ..chessColor = ChessColor.white
-        ..tile = position.board.tile(4,5);
+        ..tile = position.tiles.tile(4,5);
 
-      Pawn whitePawn = Pawn(position.board)
+      Pawn whitePawn = Pawn(position.tiles)
         ..chessColor = ChessColor.white
-        ..tile = position.board.tile(3,5);
+        ..tile = position.tiles.tile(3,5);
 
-      Pawn blackPawn = Pawn(position.board)
+      Pawn blackPawn = Pawn(position.tiles)
         ..chessColor = ChessColor.black
-        ..tile = position.board.tile(1,6);
+        ..tile = position.tiles.tile(1,6);
 
       expect(whiteRook.isFriendly(whitePawn), true);
-      expect(position.board.tile(2,5).tileOccupation(whiteRook ), OccupationStatus.neutral);
-      expect(position.board.tile(4,5).tileOccupation(whitePawn ), OccupationStatus.friendly);
-      expect(position.board.tile(3,5).tileOccupation(whiteRook ), OccupationStatus.friendly);
+      expect(position.tiles.tile(2,5).tileOccupation(whiteRook ), OccupationStatus.neutral);
+      expect(position.tiles.tile(4,5).tileOccupation(whitePawn ), OccupationStatus.friendly);
+      expect(position.tiles.tile(3,5).tileOccupation(whiteRook ), OccupationStatus.friendly);
 
       expect(whiteRook.isFriendly(blackPawn), false);
-      expect(position.board.tile(2,5).tileOccupation(blackPawn ), OccupationStatus.neutral);
-      expect(position.board.tile(4,5).tileOccupation(blackPawn ), OccupationStatus.enemy);
-      expect(position.board.tile(3,5).tileOccupation(blackPawn ), OccupationStatus.enemy);
+      expect(position.tiles.tile(2,5).tileOccupation(blackPawn ), OccupationStatus.neutral);
+      expect(position.tiles.tile(4,5).tileOccupation(blackPawn ), OccupationStatus.enemy);
+      expect(position.tiles.tile(3,5).tileOccupation(blackPawn ), OccupationStatus.enemy);
     });
 
 
@@ -765,9 +765,9 @@ void main()async{
       ui.addPlayer(LocalPlayer(ui));
       ui.startLocalGame();
 
-      (ui.input as ChessInput).tapTile((ui.position as ChessPosition).board.tile(0,1));
+      (ui.input as ChessInput).tapTile((ui.position as ChessPosition).tiles.tile(0,1));
 
-      (ui.input as ChessInput).tapTile((ui.position as ChessPosition).board.tile(0,2));
+      (ui.input as ChessInput).tapTile((ui.position as ChessPosition).tiles.tile(0,2));
 
 
 
@@ -783,8 +783,8 @@ void main()async{
       ui.newGame.firstPlayer = ('Player 1');
       await ui.startLocalGame();
 
-      ChessMove move = ChessMove((ui.position as ChessPosition).board.tile(1, 1),
-      (ui.position as ChessPosition).board.tile(1, 3));
+      ChessMove move = ChessMove((ui.position as ChessPosition).tiles.tile(1, 1),
+      (ui.position as ChessPosition).tiles.tile(1, 3));
 
       ui.tryMove(move);
 

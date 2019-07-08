@@ -1,6 +1,6 @@
 part of game;
 
-class Board{
+class Tiles{
   static const int North = 1;
   static const int North_East = 2;
   static const int East = 3;
@@ -18,6 +18,10 @@ class Board{
 
   List<Tile> tiles;
 
+  operator [](int i) => tiles[i];
+
+  Tile  get (int i, int j) => tile(i,j);
+
   String get string => null;
 
   Tile tile(int i, int j){
@@ -30,9 +34,9 @@ class Board{
     return tile;
   }
 
-  Board.fromString(String string);
+  Tiles.fromString(String string);
 
-  Board.squareTiles(int size, ConnectionScheme connectionScheme){
+  Tiles.squareTiles(int size, ConnectionScheme connectionScheme){
     tiles = getSquareTiles(size, size, connectionScheme);
   }
 

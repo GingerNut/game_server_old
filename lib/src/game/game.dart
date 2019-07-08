@@ -18,7 +18,7 @@ part 'settings.dart';
 part 'setting.dart';
 part 'game_dependency.dart';
 
-part 'board/board.dart';
+part 'board/tiles.dart';
 part 'board/markings.dart';
 part 'board/piece.dart';
 part 'board/tile.dart';
@@ -50,7 +50,7 @@ class Game {
   List<Player> players;
   String firstPlayer;
 
-  Board board;
+  Tiles board;
 
   Game.fromNewGame(this.dependency, NewGame newGame){
     timer = newGame.timer;

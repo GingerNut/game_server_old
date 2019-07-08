@@ -4,7 +4,6 @@ import 'package:game_server/game_server.dart';
 import 'package:game_server/src/game/game.dart';
 
 
-part 'chess_board.dart';
 part 'chess_injector.dart';
 part 'chess_move.dart';
 part 'chess_move_builder.dart';

@@ -30,17 +30,17 @@ class ChessMove extends Move<ChessPosition>{
 
 
   Message doCheck(ChessPosition position) {
-      Piece piece = position.board.tile(fromI, fromJ).pieces.first;
+      Piece piece = position.tiles.tile(fromI, fromJ).pieces.first;
 
-      if(piece.legalMoves.contains(position.board.tile(toI, toJ))) return Success();
+      if(piece.legalMoves.contains(position.tiles.tile(toI, toJ))) return Success();
       else return GameError('illegal move');
   }
 
   doMove(ChessPosition position) {
 
-    ChessPiece piece = position.board.tile(fromI, fromJ).pieces.first;
+    ChessPiece piece = position.tiles.tile(fromI, fromJ).pieces.first;
 
-    piece.tile = position.board.tile(toI, toJ);
+    piece.tile = position.tiles.tile(toI, toJ);
 
     ChessPiece captured = piece.captured;
 

@@ -4,7 +4,7 @@ part of chess;
 class Bishop extends ChessPiece{
 
 
-  Bishop(Board board ) : super(board){
+  Bishop(Tiles board ) : super(board){
     name = 'B';
     value = 3;
   }
@@ -13,7 +13,7 @@ class Bishop extends ChessPiece{
 
     List<Tile> moves = List();
 
-    Board.squareDiagonalDirections.forEach((d)=> search(moves, d));
+    Tiles.squareDiagonalDirections.forEach((d)=> search(moves, d));
 
     return moves;
   }

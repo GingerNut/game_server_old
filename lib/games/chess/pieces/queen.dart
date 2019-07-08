@@ -3,7 +3,7 @@ part of chess;
 
 class Queen extends ChessPiece{
 
-  Queen(Board board) : super(board){
+  Queen(Tiles board) : super(board){
     name = 'Q';
     value = 7;
   }
@@ -12,7 +12,7 @@ class Queen extends ChessPiece{
 
     List<Tile> moves = List();
 
-    Board.squareAllDirections.forEach((d){
+    Tiles.squareAllDirections.forEach((d){
 
       search(moves, d);
 

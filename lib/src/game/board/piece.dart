@@ -2,7 +2,7 @@ part of game;
 
 abstract class Piece{
 
-  final Board board;
+  final Tiles board;
 
   String name;
   String notation;

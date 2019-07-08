@@ -3,7 +3,7 @@ part of chess;
 
 class Pawn extends ChessPiece{
 
-  Pawn(Board board) : super(board){
+  Pawn(Tiles board) : super(board){
     name = 'P';
     value = 1;
   }
@@ -11,7 +11,7 @@ class Pawn extends ChessPiece{
   List<Tile> get legalMoves {
     List<Tile> moves = List();
 
-    int direction = chessColor == ChessColor.white ? Board.North : Board.South;
+    int direction = chessColor == ChessColor.white ? Tiles.North : Tiles.South;
 
       Tile nextTile = tile.nextInDirection(direction);
 
@@ -31,12 +31,12 @@ class Pawn extends ChessPiece{
       //TODO: add en pasane
 
       switch (direction){
-        case Board.North:
+        case Tiles.North:
           if(tile.northEast?.tileOccupation(this) == OccupationStatus.enemy)moves.add(tile.northEast);
           if(tile.northWest?.tileOccupation(this) == OccupationStatus.enemy)moves.add(tile.northWest);
           break;
 
-        case Board.South:
+        case Tiles.South:
           if(tile.southEast?.tileOccupation(this) == OccupationStatus.enemy)moves.add(tile.southEast);
           if(tile.southWest?.tileOccupation(this) == OccupationStatus.enemy)moves.add(tile.southWest);
           break;

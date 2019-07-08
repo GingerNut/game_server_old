@@ -2,7 +2,7 @@ part of chess;
 
 
 abstract class ChessPiece extends Piece{
-  ChessPiece(Board board) : super(board);
+  ChessPiece(Tiles board) : super(board);
 
   ChessColor chessColor;
   double value;
