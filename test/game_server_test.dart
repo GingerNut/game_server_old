@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:game_server/game_server.dart' as prefix0;
 import 'package:game_server/games/chess/chess.dart';
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/design.dart';
@@ -221,6 +222,24 @@ void main()async{
 
       expect(bools.string, PlayerVariable.playerVariablefromString( bools.string).string);
 
+
+    });
+
+    test('move valuations', (){
+
+      MoveNumber testMove = MoveNumber();
+
+      testMove.playerScores = [2.0,3.0,1.0,4.0];
+
+      expect(testMove.score(0), -2);
+      expect(testMove.score(1), -1);
+      expect(testMove.score(2), -3);
+      expect(testMove.score(3), 1);
+
+      testMove.playerScores = [2.0,3.0];
+
+      expect(testMove.score(0), -1);
+      expect(testMove.score(1), 1);
 
     });
 

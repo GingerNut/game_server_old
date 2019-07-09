@@ -240,8 +240,7 @@ class ChessPosition extends Position{
 
   @override
   double value(String playerId) {
-    // TODO: implement value
-    return 0;
+
   }
 
 

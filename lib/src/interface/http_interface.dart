@@ -37,6 +37,7 @@ class HttpInterface extends Interface{
 
   setPosition(SendPosition sendPosition) {
     position = sendPosition.build(dependency.getPositionBuilder());
+    position.lastMove = StartingPosition(position.json);
   }
 
   set status (PlayerStatus status) {
