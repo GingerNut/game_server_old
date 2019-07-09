@@ -3,9 +3,8 @@ part of game;
 
 abstract class Position{
 
-  Move lastMove;
+  GameNavigation lastMove;
   GameDependency get dependency;
-  String initialPosition;
 
   String gameId;
   List<String> playerIds;
@@ -118,7 +117,7 @@ abstract class Position{
 
     initialiseExternalVariables();
 
-    initialPosition = json;
+    lastMove = StartingPosition(json);
   }
 
   setTimers(double gameTime)=> timeLeft = PlayerVariable(playerIds, gameTime);

@@ -8,9 +8,10 @@ import 'package:game_server/src/design/design.dart';
 import 'package:game_server/src/messages/game_message/game_message.dart';
 import 'package:game_server/src/messages/message.dart';
 
-
-part 'move.dart';
-part 'move_builder.dart';
+part 'navigation/game_navigation.dart';
+part 'navigation/move.dart';
+part 'navigation/move_builder.dart';
+part 'navigation/start.dart';
 part 'position.dart';
 part 'position_builder.dart';
 part 'settings.dart';

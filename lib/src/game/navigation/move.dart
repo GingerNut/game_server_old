@@ -1,7 +1,7 @@
 
 part of game;
 
-abstract class Move <P>{
+abstract class Move <P> extends GameNavigation{
   static const String code = 'mov';
   bool legal = false;
   String error;
@@ -16,7 +16,6 @@ abstract class Move <P>{
 
   Move parent;
   List<Move> children;
-  String resultingPosition;
 
 
   Message check(P position){

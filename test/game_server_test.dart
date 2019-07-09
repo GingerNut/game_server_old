@@ -14,9 +14,6 @@ import 'package:game_server/src/messages/message.dart';
 import 'package:test/test.dart';
 
 
-
-
-
 void main()async{
 
   Future <T> next<T>(Stream<T> stream )async{
@@ -25,7 +22,6 @@ void main()async{
       return message;
     }
   }
-
 
   group('notation', (){
 

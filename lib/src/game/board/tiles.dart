@@ -20,7 +20,7 @@ class Tiles{
 
   operator [](int i) => tiles[i];
 
-  Tile  get (int i, int j) => tile(i,j);
+//  operator  [] (int i, int j) => tile(i,j);
 
   String get string => null;
 
