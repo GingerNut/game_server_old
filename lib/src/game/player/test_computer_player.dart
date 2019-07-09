@@ -2,8 +2,20 @@ part of game;
 
 class TestComputerPlayer extends Player{
 
-  go() {
+  final GameDependency dependency;
+  Computer computer;
 
+  TestComputerPlayer(this.dependency){
+    computer = Computer(dependency);
+    computer.position = game.position;
+  }
+
+
+  go() async{
+
+    Move move = await computer.findBestMove();
+
+    await game.makeMove(move, gameId, id);
   }
 
 
