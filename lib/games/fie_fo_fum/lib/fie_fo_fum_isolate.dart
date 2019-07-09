@@ -9,7 +9,7 @@ main(List<String> args, SendPort sendPort) {
   ReceivePort receivePort = new ReceivePort();
   sendPort.send(receivePort.sendPort);
 
-  Computer computer = Computer(FieFoFumInjector(), receivePort, sendPort);
+  IsolateComputer computer = IsolateComputer(FieFoFumInjector(), receivePort, sendPort);
 
   computer.initialise();
 

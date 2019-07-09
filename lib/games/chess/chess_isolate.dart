@@ -12,7 +12,7 @@ main(List<String> args, SendPort sendPort) async{
   ReceivePort receivePort = new ReceivePort();
   sendPort.send(receivePort.sendPort);
 
-  Computer computer = Computer(ChessInjector(), receivePort, sendPort);
+  IsolateComputer computer = IsolateComputer(ChessInjector(), receivePort, sendPort);
 
   await computer.initialise();
 

@@ -24,9 +24,11 @@ part 'board/markings.dart';
 part 'board/piece.dart';
 part 'board/tile.dart';
 
-part 'player/computer.dart';
+part 'player/isolate_computer.dart';
 part 'player/computer_player.dart';
 part 'player/isolate.dart';
+part 'player/test_computer_player.dart';
+part 'player/computer.dart';
 part 'player/player.dart';
 part 'player/player_variable.dart';
 
