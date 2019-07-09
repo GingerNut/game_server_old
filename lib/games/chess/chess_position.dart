@@ -101,6 +101,8 @@ class ChessPosition extends Position{
 
       p.tile = tiles.tile(i, j);
 
+      p.chessColor = color;
+
       army.add(p);
     }
 
@@ -241,6 +243,25 @@ class ChessPosition extends Position{
   @override
   double value(String playerId) {
 
+    double value = 0;
+
+    List<ChessPiece> army = playerId == whitePlayer ? whiteArmy : blackArmy;
+
+    army.forEach((p) {
+
+      value += p.value;
+      value += p.legalMoves.length * 0.1;
+
+      List moves = p.legalMoves;
+
+      if(moves.contains(tiles.tile(3, 3) )) value += 0.2;
+      if(moves.contains(tiles.tile(3, 4) )) value += 0.2;
+      if(moves.contains(tiles.tile(4, 3) )) value += 0.2;
+      if(moves.contains(tiles.tile(4, 4) )) value += 0.2;
+
+    });
+
+    return value;
   }
 
 

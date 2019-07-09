@@ -65,6 +65,8 @@ abstract class Move <P> extends GameNavigation{
         playerScores[i] = pos.value(pos.playerIds[i]);
       }
 
+      print(playerScores);
+
       return Success();
   }
 

@@ -21,6 +21,12 @@ class FieFoFumPosition extends Position{
 
   List<Move> getPossibleMoves() => [MoveNumber(), MoveFie(), MoveFo(), MoveFum()];
 
-  double value(String playerId) => score[playerId];
+  double value(String playerId) {
+    double value = score[playerId];
+
+    if(playerStatus[playerId] == PlayerStatus.out) value -= 100;
+
+    return value;
+  }
 
 }
