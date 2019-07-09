@@ -5,11 +5,12 @@ class TestComputerPlayer extends Player{
   final GameDependency dependency;
   Computer computer;
 
-  TestComputerPlayer(this.dependency){
+  TestComputerPlayer(this.dependency);
+
+  initialise(){
     computer = Computer(dependency);
     computer.position = game.position;
   }
-
 
   go() async{
 
