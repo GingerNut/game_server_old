@@ -16,8 +16,6 @@ abstract class GameDependency{
 
   Settings get settings;
 
-  Uri get computerUri;
-
   Function get isolateSpawn;
 
   static spawnIsolate(SendPort sendPort)async{

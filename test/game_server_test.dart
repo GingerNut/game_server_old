@@ -14,6 +14,7 @@ import 'package:game_server/src/messages/message.dart';
 
 
 import 'package:test/test.dart';
+import 'package:test/test.dart' as prefix1;
 
 
 void main()async{
@@ -338,12 +339,15 @@ void main()async{
     ChessPosition position;
     ComputerPlayer computer;
 
+    String player1 = 'Player 1';
+    String gameId = 'local game';
+
     setUp(() async{
       ui = LocalInterface(ChessInjector());
       ui.addPlayer(LocalPlayer(ui));
       computer = ComputerPlayer(ChessInjector());
       ui.addPlayer(computer);
-      ui.newGame.firstPlayer = 'Player 1';
+      ui.newGame.firstPlayer = player1;
 
       await ui.startLocalGame();
       position = ui.game.position;
@@ -352,7 +356,8 @@ void main()async{
 
     test('computer testing',() async{
       expect(position.runtimeType, ChessPosition);
-      expect(position.whitePlayer, 'Player 1');
+      expect(position.whitePlayer, player1);
+      expect(ui.game.gameId   , gameId);
 
       expect(ui.game.players[1].runtimeType, ComputerPlayer);
 
@@ -365,6 +370,18 @@ void main()async{
       EchoResponse response = message as EchoResponse;
 
       expect(response.text, 'echo hey');
+
+      await ui.game.makeMove(ChessMove(
+        position.tiles.tile(3, 1),
+        position.tiles.tile(3, 3)
+      ), gameId, 'Player 1');
+
+      message = Message.inflate(await next(computer.messagesIn.stream));
+
+      expect(message.runtimeType, MakeMove);
+
+      expect(ChessInjector().getMoveBuilder().build((message as MakeMove).moveString).runtimeType, ChessMove);
+
 
 
     },);

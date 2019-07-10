@@ -30,4 +30,5 @@ class MakeMove extends Message{
 
   Move build(MoveBuilder builder) => builder.build(moveString);
 
+
 }

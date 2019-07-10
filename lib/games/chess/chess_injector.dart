@@ -1,8 +1,6 @@
 part of chess;
 
 class ChessInjector extends GameDependency{
-
-  Uri get computerUri => Uri.parse('package:game_server/games/chess/chess_isolate.dart');
   
   Game getGame(NewGame newGame) => Game.fromNewGame(this, newGame);
 
