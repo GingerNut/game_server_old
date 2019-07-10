@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:game_server/game_server.dart' as prefix0;
 import 'package:game_server/games/chess/chess.dart';
@@ -328,23 +329,51 @@ void main()async{
 
     });
 
-    test('basic ai',(){
-      var ui = LocalInterface(ChessInjector());
 
-      setUp(() async{
-        ui.resetGame();
-        ui.addPlayer(LocalPlayer(ui));
+  });
 
-        var computer = ComputerPlayer(ChessInjector());
+  group('chess ai',(){
 
-        ui.addPlayer(computer);
-        await ui.startLocalGame();
-      });
+    LocalInterface ui;
+    ChessPosition position;
+    ComputerPlayer computer;
+
+    setUp(() async{
+      ui = LocalInterface(ChessInjector());
+      ui.addPlayer(LocalPlayer(ui));
+      computer = ComputerPlayer(ChessInjector());
+      ui.addPlayer(computer);
+      ui.newGame.firstPlayer = 'Player 1';
+
+      await ui.startLocalGame();
+      position = ui.game.position;
+    });
+
+
+    test('computer testing',() async{
+      expect(position.runtimeType, ChessPosition);
+      expect(position.whitePlayer, 'Player 1');
+
+      expect(ui.game.players[1].runtimeType, ComputerPlayer);
+
+      computer.send(Echo('hey'));
+
+      Message message = Message.inflate(await next(computer.messagesIn.stream));
+
+      expect(message.runtimeType, EchoResponse);
+
+      EchoResponse response = message as EchoResponse;
+
+      expect(response.text, 'echo hey');
 
 
     },);
 
+
+
+
   });
+
 
   group('Message testing',(){
 
