@@ -1,7 +1,8 @@
 library chess;
 
+import 'dart:isolate';
+
 import 'package:game_server/game_server.dart';
-import 'package:game_server/game_server.dart' as prefix0;
 import 'package:game_server/src/game/game.dart';
 
 

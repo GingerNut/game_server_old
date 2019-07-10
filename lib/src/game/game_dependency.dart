@@ -18,5 +18,16 @@ abstract class GameDependency{
 
   Uri get computerUri;
 
+  Function get isolateSpawn;
 
+  static spawnIsolate(SendPort sendPort)async{
+
+    ReceivePort receivePort = ReceivePort();
+    sendPort.send(receivePort.sendPort);
+
+//    IsolateComputer computer = IsolateComputer([ this class ], receivePort, sendPort);
+
+//    computer.initialise();
+
+  }
 }

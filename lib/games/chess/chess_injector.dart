@@ -16,4 +16,17 @@ class ChessInjector extends GameDependency{
 
   Settings get settings => ChessSettings();
 
+  Function get isolateSpawn => spawnIsolate;
+
+  static spawnIsolate(SendPort sendPort)async{
+
+    ReceivePort receivePort = ReceivePort();
+    sendPort.send(receivePort.sendPort);
+
+    IsolateComputer computer = IsolateComputer(ChessInjector(), receivePort, sendPort);
+
+    computer.initialise();
+
+  }
+
 }

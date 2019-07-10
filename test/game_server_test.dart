@@ -328,6 +328,22 @@ void main()async{
 
     });
 
+    test('basic ai',(){
+      var ui = LocalInterface(ChessInjector());
+
+      setUp(() async{
+        ui.resetGame();
+        ui.addPlayer(LocalPlayer(ui));
+
+        var computer = ComputerPlayer(ChessInjector());
+
+        ui.addPlayer(computer);
+        await ui.startLocalGame();
+      });
+
+
+    },);
+
   });
 
   group('Message testing',(){

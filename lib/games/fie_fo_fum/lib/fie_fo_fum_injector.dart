@@ -19,5 +19,23 @@ class FieFoFumInjector extends GameDependency{
 
   Uri get computerUri => Uri.parse('package:game_server/games/fie_fo_fum/lib/fie_fo_fum_isolate.dart');
 
+
+  Function get isolateSpawn => spawnIsolate;
+
+
+  static spawnIsolate(SendPort sendPort)async{
+
+    ReceivePort receivePort = ReceivePort();
+    sendPort.send(receivePort.sendPort);
+
+    IsolateComputer computer = IsolateComputer(FieFoFumInjector(), receivePort, sendPort);
+
+    computer.initialise();
+
+  }
+
+
+
+
 }
 

@@ -17,6 +17,7 @@ class ComputerPlayer extends Player{
   StreamController<String> messagesIn;  // just for testing
 
   initialise() async{
+
     messagesIn = await StreamController.broadcast();
 
     receivePort.listen((d){
@@ -28,15 +29,16 @@ class ComputerPlayer extends Player{
       }
     });
 
-    try{
-      await Isolate.spawnUri(dependency.computerUri, [],  receivePort.sendPort);
-    } on IsolateSpawnException catch(e){
-      print('isolate exception ' + e.message);
-    }
+//    try{
+//      await Isolate.spawnUri(dependency.computerUri, [],  receivePort.sendPort);
+//    } on IsolateSpawnException catch(e){
+//      print('isolate exception ' + e.message);
+//    }
+
+    await Isolate.spawn(dependency.isolateSpawn, receivePort.sendPort);
 
 
     while(sendPort == null){
-      print('waiting');
       await Future.delayed(Duration(milliseconds : 100));
     }
 
