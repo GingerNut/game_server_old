@@ -2,6 +2,7 @@ part of game;
 
 abstract class GameDependency{
 
+
   Game getGame(NewGame newGame);
 
   MoveBuilder getMoveBuilder();

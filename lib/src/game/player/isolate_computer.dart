@@ -53,8 +53,8 @@ class IsolateComputer extends Computer{
 
           case YourTurn:
             Move move = await findBestMove();
-            MakeMove makeMove = MakeMove(gameId, playerId, move , move.number);
-            send(makeMove);
+            SuggestMove suggestMove = SuggestMove(gameId, playerId, move , move.number);
+            send(suggestMove);
             break;
 
           case MakeMove:
@@ -75,7 +75,10 @@ class IsolateComputer extends Computer{
 
     Future analysePosition(Position position) => position.analyse();
 
-    doMove(Move move)=> position.makeMove(move);
+    doMove(Move move){
+
+      position.makeMove(move);
+    }
 
 
     }

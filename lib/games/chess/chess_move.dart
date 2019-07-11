@@ -30,7 +30,20 @@ class ChessMove extends Move<ChessPosition>{
 
 
   Message doCheck(ChessPosition position) {
-      Piece piece = position.tiles.tile(fromI, fromJ).pieces.first;
+//    print('from chess move check ${fromI} ${fromJ} to ${toI} ${toJ}');
+
+//    print(position.tiles.tile(fromI, fromJ).pieces);
+
+    //TODO moves in computer being duplicated
+
+    Piece piece;
+
+    if(position.tiles.tile(fromI, fromJ).pieces.length>0){
+      piece = position.tiles.tile(fromI, fromJ).pieces.first;
+    }
+
+    if(piece == null) return GameError('piece not found');
+
 
       if(piece.legalMoves.contains(position.tiles.tile(toI, toJ))) return Success();
       else return GameError('illegal move');
@@ -38,9 +51,12 @@ class ChessMove extends Move<ChessPosition>{
 
   doMove(ChessPosition position) {
 
-    ChessPiece piece = position.tiles.tile(fromI, fromJ).pieces.first;
+    Tile from = position.tiles.tile(fromI, fromJ);
+    Tile to = position.tiles.tile(toI, toJ);
 
-    piece.tile = position.tiles.tile(toI, toJ);
+    ChessPiece piece = from.pieces.first;
+
+    piece.tile = to;
 
     ChessPiece captured = piece.captured;
 
@@ -54,6 +70,10 @@ class ChessMove extends Move<ChessPosition>{
         position.whiteArmy.remove(captured);
         break;
     }
+
+    from.pieces.clear();
+    to.pieces.clear();
+    to.pieces.add(piece);
 
     return Success();
 

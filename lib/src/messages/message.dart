@@ -25,6 +25,7 @@ part 'command/setId.dart';
 part 'command/start_game.dart';
 part 'command/tidy.dart';
 part 'command/your_turn.dart';
+part 'command/suggest_move.dart';
 
 part 'error/game_error.dart';
 
@@ -58,6 +59,8 @@ abstract class Message{
         return Login.fromJSON(string);
       case MakeMove.type:
         return MakeMove.fromJSON(string);
+      case SuggestMove.type:
+        return SuggestMove.fromJSON(string);
       case ConfirmMove.type:
         return ConfirmMove.fromJSON(string);
       case NewGame.type:

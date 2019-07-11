@@ -143,6 +143,8 @@ abstract class Position{
 
   List<Move> getPossibleMoves();
 
+  printBoard(){}
+
   double value(String playerId);
 
   static String playerStatusToString(PlayerStatus p){

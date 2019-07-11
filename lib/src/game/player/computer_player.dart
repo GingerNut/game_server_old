@@ -70,8 +70,8 @@ class ComputerPlayer extends Player{
         status = setStatus.status;
         break;
 
-      case MakeMove:
-        var suggestMove = message as MakeMove;
+      case SuggestMove:
+        var suggestMove = message as SuggestMove;
         Move move = suggestMove.build(moveBuilder);
         game.makeMove(move, suggestMove.gameId, suggestMove.playerId);
         break;

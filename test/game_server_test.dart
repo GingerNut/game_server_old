@@ -277,9 +277,9 @@ void main()async{
       expect(response.runtimeType, ConfirmMove);
 
       response = Message.inflate(await next(computer.messagesIn.stream));
-      expect(response.runtimeType, MakeMove);
+      expect(response.runtimeType, SuggestMove);
 
-      expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
+      expect((response as prefix0.SuggestMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
 
       expect((ui.position as FieFoFumPosition).count, 3);
       expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
@@ -295,7 +295,7 @@ void main()async{
       expect(response.runtimeType, ConfirmMove);
 
       response = Message.inflate(await next(computer.messagesIn.stream));
-      expect((response as MakeMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
+      expect((response as SuggestMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
 
       expect((ui.position as FieFoFumPosition).playerQueue , ['Player 1', 'Computer 1']);
       expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
@@ -378,11 +378,20 @@ void main()async{
 
       message = Message.inflate(await next(computer.messagesIn.stream));
 
-      expect(message.runtimeType, MakeMove);
+      expect(message.runtimeType, SuggestMove);
 
-      expect(ChessInjector().getMoveBuilder().build((message as MakeMove).moveString).runtimeType, ChessMove);
+      expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
 
+      await ui.game.makeMove(ChessMove(
+          position.tiles.tile(4, 1),
+          position.tiles.tile(4, 3)
+      ), gameId, 'Player 1');
 
+      message = Message.inflate(await next(computer.messagesIn.stream));
+
+      expect(message.runtimeType, SuggestMove);
+
+      expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
 
     },);
 
