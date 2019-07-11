@@ -425,19 +425,19 @@ void main()async{
       expect(position.playerId.substring(0,6)  , 'Player');
 
       MakeMove makeMove = MakeMove('testGamne', 'player', MoveFie(), ui.position.nextMoveNumber);
-      Move move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
+      Move move = MakeMove.fromJSON(makeMove.json).getMove(FieFoFumInjector());
       expect(move.runtimeType, MoveFie);
 
       makeMove = MakeMove('testGamne', 'player', MoveFo(), ui.position.nextMoveNumber);
-      move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
+      move = MakeMove.fromJSON(makeMove.json).getMove(FieFoFumInjector());
       expect(move.runtimeType, MoveFo);
 
       makeMove = MakeMove('testGamne', 'player', MoveFum(), ui.position.nextMoveNumber);
-      move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
+      move = MakeMove.fromJSON(makeMove.json).getMove(FieFoFumInjector());
       expect(move.runtimeType, MoveFum);
 
       makeMove = MakeMove('testGamne', 'player', MoveNumber(), ui.position.nextMoveNumber);
-      move = MakeMove.fromJSON(makeMove.json).build(FieFoFumMoveBuilder());
+      move = MakeMove.fromJSON(makeMove.json).getMove(FieFoFumInjector());
       expect(move.runtimeType, MoveNumber);
 
     });

@@ -125,7 +125,7 @@ class GameServer{
 
   requestMove(MakeMove makeMove){
 
-    Move move = makeMove.build(injector.getMoveBuilder());
+    Move move = makeMove.getMove(injector);
 
     Game game = _games.firstWhere((g) {
        return (g.gameId == makeMove.gameId);

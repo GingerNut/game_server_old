@@ -28,7 +28,10 @@ class MakeMove extends Message{
     'number': number
   });
 
-  Move build(MoveBuilder builder) => builder.build(moveString);
+  Move getMove(GameDependency dependency){
+
+    return dependency.getMoveBuilder().build(moveString);
+  }
 
 
 }

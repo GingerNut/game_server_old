@@ -59,7 +59,7 @@ class IsolateComputer extends Computer{
 
           case MakeMove:
             MakeMove makeMove = message as MakeMove;
-            Move move = makeMove.build(moveBuilder);
+            Move move = makeMove.getMove(dependency);
             doMove(move);
             send(ConfirmMove(makeMove.number, makeMove.gameId, playerId));
             break;

@@ -4,6 +4,12 @@ part of game;
 abstract class Position{
 
   GameNavigation lastMove;
+
+  void setTo(GameNavigation situation){
+      lastMove = situation;
+      setVariables(situation.resultingPosition);
+  }
+
   GameDependency get dependency;
 
   String gameId;
@@ -29,6 +35,22 @@ abstract class Position{
     'position' : externalVariablesString,
   }
   );
+
+  setVariables(String json){
+    var jsonObject = jsonDecode(json);
+
+    gameId = jsonObject['game_id'];
+    playerIds = jsonObject['player_ids'].split(',');
+    playerQueue = jsonObject['player_queue'].split(',');
+    playerStatus = PlayerVariable.playerVariablefromString(jsonObject['player_status']);
+//        timeLeft = PlayerVariable.playerVariablefromString( jsonObject['time_left']);
+    score = PlayerVariable.playerVariablefromString(jsonObject['score']);
+    color = PlayerVariable.playerVariablefromString(jsonObject['color']);
+
+    setExternalVariables(jsonObject['position']);
+
+
+  }
 
   String get externalVariablesString;
 

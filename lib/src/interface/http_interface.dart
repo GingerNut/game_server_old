@@ -51,7 +51,7 @@ class HttpInterface extends Interface{
   }
 
   doMove(MakeMove makeMove){
-    Move move = makeMove.build(dependency.getMoveBuilder());
+    Move move = makeMove.getMove(dependency);
     position.makeMove(move);
   }
 

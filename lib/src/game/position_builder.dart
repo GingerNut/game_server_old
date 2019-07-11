@@ -7,19 +7,9 @@ class PositionBuilder{
     PositionBuilder(this.dependencies);
 
     Position build(String string){
-
-        var jsonObject = jsonDecode(string);
-
         Position position = dependencies.getPosition();
-        position.gameId = jsonObject['game_id'];
-        position.playerIds = jsonObject['player_ids'].split(',');
-        position.playerQueue = jsonObject['player_queue'].split(',');
-        position.playerStatus = PlayerVariable.playerVariablefromString(jsonObject['player_status']);
-//        position.timeLeft = PlayerVariable.playerVariablefromString( jsonObject['time_left']);
-        position.score = PlayerVariable.playerVariablefromString(jsonObject['score']);
-        position.color = PlayerVariable.playerVariablefromString(jsonObject['color']);
 
-        position.setExternalVariables(jsonObject['position']);
+        position.setVariables(string);
 
         return position;
     }
