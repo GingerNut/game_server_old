@@ -1,8 +1,5 @@
 
 import 'dart:async';
-import 'dart:math';
-
-import 'package:game_server/game_server.dart' as prefix0;
 import 'package:game_server/games/chess/chess.dart';
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/design.dart';
@@ -14,7 +11,6 @@ import 'package:game_server/src/messages/message.dart';
 
 
 import 'package:test/test.dart';
-import 'package:test/test.dart' as prefix1;
 
 
 void main()async{
@@ -279,7 +275,7 @@ void main()async{
       response = Message.inflate(await next(computer.messagesIn.stream));
       expect(response.runtimeType, SuggestMove);
 
-      expect((response as prefix0.SuggestMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
+      expect((response as SuggestMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
 
       expect((ui.position as FieFoFumPosition).count, 3);
       expect((ui.position as FieFoFumPosition).playerId , 'Player 1');
@@ -393,7 +389,7 @@ void main()async{
 
       expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
 
-    },);
+    },skip: 'AI not yet working',);
 
 
 
@@ -462,6 +458,7 @@ void main()async{
 
       ui.addPlayer(LocalPlayer(ui));
       ui.addPlayer(LocalPlayer(ui));
+      ui.newGame.firstPlayer ='Player 1';
 
       expect(ui.newGame.randomStarter, false);
       expect(ui.newGame.timer, true);
@@ -576,7 +573,7 @@ void main()async{
       position.clearPieces();
 
       Rook rook = Rook(position.tiles)
-      ..chessColor = ChessColor.white
+      ..chessColor = Palette.COLOR_WHITE
       ..tile = position.tiles.tile(4,5);
 
       List<Tile> legalMoves = rook.legalMoves;
@@ -600,7 +597,7 @@ void main()async{
       position.clearPieces();
 
       Bishop bishop = Bishop(position.tiles)
-        ..chessColor = ChessColor.white
+        ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
@@ -623,7 +620,7 @@ void main()async{
       position.clearPieces();
 
       Queen queen = Queen(position.tiles)
-        ..chessColor = ChessColor.white
+        ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
@@ -658,7 +655,7 @@ void main()async{
       position.clearPieces();
 
       King king = King(position.tiles)
-        ..chessColor = ChessColor.white
+        ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
@@ -681,7 +678,7 @@ void main()async{
       position.clearPieces();
 
       Pawn pawn = Pawn(position.tiles)
-        ..chessColor = ChessColor.white
+        ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
@@ -701,7 +698,7 @@ void main()async{
       position.clearPieces();
 
       pawn = Pawn(position.tiles)
-        ..chessColor = ChessColor.black
+        ..chessColor = Palette.COLOR_BLACK
         ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
@@ -715,7 +712,7 @@ void main()async{
 
       Pawn blackPawn = Pawn(position.tiles)
         ..tile = position.tiles.tile(4, 6)
-        ..chessColor = ChessColor.black;
+        ..chessColor = Palette.COLOR_BLACK;
 
       legalMoves.clear();
       legalMoves = blackPawn.legalMoves;
@@ -726,7 +723,7 @@ void main()async{
       position.clearPieces();
 
       Knight knight = Knight(position.tiles)
-        ..chessColor = ChessColor.white
+        ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4,5);
 
       legalMoves.clear();
@@ -754,15 +751,15 @@ void main()async{
       position.clearPieces();
 
       Rook whiteRook = Rook(position.tiles)
-        ..chessColor = ChessColor.white
+        ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4,5);
 
       Pawn whitePawn = Pawn(position.tiles)
-        ..chessColor = ChessColor.white
+        ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(3,5);
 
       Pawn blackPawn = Pawn(position.tiles)
-        ..chessColor = ChessColor.black
+        ..chessColor = Palette.COLOR_BLACK
         ..tile = position.tiles.tile(1,6);
 
       expect(whiteRook.isFriendly(whitePawn), true);

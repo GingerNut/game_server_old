@@ -11,15 +11,15 @@ class Pawn extends ChessPiece{
   List<Tile> get legalMoves {
     List<Tile> moves = List();
 
-    int direction = chessColor == ChessColor.white ? Tiles.North : Tiles.South;
+    int direction = chessColor == Palette.COLOR_WHITE ? Tiles.North : Tiles.South;
 
       Tile nextTile = tile.nextInDirection(direction);
 
       if(nextTile != null && nextTile.tileOccupation(this) == OccupationStatus.neutral){
         moves.add(nextTile);
 
-        if((chessColor == ChessColor.white && tile.j == 1)
-        || (chessColor == ChessColor.black && tile.j == 6)){
+        if((chessColor == Palette.COLOR_WHITE && tile.j == 1)
+        || (chessColor == Palette.COLOR_BLACK && tile.j == 6)){
 
         nextTile = nextTile.nextInDirection(direction);
 

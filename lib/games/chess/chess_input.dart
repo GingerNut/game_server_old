@@ -15,7 +15,9 @@ class ChessInput extends Input{
 
       ChessPiece tapped = tile.pieces.first;
 
-      if(tapped.chessColor == (ui.position as ChessPosition).playerColor){
+      ChessPosition chessPosition = ui.position as ChessPosition;
+
+      if(tapped.chessColor == chessPosition.color[chessPosition.playerId]){
         selected = tapped.tile;
         legalMoves = tapped.legalMoves;
       }

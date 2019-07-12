@@ -105,9 +105,9 @@ class Game {
 
     _position.setTimers(gameTime);
 
-    _position.setFirstPlayer(randomStarter, firstPlayer);
-
     _position.initialise();
+
+    _position.setFirstPlayer(randomStarter, firstPlayer);
 
     players.forEach((p) => p.status = PlayerStatus.ingameNotReady);
 

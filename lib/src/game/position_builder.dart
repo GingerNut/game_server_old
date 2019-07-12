@@ -11,6 +11,8 @@ class PositionBuilder{
 
         position.setVariables(string);
 
+        position.lastMove = StartingPosition(position.json);
+
         return position;
     }
 

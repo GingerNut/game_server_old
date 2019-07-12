@@ -62,11 +62,11 @@ class ChessMove extends Move<ChessPosition>{
 
     switch(piece.chessColor){
 
-      case ChessColor.white:
+      case Palette.COLOR_WHITE:
         position.blackArmy.remove(captured);
         break;
 
-      case ChessColor.black:
+      case Palette.COLOR_WHITE:
         position.whiteArmy.remove(captured);
         break;
     }

@@ -7,6 +7,7 @@ abstract class Position{
 
   void setTo(GameNavigation situation){
       lastMove = situation;
+      print(situation.resultingPosition);
       setVariables(situation.resultingPosition);
   }
 
@@ -66,8 +67,6 @@ abstract class Position{
   bool gameOver = false;
 
   bool canPlay(String id);
-
-
 
   makeMove(Move move){
 

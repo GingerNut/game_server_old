@@ -7,11 +7,8 @@ class ChessPosition extends Position{
   String whitePlayer;
   String blackPlayer;
 
-
   List<ChessPiece> whiteArmy = List();
   List<ChessPiece> blackArmy = List();
-
-  ChessColor get playerColor => whitePlayer == playerId ? ChessColor.white : ChessColor.black;
 
   @override
   analyse() {
@@ -60,7 +57,7 @@ class ChessPosition extends Position{
 
   setExternalVariables(String s) {
 
-    makePiece(String pieceString, ChessColor color, List<ChessPiece> army) {
+    makePiece(String pieceString, int color, List<ChessPiece> army) {
 
       ChessPiece p;
 
@@ -112,11 +109,11 @@ class ChessPosition extends Position{
 
     List<String> white = details[0].split(Message.internalDelimiter);
 
-    white.forEach((s) => makePiece(s, ChessColor.white, whiteArmy));
+    white.forEach((s) => makePiece(s, Palette.COLOR_WHITE, whiteArmy));
 
     List<String> black = details[1].split(Message.internalDelimiter);
 
-    black.forEach((s) => makePiece(s, ChessColor.black, blackArmy));
+    black.forEach((s) => makePiece(s, Palette.COLOR_BLACK, blackArmy));
 
   }
 
@@ -136,7 +133,7 @@ class ChessPosition extends Position{
 
     List<Piece> army;
 
-    if(playerId == whitePlayer) army = whiteArmy;
+    if(color[playerId] == Palette.COLOR_WHITE) army = whiteArmy;
     else army = blackArmy;
 
     army.forEach((p){
@@ -233,8 +230,32 @@ class ChessPosition extends Position{
   setFirstPlayer(bool random, String firstPlayer) {
    super.setFirstPlayer(random, firstPlayer);
 
-   whitePlayer = playerQueue[0];
-   blackPlayer = playerQueue[1];
+   if(random || !playerIds.contains(firstPlayer)){
+     playerQueue.clear();
+     playerQueue.add(playerIds[0]);
+     playerQueue.add(playerIds[1]);
+     playerQueue.shuffle();
+
+     whitePlayer = playerQueue[0];
+     blackPlayer = playerQueue[1];
+   } else {
+     playerQueue.clear();
+     playerQueue.add(playerIds[0]);
+     playerQueue.add(playerIds[1]);
+
+     whitePlayer = firstPlayer;
+     playerQueue.remove(whitePlayer);
+     blackPlayer = playerQueue[0];
+
+     playerQueue.clear();
+
+     playerQueue.add(whitePlayer);
+     playerQueue.add(blackPlayer);
+   }
+
+   color[whitePlayer] = Palette.COLOR_WHITE;
+   color[blackPlayer] = Palette.COLOR_BLACK;
+
   }
 
   @override
@@ -245,7 +266,7 @@ class ChessPosition extends Position{
 
     double value = 0;
 
-    List<ChessPiece> army = playerId == whitePlayer ? whiteArmy : blackArmy;
+    List<ChessPiece> army = color[playerId] == Palette.COLOR_WHITE ? whiteArmy : blackArmy;
 
     army.forEach((p) {
 

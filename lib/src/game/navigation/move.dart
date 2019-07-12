@@ -37,12 +37,9 @@ abstract class Move <P> extends GameNavigation{
 
   String get string;
 
-  Position trialPosition;
-
   String gamePosition;
 
   Move parent;
-  List<Move> children;
 
 
   Message check(P position){
@@ -64,6 +61,8 @@ abstract class Move <P> extends GameNavigation{
 
         playerScores[i] = pos.value(pos.playerIds[i]);
       }
+
+      resultingPosition = pos.json;
 
       return Success();
   }

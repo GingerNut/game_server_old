@@ -4,7 +4,7 @@ part of chess;
 abstract class ChessPiece extends Piece{
   ChessPiece(Tiles board) : super(board);
 
-  ChessColor chessColor;
+  int chessColor;
   double value;
 
   bool isFriendly(Piece piece)=> chessColor == (piece as ChessPiece).chessColor;
@@ -47,10 +47,5 @@ abstract class ChessPiece extends Piece{
 
   }
 
-}
-
-enum ChessColor{
-  white,
-  black
 }
 

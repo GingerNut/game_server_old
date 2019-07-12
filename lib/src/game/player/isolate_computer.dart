@@ -42,6 +42,7 @@ class IsolateComputer extends Computer{
           case SendPosition:
             SendPosition sendPosition = message as SendPosition;
             position = sendPosition.build(positionBuilder);
+            playBoard = sendPosition.build(positionBuilder);
             gameId = position.gameId;
             await analysePosition(position);
             ready = true;
