@@ -91,6 +91,8 @@ abstract class Position{
 
     nextPlayer();
 
+    move.resultingPosition = json;
+
   }
 
   nextPlayer(){

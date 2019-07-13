@@ -27,6 +27,8 @@ part 'board/tile.dart';
 part 'player/isolate_computer.dart';
 part 'player/computer_player.dart';
 part 'player/computer.dart';
+part 'player/move_line.dart';
+part 'player/move_queue.dart';
 part 'player/player.dart';
 part 'player/player_variable.dart';
 
@@ -182,8 +184,6 @@ class Game {
         state = GameState.won;
       }
     }
-
-    move.gamePosition = position.json;
 
     _setUnconfirmed();
 

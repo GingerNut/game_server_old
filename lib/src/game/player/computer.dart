@@ -14,31 +14,32 @@ class Computer{
   PositionBuilder get positionBuilder => dependency.getPositionBuilder();
   final GameDependency dependency;
 
-  int depth = 0;
-
-
-  findPossibleMoves(Position position){
-
-    GameNavigation situation = position.lastMove;
-
-    situation.children = position.getPossibleMoves();
-
-    situation.children.forEach((m){
-      Position test = position.duplicate;
-      test.makeMove(m);
-    });
-  }
-
   Future<Move> findBestMove() async{
 
-    depth = 0;
+    MoveQueue lines = MoveQueue();
 
-    findPossibleMoves(position);
+    MoveLine first = MoveLine(playerId, position, lines, position.lastMove, position.lastMove);
 
-//    position.lastMove.findPossibleMoves(dependency);
+    lines.add(first);
 
-    depth = 1;
+    lines.printQueue();
 
+    lines.expandAll();
+    lines.expandAll();
+
+    lines.printQueue();
+
+
+
+
+    position.lastMove.makeChildren(dependency);
+
+
+    position.lastMove.children.forEach((c) => c.makeChildren(dependency));
+
+//    position.lastMove.children.forEach((c) {
+//      c.children.forEach((d) => d.makeChildren(dependency));
+//    } );
 
     return position.lastMove.bestChild(playerId, position.playerIds);
   }

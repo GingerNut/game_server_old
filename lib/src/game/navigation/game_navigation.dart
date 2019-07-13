@@ -10,7 +10,7 @@ abstract class GameNavigation{
   List<Move> children = List();
 
 
-  findPossibleMoves(GameDependency dependency){
+  makeChildren(GameDependency dependency){
 
     Position position = dependency.getPositionBuilder().build(resultingPosition);
 
@@ -44,7 +44,7 @@ abstract class GameNavigation{
   }
 
   Move worstChild(String player, List<String> players){
-    if(children.length == 0) return null;
+    if(children.isEmpty) return null;
 
     else if(children.length ==1) return children[0];
 
