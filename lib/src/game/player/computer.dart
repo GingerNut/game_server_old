@@ -16,18 +16,11 @@ class Computer{
 
   Future<Move> findBestMove() async{
 
-    MoveQueue lines = MoveQueue();
+    MoveQueue queue = MoveQueue(playerId, position);
 
-    MoveLine first = MoveLine(playerId, position, lines, position.lastMove, position.lastMove);
-
-    lines.add(first);
-
-    lines.printQueue();
-
-    lines.expandAll();
-    lines.expandAll();
-
-    lines.printQueue();
+    queue.expandAll();
+//    queue.expandAll();
+//    queue.expandAll();
 
 
 
@@ -42,6 +35,8 @@ class Computer{
 //    } );
 
     return position.lastMove.bestChild(playerId, position.playerIds);
+
+//  return queue.bestMove;
   }
 
 

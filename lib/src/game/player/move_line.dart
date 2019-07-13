@@ -6,19 +6,30 @@ class MoveLine{
   final Position position;
   final MoveQueue lines;
 
-  double value;
+  double _value;
 
-  final Move start;
-  final Move end;
+  double get value {
+    if(_value != null) return _value;
 
-  List<Move> moves;
+    _value = start.compoundValue(player, position.playerIds);
 
-  MoveLine(this.player, this.position, this.lines, this.start, this.end){
-    value = start.compoundValue(player, position.playerIds);
+    return _value;
   }
 
-  doValue(){
-    value = start.compoundValue(player, position.playerIds);
+  int depth;
+
+  Move get start => moves.first;
+  Move get end => moves.last;
+
+  List<Move> moves = List();
+
+  MoveLine.start(this.player, this.position, this.lines, Move lastMove){
+    moves.add(lastMove);
+  }
+
+  MoveLine(this.player, this.position, this.lines, List<Move> moves, Move lastMove){
+    moves.forEach((m) => this.moves.add(m));
+    this.moves.add(lastMove);
   }
 
   expand(){
@@ -26,7 +37,12 @@ class MoveLine{
 
     end.makeChildren(position.dependency);
 
-    end.children.forEach((c) => lines.add(MoveLine(player, position, lines, start, c)));
+    if(end.children.isEmpty) return;
+
+    end.children.forEach((c) {
+      lines.add(MoveLine(player, position, lines, moves, c));
+    }
+    );
 
   }
 

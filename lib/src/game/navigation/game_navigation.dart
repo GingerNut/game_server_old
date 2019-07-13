@@ -16,6 +16,8 @@ abstract class GameNavigation{
 
     children = position.getPossibleMoves();
 
+    if(children.isEmpty) return;
+
     children.forEach((m){
       Position test = position.duplicate;
       test.makeMove(m);
