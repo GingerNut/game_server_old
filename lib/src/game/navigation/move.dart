@@ -5,33 +5,76 @@ abstract class Move <P> extends GameNavigation{
   static const String code = 'mov';
   bool legal = false;
   String error;
+  String movePlayer;
 
-  List<double> playerScores;
+  List<double> values;
 
-  double score(int index){
+  bool isPlayer(String playerId) {
+    if(movePlayer == null) return true;
 
-    if(playerScores.length == 1){
-      return playerScores[0];
+    return movePlayer == playerId;
+  }
 
-    } else if(playerScores.length == 2){
 
-      if(index == 0) return playerScores[0] - playerScores[1];
-      else return playerScores[1] - playerScores[0];
+  double compoundValue(String player, List<String> players){
+
+    double value = absoluteValue(player, players);
+
+    if(children.isNotEmpty){
+
+      // deduct which of the moves gives index the lowest score if player is not playerId
+      // add highest score for player if player is playerId
+      // bool isplayer performs this function
+
+      Move child = children[0];
+
+     bool playerMove = child.movePlayer == player;
+
+     if(playerMove) {
+       value += bestChild(player, players).compoundValue(player, players);
+
+     } else{
+       value -= worstChild(player, players).compoundValue(player, players);
+     }
+
+    }
+
+    return isPlayer(player) ? value : -value;
+  }
+
+  double absoluteValue(String player, List<String> players){
+
+    int index = players.indexOf(player);
+
+    double value;
+
+    if(values.length == 1){
+      value =  values[0];
+
+    } else if(values.length == 2){
+
+      if(index == 0) value = values[0] - values[1];
+      else value = values[1] - values[0];
 
     } else {
 
-      double highestOpponent = index == 0 ? playerScores[1] : playerScores[0];
+      double highestOpponent = index == 0 ? values[1] : values[0];
 
-      for (int i = 0 ; i < playerScores.length ; i ++){
+      for (int i = 0 ; i < values.length ; i ++){
         if(i == index) continue;
 
-        if(playerScores[i] > highestOpponent) highestOpponent = playerScores[i];
+        if(values[i] > highestOpponent) highestOpponent = values[i];
 
       }
 
-      return playerScores[index] - highestOpponent;
+      value = values[index] - highestOpponent;
     }
+
+    return value;
+
   }
+
+
 
   int number;
 
@@ -53,11 +96,13 @@ abstract class Move <P> extends GameNavigation{
 
       Position pos  = position as Position;
 
-      playerScores = List(pos.playerIds.length);
+      values = List(pos.playerIds.length);
+
+      movePlayer = pos.playerId;
 
       for(int i = 0 ; i < pos.playerIds.length ; i ++){
 
-        playerScores[i] = pos.value(pos.playerIds[i]);
+        values[i] = pos.value(pos.playerIds[i]);
       }
 
       resultingPosition = pos.json;

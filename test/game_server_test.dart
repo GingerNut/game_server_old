@@ -1,5 +1,7 @@
 
 import 'dart:async';
+import 'dart:math';
+import 'package:game_server/game_server.dart' as prefix0;
 import 'package:game_server/games/chess/chess.dart';
 import 'package:game_server/game_server.dart';
 import 'package:game_server/src/design/design.dart';
@@ -11,6 +13,7 @@ import 'package:game_server/src/messages/message.dart';
 
 
 import 'package:test/test.dart';
+import 'package:test/test.dart' as prefix1;
 
 
 void main()async{
@@ -223,21 +226,69 @@ void main()async{
 
     });
 
-    test('move valuations', (){
+    test('simple move valuations', (){
 
       MoveNumber testMove = MoveNumber();
+      List<String> players = ['a', 'b', 'c', 'd'];
 
-      testMove.playerScores = [2.0,3.0,1.0,4.0];
+      testMove.values = [2.0,3.0,1.0,4.0];
 
-      expect(testMove.score(0), -2);
-      expect(testMove.score(1), -1);
-      expect(testMove.score(2), -3);
-      expect(testMove.score(3), 1);
+      expect(testMove.compoundValue('a', players), -2);
+      expect(testMove.compoundValue('b', players), -1);
+      expect(testMove.compoundValue('c', players), -3);
+      expect(testMove.compoundValue('d', players), 1);
 
-      testMove.playerScores = [2.0,3.0];
+      testMove.values = [2.0,3.0];
+      players = ['a', 'b'];
 
-      expect(testMove.score(0), -1);
-      expect(testMove.score(1), 1);
+      expect(testMove.compoundValue('a', players), -1);
+      expect(testMove.compoundValue('b', players), 1);
+
+    });
+
+    test('nested move valuations', (){
+
+      MoveNumber testMove = MoveNumber();
+      List<String> players = ['a', 'b', 'c', 'd'];
+      testMove.movePlayer = 'a';
+
+      testMove.values = [2.0,3.0,1.0,4.0];
+
+      expect(testMove.compoundValue('a', players), -2);
+      expect(testMove.compoundValue('b', players), 1);
+      expect(testMove.compoundValue('c', players), 3);
+      expect(testMove.compoundValue('d', players), -1);
+
+      MoveNumber secondMove1 = MoveNumber()
+      ..movePlayer = 'b'
+      ..values = [2.0,3.0,1.0,5.0];
+
+      testMove.children.add(secondMove1);
+
+      // I am not player so worst score for me deducted from my score
+      // my score = -3 (5 - 2)
+      // our score is -2 -3 = -1
+
+      expect(testMove.absoluteValue('a', players), -2);
+
+      expect(secondMove1.absoluteValue('a', players), -3);
+
+      expect(testMove.compoundValue('a', players), -5);
+
+      MoveFie secondMove2 = MoveFie()
+        ..movePlayer = 'b'
+        ..values = [2.0,6.0,1.0,5.0];
+
+      testMove.children.add(secondMove2);
+
+      // mu score = -4 ;
+      // our score is 2 -4 = -6
+
+      expect(testMove.worstChild('a', players).runtimeType, MoveFie);
+
+      expect(testMove.compoundValue('a', players), -6);
+
+
 
     });
 
