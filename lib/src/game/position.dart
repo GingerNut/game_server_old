@@ -36,7 +36,6 @@ abstract class Position{
   );
 
   setVariables(String posJson){
-    print(posJson);
     var jsonObject = jsonDecode(posJson);
 
     gameId = jsonObject['game_id'];
