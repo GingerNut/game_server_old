@@ -389,7 +389,9 @@ void main()async{
 
       expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
 
-    },skip: 'AI not yet working',);
+    },//skip: 'AI not yet working',
+
+    );
 
 
 

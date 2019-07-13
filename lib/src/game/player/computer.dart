@@ -4,7 +4,7 @@ part of game;
 class Computer{
 
   Position position;
-  Position playBoard;
+
   String playerId;
   bool ready = false;
   String gameId;
@@ -15,18 +15,20 @@ class Computer{
   final GameDependency dependency;
 
 
-  findPossibleMoves(GameNavigation situation){
-    playBoard.setTo(situation);
+  findPossibleMoves(Position position){
 
-    situation.children = playBoard.getPossibleMoves();
+    GameNavigation siutation = position.lastMove;
 
-    situation.children.forEach((m){
-      playBoard.makeMove(m);
-      playBoard.setTo(situation);
+    siutation.children = position.getPossibleMoves();
+
+    siutation.children.forEach((m){
+      Position test = position.duplicate;
+      test.makeMove(m);
     });
   }
 
   Move bestMove(GameNavigation situation, String playerId){
+
     Move bestMove = situation.children[0];
     double bestscore = bestMove.score(0);
 
@@ -46,9 +48,9 @@ class Computer{
 
   Future<Move> findBestMove() async{
 
-    playBoard.setTo(position.lastMove);
+    print(position.lastMove.resultingPosition);
 
-    findPossibleMoves(position.lastMove);
+    findPossibleMoves(position);
 
     return bestMove(position.lastMove, playerId);
   }

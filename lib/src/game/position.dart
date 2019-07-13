@@ -5,12 +5,6 @@ abstract class Position{
 
   GameNavigation lastMove;
 
-  void setTo(GameNavigation situation){
-      lastMove = situation;
-      print(situation.resultingPosition);
-      setVariables(situation.resultingPosition);
-  }
-
   GameDependency get dependency;
 
   String gameId;
@@ -18,6 +12,8 @@ abstract class Position{
   List<String> playerQueue;
 
   PositionBuilder get positionBuilder => dependency.getPositionBuilder();
+  MoveBuilder get moveBuilder => dependency.getMoveBuilder();
+
   int get nextMoveNumber => lastMove == null ? 0 : lastMove.number +1;
 
   PlayerVariable<PlayerStatus> playerStatus;
@@ -33,12 +29,14 @@ abstract class Position{
 //    'time_left': timeLeft.string,
     'score' : score.string,
     'color': color.string,
+    'last_move' : lastMove == null ? StartingPosition.type : lastMove.string,
+    'move_number' : lastMove == null ? 0 : lastMove.number,
     'position' : externalVariablesString,
   }
   );
 
-  setVariables(String json){
-    var jsonObject = jsonDecode(json);
+  setVariables(String posJson){
+    var jsonObject = jsonDecode(posJson);
 
     gameId = jsonObject['game_id'];
     playerIds = jsonObject['player_ids'].split(',');
@@ -50,6 +48,19 @@ abstract class Position{
 
     setExternalVariables(jsonObject['position']);
 
+    //lastmove
+
+    int lastMoveInt = jsonObject['move_number'];
+
+    if(lastMoveInt == 0) {
+      lastMove = StartingPosition(posJson);
+    } else {
+
+      lastMove = moveBuilder.build(jsonObject['last_move']);
+      lastMove.number = lastMoveInt;
+
+    }
+
 
   }
 
@@ -57,7 +68,7 @@ abstract class Position{
 
   setExternalVariables(String string);
 
-  Position get duplicate => SendPosition.fromPosition(this).build(positionBuilder);
+  Position get duplicate => positionBuilder.build(json);
 
   String get playerId => playerQueue[0];
 

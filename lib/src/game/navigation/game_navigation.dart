@@ -5,6 +5,8 @@ abstract class GameNavigation{
 
   String resultingPosition;
 
+  String get string;
+
   List<Move> children = List();
 }
 

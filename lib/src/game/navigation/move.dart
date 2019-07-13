@@ -35,8 +35,6 @@ abstract class Move <P> extends GameNavigation{
 
   int number;
 
-  String get string;
-
   String gamePosition;
 
   Move parent;
