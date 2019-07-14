@@ -1,7 +1,7 @@
 
 part of game;
 
-abstract class Move <P> extends GameNavigation{
+abstract class Move <P> extends GameEvent{
   static const String code = 'mov';
   bool legal = false;
   String error;

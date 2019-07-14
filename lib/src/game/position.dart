@@ -3,7 +3,7 @@ part of game;
 
 abstract class Position{
 
-  GameNavigation lastMove;
+  GameEvent lastMove;
 
   GameDependency get dependency;
 

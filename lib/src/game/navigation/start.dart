@@ -1,6 +1,6 @@
 part of game;
 
-class StartingPosition extends GameNavigation{
+class StartingPosition extends GameEvent{
   static const String type = 'starting_position';
 
   StartingPosition(String string){

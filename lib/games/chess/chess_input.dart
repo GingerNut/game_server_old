@@ -7,6 +7,13 @@ class ChessInput extends Input{
   List<Tile> legalMoves = List();
   bool whiteAtBottom = true;
 
+  orientate(Position position){
+
+    if(ui.playerId == (position as ChessPosition).whitePlayer) whiteAtBottom = true;
+    else whiteAtBottom = false;
+
+  }
+
   ChessInput(this.ui);
 
   tapTile(Tile tile){
@@ -17,7 +24,7 @@ class ChessInput extends Input{
 
       ChessPosition chessPosition = ui.position as ChessPosition;
 
-      if(tapped.chessColor == chessPosition.color[chessPosition.playerId]){
+      if(ui.playerId == ui.position.playerId && tapped.chessColor == chessPosition.color[chessPosition.playerId]){
         selected = tapped.tile;
         legalMoves = tapped.legalMoves;
       }

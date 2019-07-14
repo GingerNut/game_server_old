@@ -12,6 +12,8 @@ abstract class Interface{
 
   Position position;
 
+  String playerId;
+
   Theme theme = Theme();
 
   Interface(this.dependency){

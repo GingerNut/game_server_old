@@ -326,9 +326,6 @@ void main()async{
       response = Message.inflate(await next(computer.messagesIn.stream));
       expect(response.runtimeType, SuggestMove);
 
-      // doesnt make it to here
-
-
       expect((response as SuggestMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
 
       expect((ui.position as FieFoFumPosition).count, 3);
@@ -356,16 +353,16 @@ void main()async{
       ui.tryMove(MoveFo());
 
       response = Message.inflate(await next(computer.messagesIn.stream));
-//      expect(response.runtimeType, ConfirmMove);
+      expect(response.runtimeType, SuggestMove);
 
       response = Message.inflate(await next(computer.messagesIn.stream));
 
-//      expect((ui.position as FieFoFumPosition).playerQueue , ['Computer 1', 'Player 1']);
+//      expect((ui.position as FieFoFumPosition).playerQueue , ['Player 1', 'Computer 1']);
 //
 //      expect((ui.position as FieFoFumPosition).count, 7);
 //
-//      await waitForAllConfirmed(ui.game);
-//      ui.makeMove(MoveFie());
+//
+//      ui.tryMove(MoveFie());
 //
 //      expect((ui.position as FieFoFumPosition).winner , 'Computer 1');
 
@@ -392,7 +389,9 @@ void main()async{
     String player1 = 'Player 1';
     String gameId = 'local game';
 
-    setUp(() async{
+
+    test('computer testing',() async{
+
       ui = LocalInterface(ChessInjector());
       ui.addPlayer(LocalPlayer(ui));
       computer = ComputerPlayer(ChessInjector());
@@ -401,10 +400,9 @@ void main()async{
 
       await ui.startLocalGame();
       position = ui.game.position;
-    });
 
 
-    test('computer testing',() async{
+
       expect(position.runtimeType, ChessPosition);
       expect(position.whitePlayer, player1);
       expect(ui.game.gameId   , gameId);
@@ -443,7 +441,51 @@ void main()async{
 
       expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
 
-    },//skip: 'AI not yet working',
+    },
+
+
+
+    );
+
+    test('computer goes first',() async{
+
+      ui = LocalInterface(ChessInjector());
+      ui.addPlayer(LocalPlayer(ui));
+      computer = ComputerPlayer(ChessInjector());
+      ui.addPlayer(computer);
+      ui.newGame.firstPlayer = computer.id;
+
+      await ui.startLocalGame();
+      position = ui.game.position;
+
+      expect(position.runtimeType, ChessPosition);
+      expect(position.whitePlayer, computer.id);
+      expect(ui.game.gameId   , gameId);
+
+      expect(ui.game.players[0].runtimeType, ComputerPlayer);
+
+      Message message = Message.inflate(await next(computer.messagesIn.stream));
+
+      message = Message.inflate(await next(computer.messagesIn.stream));
+
+      expect(message.runtimeType, SuggestMove);
+
+      expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
+
+      await ui.game.makeMove(ChessMove(
+          position.tiles.tile(4, 1),
+          position.tiles.tile(4, 3)
+      ), gameId, 'Player 1');
+
+      message = Message.inflate(await next(computer.messagesIn.stream));
+
+      expect(message.runtimeType, SuggestMove);
+
+      expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
+
+    },
+
+
 
     );
 

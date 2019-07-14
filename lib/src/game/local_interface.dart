@@ -29,6 +29,8 @@ addPlayer(Player player) => newGame.addLocalPlayer(player);
 startLocalGame()async{
   game = getGame(newGame);
   await game.initialise();
+
+  input.orientate(game.position);
 }
 
 tryMove(Move move) {

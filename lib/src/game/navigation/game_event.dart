@@ -1,6 +1,6 @@
 part of game;
 
-abstract class GameNavigation{
+abstract class GameEvent{
   int number;
 
   String resultingPosition;

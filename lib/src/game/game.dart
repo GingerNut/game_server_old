@@ -8,10 +8,11 @@ import 'package:game_server/src/design/design.dart';
 import 'package:game_server/src/messages/game_message/game_message.dart';
 import 'package:game_server/src/messages/message.dart';
 
-part 'navigation/game_navigation.dart';
+part 'navigation/game_event.dart';
 part 'navigation/move.dart';
 part 'navigation/move_builder.dart';
 part 'navigation/start.dart';
+part 'navigation/game_end.dart';
 part 'position.dart';
 part 'position_builder.dart';
 part 'settings.dart';
