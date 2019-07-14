@@ -7,8 +7,8 @@ abstract class GameEvent{
 
   String get string;
 
+  bool allChildrenFound = false;
   List<Move> children = List();
-
 
   makeChildren(GameDependency dependency){
 

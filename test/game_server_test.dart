@@ -352,10 +352,10 @@ void main()async{
 
       ui.tryMove(MoveFo());
 
-      response = Message.inflate(await next(computer.messagesIn.stream));
-      expect(response.runtimeType, SuggestMove);
-
-      response = Message.inflate(await next(computer.messagesIn.stream));
+//      response = Message.inflate(await next(computer.messagesIn.stream));
+//      expect(response.runtimeType, SuggestMove);
+//
+//      response = Message.inflate(await next(computer.messagesIn.stream));
 
 //      expect((ui.position as FieFoFumPosition).playerQueue , ['Player 1', 'Computer 1']);
 //

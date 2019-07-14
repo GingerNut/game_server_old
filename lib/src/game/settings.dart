@@ -13,8 +13,8 @@ class Settings{
   DoubleSetting moveTime = DoubleSetting(12);
   StringSetting onlineGameName = StringSetting('New Game');
 
-  IntSetting aiDepth = IntSetting(3);
-  DoubleSetting thinkingTime = DoubleSetting(5);
+  IntSetting aiDepth = IntSetting(2);
+  DoubleSetting thinkingTime = DoubleSetting(3);
 
   String firstPlayer;
 
