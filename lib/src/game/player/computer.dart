@@ -16,9 +16,10 @@ class Computer{
 
   Future<Move> findBestMove() async{
 
-    MoveQueue queue = MoveQueue(playerId, position);
+//    MoveQueue queue = MoveQueue(playerId, position);
 
-    queue.expandAll();
+//    queue.expandAll();
+
 //    queue.expandAll();
 //    queue.expandAll();
 
@@ -30,9 +31,9 @@ class Computer{
 
     position.lastMove.children.forEach((c) => c.makeChildren(dependency));
 
-//    position.lastMove.children.forEach((c) {
-//      c.children.forEach((d) => d.makeChildren(dependency));
-//    } );
+    position.lastMove.children.forEach((c) {
+      c.children.forEach((d) => d.makeChildren(dependency));
+    } );
 
     return position.lastMove.bestChild(playerId, position.playerIds);
 

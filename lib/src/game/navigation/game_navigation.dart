@@ -12,7 +12,11 @@ abstract class GameNavigation{
 
   makeChildren(GameDependency dependency){
 
+    List<Move> kill = List();
+
     Position position = dependency.getPositionBuilder().build(resultingPosition);
+
+    String player = position.playerId;
 
     children = position.getPossibleMoves();
 
@@ -21,7 +25,13 @@ abstract class GameNavigation{
     children.forEach((m){
       Position test = position.duplicate;
       test.makeMove(m);
+
+      if(test.playerStatus[player] == PlayerStatus.out) kill.add(m);
     });
+
+    kill.forEach((k) => children.remove(k));
+
+
   }
 
 

@@ -30,7 +30,7 @@ class MoveQueue{
 
   add(MoveLine line) {
     lines.add(line);
-    lines.sort((a, b) => a.value.compareTo(b.value));
+    lines.sort((a, b) => b.value.compareTo(a.value));
   }
 
   MoveLine get first => lines.first;
@@ -59,6 +59,8 @@ class MoveQueue{
       l.moves.forEach((m){
         string += m.string;
         string += '  ';
+        string += m.absoluteValue(player, position.playerIds).toString();
+        string +=  '  ';
       });
 
       string += '\n';

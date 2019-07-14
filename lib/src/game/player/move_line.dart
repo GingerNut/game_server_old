@@ -11,7 +11,11 @@ class MoveLine{
   double get value {
     if(_value != null) return _value;
 
-    _value = start.compoundValue(player, position.playerIds);
+    _value = 0;
+
+    moves.forEach((m) {
+      _value += m.absoluteValue(player, position.playerIds);
+    });
 
     return _value;
   }
@@ -22,10 +26,6 @@ class MoveLine{
   Move get end => moves.last;
 
   List<Move> moves = List();
-
-  MoveLine.start(this.player, this.position, this.lines, Move lastMove){
-    moves.add(lastMove);
-  }
 
   MoveLine(this.player, this.position, this.lines, List<Move> moves, Move lastMove){
     moves.forEach((m) => this.moves.add(m));

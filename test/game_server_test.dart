@@ -326,6 +326,9 @@ void main()async{
       response = Message.inflate(await next(computer.messagesIn.stream));
       expect(response.runtimeType, SuggestMove);
 
+      // doesnt make it to here
+
+
       expect((response as SuggestMove).build(FieFoFumMoveBuilder()).runtimeType, MoveNumber);
 
       expect((ui.position as FieFoFumPosition).count, 3);
