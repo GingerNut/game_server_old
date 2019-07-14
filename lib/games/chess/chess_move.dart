@@ -38,16 +38,33 @@ class ChessMove extends Move<ChessPosition>{
 
     Piece piece;
 
-    if(position.tiles.tile(fromI, fromJ).pieces.length>0){
+    if(position.tiles.tile(fromI, fromJ).pieces.isNotEmpty){
       piece = position.tiles.tile(fromI, fromJ).pieces.first;
     }
 
-    if(piece == null) return GameError('piece not found');
+    if(piece == null) return GameError('Chess Error : piece not found for move from '
+        + fromI.toString() + ' '
+        + fromJ.toString() + ' '
+        + 'to '
+        + toI.toString() + ' '
+        + toJ.toString() + ' ');
 
 
-      if(piece.legalMoves.contains(position.tiles.tile(toI, toJ))) return Success();
-      else return GameError('illegal move');
+      if(piece.legalMoves.contains(position.tiles.tile(toI, toJ))) {
+        return Success();
+      } else {
+        return GameError('Chess Error: illegal move for '
+            + piece.name + ' from '
+            + fromI.toString() + ' '
+            + fromJ.toString() + ' '
+            + ' to '
+            + toI.toString() + ' '
+            + toJ.toString() + ' '
+        );
+      }
   }
+
+
 
   doMove(ChessPosition position) {
 
