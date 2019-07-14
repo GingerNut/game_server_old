@@ -143,6 +143,7 @@ class ChessPosition extends Position{
       tiles.forEach((t) => moves.add(ChessMove(p.tile, t)));
 
     });
+    
 
     return moves;
 

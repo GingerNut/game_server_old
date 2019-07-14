@@ -13,6 +13,9 @@ class Settings{
   DoubleSetting moveTime = DoubleSetting(12);
   StringSetting onlineGameName = StringSetting('New Game');
 
+  IntSetting aiDepth = IntSetting(3);
+  DoubleSetting thinkingTime = DoubleSetting(5);
+
   String firstPlayer;
 
   get json => jsonEncode({

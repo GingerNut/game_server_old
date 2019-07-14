@@ -51,6 +51,8 @@ class Game {
   bool playerHelp;
   double gameTime;
   double moveTime;
+  int aiDepth;
+  double thinkingTime;
   List<Player> players;
   String firstPlayer;
 
@@ -76,6 +78,8 @@ class Game {
     if(timer == null) timer = dependency.settings.timer.value;
     if(gameTime == null) gameTime = dependency.settings.gameTime.value;
     if(moveTime == null) moveTime = dependency.settings.moveTime.value;
+    if(aiDepth == null) aiDepth = dependency.settings.aiDepth.value;
+    if(thinkingTime == null) thinkingTime = dependency.settings.thinkingTime.value;
   }
 
   int get numberOfPlayers => players.length;

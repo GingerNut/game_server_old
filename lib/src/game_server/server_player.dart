@@ -29,7 +29,7 @@ class ServerPlayer extends Player{
 
   go(){
     if(connection != null) {
-      connection.send(YourTurn(gameId));
+      connection.send(YourTurn(gameId, game.aiDepth, game.thinkingTime));
       if(game.timer) connection.send(GameTimer.start(game.position));
     }
   }

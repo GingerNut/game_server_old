@@ -52,6 +52,9 @@ class IsolateComputer extends Computer{
             break;
 
           case YourTurn:
+            YourTurn yourTurn = message as YourTurn;
+            aiDepth = yourTurn.aiDepth;
+            thinkingTime = yourTurn.thinkingTime;
             Move move = await findBestMove();
             SuggestMove suggestMove = SuggestMove(gameId, playerId, move , move.number);
             send(suggestMove);

@@ -407,7 +407,7 @@ void main()async{
       expect(position.whitePlayer, player1);
       expect(ui.game.gameId   , gameId);
 
-      expect(ui.game.players[1].runtimeType, ComputerPlayer);
+      expect(ui.position.playerId, player1);
 
       computer.send(Echo('hey'));
 
@@ -462,22 +462,14 @@ void main()async{
       expect(position.whitePlayer, computer.id);
       expect(ui.game.gameId   , gameId);
 
-      expect(ui.game.players[0].runtimeType, ComputerPlayer);
-
-      Message message = Message.inflate(await next(computer.messagesIn.stream));
-
-      message = Message.inflate(await next(computer.messagesIn.stream));
-
-      expect(message.runtimeType, SuggestMove);
-
-      expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
+      expect(ui.position.playerId, computer.id);
 
       await ui.game.makeMove(ChessMove(
-          position.tiles.tile(4, 1),
-          position.tiles.tile(4, 3)
+          position.tiles.tile(4, 6),
+          position.tiles.tile(4, 4)
       ), gameId, 'Player 1');
 
-      message = Message.inflate(await next(computer.messagesIn.stream));
+      Message message = Message.inflate(await next(computer.messagesIn.stream));
 
       expect(message.runtimeType, SuggestMove);
 

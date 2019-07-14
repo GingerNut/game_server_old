@@ -8,6 +8,8 @@ class Computer{
   String playerId;
   bool ready = false;
   String gameId;
+  int aiDepth;
+  double thinkingTime;
 
   Computer(this.dependency);
   MoveBuilder get moveBuilder => dependency.getMoveBuilder();
@@ -31,9 +33,9 @@ class Computer{
 
     position.lastMove.children.forEach((c) => c.makeChildren(dependency));
 
-    position.lastMove.children.forEach((c) {
-      c.children.forEach((d) => d.makeChildren(dependency));
-    } );
+//    position.lastMove.children.forEach((c) {
+//      c.children.forEach((d) => d.makeChildren(dependency));
+//    } );
 
     return position.lastMove.bestChild(playerId, position.playerIds);
 

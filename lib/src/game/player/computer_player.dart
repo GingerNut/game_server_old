@@ -29,14 +29,7 @@ class ComputerPlayer extends Player{
       }
     });
 
-//    try{
-//      await Isolate.spawnUri(dependency.computerUri, [],  receivePort.sendPort);
-//    } on IsolateSpawnException catch(e){
-//      print('isolate exception ' + e.message);
-//    }
-
     await Isolate.spawn(dependency.isolateSpawn, receivePort.sendPort);
-
 
     while(sendPort == null){
       await Future.delayed(Duration(milliseconds : 100));
@@ -51,7 +44,7 @@ class ComputerPlayer extends Player{
   moveUpdate(MakeMove move)=> send(move);
 
   go(){
-    send(YourTurn(gameId));
+    send(YourTurn(gameId, game.aiDepth, game.thinkingTime));
   }
 
   stop(){}
