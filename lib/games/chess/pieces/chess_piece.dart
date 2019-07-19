@@ -19,7 +19,6 @@ abstract class ChessPiece extends Piece{
 
       switch(tileOccupation){
 
-
         case OccupationStatus.neutral:
           moves.add(nextTile);
           nextTile = nextTile.nextInDirection(direction);

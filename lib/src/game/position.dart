@@ -151,6 +151,11 @@ abstract class Position{
 
     initialiseExternalVariables();
 
+    if(playerQueue == null) {
+      playerQueue = List();
+      playerIds.forEach((p)=>playerQueue.add(p));
+    }
+
     lastMove = StartingPosition(json);
   }
 

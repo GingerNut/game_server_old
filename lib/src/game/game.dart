@@ -30,6 +30,7 @@ part 'player/computer_player.dart';
 part 'player/computer.dart';
 part 'player/move_line.dart';
 part 'player/move_queue.dart';
+part 'player/move_tree.dart';
 part 'player/player.dart';
 part 'player/player_variable.dart';
 

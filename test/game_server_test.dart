@@ -1,6 +1,5 @@
 
 import 'dart:async';
-import 'dart:math';
 import 'package:game_server/game_server.dart' as prefix0;
 import 'package:game_server/games/chess/chess.dart';
 import 'package:game_server/game_server.dart';
@@ -233,16 +232,21 @@ void main()async{
 
       testMove.values = [2.0,3.0,1.0,4.0];
 
-      expect(testMove.compoundValue('a', players), -2);
-      expect(testMove.compoundValue('b', players), -1);
-      expect(testMove.compoundValue('c', players), -3);
-      expect(testMove.compoundValue('d', players), 1);
+      expect(testMove.absoluteValue('a', players), -2);
+      expect(testMove.absoluteValue('b', players), -1);
+      expect(testMove.absoluteValue('c', players), -3);
+      expect(testMove.absoluteValue('d', players), 1);
+
+      expect(MoveLine('a', players, testMove).value, -2);
+      expect(MoveLine('b', players, testMove).value, -1);
+      expect(MoveLine('c', players, testMove).value, -3);
+      expect(MoveLine('d', players, testMove).value, 1);
 
       testMove.values = [2.0,3.0];
       players = ['a', 'b'];
 
-      expect(testMove.compoundValue('a', players), -1);
-      expect(testMove.compoundValue('b', players), 1);
+      expect(testMove.absoluteValue('a', players), -1);
+      expect(testMove.absoluteValue('b', players), 1);
 
     });
 
@@ -254,14 +258,19 @@ void main()async{
 
       testMove.values = [2.0,3.0,1.0,4.0];
 
-      expect(testMove.compoundValue('a', players), -2);
-      expect(testMove.compoundValue('b', players), 1);
-      expect(testMove.compoundValue('c', players), 3);
-      expect(testMove.compoundValue('d', players), -1);
+      var line = MoveLine('a', players, testMove);
+      expect(line.value, -2);
+
+      expect(testMove.absoluteValue('a', players), -2);
+      expect(testMove.absoluteValue('b', players), -1);
+      expect(testMove.absoluteValue('c', players), -3);
+      expect(testMove.absoluteValue('d', players), 1);
 
       MoveNumber secondMove1 = MoveNumber()
       ..movePlayer = 'b'
       ..values = [2.0,3.0,1.0,5.0];
+
+      var line2 = line.getChild(secondMove1);
 
       testMove.children.add(secondMove1);
 
@@ -274,12 +283,17 @@ void main()async{
       expect(secondMove1.absoluteValue('a', players), -3);
 
       expect(testMove.compoundValue('a', players), -5);
+//
+      expect(line2.value, -5);
 
       MoveFie secondMove2 = MoveFie()
         ..movePlayer = 'b'
         ..values = [2.0,6.0,1.0,5.0];
 
       testMove.children.add(secondMove2);
+
+      var line3 = line.getChild(secondMove2);
+      expect(line3.value, -6);
 
       // mu score = -4 ;
       // our score is 2 -4 = -6
@@ -297,18 +311,19 @@ void main()async{
 
   group('computer player basics',(){
 
-    var ui = LocalInterface(FieFoFumInjector());
-    var computer = ComputerPlayer(FieFoFumInjector());
-    ui.addPlayer(LocalPlayer(ui));
-    ui.addPlayer(computer);
 
-    setUp(()async{
-      ui.newGame.firstPlayer = "Player 1";
-      await ui.startLocalGame();
-    });
 
 
     test('Basic computer connection', () async{
+      var ui = LocalInterface(FieFoFumInjector());
+      var computer = ComputerPlayer(FieFoFumInjector());
+      ui.addPlayer(LocalPlayer(ui));
+      ui.addPlayer(computer);
+
+
+      ui.newGame.firstPlayer = "Player 1";
+      await ui.startLocalGame();
+
       computer.send(Echo('hey'));
 
       Message response = Message.inflate(await next(computer.messagesIn.stream));
@@ -367,13 +382,23 @@ void main()async{
 //      expect((ui.position as FieFoFumPosition).winner , 'Computer 1');
 
     },
+
     );
 
 
 
     tearDown((){
 
-      ui.game.tidyUp();
+    });
+
+    test('Fie Fo Fum ai flow',() async{
+      var ui = LocalInterface(FieFoFumInjector());
+      ui.addPlayer(LocalPlayer(ui));
+      var computer = ComputerPlayer(FieFoFumInjector());
+      ui.newGame.firstPlayer = computer.id;
+      ui.addPlayer(computer);
+      await ui.startLocalGame();
+
 
     });
 
@@ -400,8 +425,6 @@ void main()async{
 
       await ui.startLocalGame();
       position = ui.game.position;
-
-
 
       expect(position.runtimeType, ChessPosition);
       expect(position.whitePlayer, player1);
@@ -441,11 +464,50 @@ void main()async{
 
       expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
 
+      expect(ui.position.playerId, player1);
+
     },
 
 
 
     );
+
+    test('computer testing',()async{
+      var position = FieFoFumPosition();
+
+      position.playerIds = ['a','b'];
+
+      position.initialise();
+
+      position.playerStatus['a'] = PlayerStatus.playing;
+      position.playerStatus['b'] = PlayerStatus.playing;
+
+      position.lastMove.makeChildren(FieFoFumInjector());
+
+      Computer computer = Computer(FieFoFumInjector());
+      computer.position = position;
+      computer.playerId = 'a';
+      computer.aiDepth = 1;
+      computer.thinkingTime = 2;
+
+      MoveQueue moveQueue = MoveQueue(position);
+      expect(moveQueue.lines.length, 1);
+      moveQueue.lines.forEach((l)=>expect(l.player, 'a'));
+      moveQueue.expandAll(5);
+//      moveQueue.expandAll(5);
+      moveQueue.printQueue();
+
+      moveQueue.lines.forEach((l)=>expect(l.player, 'a'));
+
+
+      Move move = await computer.findBestMove();
+      position.makeMove(move);
+      expect(position.playerQueue, ['b','a']);
+
+      move = await computer.findBestMove();
+      position.makeMove(move);
+      expect(position.playerQueue, ['a','b']);
+    });
 
     test('computer goes first',() async{
 
@@ -476,6 +538,7 @@ void main()async{
       expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
 
     },
+
 
 
 

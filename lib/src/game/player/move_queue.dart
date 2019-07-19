@@ -3,24 +3,27 @@ part of game;
 
 class MoveQueue{
 
-  final String player;
+  String player;
   final Position position;
+
+  get dependency => position.dependency;
 
   List<MoveLine> toExpand = List();
 
   List<MoveLine> lines = List();
 
-  MoveQueue(this.player, this.position){
+  MoveQueue(this.position){
+    player = position.playerId;
+
      position.lastMove.makeChildren(position.dependency);
 
      position.lastMove.children.forEach((c){
 
-       MoveLine moveLine = MoveLine(player,position,this,[],c);
+       MoveLine moveLine = MoveLine(player,position.playerIds,c);
 
        lines.add(moveLine);
 
      });
-
 
   }
 
@@ -40,54 +43,98 @@ class MoveQueue{
   MoveLine get first => lines.first;
   MoveLine get last => lines.last;
 
+
+  expandLine(MoveLine line, int depth){
+
+    lines.remove(line);
+
+    line.end.makeChildren(position.dependency);
+
+    if(line.end.children.isEmpty) return;
+
+    line.end.children.forEach((c) {
+      lines.add(line.getChild(c));
+    }
+    );
+
+  }
+
+
+  expandTopLines(int number, int depth){
+
+    List<MoveLine> newlines = List();
+    List<MoveLine> kill = List();
+
+    for (int i = 0 ; i < number ; i ++){
+      if(i > lines.length -1) break;
+
+      Move move = lines[i].end;
+      kill.add(lines[i]);
+
+      move.makeChildren(position.dependency);
+
+      move.children.forEach((m) {
+
+        newlines.add(lines[i].getChild(m));
+      } );
+    }
+
+    kill.forEach((l)=> lines.remove(l));
+
+    newlines.forEach((l) => lines.add(l));
+
+    sort();
+
+  }
+
   expandAll(int depth){
 
-    lines.forEach((l) => toExpand.add(l));
 
-    toExpand.forEach((l) => l.expand(depth));
+    List<MoveLine> newlines = List();
 
-    toExpand.clear();
+
+    lines.forEach((l){
+
+      l.end.makeChildren(dependency);
+
+      l.end.children.forEach((m)=> newlines.add(l.getChild(m)));
+
+    });
+
+    lines.clear();
+
+    newlines.forEach((l) => lines.add(l));
 
     sort();
 
-  }
-
-  expandTopLine(int depth){
-
-    lines[0].expand(depth);
-    sort();
-
-  }
-
-  expandTopThree(int depth){
-
-    MoveLine one = lines[0];
-    MoveLine two = lines[1];
-    MoveLine three = lines[2];
-
-    one.expand(depth);
-    two.expand(depth);
-    three.expand(depth);
-    sort();
 
   }
 
 
   printQueue(){
 
-    String string = 'Move queue \n';
+    String string = '\n${position.dependency.name} move queue: \n\n';
+
+    string += 'Number, Net Value, Move (abs value) ...  Responses (abs value)\n';
+    string += '-------------------------------------------------------------\n';
+
+    int index = 0;
 
     lines.forEach((l) {
 
+      string += 'Line ${index ++}: ';
       string += l.value.toString();
-      string += '   ';
+      string += '  ';
+      string += l.start.string;
+      string += ' (${l.start.absoluteValue(l.player, position.playerIds).toString()}): ';
 
-      l._moves.forEach((m){
+      for (int i = 1 ; i < l._moves.length; i ++){
+        Move m = l._moves[i];
+
         string += m.string;
-        string += '  ';
-        string += m.absoluteValue(player, position.playerIds).toString();
+        string += ' (${m.absoluteValue(player, position.playerIds).toString()}) ';
         string +=  '  ';
-      });
+      }
 
       string += '\n';
 

@@ -3,6 +3,8 @@ part of fie_fo_fum;
 
 class FieFoFumInjector extends GameDependency{
 
+  get name => 'Fie Fo Fum';
+
   Game getGame(NewGame newGame) => Game.fromNewGame(this,  newGame);
 
   getBoard() => null;

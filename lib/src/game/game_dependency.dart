@@ -2,6 +2,7 @@ part of game;
 
 abstract class GameDependency{
 
+  String get name;
 
   Game getGame(NewGame newGame);
 

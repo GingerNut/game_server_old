@@ -1,6 +1,8 @@
 part of chess;
 
 class ChessInjector extends GameDependency{
+
+  get name => 'Chess';
   
   Game getGame(NewGame newGame) => Game.fromNewGame(this, newGame);
 

@@ -2,9 +2,8 @@ part of game;
 
 class MoveLine{
 
-  final String player;
-  final Position position;
-  final MoveQueue lines;
+  String player;
+  List<String> players;
 
   double _value;
 
@@ -14,7 +13,7 @@ class MoveLine{
     _value = 0;
 
     _moves.forEach((m) {
-      _value += m.absoluteValue(player, position.playerIds);
+      _value += m.absoluteValue(player, players);
     });
 
     return _value;
@@ -27,25 +26,19 @@ class MoveLine{
 
   List<Move> _moves = List();
 
-  MoveLine(this.player, this.position, this.lines, List<Move> moves, Move lastMove){
+  MoveLine(this.player, this.players, Move move){
+    _moves = List();
+    _moves.add(move);
+
+  }
+
+  MoveLine.fromMoves(this.player, this.players, List<Move> moves, Move lastMove){
     moves.forEach((m) => this._moves.add(m));
     this._moves.add(lastMove);
   }
 
-  expand(int depth){
-    if(this.depth >= depth) return;
+ MoveLine getChild(Move move) =>  MoveLine.fromMoves(player, players, _moves, move);
 
-    lines.remove(this);
 
-    end.makeChildren(position.dependency);
-
-    if(end.children.isEmpty) return;
-
-    end.children.forEach((c) {
-      lines.add(MoveLine(player, position, lines, _moves, c));
-    }
-    );
-
-  }
 
 }

@@ -22,14 +22,13 @@ class Computer{
 
     Timer timer = Timer(Duration(seconds: 1), (){OK = false;});
 
-
-    MoveQueue queue = MoveQueue(playerId, position);
+    MoveQueue queue = MoveQueue(position);
 
     queue.expandAll(aiDepth);
 
     while(OK){
 
-//      queue.expandTopThree(aiDepth);
+//      queue.expandTopLines(3, aiDepth);
       await Future.delayed(Duration(microseconds : 1));
 
     }
