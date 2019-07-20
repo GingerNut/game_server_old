@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:math';
 import 'package:game_server/game_server.dart' as prefix0;
 import 'package:game_server/games/chess/chess.dart';
 import 'package:game_server/game_server.dart';
@@ -13,6 +14,8 @@ import 'package:game_server/src/messages/message.dart';
 
 import 'package:test/test.dart';
 import 'package:test/test.dart' as prefix1;
+
+import 'dummy_position.dart';
 
 
 void main()async{
@@ -250,6 +253,52 @@ void main()async{
 
     });
 
+    test('move tree valuations', (){
+
+      List<String> players = ['a', 'b', 'c', 'd'];
+
+      var testPosition = DummyPosition();
+      testPosition.playerIds = players;
+      testPosition.values = [2.0,3.0,1.0,4.0];
+
+      expect(testPosition.value('a'), -2);
+      expect(testPosition.value('b'), -1);
+      expect(testPosition.value('c'), -3);
+      expect(testPosition.value('d'), 1);
+
+      MoveTree moveTree = MoveTree(testPosition, 'a');
+      expect(moveTree.value, -2);
+
+      var secondMove1 = DummyPosition()
+      ..playerIds = players
+      ..playerQueue = List()
+        ..playerQueue.add('b')
+        ..values = [2.0,3.0,1.0,5.0];
+
+      expect(secondMove1.playerId, 'b');
+
+      MoveTree tree1 = MoveTree(secondMove1, 'a');
+      expect(tree1.value, -3);
+
+      var secondMove2 = DummyPosition()
+        ..playerIds = players
+        ..playerQueue = List()
+        ..playerQueue.add('b')
+        ..values = [2.0,6.0,1.0,5.0];
+
+      expect(secondMove2.playerId, 'b');
+      MoveTree tree2 = MoveTree(secondMove2, 'a');
+      expect(tree2.value, -4);
+
+      moveTree.branches.add(tree1);
+      moveTree.findTopBranch();
+      expect(moveTree.netValue, -5);
+
+      moveTree.branches.add(tree2);
+      moveTree.findTopBranch();
+      expect(moveTree.netValue, -6);
+    });
+
     test('nested move valuations', (){
 
       MoveNumber testMove = MoveNumber();
@@ -302,6 +351,23 @@ void main()async{
 
       expect(testMove.compoundValue('a', players), -6);
 
+
+
+    });
+
+
+    test('move tree nested valuations', (){
+
+      List<String> players = ['a', 'b', 'c', 'd'];
+
+      var testPosition = FieFoFumPosition();
+      testPosition.playerIds = players;
+      testPosition.values = [2.0,3.0,1.0,4.0];
+
+      expect(testPosition.value('a'), -2);
+      expect(testPosition.value('b'), -1);
+      expect(testPosition.value('c'), -3);
+      expect(testPosition.value('d'), 1);
 
 
     });

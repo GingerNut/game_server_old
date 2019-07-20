@@ -9,6 +9,8 @@ abstract class Move <P> extends GameEvent{
 
   List<double> values;
 
+  bool suicide = false;
+
   bool isPlayer(String playerId) {
     if(movePlayer == null) return true;
 
@@ -97,7 +99,7 @@ abstract class Move <P> extends GameEvent{
 
       for(int i = 0 ; i < pos.playerIds.length ; i ++){
 
-        values[i] = pos.value(pos.playerIds[i]);
+        values[i] = pos.valuationOfPlayer(pos.playerIds[i]);
       }
 
       resultingPosition = pos.json;

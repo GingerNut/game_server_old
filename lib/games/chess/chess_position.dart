@@ -262,7 +262,7 @@ class ChessPosition extends Position{
   setUpNewPosition() {}
 
   @override
-  double value(String playerId) {
+  double valuationOfPlayer(String playerId) {
 
     double value = 0;
 

@@ -10,6 +10,7 @@ abstract class Position{
   String gameId;
   List<String> playerIds;
   List<String> playerQueue;
+  List<double> values;
 
   PositionBuilder get positionBuilder => dependency.getPositionBuilder();
   MoveBuilder get moveBuilder => dependency.getMoveBuilder();
@@ -89,6 +90,16 @@ abstract class Position{
 
     analyse();
 
+    values = List(playerIds.length);
+
+    for (int i = 0 ; i < playerIds.length ; i ++){
+
+      values[i] = valuationOfPlayer(playerIds[i]);
+
+    }
+
+    if(playerStatus[playerId] == PlayerStatus.out) move.suicide = true;
+
     nextPlayer();
 
     move.resultingPosition = json;
@@ -156,6 +167,8 @@ abstract class Position{
       playerIds.forEach((p)=>playerQueue.add(p));
     }
 
+
+
     lastMove = StartingPosition(json);
   }
 
@@ -182,9 +195,42 @@ abstract class Position{
 
   List<Move> getPossibleMoves();
 
+  Stream<Move> listenForMoves(){}
+
   printBoard(){}
 
-  double value(String playerId);
+  double valuationOfPlayer(String playerId);
+
+  double value(String player){
+    int index = playerIds.indexOf(player);
+
+    double value;
+
+    if(values.length == 1){
+      value =  values[0];
+
+    } else if(values.length == 2){
+
+      if(index == 0) value = values[0] - values[1];
+      else value = values[1] - values[0];
+
+    } else {
+
+      double highestOpponent = index == 0 ? values[1] : values[0];
+
+      for (int i = 0 ; i < values.length ; i ++){
+        if(i == index) continue;
+
+        if(values[i] > highestOpponent) highestOpponent = values[i];
+
+      }
+
+      value = values[index] - highestOpponent;
+    }
+
+    return value;
+
+  }
 
   static String playerStatusToString(PlayerStatus p){
 

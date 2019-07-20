@@ -22,6 +22,10 @@ class Computer{
 
     Timer timer = Timer(Duration(seconds: 1), (){OK = false;});
 
+    MoveTree tree = MoveTree(position, position.playerId);
+
+    tree.findBranches();
+
     MoveQueue queue = MoveQueue(position);
 
     queue.expandAll(aiDepth);
@@ -30,6 +34,8 @@ class Computer{
 
 //      queue.expandTopLines(3, aiDepth);
       await Future.delayed(Duration(microseconds : 1));
+
+      tree.search(6);
 
     }
 
