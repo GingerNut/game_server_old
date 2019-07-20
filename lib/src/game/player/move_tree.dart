@@ -18,13 +18,11 @@ class MoveTree{
 
   List<MoveTree> branches = List();
 
-  double get value => root.value(player);
-
-  double get netValue {
+  double get value {
 
     findTopBranch();
 
-    return root.value(player) + (bestBranch != null ? bestBranch.netValue : 0);
+    return root.value(player) + (bestBranch != null ? bestBranch.value : 0);
   }
 
   findBranches() {

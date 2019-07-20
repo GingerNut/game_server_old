@@ -266,10 +266,10 @@ void main()async{
       expect(tree2.value, -4);
 
       moveTree.branches.add(tree1);
-      expect(moveTree.netValue, -5);
+      expect(moveTree.value, -5);
 
       moveTree.branches.add(tree2);
-      expect(moveTree.netValue, -6);
+      expect(moveTree.value, -6);
     });
 
 
