@@ -26,13 +26,8 @@ class Computer{
 
     tree.findBranches();
 
-    MoveQueue queue = MoveQueue(position);
-
-    queue.expandAll(aiDepth);
-
     while(OK){
 
-//      queue.expandTopLines(3, aiDepth);
       await Future.delayed(Duration(microseconds : 1));
 
       tree.search(6);
@@ -41,26 +36,8 @@ class Computer{
 
     timer.cancel();
 
-//    queue.expandAll();
-//    queue.expandAll();
 
-
-
-
-//    position.lastMove.makeChildren(dependency);
-//
-//
-//    position.lastMove.children.forEach((c) => c.makeChildren(dependency));
-//
-//    if(aiDepth > 2){
-//      position.lastMove.children.forEach((c) {
-//        c.children.forEach((d) => d.makeChildren(dependency));
-//      } );
-//    }
-//
-//    return position.lastMove.bestChild(playerId, position.playerIds);
-
-  return queue.bestMove;
+  return tree.bestMove;
   }
 
 

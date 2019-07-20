@@ -20,7 +20,12 @@ class MoveTree{
 
   double get value => root.value(player);
 
-  double get netValue => root.value(player) + (bestBranch != null ? bestBranch.netValue : 0);
+  double get netValue {
+
+    findTopBranch();
+
+    return root.value(player) + (bestBranch != null ? bestBranch.netValue : 0);
+  }
 
   findBranches() {
     var moves = root.getPossibleMoves();

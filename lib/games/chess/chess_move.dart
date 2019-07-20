@@ -52,12 +52,9 @@ class ChessMove extends Move<ChessPosition>{
           + toJ.toString() + ' ');
     }
 
-
-
       if(piece.legalMoves.contains(position.tiles.tile(toI, toJ))) {
         return Success();
       } else {
-        position.printBoard();
 
         return GameError('Chess Error: illegal move for '
             + piece.name + ' from '

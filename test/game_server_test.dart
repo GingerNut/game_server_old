@@ -228,31 +228,6 @@ void main()async{
 
     });
 
-    test('simple move valuations', (){
-
-      MoveNumber testMove = MoveNumber();
-      List<String> players = ['a', 'b', 'c', 'd'];
-
-      testMove.values = [2.0,3.0,1.0,4.0];
-
-      expect(testMove.absoluteValue('a', players), -2);
-      expect(testMove.absoluteValue('b', players), -1);
-      expect(testMove.absoluteValue('c', players), -3);
-      expect(testMove.absoluteValue('d', players), 1);
-
-      expect(MoveLine('a', players, testMove).value, -2);
-      expect(MoveLine('b', players, testMove).value, -1);
-      expect(MoveLine('c', players, testMove).value, -3);
-      expect(MoveLine('d', players, testMove).value, 1);
-
-      testMove.values = [2.0,3.0];
-      players = ['a', 'b'];
-
-      expect(testMove.absoluteValue('a', players), -1);
-      expect(testMove.absoluteValue('b', players), 1);
-
-    });
-
     test('move tree valuations', (){
 
       List<String> players = ['a', 'b', 'c', 'd'];
@@ -291,94 +266,17 @@ void main()async{
       expect(tree2.value, -4);
 
       moveTree.branches.add(tree1);
-      moveTree.findTopBranch();
       expect(moveTree.netValue, -5);
 
       moveTree.branches.add(tree2);
-      moveTree.findTopBranch();
       expect(moveTree.netValue, -6);
     });
 
-    test('nested move valuations', (){
-
-      MoveNumber testMove = MoveNumber();
-      List<String> players = ['a', 'b', 'c', 'd'];
-      testMove.movePlayer = 'a';
-
-      testMove.values = [2.0,3.0,1.0,4.0];
-
-      var line = MoveLine('a', players, testMove);
-      expect(line.value, -2);
-
-      expect(testMove.absoluteValue('a', players), -2);
-      expect(testMove.absoluteValue('b', players), -1);
-      expect(testMove.absoluteValue('c', players), -3);
-      expect(testMove.absoluteValue('d', players), 1);
-
-      MoveNumber secondMove1 = MoveNumber()
-      ..movePlayer = 'b'
-      ..values = [2.0,3.0,1.0,5.0];
-
-      var line2 = line.getChild(secondMove1);
-
-      testMove.children.add(secondMove1);
-
-      // I am not player so worst score for me deducted from my score
-      // my score = -3 (5 - 2)
-      // our score is -2 -3 = -1
-
-      expect(testMove.absoluteValue('a', players), -2);
-
-      expect(secondMove1.absoluteValue('a', players), -3);
-
-      expect(testMove.compoundValue('a', players), -5);
-//
-      expect(line2.value, -5);
-
-      MoveFie secondMove2 = MoveFie()
-        ..movePlayer = 'b'
-        ..values = [2.0,6.0,1.0,5.0];
-
-      testMove.children.add(secondMove2);
-
-      var line3 = line.getChild(secondMove2);
-      expect(line3.value, -6);
-
-      // mu score = -4 ;
-      // our score is 2 -4 = -6
-
-      expect(testMove.worstChild('a', players).runtimeType, MoveFie);
-
-      expect(testMove.compoundValue('a', players), -6);
-
-
-
-    });
-
-
-    test('move tree nested valuations', (){
-
-      List<String> players = ['a', 'b', 'c', 'd'];
-
-      var testPosition = FieFoFumPosition();
-      testPosition.playerIds = players;
-      testPosition.values = [2.0,3.0,1.0,4.0];
-
-      expect(testPosition.value('a'), -2);
-      expect(testPosition.value('b'), -1);
-      expect(testPosition.value('c'), -3);
-      expect(testPosition.value('d'), 1);
-
-
-    });
 
   });
 
 
   group('computer player basics',(){
-
-
-
 
     test('Basic computer connection', () async{
       var ui = LocalInterface(FieFoFumInjector());
