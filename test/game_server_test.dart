@@ -267,11 +267,11 @@ void main()async{
       expect(tree2.value(players.indexOf('a')), -4);
 
       moveTree.branches.add(tree1);
-      moveTree.sortBranches();
+      moveTree.sortBranches(0);
       expect(moveTree.value(players.indexOf('a')), -5);
 
       moveTree.branches.add(tree2);
-      moveTree.sortBranches();
+      moveTree.sortBranches(0);
       expect(moveTree.value(players.indexOf('a')), -6);
     });
 
@@ -421,7 +421,7 @@ void main()async{
       move12.branches.add(move12_1);
       move12.branches.add(move12_2);
 
-      moveTree.sortBranches();
+      moveTree.sortBranches(0);
       expect(moveTree.value(players.indexOf('a')), -2);
 
 

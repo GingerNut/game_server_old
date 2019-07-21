@@ -14,15 +14,12 @@ class MoveTree{
 
   final Position root;
   Move get move => root.lastMove;
-//  final String player;
   int playerIndex;
 
   MoveTree(this.top, this.root){
     playerIndex = root.playerIds.indexOf(root.playerId);
     if(top == null) top = this;
     index = root.playerIds.indexOf(root.playerId);
-
-
   }
 
   double valueNoMove(int index){
@@ -31,7 +28,8 @@ class MoveTree{
   }
 
   double value(int index){
-    sortBranches();
+
+    sortBranches(0);
 
     double value = root.relativeValues[index];
 
@@ -70,30 +68,13 @@ class MoveTree{
 
   }
 
-  sortBranches(){
+  sortBranches(int sortDepth){
 
-    exploreBranches(MoveTree explore, int depth){
+//    print('From sort depth: ' + sortDepth.toString());
 
-      print('from explore branches in moveTree - depth: ' + depth.toString());
-
-      explore.branches.forEach((b) {
-
-        if(b.branches.isEmpty){
-
-          b.findTopBranch();
-
-        } else {
-          exploreBranches(b, depth ++);
-        }
-
-      });
-
-
-    }
+    branches.forEach((b) => b.sortBranches(sortDepth++));
 
     findTopBranch();
-
-    exploreBranches(this, 0);
 
   }
 
