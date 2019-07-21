@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:math';
 import 'package:game_server/game_server.dart' as prefix0;
 import 'package:game_server/games/chess/chess.dart';
 import 'package:game_server/game_server.dart';
@@ -241,8 +242,8 @@ void main()async{
       expect(testPosition.relativeValues[players.indexOf('d')], 1);
 
       MoveTree moveTree = MoveTree(null, testPosition);
-      expect(moveTree.value(players.indexOf('a')), -2);
-      expect(moveTree.value(players.indexOf('a')), -2);
+      expect(moveTree.valueNoMove(players.indexOf('a')), -2);
+      expect(moveTree.valueNoMove(players.indexOf('a')), -2);
 
       var secondMove1 = DummyPosition()
       ..playerIds = players
@@ -280,7 +281,8 @@ void main()async{
 
       var testPosition = DummyPosition()
         ..playerId = 'a'
-        ..playerIds = players;
+        ..playerIds = players
+      ..absoluteValues = [0,0,0];
 
       MoveTree moveTree = MoveTree(null, testPosition);
 
@@ -288,7 +290,7 @@ void main()async{
           DummyPosition()
         ..playerIds = players
         ..playerId = 'a'
-        ..absoluteValues = [4,2,3],
+        ..absoluteValues = [4,2,3]
       );
 
 
@@ -296,107 +298,106 @@ void main()async{
           DummyPosition()
         ..playerIds = players
         ..playerId = 'a'
-        ..absoluteValues = [0,2,1],
+        ..absoluteValues = [0,2,1]
         );
 
       var move11_1 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'b'
-        ..absoluteValues = [3,1,2],
+        ..absoluteValues = [3,1,2]
           );
 
       var move11_2 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'b'
-        ..absoluteValues = [3,2,1],
+        ..absoluteValues = [3,2,1]
           );
-
-
 
       var move12_1 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'b'
-        ..absoluteValues = [3,1,2],
+        ..absoluteValues = [3,1,2]
           );
 
       var move12_2 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'b'
-        ..absoluteValues = [3,2,1],
+        ..absoluteValues = [3,2,1]
           );
+
 
       var move11_1_1 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'c'
-        ..absoluteValues = [3,4,1],
+        ..absoluteValues = [3,4,1]
           );
 
       var move11_1_2 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'c'
-        ..absoluteValues = [1,2,2],
+        ..absoluteValues = [1,2,2]
           );
 
       var move11_2_1 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'c'
-        ..absoluteValues = [4,3,2],
+        ..absoluteValues = [4,3,2]
       );
 
       var move11_2_2 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'c'
-        ..absoluteValues = [1,3,2],
+        ..absoluteValues = [1,3,2]
       );
 
       var move12_1_1 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'c'
-        ..absoluteValues = [3,2,1],
+        ..absoluteValues = [3,2,1]
       );
 
       var move12_1_2 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'c'
-        ..absoluteValues = [4,1,3],
+        ..absoluteValues = [4,1,3]
       );
 
       var move12_2_1 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'c'
-        ..absoluteValues = [4,3,1],
+        ..absoluteValues = [4,3,1]
       );
 
       var move12_2_2 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'c'
-        ..absoluteValues = [1,2,3],
+        ..absoluteValues = [1,2,3]
       );
 
       var move12_2_2_1 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'a'
-        ..absoluteValues = [1,3,2],
+        ..absoluteValues = [1,3,2]
       );
 
       var move12_2_2_2 = MoveTree(moveTree,
           DummyPosition()
         ..playerIds = players
         ..playerId = 'a'
-        ..absoluteValues = [4,2,3],
+        ..absoluteValues = [4,2,3]
       );
 
     move12_2_2.branches.add(move12_2_2_1);
@@ -421,6 +422,7 @@ void main()async{
       move12.branches.add(move12_2);
 
       moveTree.sortBranches();
+      expect(moveTree.value(players.indexOf('a')), -2);
 
 
     });

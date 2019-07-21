@@ -6,6 +6,7 @@ class MoveTree{
   Move get bestMove => bestBranch.move;
   MoveTree bestBranch;
   int depth;
+  int index;
 
   BranchQuality branchQuality = BranchQuality.noYetExamined;
 
@@ -19,6 +20,14 @@ class MoveTree{
   MoveTree(this.top, this.root){
     playerIndex = root.playerIds.indexOf(root.playerId);
     if(top == null) top = this;
+    index = root.playerIds.indexOf(root.playerId);
+
+
+  }
+
+  double valueNoMove(int index){
+
+    return root.relativeValues[index];
   }
 
   double value(int index){
