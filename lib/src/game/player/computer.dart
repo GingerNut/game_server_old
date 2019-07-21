@@ -22,7 +22,7 @@ class Computer{
 
     Timer timer = Timer(Duration(seconds: 1), (){OK = false;});
 
-    MoveTree tree = MoveTree(position, position.playerId);
+    MoveTree tree = MoveTree(null, position);
 
     tree.findBranches();
 

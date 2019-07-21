@@ -2,6 +2,8 @@ import 'package:game_server/src/game/game.dart';
 
 class DummyPosition extends Position{
 
+  String playerId;
+
   analyse() {}
 
   bool canPlay(String id) => true;

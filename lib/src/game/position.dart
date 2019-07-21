@@ -10,7 +10,23 @@ abstract class Position{
   String gameId;
   List<String> playerIds;
   List<String> playerQueue;
-  List<double> values;
+
+  List<double> _absoluteValues;
+  List<double> get absoluteValues => _absoluteValues;
+
+  set absoluteValues(List<double> values) {
+
+    _absoluteValues = values;
+
+    relativeValues = List(values.length);
+
+    for(int i = 0 ; i < values.length ; i++){
+      relativeValues[i] = _value(i);
+    }
+
+  }
+
+  List<double> relativeValues;
 
   PositionBuilder get positionBuilder => dependency.getPositionBuilder();
   MoveBuilder get moveBuilder => dependency.getMoveBuilder();
@@ -90,13 +106,7 @@ abstract class Position{
 
     analyse();
 
-    values = List(playerIds.length);
-
-    for (int i = 0 ; i < playerIds.length ; i ++){
-
-      values[i] = valuationOfPlayer(playerIds[i]);
-
-    }
+     setValues();
 
     if(playerStatus[playerId] == PlayerStatus.out) move.suicide = true;
 
@@ -167,7 +177,7 @@ abstract class Position{
       playerIds.forEach((p)=>playerQueue.add(p));
     }
 
-
+    setValues();
 
     lastMove = StartingPosition(json);
   }
@@ -201,31 +211,43 @@ abstract class Position{
 
   double valuationOfPlayer(String playerId);
 
-  double value(String player){
-    int index = playerIds.indexOf(player);
+  setValues(){
+
+    List<double> values = List(playerIds.length);
+
+    for(int i = 0 ; i < values.length; i++){
+      values[i] = 0.0;
+    }
+
+    absoluteValues = values;
+
+  }
+
+
+  double _value(int index){
 
     double value;
 
-    if(values.length == 1){
-      value =  values[0];
+    if(absoluteValues.length == 1){
+      value =  absoluteValues[0];
 
-    } else if(values.length == 2){
+    } else if(absoluteValues.length == 2){
 
-      if(index == 0) value = values[0] - values[1];
-      else value = values[1] - values[0];
+      if(index == 0) value = absoluteValues[0] - absoluteValues[1];
+      else value = absoluteValues[1] - absoluteValues[0];
 
     } else {
 
-      double highestOpponent = index == 0 ? values[1] : values[0];
+      double highestOpponent = index == 0 ? absoluteValues[1] : absoluteValues[0];
 
-      for (int i = 0 ; i < values.length ; i ++){
+      for (int i = 0 ; i < absoluteValues.length ; i ++){
         if(i == index) continue;
 
-        if(values[i] > highestOpponent) highestOpponent = values[i];
+        if(absoluteValues[i] > highestOpponent) highestOpponent = absoluteValues[i];
 
       }
 
-      value = values[index] - highestOpponent;
+      value = absoluteValues[index] - highestOpponent;
     }
 
     return value;

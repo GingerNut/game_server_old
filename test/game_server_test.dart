@@ -1,6 +1,5 @@
 
 import 'dart:async';
-import 'dart:math';
 import 'package:game_server/game_server.dart' as prefix0;
 import 'package:game_server/games/chess/chess.dart';
 import 'package:game_server/game_server.dart';
@@ -13,7 +12,6 @@ import 'package:game_server/src/messages/message.dart';
 
 
 import 'package:test/test.dart';
-import 'package:test/test.dart' as prefix1;
 
 import 'dummy_position.dart';
 
@@ -232,44 +230,199 @@ void main()async{
 
       List<String> players = ['a', 'b', 'c', 'd'];
 
-      var testPosition = DummyPosition();
-      testPosition.playerIds = players;
-      testPosition.values = [2.0,3.0,1.0,4.0];
+      var testPosition = DummyPosition()
+      ..playerId = 'a'
+      ..playerIds = players
+      ..absoluteValues = [2.0,3.0,1.0,4.0];
 
-      expect(testPosition.value('a'), -2);
-      expect(testPosition.value('b'), -1);
-      expect(testPosition.value('c'), -3);
-      expect(testPosition.value('d'), 1);
+      expect(testPosition.relativeValues[players.indexOf('a')], -2);
+      expect(testPosition.relativeValues[players.indexOf('b')], -1);
+      expect(testPosition.relativeValues[players.indexOf('c')], -3);
+      expect(testPosition.relativeValues[players.indexOf('d')], 1);
 
-      MoveTree moveTree = MoveTree(testPosition, 'a');
-      expect(moveTree.value, -2);
+      MoveTree moveTree = MoveTree(null, testPosition);
+      expect(moveTree.value(players.indexOf('a')), -2);
+      expect(moveTree.value(players.indexOf('a')), -2);
 
       var secondMove1 = DummyPosition()
       ..playerIds = players
-      ..playerQueue = List()
-        ..playerQueue.add('b')
-        ..values = [2.0,3.0,1.0,5.0];
+        ..playerId = 'b'
+        ..absoluteValues = [2.0,3.0,1.0,5.0];
 
       expect(secondMove1.playerId, 'b');
 
-      MoveTree tree1 = MoveTree(secondMove1, 'a');
-      expect(tree1.value, -3);
+      MoveTree tree1 = MoveTree(moveTree, secondMove1);
+      expect(tree1.value(players.indexOf('b')), -2);
+      expect(tree1.value(players.indexOf('a')), -3);
 
       var secondMove2 = DummyPosition()
+      ..playerId = 'b'
         ..playerIds = players
-        ..playerQueue = List()
-        ..playerQueue.add('b')
-        ..values = [2.0,6.0,1.0,5.0];
+        ..absoluteValues = [2.0,6.0,1.0,5.0];
 
       expect(secondMove2.playerId, 'b');
-      MoveTree tree2 = MoveTree(secondMove2, 'a');
-      expect(tree2.value, -4);
+      MoveTree tree2 = MoveTree(moveTree,secondMove2);
+      expect(tree2.value(players.indexOf('b')), 1);
+      expect(tree2.value(players.indexOf('a')), -4);
 
       moveTree.branches.add(tree1);
-      expect(moveTree.value, -5);
+      moveTree.sortBranches();
+      expect(moveTree.value(players.indexOf('a')), -5);
 
       moveTree.branches.add(tree2);
-      expect(moveTree.value, -6);
+      moveTree.sortBranches();
+      expect(moveTree.value(players.indexOf('a')), -6);
+    });
+
+    test('move tree valuations - more involved', (){
+
+      List<String> players = ['a', 'b', 'c'];
+
+      var testPosition = DummyPosition()
+        ..playerId = 'a'
+        ..playerIds = players;
+
+      MoveTree moveTree = MoveTree(null, testPosition);
+
+      MoveTree move11 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'a'
+        ..absoluteValues = [4,2,3],
+      );
+
+
+      var move12 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'a'
+        ..absoluteValues = [0,2,1],
+        );
+
+      var move11_1 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'b'
+        ..absoluteValues = [3,1,2],
+          );
+
+      var move11_2 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'b'
+        ..absoluteValues = [3,2,1],
+          );
+
+
+
+      var move12_1 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'b'
+        ..absoluteValues = [3,1,2],
+          );
+
+      var move12_2 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'b'
+        ..absoluteValues = [3,2,1],
+          );
+
+      var move11_1_1 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'c'
+        ..absoluteValues = [3,4,1],
+          );
+
+      var move11_1_2 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'c'
+        ..absoluteValues = [1,2,2],
+          );
+
+      var move11_2_1 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'c'
+        ..absoluteValues = [4,3,2],
+      );
+
+      var move11_2_2 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'c'
+        ..absoluteValues = [1,3,2],
+      );
+
+      var move12_1_1 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'c'
+        ..absoluteValues = [3,2,1],
+      );
+
+      var move12_1_2 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'c'
+        ..absoluteValues = [4,1,3],
+      );
+
+      var move12_2_1 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'c'
+        ..absoluteValues = [4,3,1],
+      );
+
+      var move12_2_2 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'c'
+        ..absoluteValues = [1,2,3],
+      );
+
+      var move12_2_2_1 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'a'
+        ..absoluteValues = [1,3,2],
+      );
+
+      var move12_2_2_2 = MoveTree(moveTree,
+          DummyPosition()
+        ..playerIds = players
+        ..playerId = 'a'
+        ..absoluteValues = [4,2,3],
+      );
+
+    move12_2_2.branches.add(move12_2_2_1);
+    move12_2_2.branches.add(move12_2_2_2);
+
+    move12_2.branches.add(move12_2_1);
+    move12_2.branches.add(move12_2_2);
+
+      move12_2.branches.add(move12_1_1);
+      move12_2.branches.add(move12_1_2);
+
+      move11_2.branches.add(move11_2_1);
+      move11_2.branches.add(move11_2_2);
+
+      move11_2.branches.add(move11_1_1);
+      move11_2.branches.add(move11_1_2);
+
+      move11.branches.add(move11_1);
+      move11.branches.add(move11_2);
+
+      move12.branches.add(move12_1);
+      move12.branches.add(move12_2);
+
+      moveTree.sortBranches();
+
+
     });
 
 
@@ -431,22 +584,22 @@ void main()async{
       expect(ui.position.playerId, player1);
 
     },
-
-
+      
 
     );
 
-    test('computer testing',()async{
+
+    test('computer testing with movetree',()async{
       var position = FieFoFumPosition();
 
       position.playerIds = ['a','b'];
 
       position.initialise();
 
+      expect(position.absoluteValues, [0.0, 0.0]);
+
       position.playerStatus['a'] = PlayerStatus.playing;
       position.playerStatus['b'] = PlayerStatus.playing;
-
-      position.lastMove.makeChildren(FieFoFumInjector());
 
       Computer computer = Computer(FieFoFumInjector());
       computer.position = position;
@@ -454,59 +607,28 @@ void main()async{
       computer.aiDepth = 1;
       computer.thinkingTime = 2;
 
-      MoveQueue moveQueue = MoveQueue(position);
-      expect(moveQueue.lines.length, 1);
-      moveQueue.lines.forEach((l)=>expect(l.player, 'a'));
-      moveQueue.expandAll(5);
-//      moveQueue.expandAll(5);
-      moveQueue.printQueue();
+      MoveTree moveQueue = MoveTree(null, position);
+      moveQueue.findBranches();
+      expect(moveQueue.branches.length, 1);
 
-      moveQueue.lines.forEach((l)=>expect(l.player, 'a'));
+      moveQueue.branches.forEach((b)=>expect(b.root.playerId, 'b'));
 
+      moveQueue.printTree();
 
-      Move move = await computer.findBestMove();
-      position.makeMove(move);
-      expect(position.playerQueue, ['b','a']);
-
-      move = await computer.findBestMove();
-      position.makeMove(move);
-      expect(position.playerQueue, ['a','b']);
+      moveQueue.search(1);
+      moveQueue.printTree();
+//
+//      moveQueue.lines.forEach((l)=>expect(l.player, 'a'));
+//
+//
+//      Move move = await computer.findBestMove();
+//      position.makeMove(move);
+//      expect(position.playerQueue, ['b','a']);
+//
+//      move = await computer.findBestMove();
+//      position.makeMove(move);
+//      expect(position.playerQueue, ['a','b']);
     });
-
-    test('computer goes first',() async{
-
-      ui = LocalInterface(ChessInjector());
-      ui.addPlayer(LocalPlayer(ui));
-      computer = ComputerPlayer(ChessInjector());
-      ui.addPlayer(computer);
-      ui.newGame.firstPlayer = computer.id;
-
-      await ui.startLocalGame();
-      position = ui.game.position;
-
-      expect(position.runtimeType, ChessPosition);
-      expect(position.whitePlayer, computer.id);
-      expect(ui.game.gameId   , gameId);
-
-      expect(ui.position.playerId, computer.id);
-
-      await ui.game.makeMove(ChessMove(
-          position.tiles.tile(4, 6),
-          position.tiles.tile(4, 4)
-      ), gameId, 'Player 1');
-
-      Message message = Message.inflate(await next(computer.messagesIn.stream));
-
-      expect(message.runtimeType, SuggestMove);
-
-      expect(ChessInjector().getMoveBuilder().build((message as SuggestMove).moveString).runtimeType, ChessMove);
-
-    },
-
-
-
-
-    );
 
 
 
