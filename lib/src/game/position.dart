@@ -1,8 +1,6 @@
-
 part of game;
 
-abstract class Position{
-
+abstract class Position {
   GameEvent lastMove;
 
   GameDependency get dependency;
@@ -15,15 +13,13 @@ abstract class Position{
   List<double> get absoluteValues => _absoluteValues;
 
   set absoluteValues(List<double> values) {
-
     _absoluteValues = values;
 
     relativeValues = List(values.length);
 
-    for(int i = 0 ; i < values.length ; i++){
+    for (int i = 0; i < values.length; i++) {
       relativeValues[i] = _value(i);
     }
-
   }
 
   List<double> relativeValues;
@@ -31,7 +27,7 @@ abstract class Position{
   PositionBuilder get positionBuilder => dependency.getPositionBuilder();
   MoveBuilder get moveBuilder => dependency.getMoveBuilder();
 
-  int get nextMoveNumber => lastMove == null ? 0 : lastMove.number +1;
+  int get nextMoveNumber => lastMove == null ? 0 : lastMove.number + 1;
 
   PlayerVariable<PlayerStatus> playerStatus;
   PlayerVariable<double> score;
@@ -39,26 +35,26 @@ abstract class Position{
   PlayerVariable<int> color;
 
   String get json => jsonEncode({
-    'game_id' : gameId,
-    'player_ids' : playerIds.join(','),
-    'player_queue' : playerQueue.join(','),
-    'player_status' : playerStatus.string,
+        'game_id': gameId,
+        'player_ids': playerIds.join(','),
+        'player_queue': playerQueue.join(','),
+        'player_status': playerStatus.string,
 //    'time_left': timeLeft.string,
-    'score' : score.string,
-    'color': color.string,
-    'last_move' : lastMove == null ? StartingPosition.type : lastMove.string,
-    'move_number' : lastMove == null ? 0 : lastMove.number,
-    'position' : externalVariablesString,
-  }
-  );
+        'score': score.string,
+        'color': color.string,
+        'last_move': lastMove == null ? StartingPosition.type : lastMove.string,
+        'move_number': lastMove == null ? 0 : lastMove.number,
+        'position': externalVariablesString,
+      });
 
-  setVariables(String posJson){
+  setVariables(String posJson) {
     var jsonObject = jsonDecode(posJson);
 
     gameId = jsonObject['game_id'];
     playerIds = jsonObject['player_ids'].split(',');
     playerQueue = jsonObject['player_queue'].split(',');
-    playerStatus = PlayerVariable.playerVariablefromString(jsonObject['player_status']);
+    playerStatus =
+        PlayerVariable.playerVariablefromString(jsonObject['player_status']);
 //        timeLeft = PlayerVariable.playerVariablefromString( jsonObject['time_left']);
     score = PlayerVariable.playerVariablefromString(jsonObject['score']);
     color = PlayerVariable.playerVariablefromString(jsonObject['color']);
@@ -69,16 +65,12 @@ abstract class Position{
 
     int lastMoveInt = jsonObject['move_number'];
 
-    if(lastMoveInt == 0) {
+    if (lastMoveInt == 0) {
       lastMove = StartingPosition(posJson);
     } else {
-
       lastMove = moveBuilder.build(jsonObject['last_move']);
       lastMove.number = lastMoveInt;
-
     }
-
-
   }
 
   String get externalVariablesString;
@@ -96,8 +88,7 @@ abstract class Position{
 
   bool canPlay(String id);
 
-  makeMove(Move move){
-
+  makeMove(Move move) {
     move.go(this);
 
     move.number = nextMoveNumber;
@@ -106,65 +97,57 @@ abstract class Position{
 
     analyse();
 
-     setValues();
+    setValues();
 
-    if(playerStatus[playerId] == PlayerStatus.out) move.suicide = true;
+    if (playerStatus[playerId] == PlayerStatus.out) move.suicide = true;
 
     nextPlayer();
 
     move.resultingPosition = json;
-
   }
 
-  nextPlayer(){
-
+  nextPlayer() {
     setNextPlayer();
 
-    if(playerQueue.length < 2 && playerIds.length > 1){
+    if (playerQueue.length < 2 && playerIds.length > 1) {
       gameOver = true;
 
-      if(playerQueue.length == 1) winner = playerQueue[0];
-
+      if (playerQueue.length == 1) winner = playerQueue[0];
     }
 
     if (!gameOver) {
-
       setUpNewPosition();
     }
   }
 
-
-  setNextPlayer(){
-
-    switch(playerOrder){
+  setNextPlayer() {
+    switch (playerOrder) {
       case PlayerOrder.sequential:
-
         String p = playerQueue.removeAt(0);
-        if(playerStatus[p] == PlayerStatus.playing) playerQueue.add(p);
+        if (playerStatus[p] == PlayerStatus.playing) playerQueue.add(p);
         break;
 
       case PlayerOrder.random:
         String p = playerQueue[0];
-        if(playerStatus[p] != PlayerStatus.playing) playerQueue.remove(p);
+        if (playerStatus[p] != PlayerStatus.playing) playerQueue.remove(p);
         playerQueue.shuffle();
         break;
 
       case PlayerOrder.firstToPlay:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         break;
 
       case PlayerOrder.highestScore:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         break;
 
       case PlayerOrder.lowestScore:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         break;
     }
-
   }
 
-  initialise(){
+  initialise() {
     playerStatus = PlayerVariable(playerIds, PlayerStatus.ingameNotReady);
     score = PlayerVariable(playerIds, 0);
 
@@ -172,9 +155,9 @@ abstract class Position{
 
     initialiseExternalVariables();
 
-    if(playerQueue == null) {
+    if (playerQueue == null) {
       playerQueue = List();
-      playerIds.forEach((p)=>playerQueue.add(p));
+      playerIds.forEach((p) => playerQueue.add(p));
     }
 
     setValues();
@@ -182,20 +165,18 @@ abstract class Position{
     lastMove = StartingPosition(json);
   }
 
-  setTimers(double gameTime)=> timeLeft = PlayerVariable(playerIds, gameTime);
+  setTimers(double gameTime) => timeLeft = PlayerVariable(playerIds, gameTime);
 
   initialiseExternalVariables();
 
-  setFirstPlayer(bool random, String firstPlayer){
+  setFirstPlayer(bool random, String firstPlayer) {
     if (firstPlayer != null) {
       if (playerIds.contains(firstPlayer)) {
-
         bool found = playerQueue.remove(firstPlayer);
-        if(found) playerQueue.insert(0, firstPlayer);
+        if (found) playerQueue.insert(0, firstPlayer);
       }
     } else {
-      if(random == true) playerQueue.shuffle();
-
+      if (random == true) playerQueue.shuffle();
     }
   }
 
@@ -205,63 +186,56 @@ abstract class Position{
 
   List<Move> getPossibleMoves();
 
-  Stream<Move> listenForMoves(){}
+  Stream<Move> listenForMoves() {}
 
-  printBoard(){}
+  printBoard() {}
 
   double valuationOfPlayer(String playerId);
 
-  setValues(){
-
+  setValues() {
     List<double> values = List(playerIds.length);
 
-    for(int i = 0 ; i < values.length; i++){
+    for (int i = 0; i < values.length; i++) {
       values[i] = 0.0;
     }
 
     absoluteValues = values;
-
   }
 
-
-  double _value(int index){
-
+  double _value(int index) {
     double value;
 
-    if(absoluteValues.length == 1){
-      value =  absoluteValues[0];
-
-    } else if(absoluteValues.length == 2){
-
-      if(index == 0) value = absoluteValues[0] - absoluteValues[1];
-      else value = absoluteValues[1] - absoluteValues[0];
-
+    if (absoluteValues.length == 1) {
+      value = absoluteValues[0];
+    } else if (absoluteValues.length == 2) {
+      if (index == 0)
+        value = absoluteValues[0] - absoluteValues[1];
+      else
+        value = absoluteValues[1] - absoluteValues[0];
     } else {
+      double highestOpponent =
+          index == 0 ? absoluteValues[1] : absoluteValues[0];
 
-      double highestOpponent = index == 0 ? absoluteValues[1] : absoluteValues[0];
+      for (int i = 0; i < absoluteValues.length; i++) {
+        if (i == index) continue;
 
-      for (int i = 0 ; i < absoluteValues.length ; i ++){
-        if(i == index) continue;
-
-        if(absoluteValues[i] > highestOpponent) highestOpponent = absoluteValues[i];
-
+        if (absoluteValues[i] > highestOpponent)
+          highestOpponent = absoluteValues[i];
       }
 
       value = absoluteValues[index] - highestOpponent;
     }
 
     return value;
-
   }
 
-  static String playerStatusToString(PlayerStatus p){
-
-    switch (p){
+  static String playerStatusToString(PlayerStatus p) {
+    switch (p) {
       case PlayerStatus.winner:
         return 'winner';
 
       case PlayerStatus.disconnected:
-        return'disconnected';
+        return 'disconnected';
 
       case PlayerStatus.out:
         return 'out';
@@ -276,14 +250,13 @@ abstract class Position{
         return 'playing';
 
       case PlayerStatus.queuing:
-        return'queuing';
+        return 'queuing';
         break;
     }
-
   }
 
-  static PlayerStatus playerStatusFromString(String string){
-    switch (string){
+  static PlayerStatus playerStatusFromString(String string) {
+    switch (string) {
       case 'winner':
         return PlayerStatus.winner;
         break;
@@ -312,18 +285,7 @@ abstract class Position{
         return PlayerStatus.queuing;
         break;
     }
-
   }
-
 }
 
-
-enum PlayerOrder{
-  sequential,
-  random,
-  firstToPlay,
-  highestScore,
-  lowestScore
-}
-
-
+enum PlayerOrder { sequential, random, firstToPlay, highestScore, lowestScore }
