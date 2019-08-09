@@ -15,6 +15,10 @@ abstract class ChessPiece extends Piece {
     if (tile == null) {
       _tileK = null;
     } else {
+      captured = (position as ChessPosition).pieces[tile.k];
+
+      (position as ChessPosition).pieces[tile.k] = this;
+
       _tileK = tile.k;
     }
   }

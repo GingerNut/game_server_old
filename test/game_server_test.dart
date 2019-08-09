@@ -66,12 +66,10 @@ void main() async {
 
       Tile tile = position.tiles.tile(0, 0);
       pawn.tile = tile;
-      pawn.setup();
 
       expect(pawn.tile, position.tiles.tile(0, 0));
       Pawn second = Pawn(position.tiles, position);
       second.tile = tile;
-      second.captured = position.pieces[second.tile.k];
 
       expect(second.captured, pawn);
       expect(pawn.captured, null);
