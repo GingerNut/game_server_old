@@ -1,37 +1,21 @@
 part of game;
 
-abstract class Piece{
-
+abstract class Piece {
   final Tiles board;
+  final Position position;
 
   String name;
   String notation;
-  Tile _tile;
+  Tile get tile;
+  set tile(Tile tile);
 
   Piece captured;
 
-  Piece(this.board);
-
-  set tile (Tile tile){
-    if(_tile != null) _tile.pieces.remove(this);
-    _tile = tile;
-
-    if(tile.pieces.isNotEmpty) captured = tile.pieces.first;
-    tile.pieces.clear();
-    tile.pieces.add(this);
-  }
-
-  Tile get tile => _tile;
+  Piece(this.board, this.position);
 
   List<Tile> get legalMoves;
 
+  setup() {}
 
-setup(){
-
+  bool isFriendly(Piece piece);
 }
-
-bool isFriendly(Piece piece);
-
-}
-
-

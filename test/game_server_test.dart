@@ -62,15 +62,16 @@ void main() async {
 
       expect(position.tiles.tiles.length, 64);
 
-      Pawn pawn = Pawn(position.tiles);
+      Pawn pawn = Pawn(position.tiles, position);
 
       Tile tile = position.tiles.tile(0, 0);
       pawn.tile = tile;
       pawn.setup();
 
       expect(pawn.tile, position.tiles.tile(0, 0));
-      Pawn second = Pawn(position.tiles);
+      Pawn second = Pawn(position.tiles, position);
       second.tile = tile;
+      second.captured = position.pieces[second.tile.k];
 
       expect(second.captured, pawn);
       expect(pawn.captured, null);
@@ -501,7 +502,45 @@ void main() async {
     ComputerPlayer computer;
 
     String player1 = 'Player 1';
+    String player2 = 'Player 2';
     String gameId = 'local game';
+
+    test('Possible moves', () async {
+      ui = LocalInterface(ChessInjector());
+      ui.addPlayer(LocalPlayer(ui));
+      ui.addPlayer(LocalPlayer(ui));
+      ui.newGame.firstPlayer = player1;
+
+      await ui.startLocalGame();
+      position = ui.game.position;
+
+      expect(position.playerId, player1);
+
+      List<Move> moves = position.getPossibleMoves();
+      String moveString = moves[0].string;
+
+      ui.tryMove(moves[0]);
+      expect(position.playerId, player2);
+      moves = position.getPossibleMoves();
+
+      bool moveNotRepeated = true;
+      moves.forEach((m) {
+        if (m.string == moveString) moveNotRepeated = false;
+      });
+
+      expect(moveNotRepeated, true);
+
+      ui.tryMove(moves[0]);
+      expect(position.playerId, player1);
+      moves = position.getPossibleMoves();
+
+      moveNotRepeated = true;
+      moves.forEach((m) {
+        if (m.string == moveString) moveNotRepeated = false;
+      });
+
+      expect(moveNotRepeated, true);
+    });
 
     test(
       'computer testing',
@@ -773,7 +812,7 @@ void main() async {
     test('moves for pieces', () {
       position.clearPieces();
 
-      Rook rook = Rook(position.tiles)
+      Rook rook = Rook(position.tiles, position)
         ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4, 5);
 
@@ -797,7 +836,7 @@ void main() async {
 
       position.clearPieces();
 
-      Bishop bishop = Bishop(position.tiles)
+      Bishop bishop = Bishop(position.tiles, position)
         ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4, 5);
 
@@ -820,7 +859,7 @@ void main() async {
 
       position.clearPieces();
 
-      Queen queen = Queen(position.tiles)
+      Queen queen = Queen(position.tiles, position)
         ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4, 5);
 
@@ -855,7 +894,7 @@ void main() async {
 
       position.clearPieces();
 
-      King king = King(position.tiles)
+      King king = King(position.tiles, position)
         ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4, 5);
 
@@ -878,7 +917,7 @@ void main() async {
 
       position.clearPieces();
 
-      Pawn pawn = Pawn(position.tiles)
+      Pawn pawn = Pawn(position.tiles, position)
         ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4, 5);
 
@@ -898,7 +937,7 @@ void main() async {
 
       position.clearPieces();
 
-      pawn = Pawn(position.tiles)
+      pawn = Pawn(position.tiles, position)
         ..chessColor = Palette.COLOR_BLACK
         ..tile = position.tiles.tile(4, 5);
 
@@ -911,7 +950,7 @@ void main() async {
 
       position.clearPieces();
 
-      Pawn blackPawn = Pawn(position.tiles)
+      Pawn blackPawn = Pawn(position.tiles, position)
         ..tile = position.tiles.tile(4, 6)
         ..chessColor = Palette.COLOR_BLACK;
 
@@ -923,7 +962,7 @@ void main() async {
 
       position.clearPieces();
 
-      Knight knight = Knight(position.tiles)
+      Knight knight = Knight(position.tiles, position)
         ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4, 5);
 
@@ -949,32 +988,34 @@ void main() async {
     test('pieces interacting', () {
       position.clearPieces();
 
-      Rook whiteRook = Rook(position.tiles)
+      Rook whiteRook = Rook(position.tiles, position)
         ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(4, 5);
 
-      Pawn whitePawn = Pawn(position.tiles)
+      Pawn whitePawn = Pawn(position.tiles, position)
         ..chessColor = Palette.COLOR_WHITE
         ..tile = position.tiles.tile(3, 5);
 
-      Pawn blackPawn = Pawn(position.tiles)
+      Pawn blackPawn = Pawn(position.tiles, position)
         ..chessColor = Palette.COLOR_BLACK
         ..tile = position.tiles.tile(1, 6);
 
       expect(whiteRook.isFriendly(whitePawn), true);
-      expect(position.tiles.tile(2, 5).tileOccupation(whiteRook),
+
+      expect(whiteRook.getOccupationStatus(position.tiles.tile(2, 5)),
           OccupationStatus.neutral);
-      expect(position.tiles.tile(4, 5).tileOccupation(whitePawn),
+      expect(whitePawn.getOccupationStatus(position.tiles.tile(4, 5)),
           OccupationStatus.friendly);
-      expect(position.tiles.tile(3, 5).tileOccupation(whiteRook),
+      expect(whiteRook.getOccupationStatus(position.tiles.tile(3, 5)),
           OccupationStatus.friendly);
 
       expect(whiteRook.isFriendly(blackPawn), false);
-      expect(position.tiles.tile(2, 5).tileOccupation(blackPawn),
+
+      expect(blackPawn.getOccupationStatus(position.tiles.tile(2, 5)),
           OccupationStatus.neutral);
-      expect(position.tiles.tile(4, 5).tileOccupation(blackPawn),
+      expect(blackPawn.getOccupationStatus(position.tiles.tile(4, 5)),
           OccupationStatus.enemy);
-      expect(position.tiles.tile(3, 5).tileOccupation(blackPawn),
+      expect(blackPawn.getOccupationStatus(position.tiles.tile(3, 5)),
           OccupationStatus.enemy);
     });
 
