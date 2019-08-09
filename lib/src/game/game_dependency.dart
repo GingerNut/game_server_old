@@ -1,7 +1,6 @@
 part of game;
 
-abstract class GameDependency{
-
+abstract class GameDependency {
   String get name;
 
   Game getGame(NewGame newGame);
@@ -18,16 +17,16 @@ abstract class GameDependency{
 
   Settings get settings;
 
+  drawTile() {}
+
   Function get isolateSpawn;
 
-  static spawnIsolate(SendPort sendPort)async{
-
+  static spawnIsolate(SendPort sendPort) async {
     ReceivePort receivePort = ReceivePort();
     sendPort.send(receivePort.sendPort);
 
 //    IsolateComputer computer = IsolateComputer([ this class ], receivePort, sendPort);
 
 //    computer.initialise();
-
   }
 }

@@ -10,8 +10,6 @@ import 'package:game_server/src/messages/game_message/game_message.dart';
 import 'package:game_server/src/messages/message.dart';
 import 'package:test/test.dart';
 
-import 'dummy_position.dart';
-
 void main() async {
   Future<T> next<T>(Stream<T> stream) async {
     await for (T message in stream) {
@@ -52,7 +50,8 @@ void main() async {
     });
 
     test('all directions square', () {
-      var tiles = Tiles.squareTiles(8, ConnectionScheme.allDirections);
+      var tiles =
+          Tiles.squareTiles(8, ConnectionScheme.allDirections, ChessInjector());
 
       expect(tiles.tiles.length, 64);
     });
@@ -205,206 +204,206 @@ void main() async {
           PlayerVariable.playerVariablefromString(bools.string).string);
     });
 
-    test('move tree valuations', () {
-      List<String> players = ['a', 'b', 'c', 'd'];
-
-      var testPosition = DummyPosition()
-        ..playerId = 'a'
-        ..playerIds = players
-        ..absoluteValues = [2.0, 3.0, 1.0, 4.0];
-
-      expect(testPosition.relativeValues[players.indexOf('a')], -2);
-      expect(testPosition.relativeValues[players.indexOf('b')], -1);
-      expect(testPosition.relativeValues[players.indexOf('c')], -3);
-      expect(testPosition.relativeValues[players.indexOf('d')], 1);
-
-      MoveTree moveTree = MoveTree(null, testPosition);
-      expect(moveTree.valueNoMove(players.indexOf('a')), -2);
-      expect(moveTree.valueNoMove(players.indexOf('a')), -2);
-
-      var secondMove1 = DummyPosition()
-        ..playerIds = players
-        ..playerId = 'b'
-        ..absoluteValues = [2.0, 3.0, 1.0, 5.0];
-
-      expect(secondMove1.playerId, 'b');
-
-      MoveTree tree1 = MoveTree(moveTree, secondMove1);
-      expect(tree1.value(players.indexOf('b')), -2);
-      expect(tree1.value(players.indexOf('a')), -3);
-
-      var secondMove2 = DummyPosition()
-        ..playerId = 'b'
-        ..playerIds = players
-        ..absoluteValues = [2.0, 6.0, 1.0, 5.0];
-
-      expect(secondMove2.playerId, 'b');
-      MoveTree tree2 = MoveTree(moveTree, secondMove2);
-      expect(tree2.value(players.indexOf('b')), 1);
-      expect(tree2.value(players.indexOf('a')), -4);
-
-      moveTree.branches.add(tree1);
-      moveTree.sortBranches(0);
-      expect(moveTree.value(players.indexOf('a')), -5);
-
-      moveTree.branches.add(tree2);
-      moveTree.sortBranches(0);
-      expect(moveTree.value(players.indexOf('a')), -6);
-    });
-
-    test('move tree valuations - more involved', () {
-      List<String> players = ['a', 'b', 'c'];
-
-      var testPosition = DummyPosition()
-        ..playerId = 'a'
-        ..playerIds = players
-        ..absoluteValues = [0, 0, 0];
-
-      MoveTree moveTree = MoveTree(null, testPosition);
-
-      MoveTree move11 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'a'
-            ..absoluteValues = [4, 2, 3]);
-
-      var move12 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'a'
-            ..absoluteValues = [0, 2, 1]);
-
-      var move11_1 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'b'
-            ..absoluteValues = [3, 1, 2]);
-
-      var move11_2 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'b'
-            ..absoluteValues = [3, 2, 1]);
-
-      var move12_1 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'b'
-            ..absoluteValues = [3, 1, 2]);
-
-      var move12_2 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'b'
-            ..absoluteValues = [3, 2, 1]);
-
-      var move11_1_1 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'c'
-            ..absoluteValues = [3, 4, 1]);
-
-      var move11_1_2 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'c'
-            ..absoluteValues = [1, 2, 2]);
-
-      var move11_2_1 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'c'
-            ..absoluteValues = [4, 3, 2]);
-
-      var move11_2_2 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'c'
-            ..absoluteValues = [1, 3, 2]);
-
-      var move12_1_1 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'c'
-            ..absoluteValues = [3, 2, 1]);
-
-      var move12_1_2 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'c'
-            ..absoluteValues = [4, 1, 3]);
-
-      var move12_2_1 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'c'
-            ..absoluteValues = [4, 3, 1]);
-
-      var move12_2_2 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'c'
-            ..absoluteValues = [1, 2, 3]);
-
-      var move12_2_2_1 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'a'
-            ..absoluteValues = [1, 3, 2]);
-
-      expect(move12_2_2_1.valueNoMove(0), -2);
-
-      var move12_2_2_2 = MoveTree(
-          moveTree,
-          DummyPosition()
-            ..playerIds = players
-            ..playerId = 'a'
-            ..absoluteValues = [4, 2, 3]);
-
-      expect(move12_2_2_2.valueNoMove(0), 1);
-
-      move12_2_2.addTree(move12_2_2_1);
-      expect(move12_2_2.bestBranch, move12_2_2_1);
-
-      move12_2_2.addTree(move12_2_2_2);
-      expect(move12_2_2.bestBranch, move12_2_2_2);
-
-      move12_2.branches.add(move12_2_1);
-      move12_2.branches.add(move12_2_2);
-
-      move12_2.branches.add(move12_1_1);
-      move12_2.branches.add(move12_1_2);
-
-      move11_2.branches.add(move11_2_1);
-      move11_2.branches.add(move11_2_2);
-
-      move11_2.branches.add(move11_1_1);
-      move11_2.branches.add(move11_1_2);
-
-      move11.branches.add(move11_1);
-      move11.branches.add(move11_2);
-
-      move12.branches.add(move12_1);
-      move12.branches.add(move12_2);
-
-      moveTree.sortBranches(0);
-//      expect(moveTree.value(players.indexOf('a')), -2);
-    });
+//    test('move tree valuations', () {
+//      List<String> players = ['a', 'b', 'c', 'd'];
+//
+//      var testPosition = DummyPosition()
+//        ..playerId = 'a'
+//        ..playerIds = players
+//        ..absoluteValues = [2.0, 3.0, 1.0, 4.0];
+//
+//      expect(testPosition.relativeValues[players.indexOf('a')], -2);
+//      expect(testPosition.relativeValues[players.indexOf('b')], -1);
+//      expect(testPosition.relativeValues[players.indexOf('c')], -3);
+//      expect(testPosition.relativeValues[players.indexOf('d')], 1);
+//
+//      MoveTree moveTree = MoveTree(testPosition);
+//      expect(testPosition.relativeValues[players.indexOf('a')], -2);
+//      expect(moveTree.valueNoMove(players.indexOf('a')), -2);
+//
+//      var secondMove1 = DummyPosition()
+//        ..playerIds = players
+//        ..playerId = 'b'
+//        ..absoluteValues = [2.0, 3.0, 1.0, 5.0];
+//
+//      expect(secondMove1.playerId, 'b');
+//
+//      MoveTree tree1 = MoveTree(moveTree, secondMove1);
+//      expect(tree1.value(players.indexOf('b')), -2);
+//      expect(tree1.value(players.indexOf('a')), -3);
+//
+//      var secondMove2 = DummyPosition()
+//        ..playerId = 'b'
+//        ..playerIds = players
+//        ..absoluteValues = [2.0, 6.0, 1.0, 5.0];
+//
+//      expect(secondMove2.playerId, 'b');
+//      MoveTree tree2 = MoveTree(moveTree, secondMove2);
+//      expect(tree2.value(players.indexOf('b')), 1);
+//      expect(tree2.value(players.indexOf('a')), -4);
+//
+//      moveTree.branches.add(tree1);
+//      moveTree.sortBranches(0);
+//      expect(moveTree.value(players.indexOf('a')), -5);
+//
+//      moveTree.branches.add(tree2);
+//      moveTree.sortBranches(0);
+//      expect(moveTree.value(players.indexOf('a')), -6);
+//    });
+//
+//    test('move tree valuations - more involved', () {
+//      List<String> players = ['a', 'b', 'c'];
+//
+//      var testPosition = DummyPosition()
+//        ..playerId = 'a'
+//        ..playerIds = players
+//        ..absoluteValues = [0, 0, 0];
+//
+//      MoveTree moveTree = MoveTree(null, testPosition);
+//
+//      MoveTree move11 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'a'
+//            ..absoluteValues = [4, 2, 3]);
+//
+//      var move12 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'a'
+//            ..absoluteValues = [0, 2, 1]);
+//
+//      var move11_1 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'b'
+//            ..absoluteValues = [3, 1, 2]);
+//
+//      var move11_2 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'b'
+//            ..absoluteValues = [3, 2, 1]);
+//
+//      var move12_1 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'b'
+//            ..absoluteValues = [3, 1, 2]);
+//
+//      var move12_2 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'b'
+//            ..absoluteValues = [3, 2, 1]);
+//
+//      var move11_1_1 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'c'
+//            ..absoluteValues = [3, 4, 1]);
+//
+//      var move11_1_2 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'c'
+//            ..absoluteValues = [1, 2, 2]);
+//
+//      var move11_2_1 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'c'
+//            ..absoluteValues = [4, 3, 2]);
+//
+//      var move11_2_2 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'c'
+//            ..absoluteValues = [1, 3, 2]);
+//
+//      var move12_1_1 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'c'
+//            ..absoluteValues = [3, 2, 1]);
+//
+//      var move12_1_2 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'c'
+//            ..absoluteValues = [4, 1, 3]);
+//
+//      var move12_2_1 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'c'
+//            ..absoluteValues = [4, 3, 1]);
+//
+//      var move12_2_2 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'c'
+//            ..absoluteValues = [1, 2, 3]);
+//
+//      var move12_2_2_1 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'a'
+//            ..absoluteValues = [1, 3, 2]);
+//
+//      expect(move12_2_2_1.valueNoMove(0), -2);
+//
+//      var move12_2_2_2 = MoveTree(
+//          moveTree,
+//          DummyPosition()
+//            ..playerIds = players
+//            ..playerId = 'a'
+//            ..absoluteValues = [4, 2, 3]);
+//
+//      expect(move12_2_2_2.valueNoMove(0), 1);
+//
+//      move12_2_2.addTree(move12_2_2_1);
+//      expect(move12_2_2.bestBranch, move12_2_2_1);
+//
+//      move12_2_2.addTree(move12_2_2_2);
+//      expect(move12_2_2.bestBranch, move12_2_2_2);
+//
+//      move12_2.branches.add(move12_2_1);
+//      move12_2.branches.add(move12_2_2);
+//
+//      move12_2.branches.add(move12_1_1);
+//      move12_2.branches.add(move12_1_2);
+//
+//      move11_2.branches.add(move11_2_1);
+//      move11_2.branches.add(move11_2_2);
+//
+//      move11_2.branches.add(move11_1_1);
+//      move11_2.branches.add(move11_1_2);
+//
+//      move11.branches.add(move11_1);
+//      move11.branches.add(move11_2);
+//
+//      move12.branches.add(move12_1);
+//      move12.branches.add(move12_2);
+//
+//      moveTree.sortBranches(0);
+////      expect(moveTree.value(players.indexOf('a')), -2);
+//    });
   });
 
   group('computer player basics', () {
@@ -623,16 +622,16 @@ void main() async {
       computer.aiDepth = 1;
       computer.thinkingTime = 2;
 
-      MoveTree moveQueue = MoveTree(null, position);
-      moveQueue.findBranches();
-      expect(moveQueue.branches.length, 1);
+      MoveTree moveTree = MoveTree(position);
+      moveTree.search(1);
+      expect(moveTree.root.children.length, 1);
 
-      moveQueue.branches.forEach((b) => expect(b.root.playerId, 'b'));
+      moveTree.root.children.forEach((b) => expect(b.playerId, 'b'));
 
-      moveQueue.printTree();
+      moveTree.printTree();
 
-      moveQueue.search(1);
-      moveQueue.printTree();
+      moveTree.search(1);
+      moveTree.printTree();
 //
 //      moveQueue.lines.forEach((l)=>expect(l.player, 'a'));
 //

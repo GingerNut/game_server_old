@@ -7,9 +7,6 @@ abstract class Piece {
   String name;
   String notation;
 
-  Tile get tile;
-  set tile(Tile tile);
-
   Piece(this.board, this.position);
 
   List<Tile> get legalMoves;

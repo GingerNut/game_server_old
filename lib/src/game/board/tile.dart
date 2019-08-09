@@ -3,6 +3,7 @@ part of game;
 class Tile {
   List<Tile> connections = List();
   final Tiles board;
+  final GameDependency dependency;
   final int i;
   final int j;
   final int k;
@@ -21,7 +22,7 @@ class Tile {
   Tile west;
   Tile northWest;
 
-  Tile(this.board, this.i, this.j, this.k);
+  Tile(this.board, this.dependency, this.i, this.j, this.k);
 
   Tile nextInDirection(int direction) {
     switch (direction) {
@@ -43,6 +44,8 @@ class Tile {
         return northWest;
     }
   }
+
+  draw() => dependency.drawTile();
 }
 
 enum OccupationStatus { neutral, friendly, enemy }

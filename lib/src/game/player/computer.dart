@@ -1,8 +1,6 @@
 part of game;
 
-
-class Computer{
-
+class Computer {
   Position position;
 
   String playerId;
@@ -16,29 +14,23 @@ class Computer{
   PositionBuilder get positionBuilder => dependency.getPositionBuilder();
   final GameDependency dependency;
 
-  Future<Move> findBestMove() async{
-
+  Future<Move> findBestMove() async {
     bool OK = true;
 
-    Timer timer = Timer(Duration(seconds: 1), (){OK = false;});
+    Timer timer = Timer(Duration(seconds: 1), () {
+      OK = false;
+    });
 
-    MoveTree tree = MoveTree(null, position);
+    MoveTree tree = MoveTree(position);
 
-    tree.findBranches();
-
-    while(OK){
-
-      await Future.delayed(Duration(microseconds : 1));
+    while (OK) {
+      await Future.delayed(Duration(microseconds: 1));
 
       tree.search(6);
-
     }
 
     timer.cancel();
 
-
-  return tree.bestMove;
+    return tree.bestMove;
   }
-
-
 }

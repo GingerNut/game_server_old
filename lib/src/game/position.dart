@@ -8,6 +8,11 @@ abstract class Position {
   String gameId;
   List<String> playerIds;
   List<String> playerQueue;
+  int get playerIndex => playerIds.indexOf(playerId);
+
+  List<Position> children = List();
+  Position topChild;
+  Position parent;
 
   List<double> _absoluteValues;
   List<double> get absoluteValues => _absoluteValues;
@@ -23,6 +28,13 @@ abstract class Position {
   }
 
   List<double> relativeValues;
+
+  double value(int player) {
+    if (topChild == null)
+      return relativeValues[player];
+    else
+      return relativeValues[player] + topChild.value(player);
+  }
 
   PositionBuilder get positionBuilder => dependency.getPositionBuilder();
   MoveBuilder get moveBuilder => dependency.getMoveBuilder();
@@ -196,7 +208,7 @@ abstract class Position {
     List<double> values = List(playerIds.length);
 
     for (int i = 0; i < values.length; i++) {
-      values[i] = 0.0;
+      values[i] = valuationOfPlayer(playerIds[i]);
     }
 
     absoluteValues = values;
@@ -252,6 +264,57 @@ abstract class Position {
       case PlayerStatus.queuing:
         return 'queuing';
         break;
+    }
+  }
+
+  makeChildren() {
+    var moves = getPossibleMoves();
+
+    moves.forEach((m) {
+      Position child = duplicate;
+      child.parent = this;
+
+      if (m.check(child) is! GameError) {
+        child.makeMove(m);
+
+        if (!m.suicide) children.add(child);
+      }
+    });
+
+    sortChildren();
+  }
+
+  sortChildren() {
+    children
+        .sort((a, b) => b.value(playerIndex).compareTo(a.value(playerIndex)));
+
+    bool topChildChanged = false;
+
+    Position newTopChild = children[0];
+    if (newTopChild != topChild) topChildChanged = true;
+
+    topChild = newTopChild;
+
+    if (topChildChanged && parent != null) parent.sortChildren();
+  }
+
+  findTopChild(Position position) {
+    if (children.isEmpty)
+      return;
+    else if (children.length == 1) {
+      topChild = children.first;
+    } else {
+      topChild = children[0];
+      double bestValue = topChild.relativeValues[playerIndex];
+
+      children.forEach((c) {
+        double childValue = c.relativeValues[playerIndex];
+
+        if (childValue > bestValue) {
+          topChild = c;
+          bestValue = childValue;
+        }
+      });
     }
   }
 

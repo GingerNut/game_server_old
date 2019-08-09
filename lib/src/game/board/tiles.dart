@@ -55,12 +55,13 @@ class Tiles {
 
   Tiles.fromString(String string);
 
-  Tiles.squareTiles(int size, ConnectionScheme connectionScheme) {
-    tiles = getSquareTiles(size, size, connectionScheme);
+  Tiles.squareTiles(
+      int size, ConnectionScheme connectionScheme, GameDependency dependency) {
+    tiles = getSquareTiles(size, size, connectionScheme, dependency);
   }
 
-  List<Tile> getSquareTiles(
-      int width, int height, ConnectionScheme connections) {
+  List<Tile> getSquareTiles(int width, int height, ConnectionScheme connections,
+      GameDependency dependency) {
     Array2d tileArray = Array2d(width, height);
 
     List<Tile> newtiles = List();
@@ -68,7 +69,7 @@ class Tiles {
 
     for (int i = 0; i < width; i++) {
       for (int j = 0; j < height; j++) {
-        Tile tile = Tile(this, i, j, k++);
+        Tile tile = Tile(this, dependency, i, j, k++);
         newtiles.add(tile);
         tileArray[i][j] = tile;
       }

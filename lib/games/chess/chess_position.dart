@@ -109,7 +109,8 @@ class ChessPosition extends Position {
       p.chessColor = color;
     }
 
-    tiles = Tiles.squareTiles(8, ConnectionScheme.allDirections);
+    tiles =
+        Tiles.squareTiles(8, ConnectionScheme.allDirections, ChessInjector());
 
     List<String> details = s.split(Message.delimiter);
 
