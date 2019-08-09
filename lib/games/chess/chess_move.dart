@@ -75,21 +75,6 @@ class ChessMove extends Move<ChessPosition> {
 
     movingPiece.tile = to;
 
-    movingPiece.captured = position.pieces[to.k];
-
-    switch (movingPiece.chessColor) {
-      case Palette.COLOR_WHITE:
-        position.blackArmy.remove(movingPiece.captured);
-        break;
-
-      case Palette.COLOR_BLACK:
-        position.whiteArmy.remove(movingPiece.captured);
-        break;
-    }
-
-    position.pieces[from.k] = null;
-    position.pieces[to.k] = movingPiece;
-
     return Success();
   }
 

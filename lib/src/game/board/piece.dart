@@ -6,10 +6,9 @@ abstract class Piece {
 
   String name;
   String notation;
+
   Tile get tile;
   set tile(Tile tile);
-
-  Piece captured;
 
   Piece(this.board, this.position);
 

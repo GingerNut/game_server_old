@@ -1038,8 +1038,8 @@ void main() async {
 
       ChessPosition chessPosition = chessGame.position;
 
-      expect(chessPosition.whiteArmy.length, 16);
-      expect(chessPosition.blackArmy.length, 16);
+      expect(chessPosition.army(Palette.COLOR_WHITE).length, 16);
+      expect(chessPosition.army(Palette.COLOR_BLACK).length, 16);
     });
 
     test('game duplication', () {});

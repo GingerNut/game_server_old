@@ -6,6 +6,8 @@ abstract class ChessPiece extends Piece {
   int chessColor;
   double value;
 
+  ChessPiece captured;
+
   int _tileK;
 
   Tile get tile =>
@@ -15,9 +17,13 @@ abstract class ChessPiece extends Piece {
     if (tile == null) {
       _tileK = null;
     } else {
-      captured = (position as ChessPosition).pieces[tile.k];
+      ChessPosition chessPos = position as ChessPosition;
 
-      (position as ChessPosition).pieces[tile.k] = this;
+      captured = chessPos.pieces[tile.k];
+
+      chessPos.pieces[tile.k] = this;
+
+      if (_tileK != null) chessPos.pieces[_tileK] = null;
 
       _tileK = tile.k;
     }

@@ -6,9 +6,22 @@ class ChessPosition extends Position {
   String whitePlayer;
   String blackPlayer;
 
-  List<ChessPiece> whiteArmy = List();
-  List<ChessPiece> blackArmy = List();
+  int get playerColor =>
+      playerId == whitePlayer ? Palette.COLOR_WHITE : Palette.COLOR_BLACK;
+
   List<ChessPiece> pieces = List(64);
+
+  List<ChessPiece> army(int color) {
+    List<ChessPiece> _army = List();
+
+    pieces.forEach((p) {
+      if (p != null && color == p.chessColor) {
+        _army.add(p);
+      }
+    });
+
+    return _army;
+  }
 
   @override
   analyse() {}
@@ -20,25 +33,25 @@ class ChessPosition extends Position {
 
   String get externalVariablesString {
     List<String> whiteList = List();
-
-    whiteArmy.forEach((p) {
-      String string = '';
-      string += p.name;
-      string += p.tile.i.toString();
-      string += p.tile.j.toString();
-
-      whiteList.add(string);
-    });
-
     List<String> blackList = List();
 
-    blackArmy.forEach((p) {
-      String string = '';
-      string += p.name;
-      string += p.tile.i.toString();
-      string += p.tile.j.toString();
+    pieces.forEach((p) {
+      if (p != null) {
+        String string = '';
+        string += p.name;
+        string += p.tile.i.toString();
+        string += p.tile.j.toString();
 
-      blackList.add(string);
+        switch (p.chessColor) {
+          case Palette.COLOR_WHITE:
+            whiteList.add(string);
+            break;
+
+          case Palette.COLOR_BLACK:
+            blackList.add(string);
+            break;
+        }
+      }
     });
 
     String string = '';
@@ -53,7 +66,7 @@ class ChessPosition extends Position {
   }
 
   setExternalVariables(String s) {
-    makePiece(String pieceString, int color, List<ChessPiece> army) {
+    makePiece(String pieceString, int color) {
       ChessPiece p;
 
       switch (pieceString.substring(0, 1)) {
@@ -94,10 +107,6 @@ class ChessPosition extends Position {
       p.tile = tiles.tile(i, j);
 
       p.chessColor = color;
-
-      army.add(p);
-
-      pieces[p.tile.k] = p;
     }
 
     tiles = Tiles.squareTiles(8, ConnectionScheme.allDirections);
@@ -106,33 +115,26 @@ class ChessPosition extends Position {
 
     List<String> white = details[0].split(Message.internalDelimiter);
 
-    white.forEach((s) => makePiece(s, Palette.COLOR_WHITE, whiteArmy));
+    white.forEach((s) => makePiece(s, Palette.COLOR_WHITE));
 
     List<String> black = details[1].split(Message.internalDelimiter);
 
-    black.forEach((s) => makePiece(s, Palette.COLOR_BLACK, blackArmy));
+    black.forEach((s) => makePiece(s, Palette.COLOR_BLACK));
   }
 
   clearPieces() {
-    whiteArmy.clear();
-    blackArmy.clear();
     pieces.fillRange(0, 63, null);
   }
 
   List<Move> getPossibleMoves() {
     List<Move> moves = List();
 
-    List<Piece> army;
+    pieces.forEach((p) {
+      if (p != null && p.chessColor == playerColor) {
+        List<Tile> tiles = p.legalMoves;
 
-    if (color[playerId] == Palette.COLOR_WHITE)
-      army = whiteArmy;
-    else
-      army = blackArmy;
-
-    army.forEach((p) {
-      List<Tile> tiles = p.legalMoves;
-
-      tiles.forEach((t) => moves.add(ChessMove(p.tile, t)));
+        tiles.forEach((t) => moves.add(ChessMove(p.tile, t)));
+      }
     });
 
     return moves;
@@ -253,19 +255,21 @@ class ChessPosition extends Position {
   double valuationOfPlayer(String playerId) {
     double value = 0;
 
-    List<ChessPiece> army =
-        color[playerId] == Palette.COLOR_WHITE ? whiteArmy : blackArmy;
+    int playerColor =
+        playerId == whitePlayer ? Palette.COLOR_WHITE : Palette.COLOR_BLACK;
 
-    army.forEach((p) {
-      value += p.value;
-      value += p.legalMoves.length * 0.1;
+    pieces.forEach((p) {
+      if (p != null && p.chessColor == playerColor) {
+        value += p.value;
+        value += p.legalMoves.length * 0.1;
 
-      List moves = p.legalMoves;
+        List moves = p.legalMoves;
 
-      if (moves.contains(tiles.tile(3, 3))) value += 0.2;
-      if (moves.contains(tiles.tile(3, 4))) value += 0.2;
-      if (moves.contains(tiles.tile(4, 3))) value += 0.2;
-      if (moves.contains(tiles.tile(4, 4))) value += 0.2;
+        if (moves.contains(tiles.tile(3, 3))) value += 0.2;
+        if (moves.contains(tiles.tile(3, 4))) value += 0.2;
+        if (moves.contains(tiles.tile(4, 3))) value += 0.2;
+        if (moves.contains(tiles.tile(4, 4))) value += 0.2;
+      }
     });
 
     return value;
