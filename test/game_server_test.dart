@@ -623,14 +623,14 @@ void main() async {
       computer.thinkingTime = 2;
 
       MoveTree moveTree = MoveTree(position);
-      moveTree.search(1);
+      moveTree.search(1, 1);
       expect(moveTree.root.children.length, 1);
 
       moveTree.root.children.forEach((b) => expect(b.playerId, 'b'));
 
       moveTree.printTree();
 
-      moveTree.search(1);
+      moveTree.search(4, 1);
       moveTree.printTree();
 //
 //      moveQueue.lines.forEach((l)=>expect(l.player, 'a'));

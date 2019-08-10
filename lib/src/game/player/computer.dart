@@ -10,26 +10,19 @@ class Computer {
   double thinkingTime;
 
   Computer(this.dependency);
+
   MoveBuilder get moveBuilder => dependency.getMoveBuilder();
+
   PositionBuilder get positionBuilder => dependency.getPositionBuilder();
+
   final GameDependency dependency;
 
   Future<Move> findBestMove() async {
-    bool OK = true;
+    Position test = position.duplicate;
 
-    Timer timer = Timer(Duration(seconds: 1), () {
-      OK = false;
-    });
+    MoveTree tree = MoveTree(test);
 
-    MoveTree tree = MoveTree(position);
-
-    while (OK) {
-      await Future.delayed(Duration(microseconds: 1));
-
-      tree.search(6);
-    }
-
-    timer.cancel();
+    tree.search(6, 1);
 
     return tree.bestMove;
   }

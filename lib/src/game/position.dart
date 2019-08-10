@@ -267,7 +267,7 @@ abstract class Position {
     }
   }
 
-  makeChildren() {
+  makeChildren() async {
     var moves = getPossibleMoves();
 
     moves.forEach((m) {
