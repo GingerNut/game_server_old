@@ -539,6 +539,30 @@ void main() async {
       expect(moveNotRepeated, true);
     });
 
+    test('check all moves are legal', () async {
+      ui = LocalInterface(ChessInjector());
+      ui.addPlayer(LocalPlayer(ui));
+      ui.addPlayer(LocalPlayer(ui));
+      ui.newGame.firstPlayer = player1;
+
+      await ui.startLocalGame();
+      position = ui.game.position;
+
+      MoveTree tree = MoveTree(position);
+      tree.root.makeChildren();
+
+      tree.root.children.forEach((p) {
+        p.makeChildren();
+
+        p.children.forEach((cc) {
+          cc.makeChildren();
+          cc.children.forEach((ccc) {
+            ccc.printBoard();
+          });
+        });
+      });
+    });
+
     test(
       'computer testing',
       () async {

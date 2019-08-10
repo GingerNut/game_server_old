@@ -3,11 +3,13 @@ part of chess;
 class ChessPosition extends Position {
   Tiles tiles;
 
-  String whitePlayer;
-  String blackPlayer;
+  int get playerColor => color[playerId];
 
-  int get playerColor =>
-      playerId == whitePlayer ? Palette.COLOR_WHITE : Palette.COLOR_BLACK;
+  String get whitePlayer =>
+      color[playerIds[0]] == Palette.COLOR_WHITE ? playerIds[0] : playerIds[1];
+
+  String get blackPlayer =>
+      color[playerIds[0]] == Palette.COLOR_BLACK ? playerIds[0] : playerIds[1];
 
   List<ChessPiece> pieces = List(64);
 
@@ -222,27 +224,30 @@ class ChessPosition extends Position {
   setFirstPlayer(bool random, String firstPlayer) {
     super.setFirstPlayer(random, firstPlayer);
 
+    String white;
+    String black;
+
     if (random || !playerIds.contains(firstPlayer)) {
       playerQueue.clear();
       playerQueue.add(playerIds[0]);
       playerQueue.add(playerIds[1]);
       playerQueue.shuffle();
 
-      whitePlayer = playerQueue[0];
-      blackPlayer = playerQueue[1];
+      white = playerQueue[0];
+      black = playerQueue[1];
     } else {
       playerQueue.clear();
       playerQueue.add(playerIds[0]);
       playerQueue.add(playerIds[1]);
 
-      whitePlayer = firstPlayer;
-      playerQueue.remove(whitePlayer);
-      blackPlayer = playerQueue[0];
+      white = firstPlayer;
+      playerQueue.remove(white);
+      black = playerQueue[0];
 
       playerQueue.clear();
 
-      playerQueue.add(whitePlayer);
-      playerQueue.add(blackPlayer);
+      playerQueue.add(white);
+      playerQueue.add(black);
     }
 
     color[whitePlayer] = Palette.COLOR_WHITE;

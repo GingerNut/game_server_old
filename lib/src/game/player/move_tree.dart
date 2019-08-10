@@ -22,9 +22,6 @@ class MoveTree {
       OK = false;
     });
 
-    print('from movetree search : checking the board posiition is right');
-    root.printBoard();
-
     root.makeChildren();
 
     Position child = root.topChild;
