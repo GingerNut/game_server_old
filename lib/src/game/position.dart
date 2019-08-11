@@ -13,6 +13,7 @@ abstract class Position {
   List<Position> children = List();
   Position topChild;
   Position parent;
+  bool expanded = false;
 
   List<double> _absoluteValues;
   List<double> get absoluteValues => _absoluteValues;
@@ -282,6 +283,7 @@ abstract class Position {
     });
 
     sortChildren();
+    expanded = true;
   }
 
   sortChildren() {

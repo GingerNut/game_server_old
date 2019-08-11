@@ -557,7 +557,7 @@ void main() async {
         p.children.forEach((cc) {
           cc.makeChildren();
           cc.children.forEach((ccc) {
-            ccc.printBoard();
+//            ccc.printBoard();
           });
         });
       });
@@ -652,21 +652,17 @@ void main() async {
 
       moveTree.root.children.forEach((b) => expect(b.playerId, 'b'));
 
-      moveTree.printTree();
-
       moveTree.search(4, 1);
-      moveTree.printTree();
-//
-//      moveQueue.lines.forEach((l)=>expect(l.player, 'a'));
-//
-//
-//      Move move = await computer.findBestMove();
-//      position.makeMove(move);
-//      expect(position.playerQueue, ['b','a']);
-//
-//      move = await computer.findBestMove();
-//      position.makeMove(move);
-//      expect(position.playerQueue, ['a','b']);
+
+      Move move = await computer.findBestMove();
+
+      position.makeMove(move);
+
+      expect(position.playerQueue, ['b', 'a']);
+
+      move = await computer.findBestMove();
+      position.makeMove(move);
+      expect(position.playerQueue, ['a', 'b']);
     });
   });
 
@@ -1076,6 +1072,7 @@ void main() async {
 
       advert.players.add(white);
       advert.players.add(black);
+      advert.firstPlayer = 'white player';
 
       var chessGame = Game.fromNewGame(ChessInjector(), advert);
 

@@ -10,31 +10,54 @@ class MoveTree {
   MoveTree(this.root);
 
   search(int depth, int seconds) async {
-    //TODO jobs - first analytise all to depth 4 then explore top move
-
-    //TODO valuation needs to be by looking at value from the point of view of the position player
-
     this.depth = depth;
 
     bool OK = true;
 
-    Timer timer = Timer(Duration(seconds: seconds), () {
+    Stopwatch stopwatch = Stopwatch()..start();
+
+    Timer timer = Timer(Duration(seconds: 1), () {
+      print('move tree : time up');
       OK = false;
     });
 
-    root.makeChildren();
+    await root.makeChildren();
+
+    root.children.forEach(((c) async {
+      if (OK) {
+        await c.makeChildren();
+
+        c.children.forEach((cc) async {
+          if (OK) {
+            await cc.makeChildren();
+
+//        cc.children.forEach((ccc) {
+//          ccc.makeChildren();
+//        });
+
+          }
+        });
+      }
+    }));
+
+    print('move tree intermeidiate time : ' +
+        stopwatch.elapsedMilliseconds.toString());
 
     Position child = root.topChild;
     int index = 1;
 
     while (child != null && index < depth && OK) {
-      await child.makeChildren();
+      if (!child.expanded) {
+        await child.makeChildren();
+        index++;
+      }
 
       child = child.topChild;
-      index++;
     }
 
     timer.cancel();
+    print('move tree final time : ' + stopwatch.elapsedMilliseconds.toString());
+    stopwatch.stop();
   }
 
   printTree() {
@@ -54,17 +77,15 @@ class MoveTree {
       string += ' (${c.relativeValues[root.playerIndex].toString()}): ';
 
       Position child = root.topChild;
-      int index = 1;
 
-      while (child.topChild != null && index < depth) {
-        child = child.topChild;
-        index++;
-
+      while (child != null) {
         string += ' ';
 
         string += child.relativeValues[root.playerIndex].toString();
 
         string += ' ';
+
+        child = child.topChild;
       }
 
       string += '\n';
