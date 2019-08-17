@@ -5,48 +5,43 @@ class MoveTree {
   int depth;
   int index;
 
+  Stopwatch stopwatch;
+  int milliSeconds;
+  bool get timeLeft => stopwatch.elapsedMilliseconds < milliSeconds;
+
   final Position root;
 
   MoveTree(this.root);
 
   search(int depth, int seconds) async {
     this.depth = depth;
-
-    bool OK = true;
-
-    Stopwatch stopwatch = Stopwatch()..start();
-
-    Timer timer = Timer(Duration(seconds: 1), () {
-      print('move tree : time up');
-      OK = false;
-    });
+    milliSeconds = seconds * 1000;
+    stopwatch = Stopwatch()..start();
 
     await root.makeChildren();
 
     root.children.forEach(((c) async {
-      if (OK) {
+      if (timeLeft) {
         await c.makeChildren();
 
         c.children.forEach((cc) async {
-          if (OK) {
+          if (timeLeft) {
             await cc.makeChildren();
 
-//        cc.children.forEach((ccc) {
-//          ccc.makeChildren();
-//        });
-
+            cc.children.forEach((ccc) async {
+              if (timeLeft) {
+                await ccc.makeChildren();
+              }
+            });
           }
         });
       }
     }));
 
-    print('move tree intermeidiate time : ' +
-        stopwatch.elapsedMilliseconds.toString());
-
     Position child = root.topChild;
     int index = 1;
 
-    while (child != null && index < depth && OK) {
+    while (child != null && index < depth && timeLeft) {
       if (!child.expanded) {
         await child.makeChildren();
         index++;
@@ -55,8 +50,6 @@ class MoveTree {
       child = child.topChild;
     }
 
-    timer.cancel();
-    print('move tree final time : ' + stopwatch.elapsedMilliseconds.toString());
     stopwatch.stop();
   }
 

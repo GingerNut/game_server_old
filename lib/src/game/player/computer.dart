@@ -22,7 +22,7 @@ class Computer {
 
     MoveTree tree = MoveTree(test);
 
-    tree.search(6, 1);
+    tree.search(6, 2);
 
     return tree.bestMove;
   }
